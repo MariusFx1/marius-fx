@@ -35,6 +35,20 @@ document.querySelectorAll('.slot').forEach(slot => {
   tryExt(0);
 });
 
+// ===== Galerie foto: click pentru mărire =====
+const lb = document.getElementById('lightbox');
+if (lb && typeof lb.showModal === 'function') {
+  const lbImg = lb.querySelector('img');
+  document.querySelectorAll('[data-lightbox]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const img = a.querySelector('img');
+    lbImg.src = a.href; lbImg.alt = img.alt;
+    lb.showModal();
+  }));
+  lb.querySelector('.lightbox-close').addEventListener('click', () => lb.close());
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });   // click în afara imaginii
+}
+
 // ===== Calculator de creștere compusă (SIMULARE IPOTETICĂ) =====
 const fmt = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
 const fmtShort = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });

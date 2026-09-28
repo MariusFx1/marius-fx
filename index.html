@@ -157,7 +157,25 @@
           </ul>
         </div>
       </div>
+
+      <!-- Galerie foto personală (click = mărire). Fișiere: images/masina-1.jpg, images/masina-2.jpg -->
+      <div class="photo-gallery" aria-label="Fotografii personale">
+        <a class="gallery-item" href="images/masina-1.jpg" data-lightbox>
+          <img src="images/masina-1.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Mașina mea în fața Palatului Culturii din Iași, văzută din față">
+        </a>
+        <a class="gallery-item" href="images/masina-2.jpg" data-lightbox>
+          <img src="images/masina-2.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Mașina mea în fața Palatului Culturii din Iași, văzută din spate">
+        </a>
+      </div>
     </section>
+
+    <!-- Fereastră pentru imaginea mărită -->
+    <dialog class="lightbox" id="lightbox" aria-label="Imagine mărită">
+      <button class="lightbox-close" type="button" aria-label="Închide">×</button>
+      <img src="" alt="">
+    </dialog>
 
     <!-- ===== CONTACT ===== -->
     <section class="section container" id="contact">
