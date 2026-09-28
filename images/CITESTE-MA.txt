@@ -1,0 +1,14 @@
+MARIUS FX — CUM ADAUGI CAPTURILE TALE REALE ÎN „JURNALUL CONTULUI”
+======================================================
+Pune aici capturile de ecran REALE de la broker, cu exact aceste nume:
+
+  etapa-1.jpg   etapa-2.jpg   etapa-3.jpg
+  etapa-4.jpg   etapa-5.jpg   etapa-6.jpg
+
+(Sunt acceptate și .png sau .webp — vezi GALERIE_EXTENSII în script.js.)
+
+Site-ul le detectează automat și le afișează în locul casetelor goale.
+Legenda de sub fiecare imagine („[Data – Sold cont]”) se editează în index.html,
+în secțiunea „JURNALUL CONTULUI”.
+
+Sfat: ascunde datele personale (număr de cont, nume) înainte de publicare.
