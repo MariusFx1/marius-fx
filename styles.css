@@ -99,7 +99,8 @@ img { max-width: 100%; display: block; }
 .journal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; counter-reset: etapa; }
 .journal li { position: relative; }
 .slot { margin: 0; }
-.slot a { display: block; }
+.slot-link, .slot a { display: block; text-decoration: none; color: inherit; cursor: zoom-in; }
+.slot-link:focus-visible { outline: 2px solid var(--green-2); outline-offset: 3px; border-radius: var(--radius); }
 .slot-img {
   aspect-ratio: 16 / 10; border: 1.5px dashed #2a3a58; border-radius: var(--radius);
   background:
@@ -115,10 +116,15 @@ img { max-width: 100%; display: block; }
   display: grid; place-items: center; font-size: 1.4rem; line-height: 1; color: var(--green); font-weight: 400;
   background: var(--green-soft);
 }
-.slot-img.has-img { border: 1px solid var(--border); border-style: solid; padding: 0; overflow: hidden; background: var(--surface); }
+.slot-img.has-img {
+  border: 1px solid var(--border); border-style: solid; padding: 0;
+  overflow: hidden; background: #0a0e16;
+  aspect-ratio: auto; /* lasă imaginea să-și dicteze înălțimea */
+  display: block;
+}
 .slot-img.has-img img {
   display: block; width: 100%; height: auto; max-width: 100%;
-  aspect-ratio: 16 / 10; object-fit: contain; object-position: top;
+  object-fit: contain; /* fără crop, fără distorsiune */
 }
 .slot figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-top: .8rem; font-size: .92rem; }
 .slot figcaption strong { color: var(--green); font-family: var(--mono); font-weight: 500; font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }

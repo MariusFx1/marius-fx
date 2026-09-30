@@ -19,6 +19,7 @@ links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
 document.querySelectorAll('.slot').forEach(slot => {
   const n = slot.dataset.etapa;
   const box = slot.querySelector('.slot-img');
+  if (!box || box.classList.contains('has-img') || box.querySelector('img')) return; // deja completat în HTML
   const tryExt = i => {
     if (i >= GALERIE_EXTENSII.length) return;          // nu există imagine — rămâne caseta goală
     const img = new Image();
