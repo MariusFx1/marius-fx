@@ -1,5 +1,5 @@
 // ===== SETĂRI =====
-const EMAIL_CONTACT = 'exemplu@email.com';               // adresa pentru formularul de contact
+const EMAIL_CONTACT = 'contact.mariusfx@gmail.com';               // adresa pentru formularul de contact
 const GALERIE_EXTENSII = ['jpg', 'jpeg', 'png', 'webp'];  // extensii căutate în images/etapa-N.*
 
 document.getElementById('an').textContent = new Date().getFullYear();
@@ -142,7 +142,11 @@ calculeaza();
 $('contact-form').addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target;
-  const subject = encodeURIComponent('Marius FX — mesaj de la ' + f.nume.value);
-  const body = encodeURIComponent(f.mesaj.value + '\n\n— ' + f.nume.value + ' (' + f.email.value + ')');
+  const subject = encodeURIComponent('Marius FX — mesaj de la ' + f.nume.value.trim());
+  const body = encodeURIComponent(
+    'Nume: ' + f.nume.value.trim() + '\n' +
+    'E-mail: ' + f.email.value.trim() + '\n\n' +
+    'Mesaj:\n' + f.mesaj.value.trim()
+  );
   window.location.href = `mailto:${EMAIL_CONTACT}?subject=${subject}&body=${body}`;
 });
