@@ -210,6 +210,33 @@ input:focus, textarea:focus { outline: none; border-color: var(--green); box-sha
 }
 .lightbox-close { position: absolute; top: -14px; right: -14px; z-index: 1; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 1.5rem; line-height: 1; cursor: pointer; }
 
+
+/* Broker recomandat */
+.broker-card {
+  max-width: 42rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  display: grid;
+  gap: .9rem;
+}
+.broker-card > p { margin: 0; }
+.broker-code { font-weight: 600; }
+.broker-code code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 1.15rem;
+  letter-spacing: .08em;
+  color: var(--green-2);
+  background: var(--green-soft);
+  border: 1px solid rgba(34,197,94,.35);
+  padding: .2rem .55rem;
+  border-radius: 8px;
+}
+.broker-card .btn { justify-self: start; margin-top: .25rem; }
+.broker-card .fineprint { margin-top: 0; }
+.broker-card .fineprint a { color: var(--green-2); }
+
 /* Contact */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
 .contact-info > p:first-child { margin-top: 0; font-size: 1.1rem; }
@@ -266,5 +293,5 @@ input:focus, textarea:focus { outline: none; border-color: var(--green); box-sha
   .lightbox-close { top: -50px; right: 0; }
   .calc, .contact-form { padding: 1.25rem; }
   .risk { padding: 1.25rem 1.25rem; }
-  .cta .btn { width: 100%; text-align: center; }
+  .cta .btn, .broker-card .btn { width: 100%; text-align: center; }
 }
