@@ -2,7 +2,8 @@
 const EMAIL_CONTACT = 'contact.mariusfx@gmail.com';               // adresa pentru formularul de contact
 const GALERIE_EXTENSII = ['jpg', 'jpeg', 'png', 'webp'];  // extensii căutate în images/etapa-N.*
 
-document.getElementById('an').textContent = new Date().getFullYear();
+const anEl = document.getElementById('an');
+if (anEl) anEl.textContent = new Date().getFullYear();
 
 // ===== Meniu mobil =====
 const menuBtn = document.querySelector('.menu-toggle');
@@ -128,18 +129,21 @@ function calculeaza() {
     `Valoare pip folosită: circa ${pipTxt} ${moneda} per lot standard, per pip.${cursNota} Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.`;
 }
 
-$('pereche').addEventListener('change', () => {
-  const p = PRET_IMPLICIT[$('pereche').value];
-  if (p) $('pret').value = String(p);
+if ($('calc-form')) {
+  $('pereche').addEventListener('change', () => {
+    const p = PRET_IMPLICIT[$('pereche').value];
+    if (p) $('pret').value = String(p);
+    calculeaza();
+  });
+  ['sold', 'risc', 'stop', 'pret', 'moneda'].forEach(id => $(id).addEventListener('input', calculeaza));
+  $('moneda').addEventListener('change', calculeaza);
+  $('calc-form').addEventListener('submit', e => e.preventDefault());
   calculeaza();
-});
-['sold', 'risc', 'stop', 'pret', 'moneda'].forEach(id => $(id).addEventListener('input', calculeaza));
-$('moneda').addEventListener('change', calculeaza);
-$('calc-form').addEventListener('submit', e => e.preventDefault());
-calculeaza();
+}
 
 // ===== Formular contact -> mailto (fără server) =====
-$('contact-form').addEventListener('submit', e => {
+const contactForm = $('contact-form');
+if (contactForm) contactForm.addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target;
   const subject = encodeURIComponent('Marius FX — mesaj de la ' + f.nume.value.trim());

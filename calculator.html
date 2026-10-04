@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculator — Marius FX</title>
+  <meta name="description" content="Calculator de mărime a poziției. Valoarea pipului este aproximativă. Marius FX — educație pentru swing trading disciplinat. Conținut educațional, nu consultanță financiară.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=13">
+</head>
+<body class="page-inner">
+  <a class="skip-link" href="#continut">Sari la conținut</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navigare principală">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Deschide meniul">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="reguli.html">Reguli</a></li>
+        <li><a href="jurnal.html">Jurnal</a></li>
+        <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+        <li><a href="despre.html">Despre</a></li>
+        <li><a href="broker.html">Broker</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="continut">
+    <!-- ===== CALCULATOR ===== -->
+    <section class="section container" id="calculator">
+      <header class="section-head">
+        <p class="kicker">03 — Instrument</p>
+        <h2>Calculator de mărime a poziției</h2>
+        <p class="section-sub">Estimează câte loturi corespund riscului ales și stop loss-ului. Nu calculează profit și nu este o recomandare de tranzacționare.</p>
+      </header>
+      <div class="calc">
+        <p class="calc-warning" role="note"><strong>Valoarea pipului este aproximativă.</strong> Confirmă la broker înainte să deschizi o poziție. Rezultatul nu promite câștig și nu înlocuiește regulile de risc.</p>
+        <form class="calc-form lot-form" id="calc-form" novalidate>
+          <label>Pereche
+            <select id="pereche">
+              <option value="EURUSD" selected>EURUSD</option>
+              <option value="GBPUSD">GBPUSD</option>
+              <option value="USDJPY">USDJPY</option>
+              <option value="AUDUSD">AUDUSD</option>
+              <option value="USDCAD">USDCAD</option>
+              <option value="USDCHF">USDCHF</option>
+              <option value="NZDUSD">NZDUSD</option>
+              <option value="EURGBP">EURGBP</option>
+              <option value="EURJPY">EURJPY</option>
+              <option value="EURCHF">EURCHF</option>
+              <option value="EURAUD">EURAUD</option>
+              <option value="EURCAD">EURCAD</option>
+              <option value="EURNZD">EURNZD</option>
+              <option value="GBPJPY">GBPJPY</option>
+              <option value="GBPCHF">GBPCHF</option>
+              <option value="GBPAUD">GBPAUD</option>
+              <option value="GBPCAD">GBPCAD</option>
+              <option value="GBPNZD">GBPNZD</option>
+              <option value="AUDJPY">AUDJPY</option>
+              <option value="AUDNZD">AUDNZD</option>
+              <option value="AUDCAD">AUDCAD</option>
+              <option value="AUDCHF">AUDCHF</option>
+              <option value="NZDJPY">NZDJPY</option>
+              <option value="NZDCAD">NZDCAD</option>
+              <option value="NZDCHF">NZDCHF</option>
+              <option value="CADJPY">CADJPY</option>
+              <option value="CADCHF">CADCHF</option>
+              <option value="CHFJPY">CHFJPY</option>
+              <option value="XAUUSD">XAUUSD</option>
+              <option value="XAGUSD">XAGUSD</option>
+            </select>
+          </label>
+          <label>Moneda contului
+            <select id="moneda">
+              <option value="USD" selected>USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </label>
+          <label>Sold cont
+            <input type="number" id="sold" value="10000" min="0" step="100" inputmode="decimal">
+          </label>
+          <label>Risc %
+            <input type="number" id="risc" value="1" min="0" max="100" step="0.1" inputmode="decimal">
+          </label>
+          <label>Stop loss (pips)
+            <input type="number" id="stop" value="20" min="0" step="1" inputmode="decimal">
+          </label>
+          <label>Preț aproximativ <span class="opt">(opțional)</span>
+            <input type="number" id="pret" value="1.08" min="0" step="0.0001" inputmode="decimal">
+          </label>
+          <div class="calc-results" aria-live="polite">
+            <div class="calc-result">
+              <span>Sumă riscată</span>
+              <output id="suma-risc">—</output>
+            </div>
+            <div class="calc-result">
+              <span>Loturi</span>
+              <output id="loturi">—</output>
+              <small>2 zecimale</small>
+            </div>
+          </div>
+          <p class="fineprint lot-note" id="pip-nota"></p>
+          <p class="fineprint lot-note">Ipoteze (lot standard): perechi cotate în USD (EURUSD, GBPUSD, AUDUSD, NZDUSD) ≈ 10 USD/pip; USDJPY ≈ 1000 / preț; USDCAD și USDCHF ≈ 10 / preț. Încrucișările în JPY folosesc USDJPY ≈ 150. Cotate în GBP ≈ 10 × GBPUSD (≈ 1,27); în CHF ≈ 10 / USDCHF (≈ 0,88); în AUD ≈ 10 × AUDUSD (≈ 0,66); în CAD ≈ 10 / USDCAD (≈ 1,36); în NZD ≈ 10 × NZDUSD (≈ 0,60). Dacă perechea selectată este chiar acel curs, se folosește prețul aproximativ. XAUUSD: 1 pip = 0,10, 1 lot = 100 uncii → ≈ 10 USD/pip. XAGUSD: 1 pip = 0,01, 1 lot = 5000 uncii → ≈ 50 USD/pip. Cont EUR: / EURUSD ≈ 1,08. Cont GBP: / GBPUSD ≈ 1,27. Formula: sumă riscată = sold × risc%; loturi = sumă riscată / (pips × valoarea pipului pe lot).</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="risk" id="avertisment" role="note" aria-labelledby="risk-title">
+        <h2 id="risk-title"><span aria-hidden="true">⚠</span> Avertisment de risc</h2>
+        <p>Tranzacționarea CFD-urilor și a instrumentelor Forex cu efect de levier implică un <strong>risc ridicat de a pierde rapid bani</strong>. <strong>Majoritatea conturilor investitorilor de retail pierd bani</strong> atunci când tranzacționează CFD-uri. Ar trebui să analizezi dacă înțelegi cum funcționează aceste instrumente și dacă îți permiți să îți asumi riscul ridicat de a-ți pierde banii.</p>
+        <p><strong>Rezultatele din trecut nu garantează rezultate viitoare.</strong> Tot conținutul de pe acest site are <strong>scop exclusiv educațional</strong> și <strong>nu constituie consultanță financiară</strong> sau de investiții, ori o recomandare de a cumpăra sau vinde vreun instrument financiar. Nu investi niciodată bani pe care nu îți permiți să îi pierzi.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="an"></span> Marius FX · Marius</p>
+        <a href="#continut">Înapoi sus ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js?v=13"></script>
+</body>
+</html>

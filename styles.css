@@ -43,6 +43,7 @@ img { max-width: 100%; display: block; }
 .nav-links { display: flex; gap: 2rem; }
 .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; transition: color .2s; }
 .nav-links a:hover { color: var(--text); }
+.nav-links a[aria-current="page"] { color: var(--green-2); }
 .menu-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 10px; width: 42px; height: 42px; cursor: pointer; color: var(--text); place-content: center; gap: 4px; }
 .menu-toggle span { display: block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; }
 
@@ -56,6 +57,9 @@ img { max-width: 100%; display: block; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+.page-home .hero { min-height: calc(100vh - 68px); display: flex; align-items: center; }
+.page-home .hero-inner { width: 100%; }
+.page-inner .section { padding-top: 4.5rem; }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden;
   background:
     radial-gradient(600px 300px at 80% 20%, rgba(34,197,94,.14), transparent 70%),

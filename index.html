@@ -1,46 +1,31 @@
 <!DOCTYPE html>
-<!--
-  ============================================================
-  MARIUS FX — GHID DE PERSONALIZARE
-  ============================================================
-  • Textul dintre paranteze pătrate [ ... ] este placeholder — înlocuiește-l.
-  • JURNALUL CONTULUI: pune capturile tale REALE în folderul „images/”
-    cu numele etapa-1.jpg … etapa-8.jpg (detalii în images/CITESTE-MA.txt).
-    Ele apar automat. Legendele „[Data – Sold cont]” se editează mai jos.
-  • E-mail de contact: contact.mariusfx@gmail.com.
-  • Culori: variabilele de la începutul fișierului styles.css.
-  • Calculatorul de loturi: valorile implicite se schimbă în atributele value="" ale câmpurilor.
-  ============================================================
--->
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Marius FX — Educație pentru trading disciplinat</title>
-  <meta name="description" content="Marius FX — educație pentru swing trading disciplinat, cu Marius (6+ ani experiență). Reguli de bază, managementul riscului. Conținut educațional, nu consultanță financiară.">
+  <meta name="description" content="Marius FX — educație pentru swing trading disciplinat. Conținut educațional, nu consultanță financiară.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
-<body>
+<body class="page-home">
   <a class="skip-link" href="#continut">Sari la conținut</a>
-
-  <!-- ===== ANTET ===== -->
   <header class="site-header">
     <nav class="nav container" aria-label="Navigare principală">
-      <a href="#acasa" class="logo"><span class="logo-mark" aria-hidden="true">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Deschide meniul">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#reguli">Reguli</a></li>
-        <li><a href="#jurnal">Jurnal</a></li>
-        <li><a href="#calculator">Loturi</a></li>
-        <li><a href="#despre">Despre</a></li>
-        <li><a href="#broker">Broker</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="reguli.html">Reguli</a></li>
+        <li><a href="jurnal.html">Jurnal</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="despre.html">Despre</a></li>
+        <li><a href="broker.html">Broker</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -66,296 +51,10 @@
         <h1>Marius <span class="accent">FX</span></h1>
         <p class="tagline">Sunt Marius, swing trader. Tradingul nu înseamnă noroc, ci disciplină — învață regulile, protejează-ți capitalul și construiește-ți un proces pe care îl poți repeta.</p>
         <div class="cta">
-          <a href="#reguli" class="btn btn-primary">Vezi regulile de bază</a>
-          <a href="#calculator" class="btn btn-ghost">Calculează lotul</a>
+          <a href="reguli.html" class="btn btn-primary">Vezi regulile de bază</a>
+          <a href="calculator.html" class="btn btn-ghost">Calculează lotul</a>
         </div>
         <p class="hero-note">Conținut strict educațional. Tradingul cu efect de levier implică un risc ridicat de pierdere. <a href="#avertisment">Citește avertismentul de risc</a>.</p>
-      </div>
-    </section>
-
-    <!-- ===== REGULI DE BAZĂ ===== -->
-    <section class="section container" id="reguli">
-      <header class="section-head">
-        <p class="kicker">01 — Fundamentul</p>
-        <h2>Reguli de bază</h2>
-        <p class="section-sub">Zece principii simple care separă tradingul disciplinat de jocul de noroc. Citește-le înainte de fiecare sesiune.</p>
-      </header>
-      <ol class="rules">
-        <li class="rule"><span class="num">01</span><h3>Riscă maxim 1–2% pe tranzacție</h3><p>Nu risca niciodată mai mult de 1–2% din contul tău pe o singură poziție. Așa supraviețuiești și unei serii de pierderi.</p></li>
-        <li class="rule"><span class="num">02</span><h3>Folosește mereu stop loss</h3><p>Fiecare tranzacție are un stop loss stabilit dinainte. Nu îl muta mai departe când prețul merge împotriva ta.</p></li>
-        <li class="rule"><span class="num">03</span><h3>Ai un plan de trading scris</h3><p>Definește în scris ce tranzacționezi, când intri, când ieși și cât riști. Fără plan, deciziile devin impulsive.</p></li>
-        <li class="rule"><span class="num">04</span><h3>Respectă raportul risc/câștig</h3><p>Caută tranzacții cu un raport de cel puțin 1:2 — potențialul câștig să fie minim dublul riscului asumat.</p></li>
-        <li class="rule"><span class="num">05</span><h3>Ține un jurnal de trading</h3><p>Notează fiecare intrare, motivul, rezultatul și starea emoțională. Jurnalul îți arată ce funcționează cu adevărat.</p></li>
-        <li class="rule"><span class="num">06</span><h3>Atenție la efectul de levier</h3><p>Levierul amplifică atât câștigurile, cât și pierderile. Un levier mare poate goli contul foarte repede.</p></li>
-        <li class="rule"><span class="num">07</span><h3>Fără trading din răzbunare</h3><p>După o pierdere, fă o pauză. Nu încerca să „recuperezi” imediat — emoțiile duc la decizii proaste.</p></li>
-        <li class="rule"><span class="num">08</span><h3>Grijă la știrile majore</h3><p>Anunțurile economice importante (dobânzi, NFP, inflație) pot produce mișcări bruște și alunecări de preț.</p></li>
-        <li class="rule"><span class="num">09</span><h3>Începe pe un cont demo</h3><p>Exersează strategia pe un cont demo până obții consecvență. Abia apoi treci la sume mici, reale.</p></li>
-        <li class="rule highlight"><span class="num">10</span><h3>Protejează capitalul, înainte de toate</h3><p>Prima ta sarcină nu este să câștigi, ci să nu pierzi capitalul. Fără capital, nu mai există tranzacții.</p></li>
-      </ol>
-    </section>
-
-    <!-- ===== JURNALUL CONTULUI =====
-         Pune capturile REALE în images/etapa-1.jpg … etapa-8.jpg — apar automat.
-         Editează legenda din <figcaption> pentru fiecare etapă. -->
-    <section class="section container" id="jurnal">
-      <header class="section-head">
-        <p class="kicker">02 — Transparență</p>
-        <h2>Jurnalul contului</h2>
-        <p class="section-sub">Evoluția contului, etapă cu etapă, prin capturi de ecran reale de la broker.</p>
-      </header>
-      <ol class="journal">
-        <li>
-          <figure class="slot" data-etapa="1">
-            <a class="slot-link" href="images/etapa-1.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-1.jpg?v=5" width="1600" height="875" loading="lazy" decoding="async"
-                     alt="Grafic AUDUSD — poziție short cu take profit atins">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 1</strong><span>AUDUSD — short, TP atins</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="2">
-            <a class="slot-link" href="images/etapa-2.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-2.jpg?v=5" width="1600" height="875" loading="lazy" decoding="async"
-                     alt="Grafice AUDCAD, AUDCHF și EURUSD — take profit-uri atinse într-o sesiune">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 2</strong><span>AUDCAD · AUDCHF · EURUSD — TP-uri</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="3">
-            <a class="slot-link" href="images/etapa-3.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-3.jpg?v=5" width="1600" height="838" loading="lazy" decoding="async"
-                     alt="Grafice GBPNZD, XAUUSD, GBPNZD și US30 — poziții short cu take profit atins">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 3</strong><span>GBPNZD · XAUUSD · US30 — short, TP</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="4">
-            <a class="slot-link" href="images/etapa-4.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-4.jpg?v=5" width="1600" height="990" loading="lazy" decoding="async"
-                     alt="Grafic GBPAUD — poziție long cu take profit atins">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 4</strong><span>GBPAUD — long, TP atins</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="5">
-            <a class="slot-link" href="images/etapa-5.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-5.jpg?v=5" width="1080" height="1087" loading="lazy" decoding="async"
-                     alt="MetaTrader — poziție deschisă GBPJPY sell cu profit flotant">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 5</strong><span>Poziții deschise — GBPJPY sell, profit flotant</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="6">
-            <a class="slot-link" href="images/etapa-6.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-6.jpg?v=5" width="1080" height="1088" loading="lazy" decoding="async"
-                     alt="MetaTrader — poziții deschise EURUSD și EURJPY cu profit flotant">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 6</strong><span>Poziții deschise — EURUSD · EURJPY, profit flotant</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="7">
-            <a class="slot-link" href="images/etapa-7.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-7.jpg?v=5" width="1080" height="1414" loading="lazy" decoding="async"
-                     alt="MetaTrader — istoric tranzacții cu profit închis">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 7</strong><span>Istoric tranzacții — profit închis</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="8">
-            <a class="slot-link" href="images/etapa-8.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-8.jpg?v=5" width="1080" height="1395" loading="lazy" decoding="async"
-                     alt="MetaTrader — istoric tranzacții cu profit închis">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 8</strong><span>Istoric tranzacții — profit închis</span></figcaption>
-          </figure>
-        </li>
-      </ol>
-      <p class="fineprint"><strong>Rezultatele din trecut nu garantează rezultate viitoare.</strong> Capturile arată exemple de grafice cu take-profit atins, poziții deschise (profit flotant, nerealizat) și istoric cu profit închis. Profitul flotant se poate schimba sau transforma în pierdere. Fiecare trader are rezultate diferite; pierderile sunt posibile. Conținut educațional, nu consultanță financiară.</p>
-    </section>
-
-    <!-- ===== CALCULATOR LOTURI ===== -->
-    <section class="section container" id="calculator">
-      <header class="section-head">
-        <p class="kicker">03 — Instrument</p>
-        <h2>Calculator de mărime a poziției</h2>
-        <p class="section-sub">Estimează câte loturi corespund riscului ales și stop loss-ului. Nu calculează profit și nu este o recomandare de tranzacționare.</p>
-      </header>
-      <div class="calc">
-        <p class="calc-warning" role="note"><strong>Valoarea pipului este aproximativă.</strong> Confirmă la broker înainte să deschizi o poziție. Rezultatul nu promite câștig și nu înlocuiește regulile de risc.</p>
-        <form class="calc-form lot-form" id="calc-form" novalidate>
-          <label>Pereche
-            <select id="pereche">
-              <option value="EURUSD" selected>EURUSD</option>
-              <option value="GBPUSD">GBPUSD</option>
-              <option value="USDJPY">USDJPY</option>
-              <option value="AUDUSD">AUDUSD</option>
-              <option value="USDCAD">USDCAD</option>
-              <option value="USDCHF">USDCHF</option>
-              <option value="NZDUSD">NZDUSD</option>
-              <option value="EURGBP">EURGBP</option>
-              <option value="EURJPY">EURJPY</option>
-              <option value="EURCHF">EURCHF</option>
-              <option value="EURAUD">EURAUD</option>
-              <option value="EURCAD">EURCAD</option>
-              <option value="EURNZD">EURNZD</option>
-              <option value="GBPJPY">GBPJPY</option>
-              <option value="GBPCHF">GBPCHF</option>
-              <option value="GBPAUD">GBPAUD</option>
-              <option value="GBPCAD">GBPCAD</option>
-              <option value="GBPNZD">GBPNZD</option>
-              <option value="AUDJPY">AUDJPY</option>
-              <option value="AUDNZD">AUDNZD</option>
-              <option value="AUDCAD">AUDCAD</option>
-              <option value="AUDCHF">AUDCHF</option>
-              <option value="NZDJPY">NZDJPY</option>
-              <option value="NZDCAD">NZDCAD</option>
-              <option value="NZDCHF">NZDCHF</option>
-              <option value="CADJPY">CADJPY</option>
-              <option value="CADCHF">CADCHF</option>
-              <option value="CHFJPY">CHFJPY</option>
-              <option value="XAUUSD">XAUUSD</option>
-              <option value="XAGUSD">XAGUSD</option>
-            </select>
-          </label>
-          <label>Moneda contului
-            <select id="moneda">
-              <option value="USD" selected>USD</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-            </select>
-          </label>
-          <label>Sold cont
-            <input type="number" id="sold" value="10000" min="0" step="100" inputmode="decimal">
-          </label>
-          <label>Risc %
-            <input type="number" id="risc" value="1" min="0" max="100" step="0.1" inputmode="decimal">
-          </label>
-          <label>Stop loss (pips)
-            <input type="number" id="stop" value="20" min="0" step="1" inputmode="decimal">
-          </label>
-          <label>Preț aproximativ <span class="opt">(opțional)</span>
-            <input type="number" id="pret" value="1.08" min="0" step="0.0001" inputmode="decimal">
-          </label>
-          <div class="calc-results" aria-live="polite">
-            <div class="calc-result">
-              <span>Sumă riscată</span>
-              <output id="suma-risc">—</output>
-            </div>
-            <div class="calc-result">
-              <span>Loturi</span>
-              <output id="loturi">—</output>
-              <small>2 zecimale</small>
-            </div>
-          </div>
-          <p class="fineprint lot-note" id="pip-nota"></p>
-          <p class="fineprint lot-note">Ipoteze (lot standard): perechi cotate în USD (EURUSD, GBPUSD, AUDUSD, NZDUSD) ≈ 10 USD/pip; USDJPY ≈ 1000 / preț; USDCAD și USDCHF ≈ 10 / preț. Încrucișările în JPY folosesc USDJPY ≈ 150. Cotate în GBP ≈ 10 × GBPUSD (≈ 1,27); în CHF ≈ 10 / USDCHF (≈ 0,88); în AUD ≈ 10 × AUDUSD (≈ 0,66); în CAD ≈ 10 / USDCAD (≈ 1,36); în NZD ≈ 10 × NZDUSD (≈ 0,60). Dacă perechea selectată este chiar acel curs, se folosește prețul aproximativ. XAUUSD: 1 pip = 0,10, 1 lot = 100 uncii → ≈ 10 USD/pip. XAGUSD: 1 pip = 0,01, 1 lot = 5000 uncii → ≈ 50 USD/pip. Cont EUR: / EURUSD ≈ 1,08. Cont GBP: / GBPUSD ≈ 1,27. Formula: sumă riscată = sold × risc%; loturi = sumă riscată / (pips × valoarea pipului pe lot).</p>
-        </form>
-      </div>
-    </section>
-
-    <!-- ===== DESPRE ===== -->
-    <section class="section container" id="despre">
-      <div class="about">
-        <div class="about-mark" aria-hidden="true">
-          <span class="about-initial">M</span>
-        </div>
-        <div class="about-copy">
-          <p class="kicker">04 — Cine sunt</p>
-          <h2>Despre Marius</h2>
-          <p class="about-lead">Mă numesc Marius și sunt swing trader de peste șase ani. Am început aproape de la zero, fără pe nimeni aproape care să mă îndrume — doar cu răbdare, greșeli și foarte multă disciplină.</p>
-          <p>După mulți ani de practică am ajuns să tranzacționez consecvent și, prin Marius FX, vreau să îi ajut pe alții să învețe un proces clar, bazat pe managementul riscului și pe educație, nu pe promisiuni.</p>
-          <ul class="about-list">
-            <li>6+ ani experiență</li>
-            <li>Swing trading</li>
-            <li>Educație și disciplină</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Galerie foto personală (click = mărire). Fișiere: images/masina-1.jpg, images/masina-2.jpg -->
-      <div class="photo-gallery" aria-label="Fotografii personale">
-        <a class="gallery-item" href="images/masina-1.jpg?v=5" data-lightbox>
-          <img src="images/masina-1.jpg?v=5" width="1600" height="1067" loading="lazy" decoding="async"
-               alt="Mașina mea în fața Palatului Culturii din Iași, văzută din față">
-        </a>
-        <a class="gallery-item" href="images/masina-2.jpg?v=5" data-lightbox>
-          <img src="images/masina-2.jpg?v=5" width="1600" height="1067" loading="lazy" decoding="async"
-               alt="Mașina mea în fața Palatului Culturii din Iași, văzută din spate">
-        </a>
-      </div>
-    </section>
-
-    <!-- Fereastră pentru imaginea mărită -->
-    <dialog class="lightbox" id="lightbox" aria-label="Imagine mărită">
-      <button class="lightbox-close" type="button" aria-label="Închide">×</button>
-      <img src="" alt="">
-    </dialog>
-
-
-    <!-- ===== BROKER RECOMANDAT ===== -->
-    <section class="section container" id="broker">
-      <header class="section-head">
-        <p class="kicker">05 — Broker</p>
-        <h2>Broker recomandat</h2>
-        <p class="section-sub">Marius folosește RoboForex. Linkul de mai jos este linkul lui de recomandare (afiliat), nu o recomandare independentă.</p>
-      </header>
-      <div class="broker-card">
-        <p>Dacă deschizi un cont la RoboForex prin acest link, folosești codul de recomandare al lui Marius. Nu este consultanță financiară și nu promite rezultate.</p>
-        <p class="broker-code">Cod de recomandare: <code>qakl</code></p>
-        <p class="fineprint">Poți introduce manual codul <strong>qakl</strong> la înregistrare, dacă linkul nu se aplică automat.</p>
-        <a class="btn btn-primary" href="https://my.roboforex.com/en/?a=qakl" target="_blank" rel="noopener noreferrer">Deschide cont la RoboForex</a>
-        <p class="fineprint">Acesta este un <strong>link de recomandare</strong> (afiliat) al lui Marius către RoboForex. Deschiderea contului este opțională. Tradingul cu levier implică risc de pierdere — vezi <a href="#avertisment">avertismentul de risc</a>.</p>
-      </div>
-    </section>
-
-    <!-- ===== CONTACT ===== -->
-    <section class="section container" id="contact">
-      <header class="section-head">
-        <p class="kicker">06 — Hai să vorbim</p>
-        <h2>Contact</h2>
-      </header>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <p>Ai întrebări despre materialele educaționale? Scrie-mi.</p>
-          <a class="email" href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a>
-          <ul class="socials">
-            <li><a class="social-telegram" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener noreferrer">Telegram · Comunitatea gratuită Free Marius FX</a></li>
-            <li><a href="#">[Instagram]</a></li>
-            <li><a href="#">[YouTube]</a></li>
-            <li><a href="#">[TikTok]</a></li>
-          </ul>
-          <p class="fineprint">Nu ofer semnale, administrare de conturi sau consultanță de investiții personalizată.</p>
-        </div>
-        <form class="contact-form" id="contact-form">
-          <label>Nume <input type="text" name="nume" required autocomplete="name"></label>
-          <label>E-mail <input type="email" name="email" required autocomplete="email"></label>
-          <label>Mesaj <textarea name="mesaj" rows="5" required></textarea></label>
-          <button type="submit" class="btn btn-primary">Trimite mesajul</button>
-          <p class="fineprint">Butonul deschide aplicația ta de e-mail (mailto). Mesajul nu este trimis de pe un server al site-ului.</p>
-        </form>
       </div>
     </section>
   </main>
@@ -370,11 +69,10 @@
       </div>
       <div class="footer-bottom">
         <p>© <span id="an"></span> Marius FX · Marius</p>
-        <a href="#acasa">Înapoi sus ↑</a>
+        <a href="#continut">Înapoi sus ↑</a>
       </div>
     </div>
   </footer>
-
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=13"></script>
 </body>
 </html>
