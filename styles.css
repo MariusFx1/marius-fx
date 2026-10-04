@@ -91,7 +91,10 @@ img { max-width: 100%; display: block; }
 .accent { color: var(--green); }
 .tagline { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted); max-width: 38rem; margin: 1.25rem 0 1.9rem; line-height: 1.6; }
 .cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
-.hero-note { margin: 2.5rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
+.hero-link { margin: .95rem 0 0; }
+.hero-link a { color: var(--muted); font-weight: 650; font-size: .92rem; text-decoration: none; }
+.hero-link a:hover { color: var(--green-2); }
+.hero-note { margin: 1.45rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
 
 /* ---------- Secțiuni ---------- */
 .section { padding-block: 4.75rem; }
@@ -321,4 +324,32 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .calc, .contact-form, .broker-card { padding: 1.15rem; }
   .cta .btn, .broker-card .btn { width: 100%; text-align: center; }
   .lot-form, .calc-results { grid-template-columns: 1fr; }
+}
+
+/* Patternuri */
+.pattern-note { margin: .85rem 0 0; color: var(--muted); font-size: .9rem; max-width: 40rem; }
+.patterns { display: grid; gap: 1.15rem; }
+.pattern {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, .85fr);
+  gap: 1.05rem 1.45rem;
+  align-items: center;
+  background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+}
+.pattern figure { margin: 0; }
+.pattern img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #0b1220;
+  border: 1px solid var(--border);
+}
+.pattern .num { font-family: var(--mono); font-size: .76rem; color: var(--green); background: var(--green-soft); padding: .2rem .48rem; border-radius: 6px; }
+.pattern h3 { font-size: 1.28rem; font-weight: 800; margin: .7rem 0 .45rem; letter-spacing: -.03em; }
+.pattern p { margin: 0; color: var(--muted); font-size: .98rem; line-height: 1.65; }
+@media (max-width: 860px) {
+  .pattern { grid-template-columns: 1fr; align-items: start; }
 }
