@@ -93,7 +93,51 @@ img { max-width: 100%; display: block; }
 .accent { color: var(--green); }
 .tagline { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted); max-width: 38rem; margin: 1.25rem 0 1.9rem; line-height: 1.6; }
 .cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
-.hero-note { margin: 2.5rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
+.hero-note { margin: 1.35rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
+
+.pair-tiles {
+  width: min(880px, 100%);
+  margin: 1.35rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .65rem;
+}
+.pair-label {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+.pair-tile {
+  min-width: 0;
+  height: 268px;
+  background: rgba(11, 18, 32, .82);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.pair-tile .tradingview-widget-container { height: 100% !important; width: 100%; }
+.pair-tile .tradingview-widget-container__widget { height: calc(100% - 22px); width: 100%; }
+.pair-tile .tradingview-widget-copyright {
+  margin: 0;
+  height: 22px;
+  font-size: .68rem;
+  line-height: 22px;
+  text-align: center;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pair-tile .tradingview-widget-copyright a { color: var(--muted); text-decoration: none; }
+.pair-tile .tradingview-widget-copyright .blue-text { color: var(--green-2); }
+@media (max-width: 800px) {
+  .pair-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+  .pair-tile { height: 232px; }
+}
 
 /* ---------- Secțiuni ---------- */
 .section { padding-block: 4.75rem; }
