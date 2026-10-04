@@ -94,13 +94,14 @@ img { max-width: 100%; display: block; }
 .tagline { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted); max-width: 38rem; margin: 1.25rem 0 1.9rem; line-height: 1.6; }
 .cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
 .hero-note {
-  margin: 1.85rem 0 0;
-  max-width: 44rem;
-  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  margin: 1.6rem 0 0;
+  max-width: 40rem;
+  font-family: var(--font);
+  font-size: clamp(1.08rem, 1.7vw, 1.32rem);
   font-weight: 500;
-  line-height: 1.45;
-  letter-spacing: .02em;
-  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: .012em;
+  color: #d2dbe8;
   text-align: center;
 }
 
