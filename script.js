@@ -56,20 +56,46 @@ const $ = id => document.getElementById(id);
 const PRET_IMPLICIT = {
   EURUSD: 1.08, GBPUSD: 1.27, AUDUSD: 0.66, NZDUSD: 0.60,
   USDJPY: 150, USDCAD: 1.36, USDCHF: 0.88,
-  EURJPY: 162, GBPJPY: 190, XAUUSD: 2650
+  EURGBP: 0.84, EURJPY: 162, EURCHF: 0.94, EURAUD: 1.64, EURCAD: 1.47, EURNZD: 1.80,
+  GBPJPY: 190, GBPCHF: 1.12, GBPAUD: 1.94, GBPCAD: 1.75, GBPNZD: 2.14,
+  AUDJPY: 98, AUDNZD: 1.10, AUDCAD: 0.90, AUDCHF: 0.57,
+  NZDJPY: 89, NZDCAD: 0.82, NZDCHF: 0.52,
+  CADJPY: 110, CADCHF: 0.64, CHFJPY: 173,
+  XAUUSD: 2650, XAGUSD: 31
 };
 const USDJPY_PRESUPUS = 150;
 const EURUSD_PRESUPUS = 1.08;
 const GBPUSD_PRESUPUS = 1.27;
+const AUDUSD_PRESUPUS = 0.66;
+const NZDUSD_PRESUPUS = 0.60;
+const USDCAD_PRESUPUS = 1.36;
+const USDCHF_PRESUPUS = 0.88;
 const QUOTE_USD = new Set(['EURUSD', 'GBPUSD', 'AUDUSD', 'NZDUSD']);
+const USD_BASE = new Set(['USDCAD', 'USDCHF']);
+const JPY_CROSS = new Set(['EURJPY', 'GBPJPY', 'AUDJPY', 'NZDJPY', 'CADJPY', 'CHFJPY']);
+const QUOTE_GBP = new Set(['EURGBP']);
+const QUOTE_CHF = new Set(['EURCHF', 'GBPCHF', 'AUDCHF', 'NZDCHF', 'CADCHF']);
+const QUOTE_AUD = new Set(['EURAUD', 'GBPAUD']);
+const QUOTE_CAD = new Set(['EURCAD', 'GBPCAD', 'AUDCAD', 'NZDCAD']);
+const QUOTE_NZD = new Set(['EURNZD', 'GBPNZD', 'AUDNZD']);
+
+function curs(cod, pereche, pret, implicit) {
+  return (pereche === cod && pret > 0) ? pret : implicit;
+}
 
 function pipUsdPeLot(pereche, pret) {
   const p = pret > 0 ? pret : PRET_IMPLICIT[pereche];
   if (QUOTE_USD.has(pereche)) return 10;
-  if (pereche === 'USDJPY') return 1000 / p;
-  if (pereche === 'USDCAD' || pereche === 'USDCHF') return 10 / p;
-  if (pereche === 'EURJPY' || pereche === 'GBPJPY') return 1000 / USDJPY_PRESUPUS;
   if (pereche === 'XAUUSD') return 10; // 100 oz × 0,10
+  if (pereche === 'XAGUSD') return 50; // 5000 oz × 0,01
+  if (pereche === 'USDJPY') return 1000 / p;
+  if (USD_BASE.has(pereche)) return 10 / p;
+  if (JPY_CROSS.has(pereche)) return 1000 / curs('USDJPY', pereche, pret, USDJPY_PRESUPUS);
+  if (QUOTE_GBP.has(pereche)) return 10 * curs('GBPUSD', pereche, pret, GBPUSD_PRESUPUS);
+  if (QUOTE_CHF.has(pereche)) return 10 / curs('USDCHF', pereche, pret, USDCHF_PRESUPUS);
+  if (QUOTE_AUD.has(pereche)) return 10 * curs('AUDUSD', pereche, pret, AUDUSD_PRESUPUS);
+  if (QUOTE_CAD.has(pereche)) return 10 / curs('USDCAD', pereche, pret, USDCAD_PRESUPUS);
+  if (QUOTE_NZD.has(pereche)) return 10 * curs('NZDUSD', pereche, pret, NZDUSD_PRESUPUS);
   return 10;
 }
 
