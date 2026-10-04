@@ -60,6 +60,7 @@ const PRET_IMPLICIT = {
 };
 const USDJPY_PRESUPUS = 150;
 const EURUSD_PRESUPUS = 1.08;
+const GBPUSD_PRESUPUS = 1.27;
 const QUOTE_USD = new Set(['EURUSD', 'GBPUSD', 'AUDUSD', 'NZDUSD']);
 
 function pipUsdPeLot(pereche, pret) {
@@ -81,7 +82,16 @@ function calculeaza() {
   const pret = parseFloat($('pret').value);
   const pipUsd = pipUsdPeLot(pereche, pret);
   const eurusd = (pereche === 'EURUSD' && pret > 0) ? pret : EURUSD_PRESUPUS;
-  const pipCont = moneda === 'EUR' ? pipUsd / eurusd : pipUsd;
+  const gbpusd = (pereche === 'GBPUSD' && pret > 0) ? pret : GBPUSD_PRESUPUS;
+  let pipCont = pipUsd;
+  let cursNota = '';
+  if (moneda === 'EUR') {
+    pipCont = pipUsd / eurusd;
+    cursNota = ` Conversie EUR cu EURUSD ≈ ${eurusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}.`;
+  } else if (moneda === 'GBP') {
+    pipCont = pipUsd / gbpusd;
+    cursNota = ` Conversie GBP cu GBPUSD ≈ ${gbpusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })} (ipoteză ~1,27, sau prețul perechii GBPUSD).`;
+  }
   const suma = sold * (risc / 100);
   const loturi = (stop > 0 && pipCont > 0) ? suma / (stop * pipCont) : NaN;
   const fmt = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: moneda, maximumFractionDigits: 2 });
@@ -89,7 +99,7 @@ function calculeaza() {
   $('loturi').textContent = Number.isFinite(loturi) ? loturi.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
   const pipTxt = pipCont.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   $('pip-nota').textContent =
-    `Valoare pip folosită: circa ${pipTxt} ${moneda} per lot standard, per pip. Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.`;
+    `Valoare pip folosită: circa ${pipTxt} ${moneda} per lot standard, per pip.${cursNota} Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.`;
 }
 
 $('pereche').addEventListener('change', () => {

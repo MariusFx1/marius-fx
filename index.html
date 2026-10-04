@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#continut">Sari la conținut</a>
@@ -212,6 +212,7 @@
             <select id="moneda">
               <option value="USD" selected>USD</option>
               <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
             </select>
           </label>
           <label>Sold cont
@@ -238,7 +239,7 @@
             </div>
           </div>
           <p class="fineprint lot-note" id="pip-nota"></p>
-          <p class="fineprint lot-note">Ipoteze: perechi XXXUSD ≈ 10 USD per pip pe lot standard; USDJPY ≈ 1000 / preț (în jur de 6,7 USD la preț 150); USDCAD și USDCHF ≈ 10 / preț; EURJPY și GBPJPY folosesc un USDJPY presupus de 150; XAUUSD: 1 pip = mișcare de 0,10, 1 lot = 100 uncii → circa 10 USD per pip (nu 1 USD — unii brokeri definesc lotul altfel). Cont în EUR: conversie cu prețul EURUSD sau cu ≈ 1,08. Formula: sumă riscată = sold × risc%; loturi = sumă riscată / (pips × valoarea pipului pe lot).</p>
+          <p class="fineprint lot-note">Ipoteze: perechi XXXUSD ≈ 10 USD per pip pe lot standard; USDJPY ≈ 1000 / preț (în jur de 6,7 USD la preț 150); USDCAD și USDCHF ≈ 10 / preț; EURJPY și GBPJPY folosesc un USDJPY presupus de 150; XAUUSD: 1 pip = mișcare de 0,10, 1 lot = 100 uncii → circa 10 USD per pip (nu 1 USD — unii brokeri definesc lotul altfel). Cont în EUR: conversie cu prețul EURUSD sau cu ≈ 1,08. Cont în GBP: conversie cu GBPUSD ≈ 1,27 (dacă perechea este GBPUSD, se folosește prețul aproximativ introdus). Formula: sumă riscată = sold × risc%; loturi = sumă riscată / (pips × valoarea pipului pe lot).</p>
         </form>
       </div>
     </section>
@@ -341,6 +342,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
