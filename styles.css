@@ -96,51 +96,47 @@ img { max-width: 100%; display: block; }
 .hero-note { margin: 1.35rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
 
 .pair-tiles {
-  width: min(920px, 100%);
-  margin: 1.25rem 0 0;
+  width: min(880px, 100%);
+  margin: 1.35rem 0 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: .6rem;
+  gap: .65rem;
+}
+.pair-label {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
 }
 .pair-tile {
   min-width: 0;
-  background: #070b14;
+  height: 268px;
+  background: rgba(11, 18, 32, .82);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: .5rem .5rem .35rem;
+  border-radius: 14px;
+  overflow: hidden;
 }
-.pair-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .35rem;
+.pair-tile .tradingview-widget-container { height: 100% !important; width: 100%; }
+.pair-tile .tradingview-widget-container__widget { height: calc(100% - 22px); width: 100%; }
+.pair-tile .tradingview-widget-copyright {
+  margin: 0;
+  height: 22px;
+  font-size: .68rem;
+  line-height: 22px;
+  text-align: center;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
 }
-.pair-name {
-  font-family: var(--mono);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: #d5deea;
-}
-.pair-price {
-  font-variant-numeric: tabular-nums;
-  font-weight: 750;
-  font-size: .86rem;
-  letter-spacing: -.02em;
-  color: var(--text);
-}
-.pair-price.up { color: #26a69a; }
-.pair-price.down { color: #ef5350; }
-.pair-chart {
-  display: block;
-  width: 100%;
-  height: 96px;
-  margin-top: .2rem;
-}
+.pair-tile .tradingview-widget-copyright a { color: var(--muted); text-decoration: none; }
+.pair-tile .tradingview-widget-copyright .blue-text { color: var(--green-2); }
 @media (max-width: 800px) {
-  .pair-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
-  .pair-chart { height: 88px; }
-  .pair-price { font-size: .82rem; }
+  .pair-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+  .pair-tile { height: 232px; }
 }
 
 /* ---------- Secțiuni ---------- */

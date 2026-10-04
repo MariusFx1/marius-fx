@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=22">
+  <link rel="stylesheet" href="styles.css?v=23">
   <link rel="icon" href="favicon.ico?v=15" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
@@ -62,34 +62,103 @@
           <a href="calculator.html" class="btn btn-primary">Calculează lotul</a>
         </div>
         <section class="pair-tiles" aria-label="Cotații">
-          <article class="pair-tile" data-symbol="EURUSD">
-            <div class="pair-head">
-              <span class="pair-name">EURUSD</span>
-              <span class="pair-price">—</span>
+          <h2 class="pair-label">Cotații</h2>
+          <div class="pair-tile">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/EURUSD/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">EURUSD</span></a><span class="trademark"> by TradingView</span></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+              {
+                "symbol": "OANDA:EURUSD",
+                "width": "100%",
+                "height": "100%",
+                "locale": "ro",
+                "dateRange": "1M",
+                "colorTheme": "dark",
+                "trendLineColor": "rgba(34, 197, 94, 1)",
+                "underLineColor": "rgba(34, 197, 94, 0.35)",
+                "underLineBottomColor": "rgba(34, 197, 94, 0)",
+                "isTransparent": false,
+                "autosize": true,
+                "largeChartUrl": "",
+                "chartOnly": false,
+                "noTimeScale": true
+              }
+              </script>
             </div>
-            <canvas class="pair-chart" width="320" height="168" aria-hidden="true"></canvas>
-          </article>
-          <article class="pair-tile" data-symbol="GBPUSD">
-            <div class="pair-head">
-              <span class="pair-name">GBPUSD</span>
-              <span class="pair-price">—</span>
+          </div>
+          <div class="pair-tile">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/GBPUSD/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">GBPUSD</span></a><span class="trademark"> by TradingView</span></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+              {
+                "symbol": "OANDA:GBPUSD",
+                "width": "100%",
+                "height": "100%",
+                "locale": "ro",
+                "dateRange": "1M",
+                "colorTheme": "dark",
+                "trendLineColor": "rgba(34, 197, 94, 1)",
+                "underLineColor": "rgba(34, 197, 94, 0.35)",
+                "underLineBottomColor": "rgba(34, 197, 94, 0)",
+                "isTransparent": false,
+                "autosize": true,
+                "largeChartUrl": "",
+                "chartOnly": false,
+                "noTimeScale": true
+              }
+              </script>
             </div>
-            <canvas class="pair-chart" width="320" height="168" aria-hidden="true"></canvas>
-          </article>
-          <article class="pair-tile" data-symbol="USDJPY">
-            <div class="pair-head">
-              <span class="pair-name">USDJPY</span>
-              <span class="pair-price">—</span>
+          </div>
+          <div class="pair-tile">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/USDJPY/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">USDJPY</span></a><span class="trademark"> by TradingView</span></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+              {
+                "symbol": "OANDA:USDJPY",
+                "width": "100%",
+                "height": "100%",
+                "locale": "ro",
+                "dateRange": "1M",
+                "colorTheme": "dark",
+                "trendLineColor": "rgba(34, 197, 94, 1)",
+                "underLineColor": "rgba(34, 197, 94, 0.35)",
+                "underLineBottomColor": "rgba(34, 197, 94, 0)",
+                "isTransparent": false,
+                "autosize": true,
+                "largeChartUrl": "",
+                "chartOnly": false,
+                "noTimeScale": true
+              }
+              </script>
             </div>
-            <canvas class="pair-chart" width="320" height="168" aria-hidden="true"></canvas>
-          </article>
-          <article class="pair-tile" data-symbol="XAUUSD">
-            <div class="pair-head">
-              <span class="pair-name">XAUUSD</span>
-              <span class="pair-price">—</span>
+          </div>
+          <div class="pair-tile">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/XAUUSD/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">XAUUSD</span></a><span class="trademark"> by TradingView</span></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+              {
+                "symbol": "OANDA:XAUUSD",
+                "width": "100%",
+                "height": "100%",
+                "locale": "ro",
+                "dateRange": "1M",
+                "colorTheme": "dark",
+                "trendLineColor": "rgba(34, 197, 94, 1)",
+                "underLineColor": "rgba(34, 197, 94, 0.35)",
+                "underLineBottomColor": "rgba(34, 197, 94, 0)",
+                "isTransparent": false,
+                "autosize": true,
+                "largeChartUrl": "",
+                "chartOnly": false,
+                "noTimeScale": true
+              }
+              </script>
             </div>
-            <canvas class="pair-chart" width="320" height="168" aria-hidden="true"></canvas>
-          </article>
+          </div>
         </section>
         <p class="hero-note">Conținut strict educațional. Tradingul cu efect de levier implică un risc ridicat de pierdere. <a href="#avertisment">Citește avertismentul de risc</a>.</p>
       </div>
@@ -106,6 +175,6 @@
       </div>
     </div>
   </footer>
-  <script src="script.js?v=22"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>
