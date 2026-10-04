@@ -151,8 +151,6 @@ img { max-width: 100%; display: block; }
 
 /* Calculator */
 .calc { background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; }
-.calc-warning { margin: 0 0 1.75rem; padding: .9rem 1.2rem; border-radius: 10px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.35); color: #fde68a; font-size: .95rem; }
-.calc-warning strong { color: var(--amber); }
 .calc-grid { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; align-items: start; }
 .calc-form { display: grid; gap: 1.1rem; }
 
@@ -287,12 +285,9 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .contact-form .btn { justify-self: start; }
 
 /* Subsol */
-.site-footer { background: #05080f; border-top: 1px solid var(--border); padding-block: 3.5rem 2rem; }
-.risk { border: 1px solid rgba(251,191,36,.45); background: rgba(251,191,36,.06); border-left: 5px solid var(--amber); border-radius: 12px; padding: 1.75rem 2rem; }
-.risk h2 { color: var(--amber); font-size: 1.25rem; font-weight: 800; margin-bottom: .75rem; }
-.risk p { margin: .6rem 0 0; color: #d6dbe6; font-size: .95rem; }
-.risk strong { color: #fff; }
-.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; color: var(--muted); font-size: .9rem; }
+.site-footer { background: #05080f; border-top: 1px solid var(--border); padding-block: 1.6rem 1.15rem; }
+.footer-risk { margin: 0; max-width: 48rem; color: var(--muted); font-size: .8rem; line-height: 1.45; }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .75rem 1rem; margin-top: .85rem; color: var(--muted); font-size: .85rem; }
 .footer-bottom p { margin: 0; }
 .footer-bottom a { color: var(--muted); text-decoration: none; }
 .footer-bottom a:hover { color: var(--green-2); }
@@ -339,6 +334,5 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .journal { grid-template-columns: 1fr; }
   .lightbox-close { top: -50px; right: 0; }
   .calc, .contact-form { padding: 1.25rem; }
-  .risk { padding: 1.25rem 1.25rem; }
   .cta .btn, .broker-card .btn { width: 100%; text-align: center; }
 }
