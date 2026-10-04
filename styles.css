@@ -54,6 +54,8 @@ img { max-width: 100%; display: block; }
 .btn-primary:hover { background: var(--green-2); }
 .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
 .btn-ghost:hover { border-color: var(--green); background: var(--green-soft); }
+.btn-slate { background: #243652; color: #e7eef8; border-color: #5b7ea6; box-shadow: none; }
+.btn-slate:hover { background: #2e476c; border-color: #7c9cc4; color: #f4f8fd; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
@@ -91,10 +93,7 @@ img { max-width: 100%; display: block; }
 .accent { color: var(--green); }
 .tagline { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted); max-width: 38rem; margin: 1.25rem 0 1.9rem; line-height: 1.6; }
 .cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
-.hero-link { margin: .95rem 0 0; }
-.hero-link a { color: var(--muted); font-weight: 650; font-size: .92rem; text-decoration: none; }
-.hero-link a:hover { color: var(--green-2); }
-.hero-note { margin: 1.45rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
+.hero-note { margin: 2.5rem 0 0; font-size: .85rem; color: var(--muted); max-width: 36rem; }
 
 /* ---------- Secțiuni ---------- */
 .section { padding-block: 4.75rem; }
