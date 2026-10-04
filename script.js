@@ -117,7 +117,7 @@ function calculeaza() {
     cursNota = ` Conversie EUR cu EURUSD ≈ ${eurusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}.`;
   } else if (moneda === 'GBP') {
     pipCont = pipUsd / gbpusd;
-    cursNota = ` Conversie GBP cu GBPUSD ≈ ${gbpusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })} (ipoteză ~1,27, sau prețul perechii GBPUSD).`;
+    cursNota = ` Conversie GBP cu GBPUSD ≈ ${gbpusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}.`;
   }
   const suma = sold * (risc / 100);
   const loturi = (stop > 0 && pipCont > 0) ? suma / (stop * pipCont) : NaN;
