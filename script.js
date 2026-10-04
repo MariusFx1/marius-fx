@@ -50,67 +50,57 @@ if (lb && typeof lb.showModal === 'function') {
   lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });   // click în afara imaginii
 }
 
-// ===== Calculator de creștere compusă (SIMULARE IPOTETICĂ) =====
-const fmt = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
-const fmtShort = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+// ===== Calculator mărime poziție (estimare, fără promisiuni de profit) =====
 const $ = id => document.getElementById(id);
 
+const PRET_IMPLICIT = {
+  EURUSD: 1.08, GBPUSD: 1.27, AUDUSD: 0.66, NZDUSD: 0.60,
+  USDJPY: 150, USDCAD: 1.36, USDCHF: 0.88,
+  EURJPY: 162, GBPJPY: 190, XAUUSD: 2650
+};
+const USDJPY_PRESUPUS = 150;
+const EURUSD_PRESUPUS = 1.08;
+const QUOTE_USD = new Set(['EURUSD', 'GBPUSD', 'AUDUSD', 'NZDUSD']);
+
+function pipUsdPeLot(pereche, pret) {
+  const p = pret > 0 ? pret : PRET_IMPLICIT[pereche];
+  if (QUOTE_USD.has(pereche)) return 10;
+  if (pereche === 'USDJPY') return 1000 / p;
+  if (pereche === 'USDCAD' || pereche === 'USDCHF') return 10 / p;
+  if (pereche === 'EURJPY' || pereche === 'GBPJPY') return 1000 / USDJPY_PRESUPUS;
+  if (pereche === 'XAUUSD') return 10; // 100 oz × 0,10
+  return 10;
+}
+
 function calculeaza() {
-  const capital = Math.max(0, parseFloat($('capital').value) || 0);
-  const pct = Math.min(100, Math.max(-100, parseFloat($('procent').value) || 0));
-  const luni = Math.min(120, Math.max(1, Math.round(parseFloat($('luni').value) || 1)));
-  const serie = [capital];
-  for (let i = 1; i <= luni; i++) serie.push(serie[i - 1] * (1 + pct / 100));
-  const final = serie[luni];
-  const dif = final - capital;
-
-  $('rezultat').textContent = fmt.format(final);
-  $('rezultat-detalii').textContent =
-    `${dif >= 0 ? '+' : '−'}${fmt.format(Math.abs(dif))} față de capitalul inițial, după ${luni} ${luni === 1 ? 'lună' : 'luni'} (ipotetic)`;
-
-  // Tabel
-  $('calc-body').innerHTML = serie.slice(1).map((v, i) => {
-    const d = v - serie[i];
-    return `<tr><td>${i + 1}</td><td>${fmt.format(v)}</td><td class="${d >= 0 ? 'pos' : 'neg'}">${d >= 0 ? '+' : '−'}${fmt.format(Math.abs(d))}</td></tr>`;
-  }).join('');
-
-  desenGrafic(serie);
+  const pereche = $('pereche').value;
+  const moneda = $('moneda').value;
+  const sold = Math.max(0, parseFloat($('sold').value) || 0);
+  const risc = Math.min(100, Math.max(0, parseFloat($('risc').value) || 0));
+  const stop = Math.max(0, parseFloat($('stop').value) || 0);
+  const pret = parseFloat($('pret').value);
+  const pipUsd = pipUsdPeLot(pereche, pret);
+  const eurusd = (pereche === 'EURUSD' && pret > 0) ? pret : EURUSD_PRESUPUS;
+  const pipCont = moneda === 'EUR' ? pipUsd / eurusd : pipUsd;
+  const suma = sold * (risc / 100);
+  const loturi = (stop > 0 && pipCont > 0) ? suma / (stop * pipCont) : NaN;
+  const fmt = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: moneda, maximumFractionDigits: 2 });
+  $('suma-risc').textContent = fmt.format(suma);
+  $('loturi').textContent = Number.isFinite(loturi) ? loturi.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+  const pipTxt = pipCont.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  $('pip-nota').textContent =
+    `Valoare pip folosită: circa ${pipTxt} ${moneda} per lot standard, per pip. Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.`;
 }
 
-function desenGrafic(serie) {
-  const box = $('chart');
-  const W = Math.max(280, Math.round(box.clientWidth - 24 || 600));
-  const H = W < 480 ? 200 : 260, pl = 72, pr = 16, pt = 16, pb = 32;
-  const min = Math.min(...serie), max = Math.max(...serie);
-  const span = (max - min) || Math.max(1, max * 0.1);
-  const lo = min - span * 0.08, hi = max + span * 0.08;
-  const x = i => pl + (i / (serie.length - 1)) * (W - pl - pr);
-  const y = v => pt + (1 - (v - lo) / (hi - lo)) * (H - pt - pb);
-  const pts = serie.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
-  const grid = [0, 0.5, 1].map(t => {
-    const v = lo + (hi - lo) * t, yy = y(v).toFixed(1);
-    return `<line x1="${pl}" x2="${W - pr}" y1="${yy}" y2="${yy}" class="grid"/><text x="${pl - 8}" y="${yy}" class="axis" text-anchor="end" dominant-baseline="middle">${fmtShort.format(v)}</text>`;
-  }).join('');
-  const n = serie.length - 1;
-  const xl = [0, Math.round(n / 2), n].filter((v, i, a) => a.indexOf(v) === i)
-    .map(i => `<text x="${x(i)}" y="${H - 8}" class="axis" text-anchor="middle">L${i}</text>`).join('');
-  $('chart').innerHTML = `
-    <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">
-      <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="var(--green)" stop-opacity=".35"/><stop offset="1" stop-color="var(--green)" stop-opacity="0"/>
-      </linearGradient></defs>
-      ${grid}
-      <polygon points="${x(0)},${H - pb} ${pts} ${x(n)},${H - pb}" fill="url(#g)"/>
-      <polyline points="${pts}" class="line"/>
-      ${xl}
-      <text x="${pl + 10}" y="${pt + 12}" class="watermark">SIMULARE IPOTETICĂ</text>
-    </svg>`;
-}
-
-['capital', 'procent', 'luni'].forEach(id => $(id).addEventListener('input', calculeaza));
+$('pereche').addEventListener('change', () => {
+  const p = PRET_IMPLICIT[$('pereche').value];
+  if (p) $('pret').value = String(p);
+  calculeaza();
+});
+['sold', 'risc', 'stop', 'pret', 'moneda'].forEach(id => $(id).addEventListener('input', calculeaza));
+$('moneda').addEventListener('change', calculeaza);
 $('calc-form').addEventListener('submit', e => e.preventDefault());
 calculeaza();
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(calculeaza, 150); });
 
 // ===== Formular contact -> mailto (fără server) =====
 $('contact-form').addEventListener('submit', e => {

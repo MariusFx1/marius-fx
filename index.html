@@ -9,7 +9,7 @@
     Ele apar automat. Legendele „[Data – Sold cont]” se editează mai jos.
   • E-mail de contact: caută „exemplu@email.com”.
   • Culori: variabilele de la începutul fișierului styles.css.
-  • Calculatorul: valorile implicite se schimbă în atributele value="" ale câmpurilor.
+  • Calculatorul de loturi: valorile implicite se schimbă în atributele value="" ale câmpurilor.
   ============================================================
 -->
 <html lang="ro">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <a class="skip-link" href="#continut">Sari la conținut</a>
@@ -37,7 +37,7 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="#reguli">Reguli</a></li>
         <li><a href="#jurnal">Jurnal</a></li>
-        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#calculator">Loturi</a></li>
         <li><a href="#despre">Despre</a></li>
         <li><a href="#broker">Broker</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -55,7 +55,7 @@
         <p class="tagline">Sunt Marius, swing trader. Tradingul nu înseamnă noroc, ci disciplină — învață regulile, protejează-ți capitalul și construiește-ți un proces pe care îl poți repeta.</p>
         <div class="cta">
           <a href="#reguli" class="btn btn-primary">Vezi regulile de bază</a>
-          <a href="#calculator" class="btn btn-ghost">Încearcă simulatorul</a>
+          <a href="#calculator" class="btn btn-ghost">Calculează lotul</a>
         </div>
         <p class="hero-note">Conținut strict educațional. Tradingul cu efect de levier implică un risc ridicat de pierdere. <a href="#avertisment">Citește avertismentul de risc</a>.</p>
       </div>
@@ -184,43 +184,62 @@
       <p class="fineprint"><strong>Rezultatele din trecut nu garantează rezultate viitoare.</strong> Capturile arată exemple de grafice cu take-profit atins, poziții deschise (profit flotant, nerealizat) și istoric cu profit închis. Profitul flotant se poate schimba sau transforma în pierdere. Fiecare trader are rezultate diferite; pierderile sunt posibile. Conținut educațional, nu consultanță financiară.</p>
     </section>
 
-    <!-- ===== CALCULATOR ===== -->
+    <!-- ===== CALCULATOR LOTURI ===== -->
     <section class="section container" id="calculator">
       <header class="section-head">
         <p class="kicker">03 — Instrument</p>
-        <h2>Calculator de creștere compusă</h2>
-        <p class="section-sub">Vezi cum funcționează matematic dobânda compusă. Randamentele constante nu sunt realiste în trading — piețele au și luni negative.</p>
+        <h2>Calculator de mărime a poziției</h2>
+        <p class="section-sub">Estimează câte loturi corespund riscului ales și stop loss-ului. Nu calculează profit și nu este o recomandare de tranzacționare.</p>
       </header>
       <div class="calc">
-        <p class="calc-warning" role="note"><strong>Simulare ipotetică – nu reprezintă rezultate reale.</strong> Cifrele de mai jos sunt doar un exercițiu matematic.</p>
-        <div class="calc-grid">
-          <form class="calc-form" id="calc-form" novalidate>
-            <label>Capital inițial (€)
-              <input type="number" id="capital" value="1000" min="0" step="100" inputmode="decimal">
-            </label>
-            <label>Randament lunar ipotetic (%)
-              <input type="number" id="procent" value="2" min="-100" max="100" step="0.5" inputmode="decimal">
-            </label>
-            <label>Număr de luni
-              <input type="number" id="luni" value="12" min="1" max="120" step="1" inputmode="numeric">
-            </label>
-            <div class="calc-result" aria-live="polite">
-              <span>Valoare finală ipotetică</span>
-              <output id="rezultat">—</output>
-              <small id="rezultat-detalii"></small>
+        <p class="calc-warning" role="note"><strong>Valoarea pipului este aproximativă.</strong> Confirmă la broker înainte să deschizi o poziție. Rezultatul nu promite câștig și nu înlocuiește regulile de risc.</p>
+        <form class="calc-form lot-form" id="calc-form" novalidate>
+          <label>Pereche
+            <select id="pereche">
+              <option value="EURUSD" selected>EURUSD</option>
+              <option value="GBPUSD">GBPUSD</option>
+              <option value="USDJPY">USDJPY</option>
+              <option value="AUDUSD">AUDUSD</option>
+              <option value="USDCAD">USDCAD</option>
+              <option value="USDCHF">USDCHF</option>
+              <option value="NZDUSD">NZDUSD</option>
+              <option value="EURJPY">EURJPY</option>
+              <option value="GBPJPY">GBPJPY</option>
+              <option value="XAUUSD">XAUUSD</option>
+            </select>
+          </label>
+          <label>Moneda contului
+            <select id="moneda">
+              <option value="USD" selected>USD</option>
+              <option value="EUR">EUR</option>
+            </select>
+          </label>
+          <label>Sold cont
+            <input type="number" id="sold" value="10000" min="0" step="100" inputmode="decimal">
+          </label>
+          <label>Risc %
+            <input type="number" id="risc" value="1" min="0" max="100" step="0.1" inputmode="decimal">
+          </label>
+          <label>Stop loss (pips)
+            <input type="number" id="stop" value="20" min="0" step="1" inputmode="decimal">
+          </label>
+          <label>Preț aproximativ <span class="opt">(opțional)</span>
+            <input type="number" id="pret" value="1.08" min="0" step="0.0001" inputmode="decimal">
+          </label>
+          <div class="calc-results" aria-live="polite">
+            <div class="calc-result">
+              <span>Sumă riscată</span>
+              <output id="suma-risc">—</output>
             </div>
-          </form>
-          <div class="calc-visual">
-            <div class="chart" id="chart" role="img" aria-label="Grafic ipotetic al creșterii compuse"></div>
-            <div class="table-wrap">
-              <table class="calc-table">
-                <caption class="sr-only">Evoluție lunară ipotetică</caption>
-                <thead><tr><th scope="col">Luna</th><th scope="col">Sold ipotetic</th><th scope="col">Variație</th></tr></thead>
-                <tbody id="calc-body"></tbody>
-              </table>
+            <div class="calc-result">
+              <span>Loturi</span>
+              <output id="loturi">—</output>
+              <small>2 zecimale</small>
             </div>
           </div>
-        </div>
+          <p class="fineprint lot-note" id="pip-nota"></p>
+          <p class="fineprint lot-note">Ipoteze: perechi XXXUSD ≈ 10 USD per pip pe lot standard; USDJPY ≈ 1000 / preț (în jur de 6,7 USD la preț 150); USDCAD și USDCHF ≈ 10 / preț; EURJPY și GBPJPY folosesc un USDJPY presupus de 150; XAUUSD: 1 pip = mișcare de 0,10, 1 lot = 100 uncii → circa 10 USD per pip (nu 1 USD — unii brokeri definesc lotul altfel). Cont în EUR: conversie cu prețul EURUSD sau cu ≈ 1,08. Formula: sumă riscată = sold × risc%; loturi = sumă riscată / (pips × valoarea pipului pe lot).</p>
+        </form>
       </div>
     </section>
 
@@ -322,6 +341,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
