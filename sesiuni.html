@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sesiuni forex — Marius FX</title>
+  <meta name="description" content="Sesiunile forex live: Sydney, Tokyo, Londra și New York. Vezi care sunt deschise acum, suprapunerile și countdown-ul până la deschidere sau închidere. Marius FX — educație, nu consultanță financiară.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="icon" href="favicon.ico?v=15" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=15">
+  <link rel="manifest" href="site.webmanifest?v=15">
+  <meta name="theme-color" content="#070b14">
+</head>
+<body class="page-inner">
+  <a class="skip-link" href="#continut">Sari la conținut</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navigare principală">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Deschide meniul">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="reguli.html">Reguli</a></li>
+        <li><a href="patternuri.html">Patternuri</a></li>
+        <li><a href="sesiuni.html" aria-current="page">Sesiuni</a></li>
+        <li><a href="jurnal.html">Jurnal</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="despre.html">Despre</a></li>
+        <li><a href="broker.html">Broker</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="continut">
+    <section class="section container" id="sesiuni">
+      <header class="section-head">
+        <p class="kicker">Ore de piață</p>
+        <h2>Sesiuni forex</h2>
+        <p class="section-sub">Piața forex se mișcă non-stop în zilele lucrătoare, pe rânduri de sesiuni: Sydney, Tokyo, Londra și New York. Lichiditatea și volatilitatea cresc când se suprapun — mai ales Londra cu New York.</p>
+      </header>
+
+      <div class="sessions-live" id="sessions-live" aria-live="polite">
+        <div class="sessions-status" id="sessions-status">
+          <div class="sessions-clock">
+            <span class="sessions-clock-label">Ora ta locală</span>
+            <time class="sessions-clock-time" id="visitor-clock" datetime="">—:—:—</time>
+            <span class="sessions-clock-date" id="visitor-date"></span>
+          </div>
+          <div class="sessions-open-badge" id="open-badge">
+            <span class="dot"></span>
+            <span id="open-badge-text">Se încarcă…</span>
+          </div>
+        </div>
+
+        <div class="sessions-weekend" id="weekend-banner" hidden>
+          <strong>Piața e închisă (weekend)</strong>
+          <p id="weekend-countdown">Se redeschide duminică, 17:00 New York.</p>
+        </div>
+
+        <div class="sessions-overlap" id="overlap-banner" hidden></div>
+
+        <div class="sessions-timeline" id="sessions-timeline" aria-label="Timeline 24 de ore">
+          <div class="tl-header">
+            <span>Timeline 24h (ora ta)</span>
+            <span class="tl-legend" id="tl-legend"></span>
+          </div>
+          <div class="tl-track-wrap">
+            <div class="tl-hours" id="tl-hours" aria-hidden="true"></div>
+            <div class="tl-lanes" id="tl-lanes"></div>
+            <div class="tl-now" id="tl-now" aria-hidden="true">
+              <span class="tl-now-line"></span>
+              <span class="tl-now-label">acum</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-cards" id="session-cards">
+          <!-- cards filled by JS -->
+        </div>
+      </div>
+
+      <p class="sessions-edu">Sesiunile contează pentru că lichiditatea (cât de ușor se tranzacționează) și volatilitatea (cât de mult se mișcă prețul) variază pe parcursul zilei. Perechile cu yen se mișcă mai mult în Asia; EUR/USD și GBP/USD, de obicei, în fereastra Londra–New York.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-risk" id="avertisment">Forex și CFD-urile cu levier pot duce la pierderea rapidă a banilor. Conținut educațional, nu consultanță financiară.</p>
+      <div class="footer-bottom">
+        <p>© <span id="an"></span> Marius FX · Marius</p>
+        <a href="#continut">Înapoi sus ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js?v=29"></script>
+</body>
+</html>

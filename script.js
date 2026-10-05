@@ -226,3 +226,385 @@ if (contactForm) contactForm.addEventListener('submit', e => {
   );
   window.location.href = `mailto:${EMAIL_CONTACT}?subject=${subject}&body=${body}`;
 });
+
+// ===== Sesiuni forex (live, ora vizitatorului + DST pe fusuri reale) =====
+(function () {
+  const SESSIONS = [
+    { id: 'sydney', name: 'Sydney', tz: 'Australia/Sydney', openH: 7, closeH: 16, pairs: 'AUD, NZD' },
+    { id: 'tokyo', name: 'Tokyo', tz: 'Asia/Tokyo', openH: 9, closeH: 18, pairs: 'JPY, Asia' },
+    { id: 'london', name: 'Londra', tz: 'Europe/London', openH: 8, closeH: 17, pairs: 'EUR, GBP' },
+    { id: 'newyork', name: 'New York', tz: 'America/New_York', openH: 8, closeH: 17, pairs: 'USD, aur' }
+  ];
+  const NY_TZ = 'America/New_York';
+  const WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+  function partsInZone(date, timeZone) {
+    const dtf = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      weekday: 'short',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23'
+    });
+    const map = {};
+    for (const p of dtf.formatToParts(date)) {
+      if (p.type !== 'literal') map[p.type] = p.value;
+    }
+    return {
+      weekday: map.weekday,
+      year: +map.year,
+      month: +map.month,
+      day: +map.day,
+      hour: +map.hour % 24,
+      minute: +map.minute,
+      second: +map.second
+    };
+  }
+
+  // UTC Date for a civil time in a given IANA zone (handles DST)
+  function zonedTimeToUtc(timeZone, y, m, d, h, min, s) {
+    s = s || 0;
+    let utc = Date.UTC(y, m - 1, d, h, min, s);
+    for (let i = 0; i < 4; i++) {
+      const p = partsInZone(new Date(utc), timeZone);
+      const asUtc = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+      const want = Date.UTC(y, m - 1, d, h, min, s);
+      const delta = want - asUtc;
+      if (delta === 0) break;
+      utc += delta;
+    }
+    return new Date(utc);
+  }
+
+  function addDays(y, m, d, delta) {
+    const t = new Date(Date.UTC(y, m - 1, d + delta));
+    return { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() };
+  }
+
+  function isWeekendClosed(now) {
+    const ny = partsInZone(now, NY_TZ);
+    const mins = ny.hour * 60 + ny.minute + ny.second / 60;
+    const close = 17 * 60;
+    if (ny.weekday === 'Sat') return true;
+    if (ny.weekday === 'Fri' && mins >= close) return true;
+    if (ny.weekday === 'Sun' && mins < close) return true;
+    return false;
+  }
+
+  function nextSundayNyOpen(now) {
+    const ny = partsInZone(now, NY_TZ);
+    let add = (7 - WD[ny.weekday]) % 7;
+    if (ny.weekday === 'Sun') {
+      const mins = ny.hour * 60 + ny.minute;
+      if (mins < 17 * 60) add = 0;
+      else add = 7;
+    } else if (ny.weekday === 'Fri') {
+      const mins = ny.hour * 60 + ny.minute;
+      if (mins >= 17 * 60) add = 2; // Sunday
+    } else if (ny.weekday === 'Sat') {
+      add = 1;
+    }
+    const d = addDays(ny.year, ny.month, ny.day, add);
+    return zonedTimeToUtc(NY_TZ, d.year, d.month, d.day, 17, 0, 0);
+  }
+
+  function sessionOpenCloseToday(now, session) {
+    const p = partsInZone(now, session.tz);
+    const open = zonedTimeToUtc(session.tz, p.year, p.month, p.day, session.openH, 0, 0);
+    const close = zonedTimeToUtc(session.tz, p.year, p.month, p.day, session.closeH, 0, 0);
+    return { open, close, parts: p };
+  }
+
+  function effectiveSessionOpen(open, close) {
+    // If session starts during NY weekend close, it becomes active at market reopen (if still within window)
+    if (!isWeekendClosed(open)) return open;
+    const reopen = nextSundayNyOpen(open);
+    if (reopen >= close) return null; // entirely inside weekend
+    return reopen;
+  }
+
+  function nextSessionBoundary(now, session) {
+    const p0 = partsInZone(now, session.tz);
+    for (let i = 0; i < 10; i++) {
+      const d = addDays(p0.year, p0.month, p0.day, i);
+      const open = zonedTimeToUtc(session.tz, d.year, d.month, d.day, session.openH, 0, 0);
+      const close = zonedTimeToUtc(session.tz, d.year, d.month, d.day, session.closeH, 0, 0);
+      const effOpen = effectiveSessionOpen(open, close);
+      if (!effOpen) continue;
+      if (now < effOpen) return { at: effOpen, kind: 'open' };
+      if (now >= effOpen && now < close && !isWeekendClosed(now)) {
+        return { at: close, kind: 'close' };
+      }
+    }
+    return { at: nextSundayNyOpen(now), kind: 'open' };
+  }
+
+  function isSessionOpenNow(now, session) {
+    if (isWeekendClosed(now)) return false;
+    const { open, close } = sessionOpenCloseToday(now, session);
+    return now >= open && now < close;
+  }
+
+  function formatDuration(ms) {
+    if (ms < 0) ms = 0;
+    const totalSec = Math.floor(ms / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    if (h >= 24) {
+      const d = Math.floor(h / 24);
+      const rh = h % 24;
+      return d + 'z ' + rh + 'h ' + m + 'm';
+    }
+    if (h > 0) return h + 'h ' + m + 'm';
+    if (m > 0) return m + 'm ' + s + 's';
+    return s + 's';
+  }
+
+  function formatLocalTime(date, opts) {
+    return new Intl.DateTimeFormat('ro-RO', opts).format(date);
+  }
+
+  function visitorDayBounds(now) {
+    const start = new Date(now);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
+    return { start, end };
+  }
+
+  // Session bars overlapping visitor's local calendar day (0–24h)
+  function sessionBarsForVisitorDay(now, session) {
+    const { start, end } = visitorDayBounds(now);
+    const bars = [];
+    // Check session days that might overlap visitor day (±1 day around now in session tz)
+    const p = partsInZone(now, session.tz);
+    for (let i = -1; i <= 1; i++) {
+      const d = addDays(p.year, p.month, p.day, i);
+      const open = zonedTimeToUtc(session.tz, d.year, d.month, d.day, session.openH, 0, 0);
+      const close = zonedTimeToUtc(session.tz, d.year, d.month, d.day, session.closeH, 0, 0);
+      const segStart = Math.max(open.getTime(), start.getTime());
+      const segEnd = Math.min(close.getTime(), end.getTime());
+      if (segEnd > segStart) {
+        const left = ((segStart - start.getTime()) / 86400000) * 100;
+        const width = ((segEnd - segStart) / 86400000) * 100;
+        bars.push({ left, width });
+      }
+    }
+    return bars;
+  }
+
+  function openSessions(now) {
+    return SESSIONS.filter(s => isSessionOpenNow(now, s));
+  }
+
+  function overlapLabels(open) {
+    const ids = new Set(open.map(s => s.id));
+    const labels = [];
+    if (ids.has('london') && ids.has('newyork')) {
+      labels.push({ text: 'Suprapunere Londra–New York: volatilitate mare', hot: true });
+    }
+    if (ids.has('tokyo') && ids.has('london')) {
+      labels.push({ text: 'Suprapunere Tokyo–Londra', hot: false });
+    }
+    if (ids.has('sydney') && ids.has('tokyo')) {
+      labels.push({ text: 'Suprapunere Sydney–Tokyo', hot: false });
+    }
+    return labels;
+  }
+
+  // Expose for home badge + tests
+  window.MariusSessions = {
+    SESSIONS,
+    isWeekendClosed,
+    isSessionOpenNow,
+    openSessions,
+    nextSundayNyOpen,
+    nextSessionBoundary,
+    partsInZone,
+    formatDuration,
+    zonedTimeToUtc
+  };
+
+  function renderHomeChip(now) {
+    const chip = document.getElementById('hero-session-chip');
+    if (!chip) return;
+    const weekend = isWeekendClosed(now);
+    const open = openSessions(now);
+    chip.classList.toggle('is-weekend', weekend);
+    chip.classList.toggle('is-closed', !weekend && open.length === 0);
+    const text = chip.querySelector('.chip-text');
+    if (weekend) {
+      text.textContent = 'Piața: weekend închis';
+    } else if (open.length === 0) {
+      text.textContent = 'Nicio sesiune deschisă acum';
+    } else if (open.length === 1) {
+      text.textContent = 'Sesiunea acum: ' + open[0].name;
+    } else {
+      text.textContent = 'Sesiuni acum: ' + open.map(s => s.name).join(' · ');
+    }
+  }
+
+  const root = document.getElementById('sessions-live');
+  if (!root && !document.getElementById('hero-session-chip')) {
+    // nothing to do on this page
+    return;
+  }
+
+  // Build static card shells + timeline lanes once
+  if (root) {
+    const cards = document.getElementById('session-cards');
+    const lanes = document.getElementById('tl-lanes');
+    const hours = document.getElementById('tl-hours');
+    const legend = document.getElementById('tl-legend');
+    hours.innerHTML = '';
+    for (let h = 0; h < 24; h += 2) {
+      const s = document.createElement('span');
+      s.textContent = String(h).padStart(2, '0');
+      hours.appendChild(s);
+    }
+    legend.innerHTML = SESSIONS.map(s =>
+      '<span><i style="background:var(--sess-' + (s.id === 'newyork' ? 'ny' : s.id === 'london' ? 'london' : s.id) + ')"></i>' + s.name + '</span>'
+    ).join('');
+    // fix london css var name
+    legend.innerHTML = [
+      '<span><i style="background:var(--sess-sydney)"></i>Sydney</span>',
+      '<span><i style="background:var(--sess-tokyo)"></i>Tokyo</span>',
+      '<span><i style="background:var(--sess-london)"></i>Londra</span>',
+      '<span><i style="background:var(--sess-ny)"></i>New York</span>'
+    ].join('');
+
+    lanes.innerHTML = '';
+    cards.innerHTML = '';
+    SESSIONS.forEach(s => {
+      const lane = document.createElement('div');
+      lane.className = 'tl-lane';
+      lane.dataset.id = s.id;
+      lane.innerHTML = '<span class="tl-lane-label">' + s.name + '</span>';
+      lanes.appendChild(lane);
+
+      const card = document.createElement('article');
+      card.className = 'session-card';
+      card.dataset.id = s.id;
+      card.innerHTML =
+        '<div class="session-card-top"><h3>' + s.name + '</h3><span class="session-pill" data-pill>…</span></div>' +
+        '<p class="session-hours" data-hours></p>' +
+        '<p class="session-local-clock">Ora locală acolo: <b data-local-clock>—</b></p>' +
+        '<p class="session-countdown" data-countdown>—</p>';
+      cards.appendChild(card);
+    });
+  }
+
+  function tick(forcedNow) {
+    const now = forcedNow || new Date();
+    renderHomeChip(now);
+    if (!root) return;
+
+    const weekend = isWeekendClosed(now);
+    const open = openSessions(now);
+
+    const clock = document.getElementById('visitor-clock');
+    const dateEl = document.getElementById('visitor-date');
+    const badge = document.getElementById('open-badge');
+    const badgeText = document.getElementById('open-badge-text');
+    const weekendBanner = document.getElementById('weekend-banner');
+    const weekendCd = document.getElementById('weekend-countdown');
+    const overlap = document.getElementById('overlap-banner');
+    const timeline = document.getElementById('sessions-timeline');
+    const nowLine = document.getElementById('tl-now');
+
+    clock.textContent = formatLocalTime(now, { hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+    clock.dateTime = now.toISOString();
+    dateEl.textContent = formatLocalTime(now, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    badge.classList.toggle('is-weekend', weekend);
+    badge.classList.toggle('is-closed', !weekend && open.length === 0);
+    if (weekend) {
+      badgeText.textContent = 'Piața e închisă (weekend)';
+    } else if (open.length === 0) {
+      badgeText.textContent = 'Nicio sesiune deschisă acum';
+    } else {
+      badgeText.textContent = 'Deschis acum: ' + open.map(s => s.name).join(' · ');
+    }
+
+    weekendBanner.hidden = !weekend;
+    if (weekend) {
+      const reopen = nextSundayNyOpen(now);
+      const localReopen = formatLocalTime(reopen, { weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+      weekendCd.textContent = 'Se redeschide duminică 17:00 New York — la tine: ' + localReopen +
+        ' (în ' + formatDuration(reopen - now) + ').';
+    }
+
+    const labels = weekend ? [] : overlapLabels(open);
+    if (labels.length) {
+      overlap.hidden = false;
+      overlap.innerHTML = labels.map(l => '<span class="' + (l.hot ? 'hot' : '') + '">' + l.text + '</span>').join('');
+    } else {
+      overlap.hidden = true;
+      overlap.innerHTML = '';
+    }
+
+    timeline.classList.toggle('is-weekend', weekend);
+
+    // Now line position
+    const { start } = visitorDayBounds(now);
+    const pct = ((now - start) / 86400000) * 100;
+    nowLine.style.left = Math.min(100, Math.max(0, pct)) + '%';
+
+    SESSIONS.forEach(s => {
+      const lane = root.querySelector('.tl-lane[data-id="' + s.id + '"]');
+      const card = root.querySelector('.session-card[data-id="' + s.id + '"]');
+      const isOpen = isSessionOpenNow(now, s);
+      // bars
+      lane.querySelectorAll('.tl-bar').forEach(b => b.remove());
+      sessionBarsForVisitorDay(now, s).forEach(bar => {
+        const el = document.createElement('div');
+        el.className = 'tl-bar ' + s.id + (isOpen ? ' is-open' : '');
+        el.style.left = bar.left + '%';
+        el.style.width = bar.width + '%';
+        lane.appendChild(el);
+      });
+
+      card.classList.toggle('is-open', isOpen && !weekend);
+      const pill = card.querySelector('[data-pill]');
+      const hoursEl = card.querySelector('[data-hours]');
+      const localClock = card.querySelector('[data-local-clock]');
+      const cd = card.querySelector('[data-countdown]');
+
+      pill.textContent = weekend ? 'Weekend' : (isOpen ? 'Deschis' : 'Închis');
+      const { open: o, close: c } = sessionOpenCloseToday(now, s);
+      const openLocal = formatLocalTime(o, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+      const closeLocal = formatLocalTime(c, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+      hoursEl.innerHTML = 'Local acolo: <strong>' +
+        String(s.openH).padStart(2, '0') + ':00–' + String(s.closeH).padStart(2, '0') + ':00</strong><br>' +
+        'La tine: <strong>' + openLocal + '–' + closeLocal + '</strong>';
+
+      const lp = partsInZone(now, s.tz);
+      localClock.textContent =
+        String(lp.hour).padStart(2, '0') + ':' +
+        String(lp.minute).padStart(2, '0') + ':' +
+        String(lp.second).padStart(2, '0');
+
+      if (weekend) {
+        const target = nextSessionBoundary(now, s);
+        cd.textContent = 'se deschide în ' + formatDuration(target.at - now);
+      } else if (isOpen) {
+        const bound = nextSessionBoundary(now, s);
+        cd.textContent = 'se închide în ' + formatDuration(bound.at - now);
+      } else {
+        const bound = nextSessionBoundary(now, s);
+        cd.textContent = 'se deschide în ' + formatDuration(bound.at - now);
+      }
+    });
+  }
+
+  // Allow tests to force a time
+  window.MariusSessions.tick = tick;
+
+  tick();
+  setInterval(() => tick(), 1000);
+})();
