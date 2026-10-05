@@ -346,7 +346,9 @@ if (contactForm) contactForm.addEventListener('submit', e => {
   function isSessionOpenNow(now, session) {
     if (isWeekendClosed(now)) return false;
     const { open, close } = sessionOpenCloseToday(now, session);
-    return now >= open && now < close;
+    const effOpen = effectiveSessionOpen(open, close);
+    if (!effOpen) return false;
+    return now >= effOpen && now < close;
   }
 
   function formatDuration(ms) {
@@ -361,7 +363,7 @@ if (contactForm) contactForm.addEventListener('submit', e => {
       return d + 'z ' + rh + 'h ' + m + 'm';
     }
     if (h > 0) return h + 'h ' + m + 'm';
-    if (m > 0) return m + 'm ' + s + 's';
+    if (m > 0) return s > 0 ? (m + 'm ' + s + 's') : (m + 'm');
     return s + 's';
   }
 
@@ -374,12 +376,14 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     start.setHours(0, 0, 0, 0);
     const end = new Date(start);
     end.setDate(end.getDate() + 1);
-    return { start, end };
+    return { start, end, ms: end - start };
   }
 
-  // Session bars overlapping visitor's local calendar day (0–24h)
+  // Session bars overlapping visitor's local calendar day (handles DST day length).
+  // Bars show the nominal local schedule; open-state / weekend gating is separate.
   function sessionBarsForVisitorDay(now, session) {
-    const { start, end } = visitorDayBounds(now);
+    const { start, end, ms } = visitorDayBounds(now);
+    const dayMs = ms || 86400000;
     const bars = [];
     // Check session days that might overlap visitor day (±1 day around now in session tz)
     const p = partsInZone(now, session.tz);
@@ -390,9 +394,12 @@ if (contactForm) contactForm.addEventListener('submit', e => {
       const segStart = Math.max(open.getTime(), start.getTime());
       const segEnd = Math.min(close.getTime(), end.getTime());
       if (segEnd > segStart) {
-        const left = ((segStart - start.getTime()) / 86400000) * 100;
-        const width = ((segEnd - segStart) / 86400000) * 100;
-        bars.push({ left, width });
+        bars.push({
+          left: ((segStart - start.getTime()) / dayMs) * 100,
+          width: ((segEnd - segStart) / dayMs) * 100,
+          startMs: segStart,
+          endMs: segEnd
+        });
       }
     }
     return bars;
@@ -550,9 +557,9 @@ if (contactForm) contactForm.addEventListener('submit', e => {
 
     timeline.classList.toggle('is-weekend', weekend);
 
-    // Now line position
-    const { start } = visitorDayBounds(now);
-    const pct = ((now - start) / 86400000) * 100;
+    // Now line position (use real local day length — 23/25h on DST days)
+    const { start, ms: dayMs } = visitorDayBounds(now);
+    const pct = ((now - start) / (dayMs || 86400000)) * 100;
     nowLine.style.left = Math.min(100, Math.max(0, pct)) + '%';
 
     SESSIONS.forEach(s => {
@@ -563,7 +570,8 @@ if (contactForm) contactForm.addEventListener('submit', e => {
       lane.querySelectorAll('.tl-bar').forEach(b => b.remove());
       sessionBarsForVisitorDay(now, s).forEach(bar => {
         const el = document.createElement('div');
-        el.className = 'tl-bar ' + s.id + (isOpen ? ' is-open' : '');
+        const barLit = isOpen && now.getTime() >= bar.startMs && now.getTime() < bar.endMs;
+        el.className = 'tl-bar ' + s.id + (barLit ? ' is-open' : '');
         el.style.left = bar.left + '%';
         el.style.width = bar.width + '%';
         lane.appendChild(el);
