@@ -1,14 +1,10 @@
-MARIUS FX — CUM ADAUGI CAPTURILE TALE REALE ÎN „JURNALUL CONTULUI”
-======================================================
-Pune aici capturile de ecran REALE de la broker, cu exact aceste nume:
+MARIUS FX — IMAGINI
+===================
+masina-1.jpg, masina-2.jpg   fotografiile personale din pagina „Despre” (despre.html)
+pattern-*.svg                ilustrațiile din pagina „Patternuri”
+jurnal-sablon-preview.png    previzualizarea șablonului de jurnal (pagina „Jurnal”)
 
-  etapa-1.jpg   etapa-2.jpg   etapa-3.jpg   etapa-4.jpg
-  etapa-5.jpg   etapa-6.jpg   etapa-7.jpg   etapa-8.jpg
-
-(Sunt acceptate și .png sau .webp — vezi GALERIE_EXTENSII în script.js.)
-
-Site-ul le detectează automat și le afișează în locul casetelor goale.
-Notă: fișierele masina-1.jpg și masina-2.jpg sunt fotografiile personale din secțiunea „Despre” (nu le redenumi în etapa-*).
-Legenda de sub fiecare imagine se editează în index.html, în secțiunea „JURNALUL CONTULUI”.
-
-Sfat: ascunde datele personale (număr de cont, nume) înainte de publicare.
+Pagina „Jurnal” nu mai afișează capturi de cont. Acum conține:
+  - un jurnal de tranzacționare în browser (jurnal.js) — datele se salvează doar
+    în browserul vizitatorului (localStorage), nimic nu este trimis pe server;
+  - șabloanele de descărcat din downloads/ (Excel + PDF).

@@ -1,6 +1,5 @@
 // ===== SETĂRI =====
 const EMAIL_CONTACT = 'contact.mariusfx@gmail.com';               // adresa pentru formularul de contact
-const GALERIE_EXTENSII = ['jpg', 'jpeg', 'png', 'webp'];  // extensii căutate în images/etapa-N.*
 
 const anEl = document.getElementById('an');
 if (anEl) anEl.textContent = new Date().getFullYear();
@@ -15,27 +14,6 @@ menuBtn.addEventListener('click', () => {
 links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   links.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
 }));
-
-// ===== Jurnalul contului: încarcă automat images/etapa-N.(jpg|png|…) dacă există =====
-document.querySelectorAll('.slot').forEach(slot => {
-  const n = slot.dataset.etapa;
-  const box = slot.querySelector('.slot-img');
-  if (!box || box.classList.contains('has-img') || box.querySelector('img')) return; // deja completat în HTML
-  const tryExt = i => {
-    if (i >= GALERIE_EXTENSII.length) return;          // nu există imagine — rămâne caseta goală
-    const img = new Image();
-    img.alt = 'Captură reală a contului — etapa ' + n;
-    img.onload = () => {
-      box.replaceChildren(img); box.classList.add('has-img');
-      const a = document.createElement('a'); a.href = img.src; a.target = '_blank'; a.rel = 'noopener';
-      a.setAttribute('aria-label', 'Deschide captura etapei ' + n + ' la dimensiune completă');
-      box.parentNode.insertBefore(a, box); a.appendChild(box);
-    };
-    img.onerror = () => tryExt(i + 1);
-    img.src = `images/etapa-${n}.${GALERIE_EXTENSII[i]}`;
-  };
-  tryExt(0);
-});
 
 // ===== Galerie foto: click pentru mărire =====
 const lb = document.getElementById('lightbox');

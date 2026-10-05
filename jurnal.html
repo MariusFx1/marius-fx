@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jurnalul contului — Marius FX</title>
-  <meta name="description" content="Jurnalul contului Marius FX, prin capturi reale. Marius FX — educație pentru swing trading disciplinat. Conținut educațional, nu consultanță financiară.">
+  <title>Jurnalul de tranzacționare — Marius FX</title>
+  <meta name="description" content="Jurnal de tranzacționare gratuit: notează-ți tranzacțiile direct în browser (salvate doar pe dispozitivul tău) sau descarcă șablonul Excel și PDF. Marius FX — educație pentru trading disciplinat.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=31">
   <link rel="icon" href="favicon.ico?v=15" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
@@ -39,107 +39,244 @@
   </header>
 
   <main id="continut">
-    <!-- ===== JURNALUL CONTULUI =====
-         Pune capturile REALE în images/etapa-1.jpg … etapa-8.jpg — apar automat.
-         Editează legenda din <figcaption> pentru fiecare etapă. -->
+    <!-- ===== JURNALUL DE TRANZACȚIONARE =====
+         Jurnalul se salvează DOAR în browserul vizitatorului (localStorage) — vezi jurnal.js.
+         Nimic nu este trimis pe server. Șabloanele de descărcat sunt în downloads/. -->
     <section class="section container" id="jurnal">
       <header class="section-head">
-        <p class="kicker">02 — Transparență</p>
-        <h2>Jurnalul contului</h2>
-        <p class="section-sub">Evoluția contului, etapă cu etapă, prin capturi de ecran reale de la broker.</p>
+        <p class="kicker">Jurnal personal</p>
+        <h2>Jurnalul de tranzacționare</h2>
+        <p class="section-sub">Un jurnal îți arată ce faci cu adevărat, nu ce crezi că faci. Notând fiecare intrare îți construiești disciplina, înveți din greșeli înainte să se repete și verifici dacă ți-ai respectat planul.</p>
       </header>
-      <ol class="journal">
-        <li>
-          <figure class="slot" data-etapa="1">
-            <a class="slot-link" href="images/etapa-1.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-1.jpg?v=5" width="1600" height="875" loading="lazy" decoding="async"
-                     alt="Grafic AUDUSD — poziție short cu take profit atins">
+
+      <div class="jt-privacy" role="note">
+        <span class="jt-privacy-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+        <div>
+          <p><strong>Tranzacțiile tale se salvează doar în acest browser, pe dispozitivul tău. Nimeni altcineva nu le vede.</strong></p>
+          <p class="jt-privacy-warn">Dacă ștergi datele browserului, folosești modul incognito sau schimbi telefonul, jurnalul se pierde. Fă din când în când <b>Exportă backup</b> și păstrează fișierul.</p>
+        </div>
+      </div>
+      <p class="jt-storage-error" id="jt-storage-error" role="alert" hidden>Browserul tău nu permite salvarea locală (poate ești în modul privat). Poți completa jurnalul, dar se va pierde la închiderea paginii — exportă-l înainte.</p>
+
+      <div class="jt-app">
+        <!-- Formular -->
+        <form class="jt-form" id="jt-form" novalidate autocomplete="off">
+          <div class="jt-form-head">
+            <h3 id="jt-form-title">Adaugă o tranzacție</h3>
+            <span class="jt-editing" id="jt-editing" hidden>Editezi o tranzacție</span>
+          </div>
+          <div class="jt-grid">
+            <label>Data
+              <input type="date" id="jt-data" name="data" required>
+            </label>
+            <label>Pereche
+              <select id="jt-pereche" name="pereche" required>
+                <option value="">Alege…</option>
+                  <option value="EURUSD">EURUSD</option>
+                  <option value="GBPUSD">GBPUSD</option>
+                  <option value="USDJPY">USDJPY</option>
+                  <option value="AUDUSD">AUDUSD</option>
+                  <option value="USDCAD">USDCAD</option>
+                  <option value="USDCHF">USDCHF</option>
+                  <option value="NZDUSD">NZDUSD</option>
+                  <option value="EURGBP">EURGBP</option>
+                  <option value="EURJPY">EURJPY</option>
+                  <option value="EURCHF">EURCHF</option>
+                  <option value="EURAUD">EURAUD</option>
+                  <option value="EURCAD">EURCAD</option>
+                  <option value="EURNZD">EURNZD</option>
+                  <option value="GBPJPY">GBPJPY</option>
+                  <option value="GBPCHF">GBPCHF</option>
+                  <option value="GBPAUD">GBPAUD</option>
+                  <option value="GBPCAD">GBPCAD</option>
+                  <option value="GBPNZD">GBPNZD</option>
+                  <option value="AUDJPY">AUDJPY</option>
+                  <option value="AUDNZD">AUDNZD</option>
+                  <option value="AUDCAD">AUDCAD</option>
+                  <option value="AUDCHF">AUDCHF</option>
+                  <option value="NZDJPY">NZDJPY</option>
+                  <option value="NZDCAD">NZDCAD</option>
+                  <option value="NZDCHF">NZDCHF</option>
+                  <option value="CADJPY">CADJPY</option>
+                  <option value="CADCHF">CADCHF</option>
+                  <option value="CHFJPY">CHFJPY</option>
+                  <option value="XAUUSD">XAUUSD (aur)</option>
+                  <option value="US30">US30</option>
+                  <option value="NAS100">NAS100</option>
+                <option value="__alta">Altă pereche…</option>
+              </select>
+            </label>
+            <label class="jt-span-2" id="jt-pereche-alta-wrap" hidden>Scrie perechea
+              <input type="text" id="jt-pereche-alta" maxlength="20" placeholder="ex.: EURPLN" autocapitalize="characters">
+            </label>
+            <fieldset class="jt-seg-field">
+              <legend>Direcție</legend>
+              <div class="jt-seg">
+                <label><input type="radio" name="directie" value="Buy" required><span>Buy</span></label>
+                <label><input type="radio" name="directie" value="Sell"><span>Sell</span></label>
               </div>
-            </a>
-            <figcaption><strong>Etapa 1</strong><span>AUDUSD — short, TP atins</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="2">
-            <a class="slot-link" href="images/etapa-2.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-2.jpg?v=5" width="1600" height="875" loading="lazy" decoding="async"
-                     alt="Grafice AUDCAD, AUDCHF și EURUSD — take profit-uri atinse într-o sesiune">
+            </fieldset>
+            <label>Sesiune
+              <select id="jt-sesiune" name="sesiune">
+                <option value="">Alege…</option>
+                <option>Sydney</option>
+                <option>Tokyo</option>
+                <option>Londra</option>
+                <option>New York</option>
+              </select>
+            </label>
+          </div>
+          <div class="jt-grid jt-grid-3">
+            <label>Intrare
+              <input type="text" inputmode="decimal" id="jt-intrare" name="intrare" placeholder="1.08500">
+            </label>
+            <label>Stop loss
+              <input type="text" inputmode="decimal" id="jt-sl" name="sl" placeholder="1.08300">
+            </label>
+            <label>Take profit
+              <input type="text" inputmode="decimal" id="jt-tp" name="tp" placeholder="1.08900">
+            </label>
+          </div>
+          <p class="jt-rr" id="jt-rr" aria-live="polite">R:R planificat: <b>—</b></p>
+          <div class="jt-grid">
+            <label>Rezultat
+              <select id="jt-rezultat" name="rezultat">
+                <option value="">În desfășurare</option>
+                <option value="TP">TP — take profit</option>
+                <option value="SL">SL — stop loss</option>
+                <option value="BE">BE — break-even</option>
+                <option value="Manual">Manual — închis de mine</option>
+              </select>
+            </label>
+            <label>Rezultat în R
+              <input type="text" inputmode="decimal" id="jt-r" name="r" placeholder="ex.: 2 sau -1">
+            </label>
+            <fieldset class="jt-seg-field jt-span-2">
+              <legend>Am respectat planul?</legend>
+              <div class="jt-seg jt-seg-plan">
+                <label><input type="radio" name="plan" value="Da"><span>Da</span></label>
+                <label><input type="radio" name="plan" value="Nu"><span>Nu</span></label>
               </div>
-            </a>
-            <figcaption><strong>Etapa 2</strong><span>AUDCAD · AUDCHF · EURUSD — TP-uri</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="3">
-            <a class="slot-link" href="images/etapa-3.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-3.jpg?v=5" width="1600" height="838" loading="lazy" decoding="async"
-                     alt="Grafice GBPNZD, XAUUSD, GBPNZD și US30 — poziții short cu take profit atins">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 3</strong><span>GBPNZD · XAUUSD · US30 — short, TP</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="4">
-            <a class="slot-link" href="images/etapa-4.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-4.jpg?v=5" width="1600" height="990" loading="lazy" decoding="async"
-                     alt="Grafic GBPAUD — poziție long cu take profit atins">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 4</strong><span>GBPAUD — long, TP atins</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="5">
-            <a class="slot-link" href="images/etapa-5.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-5.jpg?v=5" width="1080" height="1087" loading="lazy" decoding="async"
-                     alt="MetaTrader — poziție deschisă GBPJPY sell cu profit flotant">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 5</strong><span>Poziții deschise — GBPJPY sell, profit flotant</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="6">
-            <a class="slot-link" href="images/etapa-6.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-6.jpg?v=5" width="1080" height="1088" loading="lazy" decoding="async"
-                     alt="MetaTrader — poziții deschise EURUSD și EURJPY cu profit flotant">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 6</strong><span>Poziții deschise — EURUSD · EURJPY, profit flotant</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="7">
-            <a class="slot-link" href="images/etapa-7.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-7.jpg?v=5" width="1080" height="1414" loading="lazy" decoding="async"
-                     alt="MetaTrader — istoric tranzacții cu profit închis">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 7</strong><span>Istoric tranzacții — profit închis</span></figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="slot" data-etapa="8">
-            <a class="slot-link" href="images/etapa-8.jpg?v=5" data-lightbox>
-              <div class="slot-img has-img">
-                <img src="images/etapa-8.jpg?v=5" width="1080" height="1395" loading="lazy" decoding="async"
-                     alt="MetaTrader — istoric tranzacții cu profit închis">
-              </div>
-            </a>
-            <figcaption><strong>Etapa 8</strong><span>Istoric tranzacții — profit închis</span></figcaption>
-          </figure>
-        </li>
-      </ol>
-      <p class="fineprint"><strong>Rezultatele din trecut nu garantează rezultate viitoare.</strong> Capturile arată exemple de grafice cu take-profit atins, poziții deschise (profit flotant, nerealizat) și istoric cu profit închis. Profitul flotant se poate schimba sau transforma în pierdere. Fiecare trader are rezultate diferite; pierderile sunt posibile. Conținut educațional, nu consultanță financiară.</p>
+            </fieldset>
+          </div>
+          <details class="jt-more" id="jt-more">
+            <summary>Mai multe detalii <small>setup, lot, risc, emoții, lecție</small></summary>
+            <div class="jt-grid">
+              <label class="jt-span-2">Setup / motiv intrare
+                <textarea id="jt-setup" name="setup" rows="2" maxlength="600" placeholder="De ce ai intrat? ex.: retest suport H4 + confirmare"></textarea>
+              </label>
+              <label>Lot
+                <input type="text" inputmode="decimal" id="jt-lot" name="lot" placeholder="0.10">
+              </label>
+              <label>Risc %
+                <input type="text" inputmode="decimal" id="jt-risc" name="riscPct" placeholder="1">
+              </label>
+              <label class="jt-span-2">Risc în bani <span class="jt-opt">(opțional)</span>
+                <input type="text" inputmode="decimal" id="jt-risc-bani" name="riscBani" placeholder="ex.: 20">
+              </label>
+              <label class="jt-span-2">Emoții
+                <input type="text" id="jt-emotii" name="emotii" maxlength="200" placeholder="calm, grabă, frică, FOMO…">
+              </label>
+              <label class="jt-span-2">Lecție / ce îmbunătățesc
+                <textarea id="jt-lectie" name="lectie" rows="2" maxlength="600" placeholder="Ce faci diferit data viitoare?"></textarea>
+              </label>
+            </div>
+          </details>
+          <p class="jt-form-error" id="jt-form-error" role="alert" hidden></p>
+          <div class="jt-form-actions">
+            <button type="submit" class="btn btn-primary" id="jt-submit">Salvează tranzacția</button>
+            <button type="button" class="btn btn-ghost" id="jt-cancel" hidden>Anulează</button>
+          </div>
+        </form>
+
+        <!-- Rezumat + listă -->
+        <div class="jt-side">
+          <div class="jt-stats" id="jt-stats" aria-label="Rezumatul jurnalului tău">
+            <div class="jt-stat"><span>Total tranzacții</span><b data-stat="total">0</b></div>
+            <div class="jt-stat"><span>Câștigate</span><b data-stat="castigate">0</b></div>
+            <div class="jt-stat"><span>Pierdute</span><b data-stat="pierdute">0</b></div>
+            <div class="jt-stat"><span>Rata de câștig</span><b data-stat="rata">—</b></div>
+            <div class="jt-stat"><span>Total R</span><b data-stat="totalR">0R</b></div>
+            <div class="jt-stat"><span>R mediu</span><b data-stat="rMediu">—</b></div>
+            <div class="jt-stat jt-stat-plan"><span>Plan respectat</span><b data-stat="plan">—</b></div>
+          </div>
+
+          <div class="jt-toolbar" aria-label="Export și backup">
+            <button type="button" class="jt-tool" id="jt-export-xlsx"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Exportă Excel</button>
+            <button type="button" class="jt-tool" id="jt-export-json"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Exportă backup</button>
+            <button type="button" class="jt-tool" id="jt-import-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4l4 4M5 19h14"/></svg>Importă backup</button>
+            <input type="file" id="jt-import" accept=".json,application/json" hidden>
+            <button type="button" class="jt-tool jt-tool-danger" id="jt-clear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 11v6M14 11v6M6 7l1 12h10l1-12M9 7V4h6v3"/></svg>Șterge tot</button>
+          </div>
+          <p class="jt-status" id="jt-status" role="status" aria-live="polite"></p>
+
+          <div class="jt-list-head">
+            <h3>Tranzacțiile tale</h3>
+            <span id="jt-count"></span>
+          </div>
+          <div class="jt-empty" id="jt-empty">
+            <p><strong>Jurnalul tău e gol deocamdată.</strong></p>
+            <p>Adaugă prima tranzacție din formular — chiar și una pe cont demo. Fiecare rând notat sincer te învață ceva.</p>
+          </div>
+          <ol class="jt-list" id="jt-list"></ol>
+        </div>
+      </div>
     </section>
+
+    <!-- ===== CE SĂ NOTEZI + CHECKLIST ===== -->
+    <section class="section container" id="ghid">
+      <div class="jt-guide">
+        <div class="jt-card">
+          <p class="kicker">Ghid</p>
+          <h3>Ce să notezi la fiecare tranzacție</h3>
+          <ol class="jt-notes">
+            <li><b>Planul:</b> perechea, direcția, intrarea, stop loss-ul și take profit-ul — înainte să apeși butonul.</li>
+            <li><b>Motivul:</b> de ce ai intrat (setup-ul). Dacă nu îl poți scrie într-o propoziție, nu intra.</li>
+            <li><b>Riscul:</b> lotul și cât % din cont riști. Ideal 1–2%.</li>
+            <li><b>Rezultatul în R:</b> câte „riscuri” ai câștigat sau pierdut, nu doar banii.</li>
+            <li><b>Disciplina:</b> ai respectat planul? Răspunde sincer.</li>
+            <li><b>Emoțiile și lecția:</b> ce ai simțit și ce faci diferit data viitoare.</li>
+          </ol>
+        </div>
+        <div class="jt-card jt-checklist">
+          <p class="kicker">Înainte de intrare</p>
+          <h3>Checklist înainte de a intra în tranzacție</h3>
+          <ul>
+            <li>Am un plan clar pentru această intrare?</li>
+            <li>Stop loss-ul este setat?</li>
+            <li>Risc ≤ 1–2% din cont?</li>
+            <li>R:R ≥ 1:2?</li>
+            <li>Nu tranzacționez din emoție (frică, FOMO, răzbunare)?</li>
+          </ul>
+          <p class="jt-checklist-note">Un singur „nu” = nu intri. Piața îți oferă mereu altă ocazie.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ȘABLOANE DE DESCĂRCAT ===== -->
+    <section class="section container" id="sabloane">
+      <div class="jt-download">
+        <a class="jt-preview" href="images/jurnal-sablon-preview.png?v=31" data-lightbox>
+          <img src="images/jurnal-sablon-preview.png?v=31" width="1600" height="1131" loading="lazy" decoding="async"
+               alt="Previzualizare șablon jurnal de tranzacționare Marius FX: tabel gol cu coloanele Data, Pereche, Direcție, Sesiune, Setup, Preț intrare, Stop loss, Take profit, Lot, Risc, R:R, Rezultat, plan respectat, emoții și lecție, plus checklist înainte de intrare">
+          <span class="jt-preview-zoom">Click pentru mărire</span>
+        </a>
+        <div class="jt-download-copy">
+          <p class="kicker">Șabloane gratuite</p>
+          <h2>Preferi pe hârtie sau în Excel?</h2>
+          <p class="section-sub">Descarcă șablonul gol și completează-l offline. Aceleași coloane ca jurnalul de mai sus.</p>
+          <ul class="jt-files">
+            <li><b>Excel (.xlsx)</b> — liste derulante (Buy/Sell, sesiune, rezultat, Da/Nu), R:R și Rezultat în R calculate automat, foaie „Rezumat” cu statistici și instrucțiuni cu un exemplu fictiv. Merge și în Google Sheets sau LibreOffice.</li>
+            <li><b>PDF (A4, landscape)</b> — tabel de printat cu 13 rânduri și checklist înainte de intrare.</li>
+          </ul>
+          <div class="cta jt-download-cta">
+            <a class="btn btn-primary" href="downloads/jurnal-tranzactionare-marius-fx.xlsx?v=31" download="jurnal-tranzactionare-marius-fx.xlsx">Descarcă Excel</a>
+            <a class="btn btn-ghost" href="downloads/jurnal-tranzactionare-marius-fx.pdf?v=31" download="jurnal-tranzactionare-marius-fx.pdf">Descarcă PDF</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Fereastră pentru imaginea mărită -->
     <dialog class="lightbox" id="lightbox" aria-label="Imagine mărită">
       <button class="lightbox-close" type="button" aria-label="Închide">×</button>
@@ -157,6 +294,7 @@
       </div>
     </div>
   </footer>
-  <script src="script.js?v=30"></script>
+  <script src="script.js?v=31"></script>
+  <script src="jurnal.js?v=31"></script>
 </body>
 </html>
