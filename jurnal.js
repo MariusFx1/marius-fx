@@ -81,6 +81,11 @@
     if (!risk) return null;
     return round2(Math.abs(t.tp - t.intrare) / risk);
   }
+  /** Tranzacțiile în desfășurare (fără rezultat) nu au încă un rezultat în R.
+      R-ul eventual salvat pentru ele (date vechi) e ignorat la afișare, statistici și export,
+      dar nu e șters din localStorage. */
+  const isOpen = t => !t.rezultat;
+  const resultR = t => (isOpen(t) ? null : t.r);
   function autoR(rezultat, rr) {
     if (rezultat === 'TP') return rr;
     if (rezultat === 'SL') return -1;
@@ -117,7 +122,7 @@
   const sortTrades = list => [...list].sort((a, b) => (b.data.localeCompare(a.data)) || (b.creat.localeCompare(a.creat)));
 
   function computeStats(list) {
-    const withR = list.filter(t => t.r != null);
+    const withR = list.filter(t => resultR(t) != null);
     const wins = withR.filter(t => t.r > 0).length;
     const losses = withR.filter(t => t.r < 0).length;
     const totalR = round2(withR.reduce((s, t) => s + t.r, 0));
@@ -128,7 +133,7 @@
       rata: withR.length ? wins / withR.length : null,
       totalR, rMediu: withR.length ? totalR / withR.length : null,
       plan: answered ? da / answered : null,
-      deschise: list.filter(t => !t.rezultat).length
+      deschise: list.filter(isOpen).length
     };
   }
   const pct = v => (v == null ? '—' : (Math.round(v * 1000) / 10).toLocaleString('ro-RO') + '%');
@@ -163,11 +168,14 @@
     if (ok && dir === 'Sell' && !(p.sl > p.intrare && p.tp < p.intrare)) warn = 'La Sell, SL e deasupra intrării și TP sub.';
     F.rr.innerHTML = 'R:R planificat: <b>' + (rr != null ? '1:' + rr.toLocaleString('ro-RO') : '—') + '</b>' +
       (warn ? ' <span class="jt-rr-warn">· ' + warn + '</span>' : '');
-    if (!rManual) {
+    const open = !F.rezultat.value;
+    if (open) { rManual = false; F.r.value = ''; }
+    else if (!rManual) {
       const a = autoR(F.rezultat.value, rr);
       F.r.value = a == null ? '' : String(a).replace('.', ',');
     }
-    F.r.placeholder = F.rezultat.value === 'Manual' ? 'scrie tu, ex.: 0,6' : 'ex.: 2 sau -1';
+    F.r.disabled = open;
+    F.r.placeholder = open ? 'se completează la închidere' : F.rezultat.value === 'Manual' ? 'scrie tu, ex.: 0,6' : 'ex.: 2 sau -1';
   }
   ['input', 'change'].forEach(ev => {
     [F.intrare, F.sl, F.tp].forEach(el => el.addEventListener(ev, updateRR));
@@ -211,8 +219,9 @@
     F.intrare.value = fmtPrice(t.pereche, t.intrare); F.sl.value = fmtPrice(t.pereche, t.sl); F.tp.value = fmtPrice(t.pereche, t.tp);
     F.rezultat.value = t.rezultat;
     const auto = autoR(t.rezultat, plannedRR(t));
-    rManual = t.r != null && t.r !== auto;
-    F.r.value = t.r == null ? '' : String(t.r).replace('.', ',');
+    const r = resultR(t);
+    rManual = r != null && r !== auto;
+    F.r.value = r == null ? '' : String(r).replace('.', ',');
     setRadio('plan', t.plan);
     F.setup.value = t.setup; F.lot.value = fmtNum(t.lot); F.risc.value = fmtNum(t.riscPct);
     F.riscBani.value = fmtNum(t.riscBani); F.emotii.value = t.emotii; F.lectie.value = t.lectie;
@@ -244,6 +253,7 @@
     }
     if (nums.riscPct != null && (nums.riscPct < 0 || nums.riscPct > 100)) errors.push('Risc % (între 0 și 100)');
     if (errors.length) return { errors };
+    if (!F.rezultat.value) nums.r = null;   // în desfășurare: fără rezultat în R
     const prev = editingId ? trades.find(t => t.id === editingId) : null;
     return {
       trade: sanitize({
@@ -282,6 +292,9 @@
     set('total', s.total); set('castigate', s.castigate); set('pierdute', s.pierdute);
     set('rata', pct(s.rata)); set('totalR', fmtR(s.totalR)); set('rMediu', s.rMediu == null ? '—' : fmtR(s.rMediu));
     set('plan', pct(s.plan));
+    const openEl = document.querySelector('[data-stat="deschise"]');
+    openEl.textContent = s.deschise ? s.deschise + ' în desfășurare' : '';
+    openEl.hidden = !s.deschise;
     const totalEl = document.querySelector('[data-stat="totalR"]');
     totalEl.classList.toggle('pos', s.totalR > 0); totalEl.classList.toggle('neg', s.totalR < 0);
     $('jt-count').textContent = s.total ? s.total + (s.total === 1 ? ' tranzacție' : ' tranzacții') + (s.deschise ? ' · ' + s.deschise + ' în desfășurare' : '') : '';
@@ -290,8 +303,9 @@
 
     list.innerHTML = sorted.map(t => {
       const rr = plannedRR(t);
+      const r = resultR(t);
       const resClass = t.rezultat ? 'res-' + t.rezultat.toLowerCase() : 'res-open';
-      const rClass = t.r == null ? '' : t.r > 0 ? 'pos' : t.r < 0 ? 'neg' : '';
+      const rClass = r == null ? '' : r > 0 ? 'pos' : r < 0 ? 'neg' : '';
       const meta = [
         t.intrare != null ? 'Intrare <b>' + esc(fmtPrice(t.pereche, t.intrare)) + '</b>' : '',
         t.sl != null ? 'SL <b>' + esc(fmtPrice(t.pereche, t.sl)) + '</b>' : '',
@@ -313,7 +327,7 @@
           </div>
           <div class="jt-item-result">
             <span class="jt-res ${resClass}">${t.rezultat ? esc(t.rezultat) : 'În desfășurare'}</span>
-            <b class="jt-rval ${rClass}">${t.r == null ? '' : esc(fmtR(t.r))}</b>
+            <b class="jt-rval ${rClass}">${r == null ? '' : esc(fmtR(r))}</b>
           </div>
         </div>
         ${meta ? `<div class="jt-meta">${meta}</div>` : ''}
@@ -473,7 +487,7 @@
       rows.push({ cells: [
         [i + 1, 4], [dateSerial(t.data), 2], [t.pereche, 0], [t.directie, 0], [t.sesiune, 0], [t.setup, 5],
         [t.intrare, 3], [t.sl, 3], [t.tp, 3], [t.lot, 4], [t.riscPct, 7], [t.riscBani, 4],
-        [rr, 9], [t.rezultat || 'În desfășurare', 0], [t.r, 8], [t.plan, 0], [t.emotii, 5], [t.lectie, 5]
+        [rr, 9], [t.rezultat || 'În desfășurare', 0], [resultR(t), 8], [t.plan, 0], [t.emotii, 5], [t.lectie, 5]
       ].map(([v, s], k) => (k === 0 ? [v, 0] : [v, s])) });
     });
     const s = computeStats(list);
@@ -483,6 +497,7 @@
       { cells: [] },
       { height: 22, cells: [['Indicator', 1], ['Valoare', 1]] },
       { cells: [['Total tranzacții', 0], [s.total, 0]] },
+      { cells: [['În desfășurare (fără rezultat în R)', 0], [s.deschise, 0]] },
       { cells: [['Câștigate', 0], [s.castigate, 0]] },
       { cells: [['Pierdute', 0], [s.pierdute, 0]] },
       { cells: [['Rata de câștig', 0], [pct(s.rata), 0]] },
