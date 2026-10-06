@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forex pentru începători, lecție pas cu pas — Marius FX</title>
+  <meta name="description" content="Curs gratuit de Forex pentru începători, în 9 capitole: perechi, pip și lot, levier, stop loss, managementul riscului, ordine, psihologie, greșeli tipice și primii pași. Conținut educațional, nu consultanță financiară.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=33">
+  <link rel="icon" href="favicon.ico?v=15" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=15">
+  <link rel="manifest" href="site.webmanifest?v=15">
+  <meta name="theme-color" content="#070b14">
+</head>
+<body class="page-inner page-lesson">
+  <a class="skip-link" href="#continut">Sari la conținut</a>
+  <div class="lc-readbar" aria-hidden="true"><span id="lc-readbar"></span></div>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navigare principală">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Deschide meniul">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="lectie.html" aria-current="page">Începători</a></li>
+        <li><a href="reguli.html">Reguli</a></li>
+        <li><a href="patternuri.html">Patternuri</a></li>
+        <li><a href="sesiuni.html">Sesiuni</a></li>
+        <li><a href="jurnal.html">Jurnal</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="despre.html">Despre</a></li>
+        <li><a href="broker.html">Broker</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="continut" class="lc">
+    <!-- ===== INTRO CURS ===== -->
+    <section class="lc-hero">
+      <div class="container lc-hero-grid">
+        <div class="lc-hero-copy">
+          <p class="kicker">Curs gratuit · de la zero</p>
+          <h1>Forex pentru începători, <span class="accent">pas cu pas</span></h1>
+          <p class="lc-lead">Salut, sunt Marius. Când am început, nu am avut pe nimeni care să-mi explice lucrurile de bază, așa că am învățat singur, din greșeli care m-au costat timp și bani. Lecția aceasta este ce mi-aș fi dorit să citesc atunci.</p>
+          <p class="lc-lead-2">Nu îți promit că vei face bani. Îți promit că vei înțelege cum funcționează piața, ce riști și cum te protejezi. Citește capitolele în ordine, refă exemplele cu pixul în mână și nu trece mai departe până nu ai înțeles capitolul curent.</p>
+          <ul class="lc-meta" aria-label="Despre curs">
+            <li><b>9</b> capitole</li>
+            <li>aproximativ <b>30 de minute</b> de citit</li>
+            <li>exemple numerice pas cu pas</li>
+          </ul>
+        </div>
+        <aside class="lc-progress-card" aria-labelledby="lc-progress-title">
+          <p class="lc-progress-label" id="lc-progress-title">Progresul tău</p>
+          <p class="lc-progress-count"><b id="lc-done-count">0</b> din 9 capitole parcurse</p>
+          <div class="lc-progress-track" role="progressbar" aria-label="Capitole parcurse" aria-valuemin="0" aria-valuemax="9" aria-valuenow="0" id="lc-progress-bar"><span id="lc-progress-fill"></span></div>
+          <a class="btn btn-primary lc-start" id="lc-start" href="#cap-1">Începe cu capitolul 1</a>
+          <p class="lc-progress-note">Bifează fiecare capitol la final. Progresul se salvează doar în browserul tău.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="container lc-layout">
+      <!-- ===== CUPRINS ===== -->
+      <nav class="lc-toc" aria-label="Cuprinsul lecției" id="cuprins">
+        <p class="lc-toc-title">Cuprins</p>
+        <ol class="lc-toc-list">
+          <li><a href="#cap-1" data-ch="1"><span class="lc-toc-num">1</span><span class="lc-toc-text">Ce este Forex-ul</span></a></li>
+          <li><a href="#cap-2" data-ch="2"><span class="lc-toc-num">2</span><span class="lc-toc-text">Pip, punct și lot</span></a></li>
+          <li><a href="#cap-3" data-ch="3"><span class="lc-toc-num">3</span><span class="lc-toc-text">Levier și marjă</span></a></li>
+          <li><a href="#cap-4" data-ch="4"><span class="lc-toc-num">4</span><span class="lc-toc-text">Stop loss și take profit</span></a></li>
+          <li><a href="#cap-5" data-ch="5"><span class="lc-toc-num">5</span><span class="lc-toc-text">Managementul riscului</span></a></li>
+          <li><a href="#cap-6" data-ch="6"><span class="lc-toc-num">6</span><span class="lc-toc-text">Ordine și timeframe-uri</span></a></li>
+          <li><a href="#cap-7" data-ch="7"><span class="lc-toc-num">7</span><span class="lc-toc-text">Psihologie și disciplină</span></a></li>
+          <li><a href="#cap-8" data-ch="8"><span class="lc-toc-num">8</span><span class="lc-toc-text">Greșelile începătorilor</span></a></li>
+          <li><a href="#cap-9" data-ch="9"><span class="lc-toc-num">9</span><span class="lc-toc-text">Primii pași concreți</span></a></li>
+        </ol>
+        <p class="lc-toc-foot">Conținut educațional. Nu îți spun ce să cumperi sau să vinzi.</p>
+      </nav>
+
+      <article class="lc-article">
+
+        <!-- ===== CAPITOLUL 1 ===== -->
+        <section class="lc-chapter" id="cap-1" data-ch="1" aria-labelledby="cap-1-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">01</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 1 din 9</p>
+              <h2 id="cap-1-title">Ce este Forex-ul</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Forex (de la <em>Foreign Exchange</em>) este piața în care se schimbă valute între ele. Este cea mai mare piață financiară din lume și funcționează non-stop, de luni până vineri.</p>
+
+          <h3>Perechi valutare: bază și cotată</h3>
+          <p>Pe Forex nu cumperi pur și simplu „dolari”. Tranzacționezi mereu o valută contra alteia, de aceea prețurile apar în perechi: EURUSD, GBPUSD, USDJPY și așa mai departe.</p>
+          <div class="lc-quote-anatomy" aria-label="EURUSD egal 1,1000: euro este valuta de bază, dolarul este valuta cotată">
+            <div class="lc-qa-part lc-qa-base"><b>EUR</b><span>valuta de bază</span></div>
+            <div class="lc-qa-sep">/</div>
+            <div class="lc-qa-part lc-qa-quote"><b>USD</b><span>valuta cotată</span></div>
+            <div class="lc-qa-sep">=</div>
+            <div class="lc-qa-part lc-qa-price"><b>1,1000</b><span>1 euro costă 1,10 dolari</span></div>
+          </div>
+          <p>Prima valută din pereche este <strong>valuta de bază</strong>, a doua este <strong>valuta cotată</strong>. Prețul îți spune câte unități din valuta cotată costă o unitate din valuta de bază.</p>
+          <ul class="lc-list">
+            <li><strong>Buy (long):</strong> te aștepți ca valuta de bază să se întărească, adică prețul să crească.</li>
+            <li><strong>Sell (short):</strong> te aștepți ca valuta de bază să se slăbească, adică prețul să scadă.</li>
+          </ul>
+          <p>Poți câștiga sau pierde în ambele direcții. Nu există o direcție „sigură”.</p>
+          <p class="lc-note"><b>Notă:</b> în lecție scriu prețurile cu virgulă, cum este corect în română (1,1000). Pe platforma de tranzacționare vei vedea punct (1.1000). Este același număr.</p>
+
+          <h3>Ce perechi există</h3>
+          <div class="lc-cards-3">
+            <div class="lc-mini-card"><h4>Majore</h4><p>Dolarul american cu cele mai tranzacționate valute: EURUSD, GBPUSD, USDJPY, USDCHF, USDCAD, AUDUSD, NZDUSD. De obicei au cele mai mici spread-uri.</p></div>
+            <div class="lc-mini-card"><h4>Minore (cross-uri)</h4><p>Perechi fără dolar, de exemplu EURGBP, EURJPY, GBPJPY. Spread-uri ceva mai mari.</p></div>
+            <div class="lc-mini-card lc-mini-warn"><h4>Exotice</h4><p>O valută majoră cu una dintr-o economie mai mică, de exemplu USDTRY sau USDZAR. Spread-uri mari și mișcări bruște. Nu sunt pentru început.</p></div>
+          </div>
+          <p>Aurul (<strong>XAUUSD</strong>) nu este o valută, dar la majoritatea brokerilor se tranzacționează alături de perechile Forex. Se mișcă mult mai repede, așa că cere și mai multă atenție la risc.</p>
+
+          <h3>Bid, ask și spread</h3>
+          <p>În orice moment există două prețuri:</p>
+          <ul class="lc-list">
+            <li><strong>Bid:</strong> prețul la care poți <strong>vinde</strong>.</li>
+            <li><strong>Ask:</strong> prețul la care poți <strong>cumpăra</strong>. Este mereu puțin mai mare decât bid-ul.</li>
+          </ul>
+          <p>Diferența dintre ele se numește <strong>spread</strong> și este principalul cost al unei tranzacții. De aceea orice poziție pornește puțin pe minus: cumperi la ask, dar poziția ta este evaluată la bid.</p>
+          <figure class="lc-fig">
+            <svg viewBox="0 0 400 210" role="img" aria-labelledby="svg-spread-t">
+              <title id="svg-spread-t">Schemă: prețul ask (1,1001, aici cumperi) este deasupra prețului bid (1,1000, aici vinzi). Diferența de 1 pip este spread-ul.</title>
+              <rect width="400" height="210" rx="14" fill="#0b1220"/>
+              <g stroke="#1e2b45" stroke-width="1"><line x1="16" y1="45" x2="384" y2="45"/><line x1="16" y1="165" x2="384" y2="165"/></g>
+              <g stroke-width="1.4">
+                <line x1="34" y1="144" x2="34" y2="186" stroke="#f87171"/><rect x="29" y="152" width="10" height="26" rx="1.5" fill="#f87171"/>
+                <line x1="56" y1="136" x2="56" y2="182" stroke="#22c55e"/><rect x="51" y="146" width="10" height="28" rx="1.5" fill="#22c55e"/>
+                <line x1="78" y1="120" x2="78" y2="158" stroke="#22c55e"/><rect x="73" y="128" width="10" height="20" rx="1.5" fill="#22c55e"/>
+                <line x1="100" y1="112" x2="100" y2="150" stroke="#f87171"/><rect x="95" y="124" width="10" height="18" rx="1.5" fill="#f87171"/>
+                <line x1="122" y1="116" x2="122" y2="156" stroke="#f87171"/><rect x="117" y="134" width="10" height="16" rx="1.5" fill="#f87171"/>
+                <line x1="144" y1="120" x2="144" y2="156" stroke="#22c55e"/><rect x="139" y="130" width="10" height="18" rx="1.5" fill="#22c55e"/>
+                <line x1="166" y1="112" x2="166" y2="138" stroke="#22c55e"/><rect x="161" y="118" width="10" height="12" rx="1.5" fill="#22c55e"/>
+              </g>
+              <rect x="16" y="92" width="368" height="26" fill="#fbbf24" fill-opacity=".13"/>
+              <line x1="16" y1="92" x2="384" y2="92" stroke="#4ade80" stroke-width="2" stroke-dasharray="6 4"/>
+              <line x1="16" y1="118" x2="384" y2="118" stroke="#f87171" stroke-width="2"/>
+              <g font-family="Manrope, sans-serif">
+                <text x="384" y="84" text-anchor="end" fill="#4ade80" font-size="14" font-weight="800">ASK 1,1001</text>
+                <text x="384" y="66" text-anchor="end" fill="#9aa7bd" font-size="12">aici cumperi</text>
+                <text x="384" y="138" text-anchor="end" fill="#f87171" font-size="14" font-weight="800">BID 1,1000</text>
+                <text x="384" y="156" text-anchor="end" fill="#9aa7bd" font-size="12">aici vinzi</text>
+                <text x="214" y="110" fill="#fbbf24" font-size="13" font-weight="800">spread = 1 pip</text>
+                <text x="384" y="196" text-anchor="end" fill="#64748b" font-size="11">Schemă, nu la scară</text>
+              </g>
+              <path d="M202 95v20" stroke="#fbbf24" stroke-width="1.6"/><path d="M198 99l4-5 4 5M198 111l4 5 4-5" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+            </svg>
+            <figcaption>Cumperi la ask, vinzi la bid. Distanța dintre ele este spread-ul.</figcaption>
+          </figure>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu</p>
+            <p>EURUSD: bid 1,1000, ask 1,1001.</p>
+            <p class="lc-calc">Spread = 1,1001 − 1,1000 = 0,0001 = <b>1 pip</b></p>
+            <p>Dacă deschizi 0,10 loturi, spread-ul te costă aproximativ 1 dolar din prima secundă. În capitolul 2 vezi de unde vine suma.</p>
+          </div>
+          <p>Spread-ul nu este fix. Se mărește la știrile importante, noaptea, când lichiditatea e mică, și la redeschiderea pieței de duminică.</p>
+
+          <h3>Cine tranzacționează</h3>
+          <p>Băncile centrale, băncile comerciale (piața interbancară), fondurile de investiții, companiile care au nevoie de valută pentru afaceri și, la final, traderii individuali ca noi, prin intermediul brokerilor. Noi suntem o parte foarte mică din piață. Nu mișcăm prețul, ci încercăm să ne poziționăm în direcția în care îl mișcă participanții mari.</p>
+
+          <h3>Sesiunile de tranzacționare</h3>
+          <p>Piața se deschide duminică noaptea, în jurul orei 00:00 (ora României), și se închide vineri, tot în jurul miezului nopții. Între timp, activitatea se mută de la un centru financiar la altul. Orele de mai jos sunt aproximative, în ora României:</p>
+          <ul class="lc-sessions">
+            <li><span class="lc-sess-dot" style="--c:#fbbf24"></span><div><b>Sydney și Tokyo</b><span>de seara târziu până în jurul prânzului. De obicei mișcări mai calme, active perechile cu JPY, AUD și NZD.</span></div></li>
+            <li><span class="lc-sess-dot" style="--c:#22c55e"></span><div><b>Londra</b><span>aproximativ 10:00–19:00. Cea mai mare lichiditate din zi.</span></div></li>
+            <li><span class="lc-sess-dot" style="--c:#818cf8"></span><div><b>New York</b><span>aproximativ 15:00–24:00. Multe știri importante din SUA apar la începutul sesiunii.</span></div></li>
+            <li class="lc-sess-hot"><span class="lc-sess-dot" style="--c:#4ade80"></span><div><b>Suprapunerea Londra–New York</b><span>aproximativ 15:00–19:00. De obicei cea mai activă perioadă a zilei.</span></div></li>
+          </ul>
+          <p>Orele exacte se schimbă odată cu ora de vară. Pe pagina <a href="sesiuni.html">Sesiuni</a> vezi live ce sesiune este deschisă acum, direct în ora ta.</p>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Tranzacționezi mereu o valută contra alteia. Buy înseamnă că te aștepți să crească prețul, sell că te aștepți să scadă.</li>
+              <li>Cumperi la ask, vinzi la bid. Spread-ul este un cost pe care îl plătești la fiecare tranzacție.</li>
+              <li>Începe cu perechile majore: spread mic și mișcări mai ușor de citit.</li>
+              <li>Contează când tranzacționezi. Suprapunerea Londra–New York este, de obicei, cea mai activă.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="1" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-2">Capitolul 2: Pip, punct și lot <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 2 ===== -->
+        <section class="lc-chapter" id="cap-2" data-ch="2" aria-labelledby="cap-2-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">02</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 2 din 9</p>
+              <h2 id="cap-2-title">Pip, punct și lot</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Ca să știi cât riști, trebuie să știi cât valorează o mișcare a prețului. Aici intră în scenă pipul și lotul. Este capitolul cu cele mai multe cifre, dar merită: tot ce urmează se bazează pe el.</p>
+
+          <h3>Ce este un pip</h3>
+          <p>Pipul este unitatea standard de mișcare a prețului:</p>
+          <ul class="lc-list">
+            <li>La majoritatea perechilor, <strong>1 pip = 0,0001</strong> (a patra zecimală).</li>
+            <li>La perechile cu yen (JPY), <strong>1 pip = 0,01</strong> (a doua zecimală).</li>
+          </ul>
+          <p>Brokerii afișează de obicei o zecimală în plus. Aceasta este <strong>punctul</strong> (sau pipeta) și valorează o zecime de pip. În MetaTrader, distanțele sunt adesea exprimate în puncte: <strong>10 puncte = 1 pip</strong>. Atenție la asta când setezi stop loss-ul!</p>
+          <div class="lc-digits" aria-label="Exemple de citire a prețului">
+            <div class="lc-digit-row"><span class="lc-digit-pair">EURUSD</span><span class="lc-digit-price">1,103<b class="lc-d-pip">5</b><i class="lc-d-pt">7</i></span></div>
+            <div class="lc-digit-row"><span class="lc-digit-pair">USDJPY</span><span class="lc-digit-price">150,2<b class="lc-d-pip">5</b><i class="lc-d-pt">7</i></span></div>
+            <p class="lc-digit-legend"><span><b class="lc-d-pip">5</b> cifra pipului</span><span><i class="lc-d-pt">7</i> punctul (1/10 pip)</span></p>
+          </div>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu</p>
+            <p class="lc-calc">EURUSD urcă de la 1,1000 la 1,1035: 1,1035 − 1,1000 = 0,0035 = <b>35 de pips</b></p>
+            <p class="lc-calc">USDJPY scade de la 150,40 la 149,90: 150,40 − 149,90 = 0,50 = <b>50 de pips</b></p>
+          </div>
+
+          <h3>Lotul: cât de mare e poziția</h3>
+          <p>Pe platformă alegi mărimea poziției în <strong>loturi</strong>. Un lot înseamnă o anumită cantitate din valuta de bază:</p>
+          <div class="lc-table-wrap">
+            <table class="lc-table">
+              <thead><tr><th scope="col">Tip</th><th scope="col">Loturi</th><th scope="col">Unități (bază)</th><th scope="col">Pip la EURUSD</th></tr></thead>
+              <tbody>
+                <tr><td>Standard</td><td>1,00</td><td>100.000</td><td>10 USD</td></tr>
+                <tr><td>Mini</td><td>0,10</td><td>10.000</td><td>1 USD</td></tr>
+                <tr><td>Micro</td><td>0,01</td><td>1.000</td><td>0,10 USD</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Cel mai mic volum, de obicei 0,01 loturi, înseamnă 1.000 de unități. Cu micro-loturi poți începe pe un cont real mic, cu risc controlat.</p>
+
+          <h3>Valoarea pipului, cu exemple</h3>
+          <p class="lc-formula"><span>Valoarea unui pip</span> = mărimea pipului × numărul de unități</p>
+          <p>Rezultatul iese în <strong>valuta cotată</strong> (a doua din pereche). Dacă ai contul în altă monedă, îl transformi la cursul zilei.</p>
+
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplul 1 · EURUSD</p>
+            <p class="lc-calc">1 lot: 0,0001 × 100.000 = <b>10 USD pe pip</b></p>
+            <p>Cumperi 0,10 loturi (1 USD pe pip) și prețul urcă 35 de pips:</p>
+            <p class="lc-calc">35 × 1 USD = <b>35 USD</b> profit</p>
+            <p>Dacă prețul ar fi scăzut 35 de pips, ai fi pierdut tot 35 USD. Cont în euro? Împarți la cursul EURUSD. Presupunem EURUSD = 1,10:</p>
+            <p class="lc-calc">10 USD ÷ 1,10 ≈ <b>9,09 € pe pip</b> pentru 1 lot · 35 USD ÷ 1,10 ≈ <b>31,82 €</b></p>
+          </div>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplul 2 · USDJPY</p>
+            <p class="lc-calc">1 lot: 0,01 × 100.000 = <b>1.000 JPY pe pip</b></p>
+            <p>Ca să-l transformi în dolari, împarți la curs. Presupunem USDJPY = 150,00:</p>
+            <p class="lc-calc">1.000 JPY ÷ 150 ≈ <b>6,67 USD pe pip</b> (≈ 6,06 € la EURUSD 1,10)</p>
+            <p>Cumperi 0,10 loturi (100 JPY pe pip) la 150,00 și închizi la 150,50, adică 50 de pips:</p>
+            <p class="lc-calc">50 × 100 JPY = 5.000 JPY ÷ 150 ≈ <b>33,33 USD</b></p>
+          </div>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplul 3 · Aur (XAUUSD)</p>
+            <p>1 lot = 100 de uncii. Pe acest site folosim convenția <strong>1 pip = 0,10 USD</strong> din preț:</p>
+            <p class="lc-calc">1 lot: 100 × 0,10 = <b>10 USD pe pip</b> · 0,01 loturi = <b>0,10 USD pe pip</b></p>
+            <p>O mișcare de 1 dolar (de la 4.150,00 la 4.151,00) înseamnă 10 pips, adică 100 USD pe un lot. Aurul urcă de la 4.150,00 la 4.162,50, adică 12,50 USD, deci 125 de pips:</p>
+            <p class="lc-calc">0,01 loturi: 125 × 0,10 = <b>12,50 USD</b> · 1 lot: 125 × 10 = <b>1.250 USD</b></p>
+          </div>
+          <p class="lc-warn"><b>Atenție:</b> brokerii numesc diferit „pipul” la aur, iar unele platforme au contracte de altă mărime. Verifică mereu specificațiile simbolului la brokerul tău înainte să tranzacționezi.</p>
+          <p>Nu trebuie să faci aceste calcule de mână la fiecare tranzacție. <a href="calculator.html">Calculatorul de lot</a> de pe site face conversia pentru tine. Dar este important să înțelegi de unde vin cifrele, ca să observi când ceva nu are sens.</p>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>1 pip = 0,0001 la majoritatea perechilor și 0,01 la perechile cu JPY. 10 puncte = 1 pip.</li>
+              <li>1 lot = 100.000 de unități, 0,10 = 10.000, 0,01 = 1.000.</li>
+              <li>La EURUSD, 1 lot înseamnă aproximativ 10 USD pe pip, iar 0,01 loturi aproximativ 0,10 USD pe pip.</li>
+              <li>Aurul și perechile cu JPY au altă valoare a pipului. Verifică înainte să intri.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="2" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-3">Capitolul 3: Levier și marjă <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 3 ===== -->
+        <section class="lc-chapter" id="cap-3" data-ch="3" aria-labelledby="cap-3-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">03</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 3 din 9</p>
+              <h2 id="cap-3-title">Levier și marjă</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Levierul este motivul pentru care Forex-ul atrage atât de mulți oameni. Tot el este motivul pentru care cei mai mulți își golesc contul. Hai să-l înțelegem corect.</p>
+
+          <h3>Ce este levierul</h3>
+          <p>Levierul îți permite să deschizi o poziție mult mai mare decât banii din cont. Cu levier 1:30, pentru fiecare 1 € din cont poți controla o poziție de 30 €. Brokerul nu îți dă bani cadou. Îți blochează doar o parte din cont ca garanție, iar această garanție se numește <strong>marjă</strong>.</p>
+          <p class="lc-formula"><span>Marja necesară</span> = valoarea poziției ÷ levier</p>
+          <p class="lc-warn"><b>Important:</b> profitul și pierderea se calculează la <strong>valoarea întreagă a poziției</strong>, nu la marjă. Levierul mărește la fel de mult și pierderile.</p>
+          <p>În Uniunea Europeană, pentru clienții retail, levierul maxim este 1:30 pe perechile formate doar din valute principale (USD, EUR, JPY, GBP, CHF, CAD) și 1:20 pe aur și pe restul perechilor. Unii brokeri din afara UE oferă 1:500 sau chiar mai mult. Pentru un începător, asta nu este un avantaj, ci o capcană.</p>
+
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu · cont de 1.000 €</p>
+            <p>Cumperi 0,10 loturi EURUSD la 1,1000. Valoarea poziției: 0,10 × 100.000 = 10.000 €.</p>
+            <p class="lc-calc">Levier 1:30 → marja = 10.000 ÷ 30 ≈ <b>333,33 €</b></p>
+            <p>Pentru 1 lot întreg (100.000 €) ai avea nevoie de 3.333,33 € marjă, deci nu îl poți deschide. Limita te protejează.</p>
+            <p class="lc-calc">Levier 1:500 → marja pentru 1 lot = 100.000 ÷ 500 = <b>200 €</b></p>
+            <p>Acum poți deschide 1 lot cu doar 1.000 € în cont. Și aici apare problema.</p>
+          </div>
+
+          <h3>Margin call și stop out</h3>
+          <p>Brokerul urmărește permanent nivelul marjei:</p>
+          <p class="lc-formula"><span>Nivelul marjei</span> = capitalul curent (equity) ÷ marja folosită × 100%</p>
+          <ul class="lc-list">
+            <li><strong>Margin call</strong> (de obicei la 100%): primești un avertisment că nu mai ai marjă liberă și nu mai poți deschide poziții noi.</li>
+            <li><strong>Stop out</strong> (la un nivel mai mic, de exemplu 50%, cum este obligatoriu în UE pentru clienții retail): brokerul începe să-ți închidă automat pozițiile, de obicei începând cu poziția care pierde cel mai mult.</li>
+          </ul>
+          <p>Nivelurile exacte diferă de la un broker la altul. Le găsești în condițiile contului.</p>
+          <div class="lc-example lc-example-danger">
+            <p class="lc-example-title">Exemplu · ce se întâmplă cu 1 lot pe 1.000 €</p>
+            <p>Cont de 1.000 €, 1 lot EURUSD cu levier 1:500, marjă folosită 200 €. Un pip valorează aproximativ 9,09 € (10 USD ÷ 1,10).</p>
+            <p class="lc-calc">88 de pips împotrivă: 88 × 9,09 ≈ 800 € pierdere → equity ≈ 200 € → nivel 100% → <b>margin call</b></p>
+            <p class="lc-calc">99 de pips împotrivă: 99 × 9,09 ≈ 900 € pierdere → equity ≈ 100 € → nivel 50% → <b>stop out</b></p>
+            <p>Ai pierdut 90% din cont într-o mișcare de sub 100 de pips. Pe EURUSD, asta se poate întâmpla într-o singură zi.</p>
+          </div>
+          <div class="lc-example lc-example-good">
+            <p class="lc-example-title">Aceeași tranzacție, lot corect</p>
+            <p>Același cont, dar 0,04 loturi (lotul calculat în capitolul 5 pentru risc de 1% și stop loss de 25 de pips). Valoarea poziției este 4.000 €.</p>
+            <p class="lc-calc">Marja: 4.000 ÷ 30 ≈ 133,33 € la 1:30 · 4.000 ÷ 500 = 8 € la 1:500</p>
+            <p class="lc-calc">Pierderea la stop loss: 0,04 × 25 × 9,09 ≈ <b>9,09 €</b>, sub 1% din cont, indiferent de levier</p>
+          </div>
+          <figure class="lc-fig">
+            <svg viewBox="0 0 400 236" role="img" aria-labelledby="svg-lev-t">
+              <title id="svg-lev-t">Pierderea la 100 de pips împotrivă pe EURUSD, cont de 1.000 euro: 0,01 loturi 9,09 euro, 0,04 loturi 36,36 euro, 0,10 loturi 90,91 euro, 1 lot 909,09 euro, adică aproape tot contul.</title>
+              <rect width="400" height="236" rx="14" fill="#0b1220"/>
+              <g font-family="Manrope, sans-serif">
+                <text x="16" y="28" fill="#e6ebf5" font-size="14" font-weight="800">Pierdere la 100 de pips împotrivă</text>
+                <text x="16" y="46" fill="#9aa7bd" font-size="11.5">EURUSD, cont de 1.000 €. Bara întreagă = tot contul.</text>
+                <g font-size="13" font-weight="700" fill="#e6ebf5">
+                  <text x="16" y="82">0,01 lot</text>
+                  <text x="16" y="124">0,04 lot</text>
+                  <text x="16" y="166">0,10 lot</text>
+                  <text x="16" y="208">1 lot</text>
+                </g>
+                <g fill="#14203a">
+                  <rect x="92" y="66" width="292" height="22" rx="6"/>
+                  <rect x="92" y="108" width="292" height="22" rx="6"/>
+                  <rect x="92" y="150" width="292" height="22" rx="6"/>
+                  <rect x="92" y="192" width="292" height="22" rx="6"/>
+                </g>
+                <rect x="92" y="66" width="4" height="22" rx="2" fill="#22c55e"/>
+                <rect x="92" y="108" width="10.6" height="22" rx="3" fill="#22c55e"/>
+                <rect x="92" y="150" width="26.5" height="22" rx="4" fill="#fbbf24"/>
+                <rect x="92" y="192" width="265.5" height="22" rx="6" fill="#f87171"/>
+                <g font-size="12" font-weight="700">
+                  <text x="104" y="82" fill="#4ade80">9,09 € · 0,9%</text>
+                  <text x="110" y="124" fill="#4ade80">36,36 € · 3,6%</text>
+                  <text x="126" y="166" fill="#fbbf24">90,91 € · 9,1%</text>
+                  <text x="348" y="208" text-anchor="end" fill="#1a0505">909,09 € · 90,9%</text>
+                </g>
+              </g>
+            </svg>
+            <figcaption>Riscul îl dă mărimea poziției. Levierul mare doar îți permite să deschizi poziții prea mari.</figcaption>
+          </figure>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Levierul mărește în egală măsură câștigurile și pierderile.</li>
+              <li>Marja este garanția blocată de broker. Nu este costul tranzacției și nici pierderea maximă.</li>
+              <li>Margin call și stop out apar când pierderile consumă marja. Dacă ajungi acolo, ai riscat mult prea mult.</li>
+              <li>Calculează lotul după risc, nu după cât îți permite levierul.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="3" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-4">Capitolul 4: Stop loss și take profit <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 4 ===== -->
+        <section class="lc-chapter" id="cap-4" data-ch="4" aria-labelledby="cap-4-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">04</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 4 din 9</p>
+              <h2 id="cap-4-title">Stop loss și take profit</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Dacă ar fi să reții un singur lucru din toată lecția, aș vrea să fie acesta: nicio tranzacție fără stop loss.</p>
+
+          <h3>De ce mereu stop loss</h3>
+          <p><strong>Stop loss-ul (SL)</strong> este un ordin care îți închide automat poziția la un preț stabilit dinainte, dacă piața merge împotriva ta. El transformă o pierdere necunoscută într-o pierdere mică și cunoscută. Fără SL, o singură știre neașteptată sau o seară în care îți spui „las-o, că își revine” îți poate șterge luni întregi de muncă.</p>
+          <p><strong>Take profit-ul (TP)</strong> este opusul: închide automat poziția când prețul ajunge la ținta ta. Te ajută să nu te răzgândești din lăcomie sau din frică.</p>
+
+          <h3>Unde pui stop loss-ul</h3>
+          <p>SL-ul nu se pune la un număr fix de pips „pentru că așa am văzut”. Se pune acolo unde ideea ta de tranzacționare devine greșită:</p>
+          <ul class="lc-list">
+            <li><strong>La buy:</strong> sub ultimul minim relevant (swing low) sau sub o zonă de suport.</li>
+            <li><strong>La sell:</strong> deasupra ultimului maxim relevant (swing high) sau deasupra unei zone de rezistență.</li>
+            <li><strong>Lasă o mică rezervă</strong> (câțiva pips plus spread-ul), ca să nu fii scos din poziție de o simplă fitilă.</li>
+          </ul>
+          <p>Abia după ce știi unde stă SL-ul calculezi lotul. Distanța stop loss-ului o dictează graficul, iar mărimea poziției se adaptează la ea. Niciodată invers.</p>
+          <p class="lc-note"><b>Detaliu util:</b> o poziție sell se închide la prețul ask. Graficul din MetaTrader arată de obicei bid-ul, așa că spread-ul poate atinge SL-ul unui sell chiar dacă pe grafic prețul nu pare să ajungă acolo. Încă un motiv pentru rezerva de câțiva pips.</p>
+          <p class="lc-warn"><b>Regulă de aur:</b> nu muta niciodată SL-ul mai departe când prețul se apropie de el. Îl poți muta doar în direcția care îți reduce riscul (de exemplu la break-even, adică la prețul de intrare) și doar dacă asta scrie în planul tău.</p>
+
+          <h3>Raportul risc/câștig (R:R)</h3>
+          <p>R:R compară cât riști cu cât poți câștiga. Dacă riști 25 de pips ca să câștigi 50, raportul este 1:2. Traderii numesc riscul unei tranzacții <strong>1R</strong>: la 1:2, ținta este 2R.</p>
+          <figure class="lc-fig">
+            <svg viewBox="0 0 400 262" role="img" aria-labelledby="svg-rr-t">
+              <title id="svg-rr-t">Exemplu de buy pe EURUSD: intrare la 1,1000, stop loss la 1,0975 sub ultimul minim (25 de pips, 1R), take profit la 1,1050 (50 de pips, 2R). Raport risc/câștig 1:2.</title>
+              <rect width="400" height="262" rx="14" fill="#0b1220"/>
+              <rect x="150" y="50" width="160" height="100" fill="#22c55e" fill-opacity=".14"/>
+              <rect x="150" y="150" width="160" height="50" fill="#f87171" fill-opacity=".16"/>
+              <line x1="16" y1="50" x2="310" y2="50" stroke="#22c55e" stroke-width="2"/>
+              <line x1="16" y1="150" x2="310" y2="150" stroke="#e6ebf5" stroke-width="1.6" stroke-dasharray="5 4"/>
+              <line x1="16" y1="200" x2="310" y2="200" stroke="#f87171" stroke-width="2"/>
+              <g stroke-width="1.4">
+                <line x1="28" y1="104" x2="28" y2="128" stroke="#f87171"/><rect x="23" y="110" width="10" height="12" rx="1.5" fill="#f87171"/>
+                <line x1="44" y1="118" x2="44" y2="142" stroke="#f87171"/><rect x="39" y="122" width="10" height="16" rx="1.5" fill="#f87171"/>
+                <line x1="60" y1="126" x2="60" y2="146" stroke="#22c55e"/><rect x="55" y="132" width="10" height="6" rx="1.5" fill="#22c55e"/>
+                <line x1="76" y1="130" x2="76" y2="160" stroke="#f87171"/><rect x="71" y="132" width="10" height="24" rx="1.5" fill="#f87171"/>
+                <line x1="92" y1="152" x2="92" y2="182" stroke="#f87171"/><rect x="87" y="156" width="10" height="16" rx="1.5" fill="#f87171"/>
+                <line x1="108" y1="154" x2="108" y2="178" stroke="#22c55e"/><rect x="103" y="158" width="10" height="14" rx="1.5" fill="#22c55e"/>
+                <line x1="124" y1="142" x2="124" y2="164" stroke="#22c55e"/><rect x="119" y="146" width="10" height="12" rx="1.5" fill="#22c55e"/>
+                <line x1="140" y1="144" x2="140" y2="158" stroke="#22c55e"/><rect x="135" y="148" width="10" height="6" rx="1.5" fill="#22c55e"/>
+              </g>
+              <circle cx="150" cy="150" r="4.5" fill="#e6ebf5"/>
+              <path d="M150 150 L196 128 L222 138 L262 92 L300 54" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-dasharray="3 4" opacity=".8"/>
+              <g font-family="Manrope, sans-serif">
+                <text x="392" y="46" text-anchor="end" fill="#4ade80" font-size="13" font-weight="800">TP 1,1050</text>
+                <text x="392" y="154" text-anchor="end" fill="#e6ebf5" font-size="13" font-weight="800">Intrare</text>
+                <text x="392" y="170" text-anchor="end" fill="#9aa7bd" font-size="12">1,1000</text>
+                <text x="392" y="205" text-anchor="end" fill="#f87171" font-size="13" font-weight="800">SL 1,0975</text>
+                <text x="230" y="98" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="800">+50 pips · 2R</text>
+                <text x="230" y="180" text-anchor="middle" fill="#f87171" font-size="13" font-weight="800">−25 pips · 1R</text>
+                <text x="66" y="194" fill="#9aa7bd" font-size="10.5">ultimul minim</text>
+                <text x="16" y="240" fill="#e6ebf5" font-size="13.5" font-weight="700">R:R = 25 : 50 = <tspan fill="#4ade80">1:2</tspan></text>
+              </g>
+              <path d="M92 184v6" stroke="#9aa7bd" stroke-width="1.2"/>
+            </svg>
+            <figcaption>SL sub ultimul minim, TP înaintea următoarei rezistențe. Pierderea posibilă (1R) este jumătate din câștigul vizat (2R).</figcaption>
+          </figure>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu</p>
+            <p>Buy EURUSD la 1,1000. SL la 1,0975, sub ultimul minim. TP la 1,1050, înaintea următoarei rezistențe.</p>
+            <p class="lc-calc">Risc: 1,1000 − 1,0975 = 25 de pips · Câștig vizat: 1,1050 − 1,1000 = 50 de pips</p>
+            <p class="lc-calc">R:R = 25 : 50 = <b>1:2</b> · dacă riști 10 €: la SL pierzi 10 €, la TP câștigi 20 €</p>
+          </div>
+
+          <h4 class="lc-h4">Câte tranzacții trebuie să câștigi ca să nu pierzi bani</h4>
+          <div class="lc-table-wrap">
+            <table class="lc-table">
+              <thead><tr><th scope="col">R:R</th><th scope="col">Rata minimă de câștig (fără costuri)</th></tr></thead>
+              <tbody>
+                <tr><td>1:1</td><td>50%</td></tr>
+                <tr><td>1:1,5</td><td>40%</td></tr>
+                <tr class="lc-row-hi"><td>1:2</td><td>33,3%</td></tr>
+                <tr><td>1:3</td><td>25%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lc-small">Formula: rata minimă = 1 ÷ (1 + R). La 1:2: 1 ÷ 3 = 33,3%.</p>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu matematic, nu promisiune</p>
+            <p>10 tranzacții la R:R 1:2, din care 4 câștigate și 6 pierdute:</p>
+            <p class="lc-calc">4 × (+2R) + 6 × (−1R) = +8R − 6R = <b>+2R</b></p>
+            <p>Ai greșit de mai multe ori decât ai avut dreptate și totuși ești pe plus, înainte de costuri (spread, comisioane, swap). De aceea managementul riscului contează mai mult decât să „ai dreptate”.</p>
+          </div>
+          <p>Atenție însă: un R:R mare pe hârtie nu te ajută dacă ținta este nerealistă. TP-ul se pune logic, înaintea unei zone de unde prețul se poate întoarce, nu doar ca să iasă 1:5.</p>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Nicio tranzacție fără stop loss, setat în momentul intrării.</li>
+              <li>SL-ul se pune acolo unde ideea devine greșită. Abia apoi calculezi lotul.</li>
+              <li>Nu muta SL-ul mai departe. Niciodată.</li>
+              <li>Caută un R:R de cel puțin 1:2, cu ținte logice, nu dorite.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="4" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-5">Capitolul 5: Managementul riscului <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 5 ===== -->
+        <section class="lc-chapter" id="cap-5" data-ch="5" aria-labelledby="cap-5-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">05</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 5 din 9</p>
+              <h2 id="cap-5-title">Managementul riscului</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Dacă ar trebui să aleg un singur capitol din acest curs, l-aș alege pe acesta. Strategia îți aduce intrările. Managementul riscului te ține în joc suficient de mult cât să înveți.</p>
+
+          <h3>Regula de 1%</h3>
+          <p>Riști <strong>maximum 1% din cont pe o tranzacție</strong>. La un cont de 1.000 €, asta înseamnă cel mult 10 € pierdere dacă se atinge stop loss-ul. Pare puțin și exact asta este ideea: îți permite să greșești de multe ori fără să ieși din joc. La început, chiar și 0,5% este o alegere foarte bună.</p>
+
+          <h3>Calculul lotului, pas cu pas</h3>
+          <p class="lc-formula"><span>Lot</span> = suma riscată ÷ (stop loss în pips × valoarea pipului pentru 1 lot)</p>
+          <div class="lc-example lc-steps-box">
+            <p class="lc-example-title">Exemplu · cont 1.000 €, risc 1%, SL 25 de pips, EURUSD</p>
+            <ol class="lc-steps">
+              <li><span>Suma riscată</span><b class="lc-calc-inline">1.000 € × 1% = 10 €</b></li>
+              <li><span>Stop loss</span><b class="lc-calc-inline">25 de pips (pus logic, sub ultimul minim)</b></li>
+              <li><span>Valoarea pipului pentru 1 lot, în euro</span><b class="lc-calc-inline">10 USD ÷ 1,10 ≈ 9,09 €</b></li>
+              <li><span>Lot</span><b class="lc-calc-inline">10 ÷ (25 × 9,09) = 10 ÷ 227,27 ≈ 0,044</b></li>
+              <li><span>Rotunjești în jos</span><b class="lc-calc-inline">0,04 loturi</b></li>
+            </ol>
+            <p class="lc-check"><b>Verificare:</b> 0,04 × 25 × 9,09 ≈ 9,09 € risc efectiv. Este sub 10 €, deci corect. Rotunjești mereu în jos, altfel riști peste 1%.</p>
+            <p class="lc-check"><b>A doua verificare, cu micro-loturi:</b> 0,01 loturi ≈ 0,0909 € pe pip. 25 × 0,0909 ≈ 2,27 € pe micro-lot. 10 ÷ 2,27 ≈ 4,4, deci 4 micro-loturi = 0,04 loturi.</p>
+          </div>
+          <p>Observă ce se întâmplă dacă graficul îți cere un SL de 50 de pips: lotul devine 10 ÷ (50 × 9,09) ≈ 0,022, deci 0,02 loturi. Riscul în euro rămâne același. Se schimbă doar mărimea poziției.</p>
+          <p>Pe <a href="calculator.html">calculatorul de lot</a> alegi EURUSD, moneda EUR, sold 1000, risc 1, stop loss 25 și preț 1,10. Vei obține tot 0,04 loturi.</p>
+
+          <h3>Seriile de pierderi sunt normale</h3>
+          <p>Vor veni serii de pierderi, chiar și cu o metodă bună. Strict matematic, cu o rată de câștig de 50%, șansa să ai cel puțin 6 pierderi la rând în 100 de tranzacții este de aproximativ 55%. Cu o rată de câștig de 40%, ajunge la aproximativ 87%. Întrebarea nu este dacă vine o serie proastă, ci cât te costă.</p>
+          <figure class="lc-fig">
+            <svg viewBox="0 0 400 252" role="img" aria-labelledby="svg-dd-t">
+              <title id="svg-dd-t">Evoluția unui cont de 1.000 euro după 10 pierderi la rând: cu risc de 1% rămân 904 euro, cu 2% rămân 817 euro, cu 5% rămân 599 euro, cu 10% rămân 349 euro.</title>
+              <rect width="400" height="252" rx="14" fill="#0b1220"/>
+              <g stroke="#1e2b45" stroke-width="1">
+                <line x1="44" y1="30" x2="294" y2="30"/><line x1="44" y1="81.4" x2="294" y2="81.4"/><line x1="44" y1="132.9" x2="294" y2="132.9"/><line x1="44" y1="184.3" x2="294" y2="184.3"/>
+                <line x1="44" y1="30" x2="44" y2="210"/><line x1="44" y1="210" x2="294" y2="210"/>
+              </g>
+              <g font-family="Manrope, sans-serif" font-size="10.5" fill="#9aa7bd" text-anchor="end">
+                <text x="38" y="34">1.000</text><text x="38" y="85">800</text><text x="38" y="137">600</text><text x="38" y="188">400</text>
+              </g>
+              <g font-family="Manrope, sans-serif" font-size="10.5" fill="#9aa7bd" text-anchor="middle">
+                <text x="44" y="225">0</text><text x="169" y="225">5</text><text x="294" y="225">10</text>
+                <text x="169" y="243">pierderi la rând</text>
+              </g>
+              <g fill="none" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+                <polyline stroke="#4ade80" points="44,30.0 69,32.6 94,35.1 119,37.6 144,40.1 169,42.6 194,45.0 219,47.5 244,49.9 269,52.2 294,54.6"/>
+                <polyline stroke="#60a5fa" points="44,30.0 69,35.1 94,40.2 119,45.1 144,50.0 169,54.7 194,59.4 219,63.9 244,68.4 269,72.8 294,77.0"/>
+                <polyline stroke="#fbbf24" points="44,30.0 69,42.9 94,55.1 119,66.7 144,77.7 169,88.2 194,98.1 219,107.6 244,116.5 269,125.1 294,133.2"/>
+                <polyline stroke="#f87171" points="44,30.0 69,55.7 94,78.9 119,99.7 144,118.4 169,135.3 194,150.5 219,164.2 244,176.5 269,187.5 294,197.5"/>
+              </g>
+              <g font-family="Manrope, sans-serif" font-size="12" font-weight="800">
+                <text x="302" y="56" fill="#4ade80">1% · 904 €</text>
+                <text x="302" y="81" fill="#60a5fa">2% · 817 €</text>
+                <text x="302" y="137" fill="#fbbf24">5% · 599 €</text>
+                <text x="302" y="201" fill="#f87171">10% · 349 €</text>
+              </g>
+            </svg>
+            <figcaption>Același ghinion, conturi foarte diferite. Fiecare pierdere este calculată din soldul rămas.</figcaption>
+          </figure>
+          <div class="lc-table-wrap">
+            <table class="lc-table">
+              <thead><tr><th scope="col">Risc pe tranzacție</th><th scope="col">Sold după 10 pierderi</th><th scope="col">Scădere</th></tr></thead>
+              <tbody>
+                <tr class="lc-row-hi"><td>1%</td><td>904,38 €</td><td>−9,6%</td></tr>
+                <tr><td>2%</td><td>817,07 €</td><td>−18,3%</td></tr>
+                <tr><td>5%</td><td>598,74 €</td><td>−40,1%</td></tr>
+                <tr><td>10%</td><td>348,68 €</td><td>−65,1%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>De ce pierderile mari sunt atât de greu de recuperat</h3>
+          <p>Când pierzi un procent din cont, ai nevoie de un procent <strong>mai mare</strong> ca să revii, pentru că pornești de la o sumă mai mică.</p>
+          <div class="lc-recovery" role="table" aria-label="Pierdere și câștig necesar pentru recuperare">
+            <div class="lc-rec-row lc-rec-head" role="row"><span role="columnheader">Pierdere</span><span role="columnheader">Câștig necesar ca să revii</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−5%</span><span role="cell"><i style="--w:0.6%"></i>+5,3%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−10%</span><span role="cell"><i style="--w:1.2%"></i>+11,1%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−20%</span><span role="cell"><i style="--w:2.8%"></i>+25%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−30%</span><span role="cell"><i style="--w:4.8%"></i>+42,9%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−50%</span><span role="cell"><i style="--w:11.1%"></i>+100%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−75%</span><span role="cell"><i style="--w:33.3%"></i>+300%</span></div>
+            <div class="lc-rec-row" role="row"><span role="cell">−90%</span><span role="cell"><i style="--w:100%"></i>+900%</span></div>
+          </div>
+          <div class="lc-example">
+            <p class="lc-example-title">Exemplu</p>
+            <p>Ai 1.000 €, pierzi 50% și rămâi cu 500 €. Ca să revii la 1.000 € îți trebuie +500 €, adică +100% din cei 500 € rămași.</p>
+            <p class="lc-calc">Câștig necesar = 1 ÷ (1 − pierdere) − 1 · la −20%: 1 ÷ 0,8 − 1 = <b>+25%</b></p>
+          </div>
+
+          <h3>Încă două reguli care te protejează</h3>
+          <ul class="lc-list">
+            <li><strong>Limite pe zi și pe săptămână.</strong> De exemplu, maximum 2% pierdere pe zi și 5% pe săptămână. Când ajungi la limită, închizi platforma până data viitoare.</li>
+            <li><strong>Atenție la pozițiile corelate.</strong> Buy pe EURUSD și buy pe GBPUSD în același timp nu înseamnă două riscuri de 1%, ci aproape 2% pe aceeași idee (dolar slab).</li>
+          </ul>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Maximum 1% risc pe tranzacție. La început, 0,5% este și mai bine.</li>
+              <li>Lot = suma riscată ÷ (SL în pips × valoarea pipului pe 1 lot). Rotunjești în jos.</li>
+              <li>Seriile de pierderi sunt normale. Riscul mic le face suportabile.</li>
+              <li>Pierderile mari cer câștiguri disproporționat de mari. Protejează contul înainte de toate.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="5" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-6">Capitolul 6: Ordine și timeframe-uri <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 6 ===== -->
+        <section class="lc-chapter" id="cap-6" data-ch="6" aria-labelledby="cap-6-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">06</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 6 din 9</p>
+              <h2 id="cap-6-title">Tipuri de ordine și timeframe-uri</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Acum că știi cât riști, hai să vedem cum intri efectiv în piață și pe ce grafic te uiți.</p>
+
+          <h3>Ordinele de bază</h3>
+          <ul class="lc-list">
+            <li><strong>Market (la piață):</strong> intri imediat, la prețul curent. Buy la ask, sell la bid.</li>
+            <li><strong>Limit:</strong> intri la un preț <em>mai bun</em> decât cel curent. <strong>Buy limit</strong> sub preț (aștepți o retragere ca să cumperi mai ieftin), <strong>sell limit</strong> deasupra prețului (aștepți o urcare ca să vinzi mai sus).</li>
+            <li><strong>Stop:</strong> intri când prețul <em>confirmă</em> direcția. <strong>Buy stop</strong> deasupra prețului (cumperi la spargerea unei rezistențe), <strong>sell stop</strong> sub preț (vinzi la spargerea unui suport).</li>
+            <li><strong>Stop loss și take profit</strong> sunt tot ordine, atașate poziției, care o închid.</li>
+          </ul>
+          <figure class="lc-fig">
+            <svg viewBox="0 0 400 252" role="img" aria-labelledby="svg-ord-t">
+              <title id="svg-ord-t">Tipuri de ordine. Ordinele limit așteaptă un preț mai bun și o întoarcere: sell limit deasupra prețului curent, buy limit sub. Ordinele stop așteaptă confirmarea mișcării: buy stop deasupra prețului curent, sell stop sub.</title>
+              <defs>
+                <marker id="arr-g" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
+                <marker id="arr-r" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f87171"/></marker>
+              </defs>
+              <rect width="400" height="252" rx="14" fill="#0b1220"/>
+              <line x1="200" y1="16" x2="200" y2="236" stroke="#1e2b45" stroke-width="1"/>
+              <g font-family="Manrope, sans-serif" font-size="11" font-weight="800" letter-spacing=".06em">
+                <text x="100" y="26" text-anchor="middle" fill="#e6ebf5">LIMIT</text>
+                <text x="300" y="26" text-anchor="middle" fill="#e6ebf5">STOP</text>
+              </g>
+              <g font-family="Manrope, sans-serif" font-size="10.5" fill="#9aa7bd" text-anchor="middle">
+                <text x="100" y="40">preț mai bun, apoi întoarcere</text>
+                <text x="300" y="40">confirmare, apoi continuare</text>
+              </g>
+              <line x1="12" y1="130" x2="388" y2="130" stroke="#e6ebf5" stroke-width="1.4" stroke-dasharray="5 4" opacity=".7"/>
+              <rect x="164" y="121" width="72" height="18" rx="9" fill="#14203a"/>
+              <text x="200" y="134" text-anchor="middle" font-family="Manrope, sans-serif" font-size="10.5" font-weight="700" fill="#e6ebf5">preț curent</text>
+              <g stroke-width="1.8">
+                <line x1="20" y1="72" x2="190" y2="72" stroke="#f87171"/>
+                <line x1="20" y1="188" x2="190" y2="188" stroke="#4ade80"/>
+                <line x1="210" y1="72" x2="380" y2="72" stroke="#4ade80"/>
+                <line x1="210" y1="188" x2="380" y2="188" stroke="#f87171"/>
+              </g>
+              <g fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M28 130 L56 108 L74 116 L100 73 L122 98 L142 112" stroke="#f87171" marker-end="url(#arr-r)"/>
+                <path d="M28 130 L56 152 L74 146 L100 187 L122 162 L142 150" stroke="#4ade80" marker-end="url(#arr-g)"/>
+                <path d="M218 130 L246 110 L262 118 L288 70 L310 56 L326 40" stroke="#4ade80" marker-end="url(#arr-g)"/>
+                <path d="M218 130 L246 150 L262 142 L288 190 L310 204 L326 220" stroke="#f87171" marker-end="url(#arr-r)"/>
+              </g>
+              <circle cx="100" cy="72" r="4" fill="#f87171"/><circle cx="100" cy="188" r="4" fill="#4ade80"/>
+              <circle cx="288" cy="72" r="4" fill="#4ade80"/><circle cx="288" cy="188" r="4" fill="#f87171"/>
+              <g font-family="Manrope, sans-serif" font-size="12.5" font-weight="800">
+                <text x="190" y="66" text-anchor="end" fill="#f87171">Sell limit</text>
+                <text x="190" y="204" text-anchor="end" fill="#4ade80">Buy limit</text>
+                <text x="380" y="66" text-anchor="end" fill="#4ade80">Buy stop</text>
+                <text x="380" y="204" text-anchor="end" fill="#f87171">Sell stop</text>
+              </g>
+            </svg>
+            <figcaption>Limit: aștepți un preț mai bun. Stop: aștepți confirmarea mișcării.</figcaption>
+          </figure>
+          <p class="lc-note"><b>Gap și slippage:</b> ordinele de tip stop, inclusiv stop loss-ul, se execută la primul preț disponibil. La știri sau la redeschiderea pieței după weekend, prețul poate „sări” peste nivelul tău (gap), iar execuția poate fi mai proastă decât ai stabilit. Se numește slippage și face parte din tranzacționare.</p>
+
+          <h3>Timeframe-urile</h3>
+          <p>Același grafic poate fi privit pe intervale diferite: <strong>M1, M5, M15</strong> (minute), <strong>H1, H4</strong> (ore), <strong>D1</strong> (zilnic), <strong>W1</strong> (săptămânal). Fiecare lumânare arată mișcarea prețului pe acel interval.</p>
+          <p>Cu cât intervalul este mai mic, cu atât vezi mai mult „zgomot”: mișcări întâmplătoare, semnale false, decizii luate în grabă. Pe intervalele mari, structura pieței se vede mult mai clar.</p>
+          <div class="lc-topdown">
+            <div><b>W1 / D1</b><span>direcția generală și zonele importante</span></div>
+            <div><b>H4</b><span>structura și setup-ul</span></div>
+            <div><b>H1</b><span>rafinarea intrării, dacă e nevoie</span></div>
+          </div>
+          <p class="lc-small">Analiza „de sus în jos”: pornești de la intervalul mare și cobori doar cât îți trebuie.</p>
+
+          <h3>Ce înseamnă swing trading</h3>
+          <p>Eu sunt swing trader. Asta înseamnă că țin pozițiile de la câteva zile până la câteva săptămâni și încerc să prind o „undă” (swing) importantă a prețului, nu fiecare mișcare de câteva minute.</p>
+          <div class="lc-table-wrap">
+            <table class="lc-table lc-table-styles">
+              <thead><tr><th scope="col">Stil</th><th scope="col">Cât ții poziția</th><th scope="col">Grafice</th><th scope="col">Timp la ecran</th></tr></thead>
+              <tbody>
+                <tr><td>Scalping</td><td>secunde – minute</td><td>M1 – M5</td><td>foarte mult, presiune mare</td></tr>
+                <tr><td>Day trading</td><td>minute – ore, închizi în aceeași zi</td><td>M5 – H1</td><td>câteva ore pe zi</td></tr>
+                <tr class="lc-row-hi"><td>Swing trading</td><td>zile – săptămâni</td><td>H4 – D1</td><td>în jur de 30–60 de minute pe zi</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="lc-two">
+            <div class="lc-pros"><h4>Ce câștigi</h4><ul><li>Nu stai lipit de ecran și poți păstra un job.</li><li>Decizii mai calme, luate pe lumânări închise, nu în mijlocul mișcării.</li><li>Mai puține tranzacții, deci mai puține costuri și mai puțin stres.</li></ul></div>
+            <div class="lc-cons"><h4>Ce trebuie să accepți</h4><ul><li>Stop loss-uri mai largi în pips, deci loturi mai mici.</li><li>Zile întregi fără nicio tranzacție.</li><li>Swap (costul de finanțare peste noapte) și riscul de gap în weekend.</li></ul></div>
+          </div>
+          <p>Pentru majoritatea începătorilor, intervalele mari sunt mai iertătoare: ai timp să gândești înainte să apeși butonul.</p>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Market = acum. Limit = la un preț mai bun. Stop = la confirmare.</li>
+              <li>Gap-urile și slippage-ul există. SL-ul te protejează, dar nu este garantat la pip exact.</li>
+              <li>Intervalele mici au mult zgomot. Pornește de sus în jos: D1, apoi H4.</li>
+              <li>Swing trading înseamnă mai puține tranzacții, mai multă răbdare, SL mai larg și lot mai mic.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="6" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-7">Capitolul 7: Psihologie și disciplină <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 7 ===== -->
+        <section class="lc-chapter" id="cap-7" data-ch="7" aria-labelledby="cap-7-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">07</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 7 din 9</p>
+              <h2 id="cap-7-title">Psihologie și disciplină</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Strategia o poți învăța în câteva săptămâni. Disciplina îți ia ani. Cele mai multe conturi nu se pierd din lipsă de cunoștințe, ci din cauza emoțiilor.</p>
+
+          <h3>Planul de trading</h3>
+          <p>Planul de trading este un document <strong>scris</strong> în care îți stabilești regulile dinainte. Nu în cap, ci pe hârtie sau într-un fișier. Când piața se mișcă repede și emoțiile cresc, planul gândește în locul tău.</p>
+          <ul class="lc-list lc-list-check">
+            <li><strong>Ce tranzacționezi:</strong> 2–4 perechi, nu 20.</li>
+            <li><strong>Când tranzacționezi:</strong> ce sesiuni, ce zile și ce eviți (de exemplu știrile mari).</li>
+            <li><strong>Setup-ul:</strong> ce trebuie să vezi exact pe grafic ca să intri.</li>
+            <li><strong>Unde pui SL și TP</strong> și după ce reguli.</li>
+            <li><strong>Cât riști:</strong> procent pe tranzacție, limită pe zi și pe săptămână.</li>
+            <li><strong>Ce faci după o pierdere</strong> sau după o serie de pierderi.</li>
+          </ul>
+
+          <h3>Jurnalul de trading</h3>
+          <p>Jurnalul este oglinda ta. Notezi fiecare tranzacție: perechea, motivul intrării, SL, TP, rezultatul în R și, foarte important, cum te-ai simțit și dacă ai respectat planul. După 20–30 de tranzacții vei vedea lucruri pe care altfel nu le observi: ce setup funcționează, în ce zile greșești, când intri din plictiseală.</p>
+          <p>Pe site ai un <a href="jurnal.html">jurnal gratuit</a>, care se salvează doar în browserul tău, plus șabloane Excel și PDF.</p>
+          <figure class="lc-fig lc-fig-sm">
+            <svg viewBox="0 0 400 230" role="img" aria-labelledby="svg-cyc-t">
+              <title id="svg-cyc-t">Ciclul disciplinei: plan, execuție, jurnal, analiză, apoi înapoi la plan.</title>
+              <defs>
+                <marker id="arr-c" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
+              </defs>
+              <rect width="400" height="230" rx="14" fill="#0b1220"/>
+              <g fill="none" stroke="#4ade80" stroke-width="1.8" opacity=".75" marker-end="url(#arr-c)">
+                <path d="M246 44 Q318 52 326 92"/>
+                <path d="M326 140 Q318 180 246 188"/>
+                <path d="M154 188 Q82 180 74 140"/>
+                <path d="M74 92 Q82 52 154 44"/>
+              </g>
+              <g font-family="Manrope, sans-serif" text-anchor="middle">
+                <rect x="150" y="22" width="100" height="40" rx="12" fill="#14203a" stroke="#22c55e" stroke-opacity=".55"/>
+                <text x="200" y="47" fill="#e6ebf5" font-size="14" font-weight="800">1. Plan</text>
+                <rect x="276" y="96" width="112" height="40" rx="12" fill="#14203a" stroke="#22c55e" stroke-opacity=".55"/>
+                <text x="332" y="121" fill="#e6ebf5" font-size="14" font-weight="800">2. Execuție</text>
+                <rect x="150" y="170" width="100" height="40" rx="12" fill="#14203a" stroke="#22c55e" stroke-opacity=".55"/>
+                <text x="200" y="195" fill="#e6ebf5" font-size="14" font-weight="800">3. Jurnal</text>
+                <rect x="12" y="96" width="112" height="40" rx="12" fill="#14203a" stroke="#22c55e" stroke-opacity=".55"/>
+                <text x="68" y="121" fill="#e6ebf5" font-size="14" font-weight="800">4. Analiză</text>
+                <text x="200" y="112" fill="#9aa7bd" font-size="11.5">repeți ciclul</text>
+                <text x="200" y="128" fill="#9aa7bd" font-size="11.5">în fiecare săptămână</text>
+              </g>
+            </svg>
+            <figcaption>Disciplina nu este un talent, ci un ciclu pe care îl repeți.</figcaption>
+          </figure>
+
+          <h3>Capcanele emoționale</h3>
+          <div class="lc-traps">
+            <div class="lc-trap"><h4>Trading din răzbunare</h4><p>După o pierdere vrei să „recuperezi” imediat. Intri fără setup, de obicei cu un lot mai mare, și transformi o pierdere mică într-una mare.</p><p class="lc-antidote"><b>Antidot:</b> o regulă fixă, de exemplu după 2 pierderi la rând închizi platforma până a doua zi.</p></div>
+            <div class="lc-trap"><h4>FOMO (frica de a rata)</h4><p>Vezi o mișcare mare și sari în ea târziu, fără un SL logic, doar ca să nu rămâi pe dinafară.</p><p class="lc-antidote"><b>Antidot:</b> dacă ai ratat intrarea, ai ratat-o. Piața îți dă alte ocazii.</p></div>
+            <div class="lc-trap"><h4>Overtrading</h4><p>Prea multe tranzacții, din plictiseală sau din dorința de a face ceva. Fiecare tranzacție în plus înseamnă costuri și risc în plus.</p><p class="lc-antidote"><b>Antidot:</b> un număr maxim de tranzacții pe săptămână, scris în plan, și lista de verificare din capitolul 9.</p></div>
+            <div class="lc-trap"><h4>Lăcomie și frică</h4><p>Închizi câștigurile prea devreme de frică și lași pierderile să curgă din speranță. Exact pe dos.</p><p class="lc-antidote"><b>Antidot:</b> SL și TP setate de la început și lăsate în pace.</p></div>
+          </div>
+          <blockquote class="lc-pull">Nu poți controla piața. Poți controla doar cât riști, când intri și dacă îți respecți regulile.</blockquote>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Ai un plan scris înainte de prima tranzacție. Fără plan, tranzacționezi emoții.</li>
+              <li>Notează fiecare tranzacție în jurnal, inclusiv ce ai simțit și dacă ai respectat planul.</li>
+              <li>După pierderi: pauză, nu răzbunare.</li>
+              <li>O ocazie ratată nu este o pierdere. O tranzacție impulsivă, de cele mai multe ori, este.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="7" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-8">Capitolul 8: Greșelile începătorilor <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 8 ===== -->
+        <section class="lc-chapter" id="cap-8" data-ch="8" aria-labelledby="cap-8-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">08</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 8 din 9</p>
+              <h2 id="cap-8-title">Greșelile tipice ale începătorilor</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Multe dintre aceste greșeli le-am făcut și eu la început. Dacă le eviți doar pe acestea, ești deja înaintea multora.</p>
+          <ol class="lc-mistakes">
+            <li><h4>Tranzacții fără stop loss</h4><p>Setezi SL-ul în momentul în care deschizi poziția, nu „puțin mai târziu”.</p></li>
+            <li><h4>Risc prea mare pe tranzacție</h4><p>Maximum 1%. Calculezi lotul de fiecare dată, nu „din ochi”.</p></li>
+            <li><h4>Muți stop loss-ul mai departe</h4><p>Dacă prețul a ajuns la SL, ideea a fost greșită. O accepți și mergi mai departe.</p></li>
+            <li><h4>Levier mare și loturi mari pe un cont mic</h4><p>Lotul îl dă calculul de risc, nu marja disponibilă.</p></li>
+            <li><h4>Adaugi la o poziție care pierde</h4><p>Nu „mediezi” niciodată o pierdere. Așa se golesc conturile.</p></li>
+            <li><h4>Overtrading și tranzacții din plictiseală</h4><p>Intri doar pe setup-urile din plan. Zilele fără tranzacții sunt normale.</p></li>
+            <li><h4>Schimbi strategia după fiecare pierdere</h4><p>Testezi o metodă pe cel puțin 30–50 de tranzacții, pe demo, înainte să o judeci.</p></li>
+            <li><h4>Tranzacționezi la știri fără să știi</h4><p>Verifici zilnic calendarul economic (dobânzi, inflație, NFP). Dacă nu știi ce faci, stai deoparte.</p></li>
+            <li><h4>Copiezi semnale fără să înțelegi</h4><p>Dacă nu știi de ce intri, nu vei ști nici când să ieși. Învață procesul.</p></li>
+            <li><h4>Treci pe real prea repede sau cu bani de care ai nevoie</h4><p>Demo întâi, apoi un cont mic, doar cu bani pe care îți permiți să-i pierzi.</p></li>
+            <li><h4>Ignori costurile</h4><p>Spread-ul, comisionul și swap-ul fac parte din calcul. Pe intervalele mici contează enorm.</p></li>
+            <li><h4>Aștepți să te îmbogățești rapid</h4><p>Gândești în ani, nu în săptămâni. Primul obiectiv este să nu pierzi capitalul.</p></li>
+          </ol>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Cele mai multe greșeli vin din risc prea mare și din lipsa regulilor.</li>
+              <li>Fiecare greșeală de mai sus are un antidot simplu. Scrie-l în plan.</li>
+              <li>Recitește lista o dată pe lună și verifică-te sincer.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="8" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cap-9">Capitolul 9: Primii pași concreți <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- ===== CAPITOLUL 9 ===== -->
+        <section class="lc-chapter" id="cap-9" data-ch="9" aria-labelledby="cap-9-title">
+          <header class="lc-ch-head">
+            <span class="lc-ch-num" aria-hidden="true">09</span>
+            <div>
+              <p class="lc-ch-kicker">Capitolul 9 din 9</p>
+              <h2 id="cap-9-title">Primii pași concreți</h2>
+            </div>
+          </header>
+          <p class="lc-ch-lead">Ai ajuns la final. Iată exact ce aș face eu dacă aș începe azi de la zero.</p>
+
+          <ol class="lc-roadmap">
+            <li><h4>Stăpânește calculele</h4><p>Recitește capitolele 2–5 până când poți calcula singur lotul pentru orice pereche. Folosește <a href="calculator.html">calculatorul</a> doar ca verificare.</p></li>
+            <li><h4>Cont demo, cel puțin 6–8 săptămâni</h4><p>Și minimum 30–50 de tranzacții. Tratează-l ca pe bani reali: același risc de 1%, același plan, jurnal complet. Un demo tranzacționat „la noroc” nu te învață nimic.</p></li>
+            <li><h4>Scrie-ți planul</h4><p>Pornește de la <a href="reguli.html">regulile de bază</a>. Alege 2–3 perechi majore și 1–2 setup-uri pe care le înțelegi bine, de exemplu din <a href="patternuri.html">patternurile</a> de pe site.</p></li>
+            <li><h4>Jurnal de la prima tranzacție</h4><p>Notează totul în <a href="jurnal.html">jurnal</a> și analizează-l în fiecare weekend: ce ai respectat, ce nu, ce repeți.</p></li>
+            <li><h4>Treci pe real doar dacă ai fost disciplinat</h4><p>Nu „dacă ai făcut profit pe demo”, ci dacă ai respectat planul. Începe cu un cont mic, cu bani pe care îți permiți să-i pierzi, și cu loturi de 0,01.</p></li>
+            <li><h4>Alege atent brokerul</h4><p>Verifică singur reglementarea, spread-urile, comisioanele, levierul și cât de simplu îți retragi banii. Pe pagina <a href="broker.html">Broker</a> găsești brokerul pe care îl folosesc eu (link de afiliere).</p></li>
+            <li><h4>Crește treptat</h4><p>Mărești contul sau riscul doar după luni întregi de disciplină, nu după o săptămână bună.</p></li>
+          </ol>
+
+          <h3>Lista de verificare înainte de fiecare tranzacție</h3>
+          <p>Bifează sincer fiecare punct. Dacă unul singur lipsește, nu intri.</p>
+          <div class="lc-checklist" id="lc-checklist">
+            <label><input type="checkbox"><span>Tranzacția respectă un setup din planul meu.</span></label>
+            <label><input type="checkbox"><span>Am verificat direcția pe intervalul mare (D1 / H4).</span></label>
+            <label><input type="checkbox"><span>Știu exact unde pun stop loss-ul și de ce.</span></label>
+            <label><input type="checkbox"><span>R:R este de cel puțin 1:2, cu o țintă logică.</span></label>
+            <label><input type="checkbox"><span>Am calculat lotul pentru maximum 1% risc.</span></label>
+            <label><input type="checkbox"><span>Am verificat calendarul economic pentru orele următoare.</span></label>
+            <label><input type="checkbox"><span>Sunt calm: nu intru din plictiseală, din FOMO sau ca să recuperez.</span></label>
+            <label><input type="checkbox"><span>Voi nota tranzacția în jurnal.</span></label>
+            <p class="lc-check-status" id="lc-check-status" aria-live="polite">Bifează toate cele 8 puncte înainte să intri.</p>
+          </div>
+
+          <div class="lc-closing">
+            <p>Tradingul nu este o cursă. Nu contează cât de repede ajungi, ci să ajungi cu contul întreg și cu un proces pe care îl poți repeta. Dacă ai întrebări, intră în comunitatea gratuită de pe Telegram sau scrie-mi pe pagina de contact.</p>
+            <p class="lc-sign">Spor la învățat,<br><b>Marius</b></p>
+            <div class="lc-closing-cta">
+              <a class="btn btn-primary" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener">Comunitatea gratuită pe Telegram</a>
+              <a class="btn btn-ghost" href="contact.html">Scrie-mi</a>
+            </div>
+          </div>
+
+          <nav class="lc-links" aria-label="Continuă cu">
+            <a href="reguli.html"><b>Reguli de bază</b><span>10 principii de citit înainte de fiecare sesiune</span></a>
+            <a href="patternuri.html"><b>Patternuri</b><span>formele clasice de pe grafic</span></a>
+            <a href="calculator.html"><b>Calculator de lot</b><span>riscul în bani, transformat în loturi</span></a>
+            <a href="jurnal.html"><b>Jurnal de trading</b><span>gratuit, salvat doar la tine</span></a>
+            <a href="sesiuni.html"><b>Sesiuni live</b><span>ce piață e deschisă acum</span></a>
+            <a href="broker.html"><b>Broker</b><span>ce folosesc eu (link de afiliere)</span></a>
+          </nav>
+
+          <div class="lc-retine">
+            <p class="lc-retine-title">Reține</p>
+            <ul>
+              <li>Demo întâi, cu aceleași reguli ca pe real, cel puțin 6–8 săptămâni.</li>
+              <li>Treci pe real cu sume mici și loturi minime, doar după ce ai fost disciplinat.</li>
+              <li>Fiecare tranzacție trece prin lista de verificare și ajunge în jurnal.</li>
+            </ul>
+          </div>
+          <div class="lc-ch-foot">
+            <button type="button" class="lc-done-btn" data-done="9" hidden><span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Am parcurs capitolul</span></button>
+            <a class="lc-next" href="#cuprins">Înapoi la cuprins <span aria-hidden="true">↑</span></a>
+          </div>
+        </section>
+
+        <p class="lc-disclaimer">Această lecție are scop exclusiv educațional. Nu este consultanță financiară sau de investiții și nu îți recomandă să cumperi sau să vinzi vreun instrument. Exemplele numerice sunt ilustrative: cursurile, valoarea pipului, levierul și nivelurile de margin call sau stop out diferă de la un broker la altul. Tranzacționarea cu levier poate duce la pierderea întregului capital investit.</p>
+      </article>
+    </div>
+  </main>
+
+  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-risk" id="avertisment">Forex și CFD-urile cu levier pot duce la pierderea rapidă a banilor. Conținut educațional, nu consultanță financiară.</p>
+      <div class="footer-bottom">
+        <p>© <span id="an"></span> Marius FX · Marius</p>
+        <a href="#continut">Înapoi sus ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js?v=31"></script>
+  <script src="lectie.js?v=1"></script>
+</body>
+</html>
