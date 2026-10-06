@@ -1,16 +1,19 @@
 // ===== Lecție pentru începători: progres capitole (doar în browser), cuprins activ, bară de citire, checklist =====
 (function () {
   'use strict';
-  const KEY = 'mariusfx-lectie-v1';
-  const TOTAL = 9;
+  // v2: structura cu 8 capitole. Progresul vechi (v1, 9 capitole cu altă numerotare) nu se mai potrivește, așa că e ignorat și șters.
+  const KEY = 'mariusfx-lectie-v2';
+  const OLD_KEYS = ['mariusfx-lectie-v1'];
   const chapters = Array.from(document.querySelectorAll('.lc-chapter[data-ch]'));
   if (!chapters.length) return;
+  const TOTAL = chapters.length;
+  try { OLD_KEYS.forEach(k => localStorage.removeItem(k)); } catch (e) { /* stocare indisponibilă */ }
 
   // --- progres salvat local (fără server) ---
   function load() {
     try {
       const raw = JSON.parse(localStorage.getItem(KEY) || '[]');
-      return new Set(Array.isArray(raw) ? raw.map(Number).filter(n => n >= 1 && n <= TOTAL) : []);
+      return new Set(Array.isArray(raw) ? raw.map(Number).filter(n => Number.isInteger(n) && n >= 1 && n <= TOTAL) : []);
     } catch (e) { return new Set(); }
   }
   function save(set) {
@@ -22,6 +25,9 @@
   const fillEl = document.getElementById('lc-progress-fill');
   const barEl = document.getElementById('lc-progress-bar');
   const startEl = document.getElementById('lc-start');
+  const totalEl = document.getElementById('lc-total');
+  if (totalEl) totalEl.textContent = String(TOTAL);
+  if (barEl) barEl.setAttribute('aria-valuemax', String(TOTAL));
   const tocLinks = Array.from(document.querySelectorAll('.lc-toc a[data-ch]'));
   const doneBtns = Array.from(document.querySelectorAll('.lc-done-btn[data-done]'));
 
