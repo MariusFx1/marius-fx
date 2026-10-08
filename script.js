@@ -7,13 +7,81 @@ if (anEl) anEl.textContent = new Date().getFullYear();
 // ===== Meniu mobil =====
 const menuBtn = document.querySelector('.menu-toggle');
 const links = document.getElementById('nav-links');
-menuBtn.addEventListener('click', () => {
-  const open = links.classList.toggle('open');
-  menuBtn.setAttribute('aria-expanded', open);
-});
-links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  links.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
-}));
+function setMenu(open) {
+  if (!menuBtn || !links) return;
+  links.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', String(open));
+  menuBtn.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+  document.documentElement.classList.toggle('menu-open', open);
+}
+if (menuBtn && links) {
+  menuBtn.addEventListener('click', () => setMenu(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && links.classList.contains('open')) { setMenu(false); menuBtn.focus(); }
+  });
+  const desktopMq = window.matchMedia('(min-width: 1081px)');
+  const onMq = () => { if (desktopMq.matches) setMenu(false); };
+  if (desktopMq.addEventListener) desktopMq.addEventListener('change', onMq); else if (desktopMq.addListener) desktopMq.addListener(onMq);
+}
+
+// ===== Antet: fundal mai opac după scroll =====
+(function () {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  let ticking = false;
+  const update = () => { header.classList.toggle('is-scrolled', window.scrollY > 8); ticking = false; };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
+
+// ===== Animații la scroll + numărătoare (respectă prefers-reduced-motion; fără JS totul rămâne vizibil) =====
+(function () {
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  const SEL = '.section-head, .rule, .pattern, .session-card, .sessions-status, .sessions-timeline, .sessions-edu, .feature-card, .stat-item, .broker-card, .about, .contact-grid > *, .jt-card, .jt-download > *, .footer-grid > *';
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add('is-revealed');
+      io.unobserve(el);
+      // după animație, scoatem clasele ca hover-ul cardurilor să-și păstreze tranzițiile proprii
+      setTimeout(() => { el.classList.remove('reveal', 'is-revealed'); el.style.removeProperty('--reveal-delay'); }, 1300);
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  document.querySelectorAll(SEL).forEach(el => {
+    if (el.closest('.hero, .lc-article, .lc-hero')) return;
+    if (el.getBoundingClientRect().top < vh * 0.92) return;   // deja în ecran: nu îl ascundem deloc
+    const sibs = Array.prototype.indexOf.call(el.parentElement.children, el);
+    el.style.setProperty('--reveal-delay', (sibs % 6) * 70 + 'ms');
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+
+  // numărătoare pe statisticile de pe home (valoarea finală e deja în HTML)
+  const counters = document.querySelectorAll('[data-count]');
+  if (!counters.length) return;
+  const run = el => {
+    const target = parseInt(el.dataset.count, 10);
+    if (!target) return;
+    const t0 = performance.now(), dur = 1300;
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    el.textContent = '0';
+    requestAnimationFrame(step);
+  };
+  const co = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { run(e.target); co.unobserve(e.target); }
+  }), { threshold: 0.6 });
+  counters.forEach(el => co.observe(el));
+})();
 
 // ===== Galerie foto: click pentru mărire =====
 const lb = document.getElementById('lightbox');
