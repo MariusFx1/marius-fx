@@ -25,6 +25,17 @@ if (menuBtn && links) {
   if (desktopMq.addEventListener) desktopMq.addEventListener('change', onMq); else if (desktopMq.addListener) desktopMq.addListener(onMq);
 }
 
+// ===== Calendar economic: mesaj de rezervă dacă widgetul TradingView nu se încarcă =====
+(function () {
+  const w = document.getElementById('cal-widget'), fb = document.getElementById('cal-fallback');
+  if (!w || !fb) return;
+  const loaded = () => !!w.querySelector('iframe');
+  const setFailed = failed => { fb.classList.toggle('is-shown', failed); w.classList.toggle('is-failed', failed); };
+  setTimeout(() => { if (!loaded()) setFailed(true); }, 9000);
+  // dacă iframe-ul apare totuși mai târziu (conexiune lentă), ascundem din nou mesajul
+  if ('MutationObserver' in window) new MutationObserver(() => { if (loaded()) setFailed(false); }).observe(w, { childList: true, subtree: true });
+})();
+
 // ===== Antet: fundal mai opac după scroll =====
 (function () {
   const header = document.querySelector('.site-header');
@@ -40,7 +51,7 @@ if (menuBtn && links) {
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return;
 
-  const SEL = '.section-head, .rule, .pattern, .session-card, .sessions-status, .sessions-timeline, .sessions-edu, .feature-card, .stat-item, .broker-card, .about, .contact-grid > *, .jt-card, .jt-download > *, .footer-grid > *';
+  const SEL = '.section-head, .rule, .pattern, .session-card, .sessions-status, .sessions-timeline, .sessions-edu, .feature-card, .stat-item, .broker-card, .about, .contact-grid > *, .jt-card, .jt-download > *, .footer-grid > *, .cal-event, .cal-read-col, .cal-dst, .cal-retine';
   const vh = window.innerHeight || document.documentElement.clientHeight;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {

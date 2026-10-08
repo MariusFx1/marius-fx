@@ -1274,3 +1274,82 @@ input:hover, textarea:hover, .lot-form select:hover { border-color: #2a3b5c; }
   .reveal { opacity: 1 !important; transform: none !important; }
   .site-header, .hero-glow { display: none; }
 }
+
+/* ============================================================
+   Calendar economic (calendar.html) + carduri home în 3 coloane (7 carduri)
+   ============================================================ */
+.home-features .features > li:first-child, .home-features .features > li:last-child { grid-column: span 2; }
+
+.cal-card, .cal-event, .cal-read-col {
+  background: var(--card-bg) padding-box, var(--card-border) border-box;
+  border: 1px solid transparent; border-radius: var(--r-lg); box-shadow: var(--shadow-card);
+}
+.cal-intro { max-width: 46rem; display: grid; gap: .85rem; margin: -.4rem 0 1.9rem; }
+.cal-intro p { margin: 0; color: #c4cede; font-size: 1.02rem; line-height: 1.75; }
+.cal-card { padding: 1rem 1rem .95rem; }
+.cal-card-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem 1rem; padding: .25rem .3rem .95rem; margin-bottom: .55rem; border-bottom: 1px solid rgba(30,43,69,.85); }
+.cal-card-head h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; }
+.cal-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.cal-chips li { display: inline-flex; align-items: center; gap: .45rem; font-size: .78rem; font-weight: 650; color: var(--muted); padding: .28rem .7rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(7,11,20,.55); }
+.cal-chips .dot { width: 7px; height: 7px; box-shadow: 0 0 0 3px var(--green-soft); }
+.cal-widget { height: 680px; border-radius: 12px; overflow: hidden; }
+.cal-widget .tradingview-widget-container, .cal-widget .tradingview-widget-container__widget { height: 100% !important; width: 100%; }
+.cal-widget iframe { display: block; color-scheme: light; } /* același color-scheme ca documentul din iframe: altfel Chrome pictează un fundal alb opac sub widgetul transparent */
+html:not(.js) .cal-widget, .cal-widget.is-failed { display: none; }
+.cal-fallback { display: grid; gap: .85rem; justify-items: start; margin-top: .4rem; padding: 1.1rem 1.15rem; border-radius: 14px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.35); }
+.cal-fallback p { margin: 0; font-size: .95rem; line-height: 1.6; }
+.cal-fallback strong { color: var(--amber); }
+.js .cal-fallback { display: none; }
+.js .cal-fallback.is-shown { display: grid; }
+.cal-note { margin: .85rem .3rem .1rem; font-size: .84rem; line-height: 1.55; color: var(--muted); }
+
+.cal-events { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.cal-event { padding: 1.2rem 1.25rem 1.25rem; display: grid; gap: .55rem; align-content: start; transition: box-shadow .3s var(--ease); }
+.cal-event:hover { box-shadow: var(--glow); }
+.cal-event-top { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.cal-event h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; color: #f4f7fc; }
+.cal-event p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+.cal-event p.cal-when { color: #c4cede; font-size: .9rem; padding-top: .6rem; border-top: 1px dashed rgba(42,58,88,.9); }
+.cal-when span { display: block; margin-bottom: .15rem; font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
+.cal-when b { color: var(--text); font-weight: 700; white-space: nowrap; }
+.cal-impact { flex: none; display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 750; padding: .2rem .55rem; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.cal-impact::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.cal-impact-high { color: #fca5a5; background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.4); }
+.cal-impact-med { color: var(--amber); background: rgba(251,191,36,.1); border-color: rgba(251,191,36,.38); }
+.cal-impact-low { color: #93c5fd; background: rgba(147,197,253,.08); border-color: rgba(147,197,253,.32); }
+.cal-dst { margin: 1.25rem 0 0; max-width: 52rem; padding: .95rem 1.15rem; border-radius: 14px; background: rgba(15,24,41,.6); border: 1px solid var(--border); color: var(--muted); font-size: .93rem; line-height: 1.65; }
+
+.cal-read { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+.cal-read-col { padding: 1.3rem 1.35rem 1.35rem; }
+.cal-read-col h3 { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 1rem; }
+.cal-levels { display: grid; gap: .6rem; }
+.cal-levels li { display: grid; grid-template-columns: 5.4rem 1fr; gap: .8rem; align-items: start; }
+.cal-levels .cal-impact { justify-self: start; margin-top: .15rem; }
+.cal-levels p, .cal-fields dd { margin: 0; color: var(--muted); font-size: .93rem; line-height: 1.55; }
+.cal-fields { display: grid; gap: .7rem; margin: 0; }
+.cal-fields div { display: grid; grid-template-columns: 8.2rem 1fr; gap: .8rem; }
+.cal-fields dt { font-weight: 800; color: var(--text); font-size: .95rem; }
+.cal-fields dt span { display: block; font-weight: 600; font-size: .78rem; color: var(--muted); }
+.cal-small { margin: 1rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.65; }
+.cal-small strong { color: var(--green-2); }
+.cal-retine { max-width: 52rem; margin-top: 1.8rem; }
+.cal-next { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.cal-rules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 980px) {
+  .home-features .features > li:last-child { grid-column: auto; }
+  .cal-next, .cal-rules { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .cal-events, .cal-read { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .home-features .features > li:first-child { grid-column: auto; }
+  .cal-next, .cal-rules { grid-template-columns: 1fr; }
+  .cal-card { padding: .75rem .6rem .8rem; }
+  .cal-card-head { padding: .3rem .35rem .8rem; }
+  .cal-widget { height: 760px; }
+  .cal-event, .cal-read-col { padding: 1.05rem 1.05rem 1.1rem; }
+  .cal-levels li { grid-template-columns: 1fr; gap: .3rem; }
+  .cal-fields div { grid-template-columns: 1fr; gap: .15rem; }
+}
