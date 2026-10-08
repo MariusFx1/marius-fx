@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Rescrie fișierul chiar dacă datele nu s-au schimbat'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -19,11 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
       - name: Fetch ForexFactory weekly feed
+        env:
+          FORCE: ${{ inputs.force && '1' || '' }}
         run: python3 .github/scripts/update_calendar.py
 
       - name: Commit if changed

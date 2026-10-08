@@ -7,6 +7,7 @@ Feed-ul permite maximum 2 cereri la 5 minute per IP și se actualizează cel mul
 Ieșire: cod 0 dacă totul e în regulă sau dacă feed-ul e temporar indisponibil dar datele
 existente sunt recente; cod 1 dacă feed-ul nu răspunde și datele au peste FAIL_AFTER_H ore.
 Folosire: update_calendar.py [fișier_local.json]  (fișierul local e doar pentru teste)
+FORCE=1 în mediu rescrie fișierul chiar dacă datele nu s-au schimbat (pornire manuală).
 """
 import json, os, sys, urllib.request
 from datetime import datetime, timezone, timedelta
@@ -83,7 +84,8 @@ def main():
         sys.exit(1 if age > FAIL_AFTER_H else 0)
 
     changed = not existing or existing.get('events') != events
-    if not changed and age_hours(existing) < HEARTBEAT_H:
+    force = os.environ.get('FORCE') == '1'
+    if not changed and not force and age_hours(existing) < HEARTBEAT_H:
         print(f'No change ({len(events)} events); data written {age_hours(existing):.1f}h ago. Nothing to commit.')
         return
     doc = {
