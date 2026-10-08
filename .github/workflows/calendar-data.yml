@@ -1,0 +1,42 @@
+name: Calendar data
+
+# Actualizează data/calendar.json din feed-ul ForexFactory (o dată la 30 de minute).
+# Commit doar când datele s-au schimbat (sau o dată la ~20h, ca semn că sunt verificate).
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: calendar-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Fetch ForexFactory weekly feed
+        run: python3 .github/scripts/update_calendar.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/calendar.json && git ls-files --error-unmatch data/calendar.json >/dev/null 2>&1; then
+            echo "data/calendar.json unchanged"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/calendar.json
+          git commit -m "Calendar data: automatic update [bot]"
+          for i in 1 2 3; do
+            git pull --rebase --quiet origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((i * 5))
+          done
+          echo "::error::push failed"; exit 1

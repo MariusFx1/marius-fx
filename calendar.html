@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Calendar economic · Marius FX</title>
-  <meta name="description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
+  <meta name="description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală, cu numărătoare inversă până la fiecare anunț. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
   <link rel="canonical" href="https://mariusfx1.github.io/marius-fx/calendar.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Marius FX">
   <meta property="og:locale" content="ro_RO">
   <meta property="og:title" content="Calendar economic · Marius FX">
-  <meta property="og:description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
+  <meta property="og:description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală, cu numărătoare inversă până la fiecare anunț. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
   <meta property="og:url" content="https://mariusfx1.github.io/marius-fx/calendar.html">
   <meta property="og:image" content="https://mariusfx1.github.io/marius-fx/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -18,14 +18,12 @@
   <meta property="og:image:alt" content="Marius FX: Educație · Disciplină · Managementul riscului">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Calendar economic · Marius FX">
-  <meta name="twitter:description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
+  <meta name="twitter:description" content="Calendar economic live pentru forex: știrile importante pentru USD, EUR, GBP, JPY și celelalte valute principale, în ora ta locală, cu numărătoare inversă până la fiecare anunț. Ce înseamnă NFP, CPI, deciziile de dobândă și cum îți protejezi contul. Conținut educațional, nu consultanță financiară.">
   <meta name="twitter:image" content="https://mariusfx1.github.io/marius-fx/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://s3.tradingview.com">
-  <link rel="preconnect" href="https://www.tradingview-widget.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=36">
+  <link rel="stylesheet" href="styles.css?v=37">
   <link rel="icon" href="favicon.ico?v=15" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
@@ -68,40 +66,46 @@
       </header>
 
       <div class="cal-intro">
-        <p>Calendarul economic îți arată când apar datele și deciziile care pot mișca puternic valutele: raportul locurilor de muncă din SUA, inflația, deciziile băncilor centrale și multe altele. Pentru fiecare știre vezi ora, țara, cât de importantă este și cifrele.</p>
+        <p>Calendarul economic îți arată când apar datele și deciziile care pot mișca puternic valutele: raportul locurilor de muncă din SUA, inflația, deciziile băncilor centrale și multe altele. Pentru fiecare știre vezi valuta afectată, ora ta locală, cât timp mai e până la anunț, cât de importantă este și cifrele așteptate.</p>
         <p>Ca începător, nu trebuie să tranzacționezi știrile. Trebuie doar să știi când vin, ca să nu te prindă o mișcare bruscă cu o poziție deschisă sau cu un stop loss prea strâns. De asta verific calendarul în fiecare duminică pentru săptămâna care urmează și în fiecare dimineață pentru ziua respectivă.</p>
       </div>
 
-      <div class="cal-card">
-        <div class="cal-card-head">
-          <h3>Calendarul săptămânii</h3>
-          <ul class="cal-chips" aria-label="Setări calendar">
-            <li><span class="dot"></span>Ora ta locală</li>
-            <li>Impact mediu și mare</li>
-            <li>USD, EUR, GBP, JPY, CHF, CAD, AUD, NZD</li>
-          </ul>
+      <div class="cal-app" id="cal-app" aria-busy="true">
+        <div class="cal-hero" id="cal-hero">
+          <p class="cal-hero-kicker"><span class="cal-hero-dot"></span>Următoarea știre importantă</p>
+          <p class="cal-loading">Se încarcă știrile săptămânii…</p>
         </div>
-        <div class="cal-widget" id="cal-widget">
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-              {
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "width": "100%",
-                "height": "100%",
-                "locale": "en",
-                "importanceFilter": "0,1",
-                "countryFilter": "us,eu,gb,jp,ch,ca,au,nz,de,fr"
-              }
-            </script>
+
+        <div class="cal-card cal-board">
+          <div class="cal-board-head">
+            <h3>Calendarul săptămânii</h3>
+            <p class="cal-meta" id="cal-meta"></p>
           </div>
+          <div class="cal-toolbar">
+            <div class="cal-filter">
+              <span class="cal-filter-label" id="cal-lbl-ccy">Valute</span>
+              <div class="cal-chips-row" id="cal-ccy-chips" role="group" aria-labelledby="cal-lbl-ccy"></div>
+            </div>
+            <div class="cal-filter cal-filter-inline">
+              <span class="cal-filter-label" id="cal-lbl-imp">Impact</span>
+              <div class="cal-seg" id="cal-impact-seg" role="group" aria-labelledby="cal-lbl-imp">
+                <button type="button" data-impact="high" aria-pressed="false">Mare</button>
+                <button type="button" data-impact="hm" aria-pressed="true">Mare + mediu</button>
+                <button type="button" data-impact="all" aria-pressed="false">Toate</button>
+              </div>
+              <button type="button" class="cal-toggle" id="cal-today" aria-pressed="false"><span class="cal-switch" aria-hidden="true"></span>Doar azi</button>
+            </div>
+          </div>
+          <div class="cal-list" id="cal-list"></div>
+          <div class="cal-fallback" id="cal-fallback" role="status">
+            <p id="cal-fallback-msg"><strong>Calendarul live are nevoie de JavaScript.</strong> Dacă nu apare, găsești aceleași știri, în ora ta, pe calendarele de mai jos.</p>
+            <div class="cal-fallback-links">
+              <a class="btn btn-ghost" href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener nofollow">Calendarul ForexFactory ↗</a>
+              <a class="btn btn-ghost" href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener nofollow">Calendarul TradingView ↗</a>
+            </div>
+          </div>
+          <p class="cal-note">Datele vin din calendarul public <a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener nofollow">ForexFactory</a> și se actualizează automat cam o dată la 30 de minute. Titlurile rămân în engleză, ca la sursă, iar dedesubt ai explicația în română pentru știrile importante. Rezultatul (cifra actuală) nu apare aici: îl vezi pe ForexFactory sau pe TradingView imediat după anunț.</p>
         </div>
-        <div class="cal-fallback" id="cal-fallback" role="status">
-          <p><strong>Calendarul nu s-a putut încărca.</strong> Poate fi blocat de un ad-blocker, de setările browserului sau de conexiune.</p>
-          <a class="btn btn-ghost" href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener nofollow">Deschide calendarul pe TradingView ↗</a>
-        </div>
-        <p class="cal-note">Calendarul este oferit gratuit de <a href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener nofollow">TradingView</a> și apare în limba engleză. Din bara de sus a calendarului poți schimba țările și importanța știrilor afișate.</p>
       </div>
     </section>
 
@@ -163,7 +167,7 @@
             <li><span class="cal-impact cal-impact-med">Mediu</span><p>Poate mișca perechile legate de acea valută, mai ales dacă cifra surprinde.</p></li>
             <li><span class="cal-impact cal-impact-high">Mare</span><p>NFP, inflația, deciziile de dobândă. Mișcări bruște, spread-uri mari și slippage.</p></li>
           </ul>
-          <p class="cal-small">Calendarul de pe această pagină afișează implicit doar știrile cu impact mediu și mare.</p>
+          <p class="cal-small">Calendarul de pe această pagină afișează implicit știrile cu impact mare și mediu. Le poți vedea și pe cele cu impact scăzut alegând „Toate”.</p>
         </div>
         <div class="cal-read-col">
           <h3>Actual, prognoză, anterior</h3>
@@ -172,7 +176,7 @@
             <div><dt>Prognoză <span>(forecast)</span></dt><dd>Ce așteaptă piața: media estimărilor făcute înainte de anunț.</dd></div>
             <div><dt>Anterior <span>(previous)</span></dt><dd>Cifra din perioada trecută, uneori revizuită.</dd></div>
           </dl>
-          <p class="cal-small">Pe telefon, calendarul de mai sus marchează prognoza cu <b>F</b> (forecast) și valoarea anterioară cu <b>P</b> (previous).</p>
+          <p class="cal-small">În calendarul de mai sus vezi prognoza și valoarea anterioară. Cifra actuală o găsești pe ForexFactory sau pe TradingView imediat după anunț.</p>
           <p class="cal-small"><strong>Prețul reacționează la surpriză</strong>, adică la diferența dintre actual și prognoză, nu la cifra în sine. O cifră bună dar deja așteptată poate muta puțin prețul, iar una neașteptată poate produce o mișcare mare, în orice direcție. Direcția nu o știe nimeni dinainte, așa că nu încerca să o ghicești.</p>
         </div>
       </div>
@@ -285,6 +289,7 @@
       </div>
     </div>
   </footer>
-  <script src="script.js?v=33" defer></script>
+  <script src="script.js?v=34" defer></script>
+  <script src="calendar.js?v=1" defer></script>
 </body>
 </html>
