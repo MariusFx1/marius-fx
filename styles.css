@@ -1922,3 +1922,225 @@ html:not(.js) .cal-hero, html:not(.js) .cal-toolbar, html:not(.js) .cal-list, ht
 }
 .jt-src-sim { color: var(--green-2); border-color: rgba(74,222,128,.4); }
 .jt-sim-link a { color: var(--green-2); text-underline-offset: 3px; }
+
+/* ============================================================
+   Simulator: spațiul de lucru pe tot ecranul (stil TradingView)
+   ============================================================ */
+.sim-adv-setup { margin-top: 1rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.sim-adv-setup > summary, .ws-adv > summary { cursor: pointer; list-style: none; padding: .7rem .9rem; font-weight: 700; font-size: .92rem; display: flex; gap: .5rem; align-items: baseline; flex-wrap: wrap; }
+.sim-adv-setup > summary::-webkit-details-marker, .ws-adv > summary::-webkit-details-marker { display: none; }
+.sim-adv-setup > summary::before, .ws-adv > summary::before { content: '▸'; color: var(--muted); transition: transform .2s; display: inline-block; }
+.sim-adv-setup[open] > summary::before, .ws-adv[open] > summary::before { transform: rotate(90deg); }
+.sim-adv-setup > summary small, .ws-adv > summary small { color: var(--muted); font-weight: 500; }
+.sim-adv-setup > .sim-setup-grid { padding: 0 .9rem .9rem; }
+.btn-lg { min-height: 3.1rem; padding-inline: 1.8rem; font-size: 1.05rem; }
+
+html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+.sim-ws {
+  --tv-bg: #131722; --tv-panel: #1e222d; --tv-line: #2a2e39; --tv-hover: #2a2e39; --tv-text: #d1d4dc; --tv-muted: #787b86;
+  --tv-green: #089981; --tv-red: #f23645; --tv-blue: #2962ff;
+  position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh; background: var(--tv-bg); color: var(--tv-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; font-size: 14px;
+}
+.sim-ws[hidden], .sim-ws [hidden] { display: none !important; }
+.sim-ws svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* bara de sus */
+.ws-bar { display: flex; align-items: center; gap: 4px; min-height: 46px; padding: 4px 8px; border-bottom: 1px solid var(--tv-line); background: var(--tv-bg); flex-wrap: wrap; }
+.ws-group { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.ws-group + .ws-group { padding-left: 6px; margin-left: 2px; border-left: 1px solid var(--tv-line); }
+.ws-id { gap: 6px; min-width: 0; }
+.ws-logo { width: 26px; height: 26px; border-radius: 7px; flex: none; }
+.ws-logo svg { width: 15px; height: 15px; }
+.ws-sym { margin: 0; display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.ws-sym strong { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
+.ws-sym span { font-size: 11.5px; color: var(--tv-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; min-width: 34px; padding: 0 9px; border: 0; border-radius: 4px; background: transparent; color: var(--tv-text); font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.ws-btn:hover:not(:disabled) { background: var(--tv-hover); }
+.ws-btn:focus-visible, .ws-speed select:focus-visible, .ws-tabs button:focus-visible { outline: 2px solid var(--tv-blue); outline-offset: -2px; }
+.ws-btn:disabled { opacity: .38; cursor: not-allowed; }
+.ws-icon { padding: 0; font-size: 16px; }
+.ws-play .i-pause, .ws-play.is-on .i-play { display: none; }
+.ws-play.is-on .i-pause { display: block; }
+.ws-play.is-on { color: var(--tv-blue); }
+.ws-play svg path, .ws-step svg path:first-child { fill: currentColor; }
+.ws-step { color: #fff; }
+.ws-speed select { height: 30px; border: 1px solid var(--tv-line); border-radius: 4px; background: var(--tv-bg); color: var(--tv-text); font: inherit; font-weight: 600; padding: 0 6px; cursor: pointer; }
+.ws-acct { margin: 0; gap: 14px; padding-inline: 8px 4px; margin-left: auto; }
+.ws-acct div { display: flex; flex-direction: column; line-height: 1.15; }
+.ws-acct dt { font-size: 11px; color: var(--tv-muted); }
+.ws-acct dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ws-acct .pos, .sim-ws .pos { color: var(--tv-green); }
+.ws-acct .neg, .sim-ws .neg { color: var(--tv-red); }
+.ws-finish { background: var(--tv-blue); color: #fff; padding: 0 14px; }
+.ws-finish:hover:not(:disabled) { background: #1e53e5; }
+
+/* corp: grafic + panou */
+.ws-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 320px; }
+.ws-chart-wrap { position: relative; min-width: 0; min-height: 0; }
+.sim-ws .sim-chart { position: absolute; inset: 0; height: auto; border: 0; border-radius: 0; background: var(--tv-bg); }
+.ws-legend { position: absolute; top: 8px; left: 10px; z-index: 3; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; max-width: calc(100% - 90px); pointer-events: none; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ws-legend strong { color: #fff; font-weight: 600; }
+.ws-legend .lg-t { color: var(--tv-muted); }
+.ws-legend i { font-style: normal; color: var(--tv-muted); margin: 0 3px 0 6px; }
+.ws-legend span i:first-child { margin-left: 0; }
+.ws-legend .up { color: var(--tv-green); } .ws-legend .dn { color: var(--tv-red); }
+.ws-legend em { font-style: normal; margin-left: 6px; }
+.ws-toast { position: absolute; left: 50%; bottom: 40px; z-index: 4; transform: translate(-50%, 8px); width: max-content; max-width: min(92%, 560px); margin: 0; padding: 9px 14px; border-radius: 6px; background: rgba(30,34,45,.97); border: 1px solid var(--tv-line); box-shadow: 0 8px 24px rgba(0,0,0,.45); font-size: 13.5px; line-height: 1.4; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+.ws-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.ws-toast[data-tone="good"] { border-color: rgba(8,153,129,.7); }
+.ws-toast[data-tone="bad"] { border-color: rgba(242,54,69,.7); }
+.ws-toast[data-tone="warn"] { border-color: rgba(251,191,36,.7); }
+
+.ws-panel { display: flex; flex-direction: column; min-height: 0; border-left: 1px solid var(--tv-line); background: var(--tv-bg); }
+.ws-tabs { display: flex; align-items: stretch; border-bottom: 1px solid var(--tv-line); flex: none; }
+.ws-tabs [role="tab"] { flex: 1; height: 40px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--tv-muted); font: inherit; font-weight: 600; cursor: pointer; }
+.ws-tabs [role="tab"][aria-selected="true"] { color: #fff; border-bottom-color: var(--tv-blue); }
+.ws-tabs [role="tab"]:hover { color: var(--tv-text); }
+.ws-count { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--tv-line); color: var(--tv-text); font-size: 11px; line-height: 18px; }
+.ws-sheet-toggle { display: none; width: 44px; border: 0; background: none; color: var(--tv-text); cursor: pointer; }
+.ws-sheet-toggle svg { transition: transform .2s; }
+.ws-panel[data-open="true"] .ws-sheet-toggle svg { transform: rotate(180deg); }
+.ws-panes { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.ws-pane { padding: 12px; }
+
+/* bilet de ordin */
+.sim-ws .sim-order, .sim-ws .sim-pos { gap: 10px; padding: 0; border: 0; background: none; border-radius: 0; }
+.sim-ws .sim-pos { padding-top: 2px; }
+.sim-ws .sim-pos h2 { margin: 0; font-size: 15px; }
+.ws-sides { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0; padding: 0; border: 0; }
+.ws-sides label { position: relative; display: block; margin: 0; }
+.ws-sides input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.ws-sides label > span { display: flex; flex-direction: column; justify-content: center; min-height: 56px; padding: 6px 12px; border-radius: 6px; border: 1px solid; transition: background .15s, color .15s; }
+.ws-side-sell > span { align-items: flex-start; color: var(--tv-red); border-color: rgba(242,54,69,.45); background: rgba(242,54,69,.08); }
+.ws-side-buy > span { align-items: flex-end; color: #5b9cf6; border-color: rgba(41,98,255,.5); background: rgba(41,98,255,.08); }
+.ws-sides small { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.ws-sides b { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ws-side-sell input:checked + span { background: var(--tv-red); border-color: var(--tv-red); color: #fff; }
+.ws-side-buy input:checked + span { background: var(--tv-blue); border-color: var(--tv-blue); color: #fff; }
+.ws-sides input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+.ws-spread { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; min-width: 34px; padding: 2px 6px; border-radius: 4px; background: var(--tv-bg); border: 1px solid var(--tv-line); color: var(--tv-muted); font-size: 11px; text-align: center; pointer-events: none; }
+.sim-ws .sim-two { gap: 8px; }
+.sim-ws label { font-size: 12.5px; color: var(--tv-muted); font-weight: 600; }
+.sim-ws input[type="text"] { height: 36px; padding: 0 10px; border-radius: 4px; border: 1px solid var(--tv-line); background: var(--tv-panel); color: #fff; font: inherit; font-size: 14px; font-variant-numeric: tabular-nums; }
+.sim-ws input[type="text"]:focus { outline: none; border-color: var(--tv-blue); }
+.sim-ws input[aria-invalid="true"] { border-color: var(--tv-red); }
+.ws-adv { border: 1px solid var(--tv-line); border-radius: 6px; }
+.ws-adv > summary { padding: 8px 10px; font-size: 13px; color: var(--tv-text); }
+.ws-adv[open] { padding-bottom: 10px; }
+.ws-adv > :not(summary) { margin: 8px 10px 0; }
+.ws-adv .ws-risk { display: grid; gap: 4px; }
+.sim-ws .sim-seg legend { font-size: 12.5px; color: var(--tv-muted); }
+.sim-ws .sim-seg-opts { background: var(--tv-panel); border-color: var(--tv-line); border-radius: 6px; }
+.sim-ws .sim-seg span { min-height: 30px; border-radius: 4px; font-size: 13px; }
+.sim-ws .sim-seg input:checked + span { background: var(--tv-line); box-shadow: none; color: #fff; }
+.sim-ws .sim-calc, .sim-ws .sim-pos-dl { background: var(--tv-panel); border-color: var(--tv-line); border-radius: 6px; padding: 8px 10px; }
+.sim-ws .sim-calc dt, .sim-ws .sim-pos-dl dt { color: var(--tv-muted); font-size: 11.5px; }
+.sim-ws .sim-place { min-height: 44px; border-radius: 6px; font-size: 15px; font-weight: 700; color: #fff; }
+.sim-ws .sim-place.is-buy { background: var(--tv-blue); }
+.sim-ws .sim-place.is-sell { background: var(--tv-red); }
+.sim-ws .sim-place:hover { filter: brightness(1.08); }
+.sim-ws .sim-hint { font-size: 12px; color: var(--tv-muted); line-height: 1.45; }
+.sim-ws .sim-error { font-size: 12.5px; }
+.sim-ws .sim-pl { margin: 0; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sim-ws .sim-pos-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.sim-ws .sim-pos-actions .btn { min-height: 36px; padding: 0 8px; border-radius: 4px; font-size: 13px; }
+.sim-ws #sim-close { grid-column: 1 / -1; background: var(--tv-panel); border: 1px solid var(--tv-line); color: #fff; }
+.ws-keys { margin: 14px 0 0; }
+.ws-keys kbd { display: inline-block; padding: 0 5px; border: 1px solid var(--tv-line); border-radius: 3px; background: var(--tv-panel); font: 11px/1.6 inherit; color: var(--tv-text); }
+.sim-ws .sim-table { font-size: 12.5px; }
+.sim-ws .sim-table th, .sim-ws .sim-table td { padding: 6px 5px; border-color: var(--tv-line); }
+.sim-ws .sim-tiles { grid-template-columns: 1fr 1fr; gap: 6px; }
+.sim-ws .sim-tile { padding: 8px 10px; border-radius: 6px; background: var(--tv-panel); border: 1px solid var(--tv-line); }
+.sim-ws .sim-tile strong { font-size: 15px; }
+.sim-ws .sim-equity h3 { font-size: 13px; margin: 12px 0 6px; color: var(--tv-muted); }
+.sim-ws .sim-eq-chart { height: 170px; }
+
+/* rezumat final */
+.ws-summary { width: min(640px, calc(100% - 24px)); max-height: calc(100dvh - 24px); overflow-y: auto; padding: 18px; border-radius: 10px; border: 1px solid var(--tv-line); background: var(--tv-panel); color: var(--tv-text); }
+.ws-summary::backdrop { background: rgba(0,0,0,.6); }
+.ws-sum-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ws-sum-head h2 { margin: 0; font-size: 19px; color: #fff; }
+.ws-summary .sim-reveal { margin: 8px 0 2px; color: #fff; font-weight: 600; }
+.ws-sum-reason { margin: 0 0 12px; color: var(--tv-muted); font-size: 13px; }
+.ws-summary .sim-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ws-summary .sim-tile { background: var(--tv-bg); }
+.ws-sum-eq { height: 160px; margin: 12px 0; }
+.ws-summary .sim-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ws-summary .sim-actions .btn { min-height: 40px; padding: 0 8px; font-size: 13.5px; border-radius: 6px; }
+.ws-summary .btn-primary { background: var(--tv-blue); color: #fff; }
+.ws-summary .sim-msg { min-height: 0; margin: 10px 0 0; font-size: 13px; }
+.ws-summary .sim-hint { margin: 10px 0 0; font-size: 12px; color: var(--tv-muted); }
+
+/* ecrane medii */
+@media (max-width: 1100px) {
+  .ws-step .ws-txt { display: none; }
+  .ws-body { grid-template-columns: minmax(0, 1fr) 290px; }
+}
+@media (max-width: 860px) {
+  .ws-bars { display: none !important; }
+  .ws-acct { gap: 10px; }
+}
+/* telefon în portret: panou ca foaie jos, bară de sus pe două rânduri */
+@media (max-width: 699px) {
+  .ws-bar { padding: 3px 6px; gap: 2px; row-gap: 3px; }
+  .ws-logo, .sim-ws #sim-help-ws { display: none; }
+  .ws-id { flex: 1 1 auto; }
+  .ws-acct { order: 3; flex: 1 0 100%; margin: 0; padding: 3px 4px 0; border-left: 0 !important; border-top: 1px solid var(--tv-line); justify-content: space-between; }
+  .ws-acct div { flex-direction: row; gap: 5px; align-items: baseline; }
+  .ws-replay { order: 2; }
+  .ws-end { order: 1; border-left: 0 !important; padding-left: 0 !important; }
+  .ws-group + .ws-group { margin-left: 0; }
+  .ws-btn { height: 34px; min-width: 32px; padding: 0 7px; }
+  .ws-finish { padding: 0 10px; }
+  .ws-replay { flex: 1 0 100%; justify-content: space-between; border-left: 0 !important; padding-left: 0 !important; }
+  .ws-body { display: flex; flex-direction: column; }
+  .ws-chart-wrap { flex: 1; }
+  .ws-panel { flex: none; overflow: hidden; border-left: 0; border-top: 1px solid var(--tv-line); max-height: 40px; transition: max-height .25s ease; }
+  .ws-panel[data-open="true"] { max-height: min(62dvh, 560px); }
+  .ws-sheet-toggle { display: block; }
+  .ws-tabs [role="tab"] { height: 40px; font-size: 13.5px; }
+  .ws-summary .sim-tiles { grid-template-columns: 1fr 1fr; }
+  .ws-summary .sim-actions { grid-template-columns: 1fr 1fr; }
+  .ws-legend { font-size: 11.5px; top: 6px; left: 8px; }
+  .ws-toast { bottom: 30px; font-size: 13px; }
+}
+/* telefon în peisaj (puțină înălțime): panou îngust în dreapta, bară compactă */
+@media (min-width: 700px) and (max-height: 520px) {
+  .ws-bar { min-height: 38px; padding: 2px 6px; flex-wrap: nowrap; }
+  .ws-btn { height: 30px; min-width: 30px; padding: 0 6px; }
+  .ws-logo, .ws-bars, .sim-ws #sim-help-ws { display: none !important; }
+  .ws-acct { gap: 8px; }
+  .ws-acct dt { font-size: 10px; }
+  .ws-acct dd { font-size: 12.5px; }
+  .ws-sym span { display: none; }
+  .ws-body { grid-template-columns: minmax(0, 1fr) 260px; }
+  .ws-tabs [role="tab"] { height: 34px; font-size: 12.5px; }
+  .ws-pane { padding: 8px; }
+  .ws-sides label > span { min-height: 44px; }
+  .ws-sides b { font-size: 15px; }
+  .ws-keys { display: none; }
+}
+@media (max-width: 380px) { .ws-acct dt { font-size: 10px; } .ws-acct dd { font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { .ws-panel, .ws-toast { transition: none; } }
+.ws-tabs [role="tab"] { white-space: nowrap; padding: 0 6px; }
+@media (min-width: 700px) and (max-height: 520px) { .ws-count { display: none; } }
+.ws-summary .sim-actions { position: sticky; bottom: -18px; z-index: 2; margin: 0 -18px -18px; padding: 12px 18px 18px; background: var(--tv-panel); border-top: 1px solid var(--tv-line); }
+@media (max-height: 520px) {
+  .ws-summary { padding: 12px 14px 14px; max-height: calc(100dvh - 12px); }
+  .ws-sum-head h2 { font-size: 16px; }
+  .ws-summary .sim-reveal { margin-top: 4px; font-size: 13px; }
+  .ws-sum-reason { margin-bottom: 6px; }
+  .ws-summary .sim-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+  .ws-summary .sim-tile { padding: 5px 7px; }
+  .ws-summary .sim-tile span { font-size: 10.5px; }
+  .ws-summary .sim-tile strong { font-size: 13px; }
+  .ws-summary .sim-tile small { display: none; }
+  .ws-sum-eq { height: 70px; margin: 6px 0; }
+  .ws-summary .sim-actions { bottom: -14px; margin: 0 -14px -14px; padding: 8px 14px 12px; }
+  .ws-summary .sim-actions .btn { min-height: 34px; }
+  .ws-summary .sim-hint { display: none; }
+}
+.sim-ws .ws-sum-eq { height: 160px; }
+@media (max-height: 520px) { .sim-ws .ws-sum-eq { height: 70px; } }

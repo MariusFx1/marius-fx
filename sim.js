@@ -17,7 +17,7 @@
   const YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
   const DATA_START = Date.UTC(2019, 0, 2) / 1000, DATA_END = Date.UTC(2025, 11, 31, 21) / 1000;
   const CSS = getComputedStyle(document.documentElement);
-  const C = { green: '#22c55e', red: '#ef4444', amber: '#fbbf24', blue: '#60a5fa', text: '#cbd5e1', grid: 'rgba(148,163,184,.07)', border: '#1e2b45' };
+  const C = { green: '#089981', red: '#f23645', amber: '#f7a600', blue: '#2962ff', text: '#b2b5be', grid: 'rgba(42,46,57,.6)', border: '#2a2e39', bg: '#131722' };
 
   // ---------- utilitare ----------
   const store = {
@@ -102,7 +102,7 @@
   let S = null;            // sesiunea curentă
   let chart = null, series = null, markersApi = null, eqChart = null, eqSeries = null;
   const lines = {};        // linii de preț pe grafic: entry, sl, tp, pend (poziție) și psl, ptp, ppr (previzualizare)
-  let playTimer = null, loadingMore = null;
+  let playTimer = null, loadingMore = null, legendHover = false, sumChart = null;
 
   // ---------- grafic ----------
   function timeLabels(hidden) {
@@ -128,11 +128,11 @@
     const el = $('sim-chart');
     chart = LW.createChart(el, {
       autoSize: true,
-      layout: { background: { type: 'solid', color: '#0b1220' }, textColor: C.text, fontFamily: CSS.getPropertyValue('--font') || 'system-ui', attributionLogo: true },
+      layout: { background: { type: 'solid', color: C.bg }, textColor: C.text, fontSize: 12, fontFamily: "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif", attributionLogo: true },
       grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
       rightPriceScale: { borderColor: C.border, scaleMargins: { top: 0.12, bottom: 0.12 } },
       timeScale: { borderColor: C.border, rightOffset: 6, barSpacing: 8, shiftVisibleRangeOnNewBar: true },
-      crosshair: { mode: LW.CrosshairMode.Normal },
+      crosshair: { mode: LW.CrosshairMode.Normal, vertLine: { color: '#758696', style: LW.LineStyle.Dashed, labelBackgroundColor: '#363a45' }, horzLine: { color: '#758696', style: LW.LineStyle.Dashed, labelBackgroundColor: '#363a45' } },
       handleScroll: { vertTouchDrag: false }
     });
     series = chart.addSeries(LW.CandlestickSeries, {
@@ -152,6 +152,32 @@
     });
     markersApi = LW.createSeriesMarkers(series, []);
     timeLabels(S.hidden);
+    chart.subscribeCrosshairMove(p => {
+      const d = p && p.time != null && series ? p.seriesData.get(series) : null;
+      legendHover = !!d; legend(d || null);
+    });
+  }
+  /** Legenda OHLC din colțul stânga sus (ca în TradingView): bara de sub cursor sau ultima bară. */
+  function legend(bar) {
+    if (!S) return;
+    const b = bar || lwBar(S.cur), f = p => fmtPrice(S.sym, p), up = b.close >= b.open;
+    const ch = b.close - b.open, pc = b.open ? ch / b.open * 100 : 0;
+    $('sim-legend').innerHTML = `<strong>${esc(S.sym)} · ${esc(S.tf)}</strong>` +
+      (S.hidden ? '' : `<span class="lg-t">${esc(fmtTime(b.time, S.tf))}</span>`) +
+      `<span class="${up ? 'up' : 'dn'}"><i>O</i>${f(b.open)} <i>H</i>${f(b.high)} <i>L</i>${f(b.low)} <i>C</i>${f(b.close)} <em>${ch >= 0 ? '+' : '−'}${f(Math.abs(ch))} (${ch >= 0 ? '+' : '−'}${nf(Math.abs(pc), 2)}%)</em></span>`;
+  }
+  /** Eticheta liniei: nivel + rezultat în bani și R dacă prețul ajunge acolo. */
+  function lineTitle(key, price) {
+    const P = S.pos, O = S.pending, pr = !P && !O ? preview() : null;
+    const x = P || O || (pr && pr.ok ? pr : null);
+    const base = key === 'sl' ? (P && P.be ? 'SL (BE)' : 'SL') : 'TP';
+    if (!x || price == null) return base;
+    const entry = P ? P.entry : O ? O.price : pr.ref, slp = P ? P.sl0 : x.sl;
+    const dir = x.side === 'buy' ? 1 : -1, pip = E.pipOf(S.sym);
+    const pips = (price - entry) * dir / pip, pipVal = x.pipVal, lot = x.lot;
+    const m = pips * pipVal * lot, risk = Math.abs(entry - slp) / pip * pipVal * lot;
+    const r = risk > 0 ? m / risk : 0;
+    return `${base}  ${money(m, S.ccy, true)}  ${r >= 0 ? '+' : '−'}${nf(Math.abs(r), 2)}R`;
   }
   const lwBar = i => ({ time: S.d.t[i], open: S.d.o[i], high: S.d.h[i], low: S.d.l[i], close: S.d.c[i] });
   function setChartData() {
@@ -163,7 +189,7 @@
   }
   function setLine(key, price, opts) {
     if (price == null || !Number.isFinite(price)) { if (lines[key]) { series.removePriceLine(lines[key]); delete lines[key]; } return; }
-    const o = Object.assign({ price, lineWidth: 2, axisLabelVisible: true, lineStyle: LW.LineStyle.Solid }, opts);
+    const o = Object.assign({ price, lineWidth: 1, axisLabelVisible: true, lineStyle: LW.LineStyle.Solid }, opts);
     if (lines[key]) lines[key].applyOptions(o); else lines[key] = series.createPriceLine(o);
   }
   function drawLines() {
@@ -173,8 +199,8 @@
     const sl = P ? P.sl : O ? O.sl : prev && prev.ok ? prev.sl : null;
     const tp = P ? P.tp : O ? O.tp : prev && prev.ok ? prev.tp : null;
     const ghost = !P && !O;
-    setLine('sl', sl, { color: ghost ? 'rgba(239,68,68,.6)' : C.red, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: P && P.be ? 'SL (BE)' : 'SL' });
-    setLine('tp', tp, { color: ghost ? 'rgba(34,197,94,.6)' : C.green, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: 'TP' });
+    setLine('sl', sl, { color: ghost ? 'rgba(242,54,69,.65)' : C.red, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: lineTitle('sl', sl) });
+    setLine('tp', tp, { color: ghost ? 'rgba(8,153,129,.7)' : C.green, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: lineTitle('tp', tp) });
     setLine('ppr', ghost && prev && prev.kind !== 'market' && prev.ref ? prev.ref : null, { color: 'rgba(251,191,36,.7)', lineStyle: LW.LineStyle.Dashed, title: 'Ordin' });
   }
 
@@ -240,7 +266,7 @@
     p = E.round(p, dec);
     if (S.pos) {
       if (key === 'sl') S.pos.slDraft = p; else if (key === 'tp') S.pos.tpDraft = p; else return;
-      setLine(key, p, {});
+      setLine(key, p, { title: lineTitle(key, p) });
       $(key === 'sl' ? 'sim-p-sl' : 'sim-p-tp').value = inputPrice(sym, p);
       if (final) applyPosLevels();
       return;
@@ -257,7 +283,7 @@
         Object.assign(S.pending, { [k]: p, slPips, lot });
         showMsg('Ordinul a fost modificat: ' + (k === 'price' ? 'preț ' : k.toUpperCase() + ' ') + fmtPrice(sym, p) + '.');
         afterChange();
-      } else setLine(key, p, {});
+      } else setLine(key, p, k === 'price' ? {} : { title: lineTitle(key, p) });
       return;
     }
     // previzualizare: actualizează câmpurile formularului
@@ -356,7 +382,9 @@
   // ---------- poziția deschisă ----------
   function renderPos() {
     const P = S.pos, O = S.pending;
+    const wasPos = !$('sim-pos').hidden;
     $('sim-order').hidden = !!(P || O) || S.ended;
+    if (wasPos !== !!(P || O)) $('sim-panes').scrollTop = 0;
     $('sim-pos').hidden = !(P || O) || S.ended;
     if (!P && !O) return;
     const x = P || O, sym = S.sym;
@@ -497,12 +525,20 @@
     clearInterval(playTimer); playTimer = null;
     const b = $('sim-play');
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    b.textContent = on ? 'Pauză' : 'Redare';
+    b.classList.toggle('is-on', !!on);
+    $('sim-play-lbl').textContent = on ? 'Pauză' : 'Redare';
+    b.title = on ? 'Pauză (Space)' : 'Redare (Space)';
     if (on) playTimer = setInterval(() => { if (!S || S.ended) return setPlaying(false); if (loadingMore) return; step(1); }, SPEED_MS[$('sim-speed').value] || 900);
   }
 
   // ---------- afișare generală ----------
-  function showMsg(text, tone) { const m = $('sim-msg'); m.textContent = text; m.dataset.tone = tone || ''; }
+  let toastTimer = null;
+  function showMsg(text, tone) {
+    const m = $('sim-msg'); m.textContent = text; m.dataset.tone = tone || '';
+    m.classList.toggle('is-on', !!text);
+    clearTimeout(toastTimer);
+    if (text) toastTimer = setTimeout(() => m.classList.remove('is-on'), tone === 'bad' || tone === 'warn' ? 7000 : 4500);
+  }
   function renderAcct() {
     const P = S.pos;
     const open = P ? E.result(P, E.markPrice(P, bid())).money : 0;
@@ -511,7 +547,11 @@
     const o = $('sim-openpl'); o.textContent = P ? money(open, S.ccy, true) : '—';
     o.className = open > 0 ? 'pos' : open < 0 ? 'neg' : '';
     $('sim-bars').textContent = String(S.barsPlayed);
-    $('sim-when').textContent = S.hidden ? 'Data e ascunsă până la final' : fmtTime(S.d.t[S.cur], S.tf);
+    $('sim-bid').textContent = fmtPrice(S.sym, bid());
+    $('sim-ask').textContent = nf(ask(), E.INSTR[S.sym].dec);
+    $('sim-spread').textContent = nf(E.INSTR[S.sym].spread, 1);
+    if (!legendHover) legend(null);
+    $('sim-when').textContent = S.hidden ? 'Data e ascunsă' : fmtTime(S.d.t[S.cur], S.tf);
   }
   function afterChange() {
     if (!S) return;
@@ -539,13 +579,12 @@
       <td class="num">${sign(t.pips)}${nf(Math.abs(t.pips), 1)}</td><td class="num ${t.r > 0 ? 'pos' : t.r < 0 ? 'neg' : ''}">${fmtR(t.r)}</td>
       <td class="num ${t.money > 0 ? 'pos' : t.money < 0 ? 'neg' : ''}">${money(t.money, ccy, true)}</td></tr>`).join('');
     $('sim-trades-empty').hidden = S.trades.length > 0;
-    drawEquity(st.curve);
-    $('sim-stats').hidden = false;
+    $('sim-tcount').textContent = String(S.trades.length);
+    if (!$('sim-stats').hidden) drawEquity(st.curve);
+    return st;
   }
-  function drawEquity(curve) {
-    const el = $('sim-eq-chart');
-    if (!eqChart) {
-      eqChart = LW.createChart(el, {
+  function eqChartOn(el) {
+    const ch = LW.createChart(el, {
         autoSize: true, height: 200,
         layout: { background: { type: 'solid', color: 'transparent' }, textColor: C.text, attributionLogo: false },
         grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
@@ -553,11 +592,16 @@
         handleScroll: false, handleScale: false, crosshair: { vertLine: { labelVisible: false } },
         localization: { locale: 'ro-RO', priceFormatter: p => nf(p, 0) }
       });
-      eqSeries = eqChart.addSeries(LW.BaselineSeries, { baseValue: { type: 'price', price: S.bal0 }, topLineColor: C.green, bottomLineColor: C.red, topFillColor1: 'rgba(34,197,94,.25)', topFillColor2: 'rgba(34,197,94,.02)', bottomFillColor1: 'rgba(239,68,68,.02)', bottomFillColor2: 'rgba(239,68,68,.25)', lineWidth: 2, priceLineVisible: false });
-    }
-    eqSeries.applyOptions({ baseValue: { type: 'price', price: S.bal0 } });
-    eqSeries.setData(curve.map((v, i) => ({ time: 946684800 + i * 86400, value: v })));
-    eqChart.timeScale().fitContent();
+    return { ch, se: ch.addSeries(LW.BaselineSeries, { baseValue: { type: 'price', price: S.bal0 }, topLineColor: C.green, bottomLineColor: C.red, topFillColor1: 'rgba(34,197,94,.25)', topFillColor2: 'rgba(34,197,94,.02)', bottomFillColor1: 'rgba(239,68,68,.02)', bottomFillColor2: 'rgba(239,68,68,.25)', lineWidth: 2, priceLineVisible: false }) };
+  }
+  function drawEquity(curve, el) {
+    let c;
+    if (el) { if (!sumChart) sumChart = eqChartOn(el); c = sumChart; }
+    else { if (!eqChart) { const x = eqChartOn($('sim-eq-chart')); eqChart = x.ch; eqSeries = x.se; } c = { ch: eqChart, se: eqSeries }; }
+    const eqSeries_ = c.se, eqChart_ = c.ch;
+    eqSeries_.applyOptions({ baseValue: { type: 'price', price: S.bal0 } });
+    eqSeries_.setData(curve.map((v, i) => ({ time: 946684800 + i * 86400, value: v })));
+    eqChart_.timeScale().fitContent();
   }
 
   // ---------- salvare ----------
@@ -637,10 +681,14 @@
       balance: snap ? snap.balance : cfg.bal0, pos: snap ? snap.pos : null, pending: snap ? snap.pending : null,
       trades: snap ? snap.trades : [], markers: snap ? snap.markers : [], barsPlayed: snap ? snap.barsPlayed : 0, ended: false, touched: false
     });
-    setupForm.hidden = true;
-    $('sim-session').hidden = false;
-    $('sim-stats').hidden = true; $('sim-end-actions').hidden = true; $('sim-stats-msg').textContent = ''; $('sim-reveal').textContent = '';
+    enterApp();
+    $('sim-stats-msg').textContent = ''; $('sim-reveal').textContent = '';
+    ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = false; });
+    $('sim-end').textContent = 'Termină'; $('sim-end').title = 'Termină sesiunea și vezi rezultatele';
     $('sim-label').textContent = `${cfg.sym} · ${tf}`;
+    $('sim-risk-ws').value = nf(cfg.riskPct, 0, 2).replace(/\s/g, '');
+    $('sim-adv').open = false;
+    selectTab('order');
     // valori implicite pentru SL/TP: ~1x amplitudinea mediană a ultimelor 50 de bare
     const mr = E.medianRangePips(d, cur, 50, cfg.sym);
     const sl = Math.max(5, Math.round(mr * 1.5 / 5) * 5 || 20);
@@ -652,9 +700,8 @@
     makeChart(); setChartData();
     $('sim-pos-err').hidden = true; $('sim-order-err').hidden = true;
     showMsg(snap ? 'Sesiunea a fost reluată de unde ai rămas.' : 'Sesiunea a început. Analizează graficul, apoi avansează sau plasează un ordin.');
-    if (S.trades.length) renderStats();
+    renderStats();
     afterChange();
-    $('sim-session').scrollIntoView({ behavior: 'smooth', block: 'start' });
     $('sim-next').focus({ preventScroll: true });
   }
   function endSession(reason) {
@@ -672,10 +719,17 @@
     $('sim-reveal').textContent = 'Perioada reală: ' + period + '.';
     $('sim-when').textContent = fmtTime(b, S.tf);
     $('sim-order').hidden = true; $('sim-pos').hidden = true;
-    ['sim-next', 'sim-next10', 'sim-play', 'sim-end', 'sim-speed'].forEach(id => { $(id).disabled = true; });
-    renderStats();
-    $('sim-end-actions').hidden = false;
-    showMsg((reason ? reason + ' ' : '') + 'Sesiunea s-a încheiat. Mai jos vezi perioada reală și statisticile.');
+    ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = true; });
+    $('sim-end').textContent = 'Rezultate'; $('sim-end').title = 'Arată rezultatele sesiunii';
+    const st0 = renderStats();
+    legend(null);
+    showMsg('');
+    $('sim-sum-reason').textContent = (reason ? reason + ' ' : '') + 'Sesiunea s-a încheiat.';
+    const g = (id, v) => { $(id).textContent = v; };
+    g('sim-m-n', String(st0.n)); g('sim-m-wl', $('sim-s-wl').textContent); g('sim-m-wr', $('sim-s-wr').textContent); g('sim-m-tr', $('sim-s-tr').textContent);
+    g('sim-m-pf', $('sim-s-pf').textContent); g('sim-m-dd', $('sim-s-dd').textContent); g('sim-m-net', $('sim-s-net').textContent); g('sim-m-bal', $('sim-s-bal').textContent);
+    $('sim-m-tr').className = $('sim-s-tr').className; $('sim-m-net').className = $('sim-s-net').className;
+    openSummary();
     // salvează în istoric
     const st = E.stats(S.trades, S.bal0);
     const list = store.get(KEY_SESS, []);
@@ -684,19 +738,102 @@
     store.set(KEY_SESS, list.slice(0, MAX_SAVED));
     store.del(KEY_CUR);
     renderHistory();
-    $('sim-stats').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  function newSession() {
+  function openSummary() {
+    const d = $('sim-summary');
+    if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+    drawEquity(E.stats(S.trades, S.bal0).curve, $('sim-sum-eq'));
+  }
+  function closeSummary() { const d = $('sim-summary'); if (d.open) { if (d.close) d.close(); else d.removeAttribute('open'); } }
+  /** Curăță sesiunea din memorie (cea neterminată rămâne salvată pentru reluare). */
+  function teardown() {
     setPlaying(false);
+    if (S && !S.ended) { clearTimeout(saveTimer); store.set(KEY_CUR, snapshot()); }
+    closeSummary();
     S = null;
-    if (chart) { chart.remove(); chart = null; }
+    if (chart) { chart.remove(); chart = null; series = null; }
     if (eqChart) { eqChart.remove(); eqChart = null; eqSeries = null; }
-    ['sim-next', 'sim-next10', 'sim-play', 'sim-end', 'sim-speed'].forEach(id => { $(id).disabled = false; });
-    $('sim-session').hidden = true; $('sim-stats').hidden = true;
-    setupForm.hidden = false;
+    if (sumChart) { sumChart.ch.remove(); sumChart = null; }
+    showMsg('');
+  }
+  /** „Sesiune nouă”: pornește imediat o sesiune cu aceleași setări, fără să ieși din spațiul de lucru. */
+  async function newSession() {
+    teardown();
+    await start();
+    if (!S) leaveApp();   // dacă pornirea a eșuat, arată eroarea în pagina de setări
+  }
+
+  // ---------- spațiul de lucru pe tot ecranul (cu istoric pentru butonul Înapoi) ----------
+  const ws = $('sim-session');
+  const others = () => [...document.body.children].filter(e => e !== ws && e !== help && e.tagName !== 'SCRIPT');
+  function enterApp() {
+    if (document.documentElement.classList.contains('sim-app-on')) return;
+    document.documentElement.classList.add('sim-app-on');
+    ws.hidden = false;
+    others().forEach(e => { e.inert = true; });
+    if (!(history.state && history.state.simApp)) history.pushState({ simApp: 1 }, '', '#sesiune');
+    sheet(false);
+  }
+  function leaveApp() {
+    teardown();
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    document.documentElement.classList.remove('sim-app-on');
+    ws.hidden = true;
+    others().forEach(e => { e.inert = false; });
     $('sim-resume').hidden = !store.get(KEY_CUR, null);
-    setupForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    renderHistory();
+    if (location.hash === '#sesiune') history.replaceState(null, '', location.pathname + location.search);
+    setupForm.scrollIntoView({ block: 'start' });
     $('sim-start').focus({ preventScroll: true });
+  }
+  function goBack() {
+    if (history.state && history.state.simApp) history.back();   // popstate → leaveApp
+    else leaveApp();
+  }
+  window.addEventListener('popstate', () => {
+    if (document.documentElement.classList.contains('sim-app-on') && !(history.state && history.state.simApp)) leaveApp();
+  });
+
+  // file: Ordin / Tranzacții / Statistici
+  const TABS = ['order', 'trades', 'stats'];
+  function selectTab(name) {
+    for (const t of TABS) {
+      const on = t === name, b = $('sim-tab-' + t);
+      b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
+      $(t === 'stats' ? 'sim-stats' : 'sim-pane-' + t).hidden = !on;
+    }
+    if (name === 'stats' && S) requestAnimationFrame(() => drawEquity(E.stats(S.trades, S.bal0).curve));
+  }
+  function sheet(open) {
+    $('sim-panel').dataset.open = open ? 'true' : 'false';
+    $('sim-sheet').setAttribute('aria-expanded', open ? 'true' : 'false');
+    $('sim-sheet').setAttribute('aria-label', open ? 'Ascunde panoul' : 'Arată panoul');
+  }
+  TABS.forEach((t, i) => {
+    const b = $('sim-tab-' + t);
+    b.addEventListener('click', () => { selectTab(t); sheet(true); });
+    b.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault(); e.stopPropagation();
+      const n = TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length];
+      selectTab(n); $('sim-tab-' + n).focus();
+    });
+  });
+  $('sim-sheet').addEventListener('click', () => sheet($('sim-panel').dataset.open !== 'true'));
+  // ecran complet (Fullscreen API, unde există)
+  const fsBtn = $('sim-fs');
+  if (document.fullscreenEnabled && document.documentElement.requestFullscreen) {
+    fsBtn.hidden = false;
+    fsBtn.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      else document.documentElement.requestFullscreen().catch(() => showMsg('Browserul nu a permis ecranul complet.', 'warn'));
+    });
+    document.addEventListener('fullscreenchange', () => {
+      const on = !!document.fullscreenElement;
+      fsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      fsBtn.setAttribute('aria-label', on ? 'Ieși din ecranul complet' : 'Ecran complet');
+      fsBtn.title = on ? 'Ieși din ecranul complet' : 'Ecran complet';
+    });
   }
 
   // ---------- istoric, CSV, jurnal ----------
@@ -781,7 +918,17 @@
   $('sim-next10').addEventListener('click', () => step(10));
   $('sim-play').addEventListener('click', () => setPlaying(!playTimer));
   $('sim-speed').addEventListener('change', () => { if (playTimer) setPlaying(true); });
-  $('sim-end').addEventListener('click', () => endSession(''));
+  $('sim-end').addEventListener('click', () => { if (S && S.ended) openSummary(); else endSession(''); });
+  $('sim-back').addEventListener('click', goBack);
+  $('sim-exit').addEventListener('click', goBack);
+  $('sim-sum-close').addEventListener('click', closeSummary);
+  $('sim-summary').addEventListener('click', e => { if (e.target === $('sim-summary')) closeSummary(); });
+  $('sim-help-ws').addEventListener('click', () => { if (help.showModal) help.showModal(); else help.setAttribute('open', ''); });
+  $('sim-risk-ws').addEventListener('input', () => {
+    const r = num($('sim-risk-ws').value);
+    if (S && r > 0 && r <= 10) { S.riskPct = r; $('sim-risk-ws').removeAttribute('aria-invalid'); }
+    else $('sim-risk-ws').setAttribute('aria-invalid', 'true');
+  });
   $('sim-p-apply').addEventListener('click', applyPosLevels);
   $('sim-pos').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'sim-p-sl' || e.target.id === 'sim-p-tp')) { e.preventDefault(); applyPosLevels(); } });
   $('sim-be').addEventListener('click', moveToBE);
@@ -792,8 +939,16 @@
   $('sim-clear').addEventListener('click', () => { store.del(KEY_SESS); renderHistory(); });
   document.addEventListener('keydown', e => {
     if (!S || S.ended || $('sim-session').hidden || e.altKey || e.ctrlKey || e.metaKey) return;
-    if (/^(INPUT|SELECT|TEXTAREA)$/.test((e.target.tagName || '')) || e.target.isContentEditable || $('sim-help').open) return;
-    if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    if (/^(INPUT|SELECT|TEXTAREA)$/.test((e.target.tagName || '')) || e.target.isContentEditable || $('sim-help').open || $('sim-summary').open) return;
+    const onBtn = /^(BUTTON|A|SUMMARY)$/.test(e.target.tagName || '') || e.target.getAttribute('role') === 'tab';
+    if (e.key === 'ArrowRight' && e.target.getAttribute('role') !== 'tab') { e.preventDefault(); step(1); }
+    else if ((e.key === ' ' || e.code === 'Space') && !onBtn) { e.preventDefault(); setPlaying(!playTimer); }
+    else if (e.key === 'b' || e.key === 'B' || e.key === 's' || e.key === 'S') {
+      if (S.pos || S.pending) { showMsg('Ai deja o poziție sau un ordin. Închide-l înainte de unul nou.', 'warn'); return; }
+      e.preventDefault();
+      document.querySelector(`input[name="sim-side"][value="${/b/i.test(e.key) ? 'buy' : 'sell'}"]`).checked = true;
+      updateCalc(); placeOrder();
+    } else if (e.key === 'Escape' && $('sim-panel').dataset.open === 'true') sheet(false);
   });
   // ajutor
   const help = $('sim-help');
@@ -801,6 +956,8 @@
   help.addEventListener('close', () => store.set(KEY_HELP, 1));
   help.addEventListener('click', e => { if (e.target === help) help.close(); });
   bindDrag();
+  document.body.appendChild(ws); document.body.appendChild(help);
+  if (location.hash === '#sesiune') history.replaceState(null, '', location.pathname + location.search);
 
   // inițializare
   setupForm.hidden = false;
@@ -808,5 +965,5 @@
   $('sim-resume').hidden = !store.get(KEY_CUR, null);
   renderHistory();
   if (!store.get(KEY_HELP, 0) && help.showModal) help.showModal();
-  window.__sim = { get S() { return S; }, step, endSession, get chart() { return chart; }, get series() { return series; }, lines };   // pentru teste
+  window.__sim = { get S() { return S; }, step, endSession, selectTab, sheet, get chart() { return chart; }, get series() { return series; }, lines };   // pentru teste
 })();

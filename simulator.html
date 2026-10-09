@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"></noscript>
-  <link rel="stylesheet" href="styles.css?v=41">
+  <link rel="stylesheet" href="styles.css?v=42">
   <link rel="icon" href="favicon.ico?v=15" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
@@ -107,6 +107,10 @@
           <label id="sim-date-wrap" hidden>Data de start
             <input type="date" id="sim-date" name="date" min="2019-09-01" max="2025-06-30">
           </label>
+        </div>
+        <details class="sim-adv-setup">
+          <summary>Avansat <small>monedă, sold, risc (implicit 10.000 €, 1%)</small></summary>
+          <div class="sim-setup-grid">
           <label>Moneda contului
             <select id="sim-ccy" name="ccy">
               <option value="EUR">EUR (€)</option>
@@ -120,158 +124,207 @@
           <label>Risc pe tranzacție (%)
             <input type="text" id="sim-risk" name="risk" inputmode="decimal" value="1" autocomplete="off">
           </label>
-        </div>
+          </div>
+        </details>
         <p class="sim-hint" id="sim-mode-hint">Cu „Perioadă aleatorie” data rămâne ascunsă până la finalul sesiunii, ca să nu fii influențat de ce știi deja despre acea perioadă.</p>
         <p class="sim-error" id="sim-setup-err" role="alert" hidden></p>
         <div class="sim-actions">
-          <button type="submit" class="btn btn-primary" id="sim-start">Pornește sesiunea</button>
+          <button type="submit" class="btn btn-primary btn-lg" id="sim-start">Pornește sesiunea</button>
           <button type="button" class="btn btn-ghost" id="sim-resume" hidden>Continuă sesiunea salvată</button>
         </div>
       </form>
 
       <!-- Sesiunea în desfășurare -->
-      <section class="sim-session" id="sim-session" hidden aria-label="Sesiune de backtesting">
-        <div class="sim-status">
-          <p class="sim-label"><strong id="sim-label">EURUSD · H1</strong> <span id="sim-when">Data e ascunsă până la final</span></p>
-          <dl class="sim-acct">
+      <section class="sim-ws" id="sim-session" hidden aria-label="Spațiul de lucru pentru backtesting">
+        <header class="ws-bar">
+          <div class="ws-group ws-id">
+            <button type="button" class="ws-btn ws-icon" id="sim-back" aria-label="Înapoi la setări" title="Înapoi la setări">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <span class="ws-logo logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>
+            <p class="ws-sym"><strong id="sim-label">EURUSD · H1</strong> <span id="sim-when">Data e ascunsă</span></p>
+          </div>
+          <div class="ws-group ws-replay" role="toolbar" aria-label="Controlul redării">
+            <button type="button" class="ws-btn ws-icon" id="sim-first" disabled aria-label="Înapoi în timp (nu se poate)" title="Înapoi nu se poate: ca în piață, vezi doar trecutul">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M18 6l-8 6 8 6z"/></svg></button>
+            <button type="button" class="ws-btn ws-icon ws-play" id="sim-play" aria-pressed="false" aria-keyshortcuts="Space" title="Redare / pauză (Space)">
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><span class="sr-only" id="sim-play-lbl">Redare</span></button>
+            <button type="button" class="ws-btn ws-step" id="sim-next" aria-keyshortcuts="ArrowRight" title="Bara următoare (→)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6l8 6-8 6zM16 5v14"/></svg><span class="ws-txt">Bara următoare</span></button>
+            <button type="button" class="ws-btn" id="sim-next10" title="Avansează 10 bare">+10</button>
+            <label class="ws-speed"><span class="sr-only">Viteza redării</span>
+              <select id="sim-speed">
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="5">5x</option>
+                <option value="10">10x</option>
+              </select>
+            </label>
+          </div>
+          <dl class="ws-group ws-acct">
             <div><dt>Sold</dt><dd id="sim-balance">—</dd></div>
             <div><dt>Equity</dt><dd id="sim-equity">—</dd></div>
-            <div><dt>P/L deschis</dt><dd id="sim-openpl">—</dd></div>
-            <div><dt>Bare</dt><dd id="sim-bars">0</dd></div>
+            <div><dt>P/L</dt><dd id="sim-openpl">—</dd></div>
+            <div class="ws-bars"><dt>Bare</dt><dd id="sim-bars">0</dd></div>
           </dl>
-        </div>
-        <div class="sim-main">
-          <div class="sim-chart-col">
-            <div class="sim-chart" id="sim-chart" role="img" aria-label="Grafic cu lumânări pentru sesiunea curentă. Folosește butoanele de mai jos pentru a avansa."></div>
-            <div class="sim-controls" role="toolbar" aria-label="Controlul redării">
-              <button type="button" class="sim-ctrl sim-ctrl-main" id="sim-next" aria-keyshortcuts="ArrowRight">Bara următoare <kbd aria-hidden="true">→</kbd></button>
-              <button type="button" class="sim-ctrl" id="sim-next10">+10 bare</button>
-              <button type="button" class="sim-ctrl" id="sim-play" aria-pressed="false">Redare</button>
-              <label class="sim-speed"><span class="sr-only">Viteza redării</span>
-                <select id="sim-speed">
-                  <option value="1">1x</option>
-                  <option value="2">2x</option>
-                  <option value="5">5x</option>
-                  <option value="10">10x</option>
-                </select>
-              </label>
-              <button type="button" class="sim-ctrl sim-ctrl-end" id="sim-end">Încheie sesiunea</button>
-            </div>
-            <p class="sim-hint sim-chart-hint">Liniile SL și TP se pot trage cu mouse-ul sau cu degetul. Înapoi nu se poate: ca în piață, vezi doar trecutul.</p>
+          <div class="ws-group ws-end">
+            <button type="button" class="ws-btn ws-icon" id="sim-help-ws" aria-label="Cum folosești simulatorul" title="Ajutor">?</button>
+            <button type="button" class="ws-btn ws-icon" id="sim-fs" aria-pressed="false" aria-label="Ecran complet" title="Ecran complet" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+            <button type="button" class="ws-btn ws-finish" id="sim-end">Termină</button>
+          </div>
+        </header>
+
+        <div class="ws-body">
+          <div class="ws-chart-wrap">
+            <div class="sim-chart" id="sim-chart" role="img" aria-label="Grafic cu lumânări pentru sesiunea curentă. Avansezi cu săgeata dreapta sau cu butoanele de redare."></div>
+            <div class="ws-legend" id="sim-legend" aria-hidden="true"></div>
+            <p class="ws-toast" id="sim-msg" role="status" aria-live="polite"></p>
           </div>
 
-          <aside class="sim-panel" aria-label="Ordine și poziție">
-            <form class="sim-order" id="sim-order" novalidate>
-              <h2>Ordin nou</h2>
-          <fieldset class="sim-seg sim-seg-side">
-            <legend>Direcție</legend>
-            <div class="sim-seg-opts">
-              <label><input type="radio" name="sim-side" value="buy" checked><span>Buy</span></label>
-              <label><input type="radio" name="sim-side" value="sell"><span>Sell</span></label>
+          <aside class="ws-panel" id="sim-panel" aria-label="Ordine, tranzacții și statistici" data-open="false">
+            <div class="ws-tabs" role="tablist" aria-label="Panou">
+              <button type="button" role="tab" id="sim-tab-order" aria-controls="sim-pane-order" aria-selected="true">Ordin</button>
+              <button type="button" role="tab" id="sim-tab-trades" aria-controls="sim-pane-trades" aria-selected="false" tabindex="-1">Tranzacții <span class="ws-count" id="sim-tcount">0</span></button>
+              <button type="button" role="tab" id="sim-tab-stats" aria-controls="sim-pane-stats" aria-selected="false" tabindex="-1">Statistici</button>
+              <button type="button" class="ws-sheet-toggle" id="sim-sheet" aria-expanded="false" aria-controls="sim-panes" aria-label="Arată panoul"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
             </div>
-          </fieldset>
-          <fieldset class="sim-seg sim-seg-3">
-            <legend>Tip ordin</legend>
-            <div class="sim-seg-opts">
-              <label><input type="radio" name="sim-kind" value="market" checked><span>La piață</span></label>
-              <label><input type="radio" name="sim-kind" value="limit"><span>Limit</span></label>
-              <label><input type="radio" name="sim-kind" value="stop"><span>Stop</span></label>
-            </div>
-          </fieldset>
-              <label id="sim-price-wrap" hidden>Prețul ordinului
-                <input type="text" id="sim-price" inputmode="decimal" autocomplete="off">
-              </label>
-          <fieldset class="sim-seg sim-seg-small">
-            <legend>SL și TP în</legend>
-            <div class="sim-seg-opts">
-              <label><input type="radio" name="sim-unit" value="pips" checked><span>Pips</span></label>
-              <label><input type="radio" name="sim-unit" value="price"><span>Preț</span></label>
-            </div>
-          </fieldset>
-              <div class="sim-two">
-                <label><span>Stop loss <span class="sim-unit-lbl">(pips)</span></span>
-                  <input type="text" id="sim-sl" inputmode="decimal" autocomplete="off">
-                </label>
-                <label><span>Take profit <span class="sim-unit-lbl">(pips)</span></span>
-                  <input type="text" id="sim-tp" inputmode="decimal" autocomplete="off">
-                </label>
-              </div>
-              <dl class="sim-calc" aria-live="polite">
-                <div><dt>SL</dt><dd id="sim-c-sl">—</dd></div>
-                <div><dt>TP</dt><dd id="sim-c-tp">—</dd></div>
-                <div><dt>R:R</dt><dd id="sim-c-rr">—</dd></div>
-                <div><dt>Lot</dt><dd id="sim-c-lot">—</dd></div>
-                <div class="sim-calc-wide"><dt>Bani riscați</dt><dd id="sim-c-risk">—</dd></div>
-              </dl>
-              <p class="sim-error" id="sim-order-err" role="alert" hidden></p>
-              <button type="submit" class="btn sim-place is-buy" id="sim-place">Buy la piață</button>
-              <p class="sim-hint" id="sim-spread-note"></p>
-            </form>
+            <div class="ws-panes" id="sim-panes">
+              <div class="ws-pane" id="sim-pane-order" role="tabpanel" aria-labelledby="sim-tab-order">
+                <form class="sim-order" id="sim-order" novalidate>
+                  <fieldset class="ws-sides">
+                    <legend class="sr-only">Direcție</legend>
+                    <label class="ws-side-sell"><input type="radio" name="sim-side" value="sell"><span><small>Sell</small><b id="sim-bid">—</b></span></label>
+                    <span class="ws-spread" id="sim-spread" title="Spread">—</span>
+                    <label class="ws-side-buy"><input type="radio" name="sim-side" value="buy" checked><span><small>Buy</small><b id="sim-ask">—</b></span></label>
+                  </fieldset>
+                  <div class="sim-two">
+                    <label><span>Stop loss <span class="sim-unit-lbl">(pips)</span></span>
+                      <input type="text" id="sim-sl" inputmode="decimal" autocomplete="off">
+                    </label>
+                    <label><span>Take profit <span class="sim-unit-lbl">(pips)</span></span>
+                      <input type="text" id="sim-tp" inputmode="decimal" autocomplete="off">
+                    </label>
+                  </div>
+                  <details class="ws-adv" id="sim-adv">
+                    <summary>Avansat <small>tip ordin, unitate, risc</small></summary>
+                  <fieldset class="sim-seg sim-seg-3">
+                    <legend>Tip ordin</legend>
+                    <div class="sim-seg-opts">
+                      <label><input type="radio" name="sim-kind" value="market" checked><span>La piață</span></label>
+                      <label><input type="radio" name="sim-kind" value="limit"><span>Limit</span></label>
+                      <label><input type="radio" name="sim-kind" value="stop"><span>Stop</span></label>
+                    </div>
+                  </fieldset>
+                  <label id="sim-price-wrap" hidden>Prețul ordinului
+                    <input type="text" id="sim-price" inputmode="decimal" autocomplete="off">
+                  </label>
+                  <fieldset class="sim-seg sim-seg-small">
+                    <legend>SL și TP în</legend>
+                    <div class="sim-seg-opts">
+                      <label><input type="radio" name="sim-unit" value="pips" checked><span>Pips</span></label>
+                      <label><input type="radio" name="sim-unit" value="price"><span>Preț</span></label>
+                    </div>
+                  </fieldset>
+                  <label class="ws-risk">Risc pe tranzacție (%)
+                    <input type="text" id="sim-risk-ws" inputmode="decimal" autocomplete="off">
+                  </label>
+                  </details>
+                  <dl class="sim-calc" aria-live="polite">
+                    <div><dt>SL</dt><dd id="sim-c-sl">—</dd></div>
+                    <div><dt>TP</dt><dd id="sim-c-tp">—</dd></div>
+                    <div><dt>R:R</dt><dd id="sim-c-rr">—</dd></div>
+                    <div><dt>Lot</dt><dd id="sim-c-lot">—</dd></div>
+                    <div class="sim-calc-wide"><dt>Bani riscați</dt><dd id="sim-c-risk">—</dd></div>
+                  </dl>
+                  <p class="sim-error" id="sim-order-err" role="alert" hidden></p>
+                  <button type="submit" class="btn sim-place is-buy" id="sim-place" aria-keyshortcuts="B S">Buy la piață</button>
+                  <p class="sim-hint" id="sim-spread-note"></p>
+                </form>
 
-            <div class="sim-pos" id="sim-pos" hidden>
-              <h2 id="sim-pos-title">Poziție deschisă</h2>
-              <dl class="sim-pos-dl">
-                <div><dt>Direcție</dt><dd id="sim-p-side">—</dd></div>
-                <div><dt>Intrare</dt><dd id="sim-p-entry">—</dd></div>
-                <div><dt>Lot</dt><dd id="sim-p-lot">—</dd></div>
-                <div><dt>Risc</dt><dd id="sim-p-risk">—</dd></div>
-              </dl>
-              <div class="sim-two">
-                <label>Stop loss (preț)
-                  <input type="text" id="sim-p-sl" inputmode="decimal" autocomplete="off">
-                </label>
-                <label>Take profit (preț)
-                  <input type="text" id="sim-p-tp" inputmode="decimal" autocomplete="off">
-                </label>
+                <div class="sim-pos" id="sim-pos" hidden>
+                  <h2 id="sim-pos-title">Poziție deschisă</h2>
+                  <dl class="sim-pos-dl">
+                    <div><dt>Direcție</dt><dd id="sim-p-side">—</dd></div>
+                    <div><dt>Intrare</dt><dd id="sim-p-entry">—</dd></div>
+                    <div><dt>Lot</dt><dd id="sim-p-lot">—</dd></div>
+                    <div><dt>Risc</dt><dd id="sim-p-risk">—</dd></div>
+                  </dl>
+                  <p class="sim-pl" id="sim-p-pl" aria-live="polite">—</p>
+                  <div class="sim-two">
+                    <label>Stop loss (preț)
+                      <input type="text" id="sim-p-sl" inputmode="decimal" autocomplete="off">
+                    </label>
+                    <label>Take profit (preț)
+                      <input type="text" id="sim-p-tp" inputmode="decimal" autocomplete="off">
+                    </label>
+                  </div>
+                  <p class="sim-error" id="sim-pos-err" role="alert" hidden></p>
+                  <div class="sim-pos-actions">
+                    <button type="button" class="btn btn-ghost" id="sim-p-apply">Aplică SL/TP</button>
+                    <button type="button" class="btn btn-ghost" id="sim-be">SL la break-even</button>
+                    <button type="button" class="btn btn-slate" id="sim-close">Închide acum</button>
+                  </div>
+                </div>
+                <p class="sim-hint ws-keys">Taste: <kbd>→</kbd> bara următoare, <kbd>Space</kbd> redare/pauză, <kbd>B</kbd> buy, <kbd>S</kbd> sell, <kbd>Esc</kbd> închide ferestrele. Liniile SL, TP și ordinul se trag cu mouse-ul sau cu degetul.</p>
               </div>
-              <p class="sim-pl" id="sim-p-pl" aria-live="polite">—</p>
-              <p class="sim-error" id="sim-pos-err" role="alert" hidden></p>
-              <div class="sim-pos-actions">
-                <button type="button" class="btn btn-ghost" id="sim-p-apply">Aplică SL/TP</button>
-                <button type="button" class="btn btn-ghost" id="sim-be">SL la break-even</button>
-                <button type="button" class="btn btn-slate" id="sim-close">Închide acum</button>
+
+              <div class="ws-pane" id="sim-pane-trades" role="tabpanel" aria-labelledby="sim-tab-trades" hidden>
+                <div class="sim-table-wrap" tabindex="0" role="region" aria-label="Lista tranzacțiilor">
+                  <table class="sim-table" id="sim-trades">
+                    <caption class="sr-only">Tranzacțiile sesiunii</caption>
+                    <thead><tr><th scope="col">#</th><th scope="col">Direcție</th><th scope="col">Intrare</th><th scope="col">Ieșire</th><th scope="col">Motiv</th><th scope="col">Pips</th><th scope="col">R</th><th scope="col">P/L</th></tr></thead>
+                    <tbody></tbody>
+                  </table>
+                  <p class="sim-empty" id="sim-trades-empty">Nicio tranzacție închisă încă.</p>
+                </div>
+              </div>
+
+              <div class="ws-pane sim-stats" id="sim-stats" role="tabpanel" aria-labelledby="sim-tab-stats" hidden>
+                <div class="sim-tiles">
+                  <div class="sim-tile"><span>Tranzacții</span><strong id="sim-s-n">0</strong><small id="sim-s-wl"></small></div>
+                  <div class="sim-tile"><span>Rata de câștig</span><strong id="sim-s-wr">—</strong></div>
+                  <div class="sim-tile"><span>Total R</span><strong id="sim-s-tr">—</strong></div>
+                  <div class="sim-tile"><span>R mediu</span><strong id="sim-s-ar">—</strong></div>
+                  <div class="sim-tile"><span>Profit factor</span><strong id="sim-s-pf">—</strong></div>
+                  <div class="sim-tile"><span>Drawdown maxim</span><strong id="sim-s-dd">—</strong><small id="sim-s-ddp"></small></div>
+                  <div class="sim-tile"><span>Cea mai bună</span><strong id="sim-s-best">—</strong></div>
+                  <div class="sim-tile"><span>Cea mai slabă</span><strong id="sim-s-worst">—</strong></div>
+                  <div class="sim-tile sim-tile-wide"><span>Rezultat net</span><strong id="sim-s-net">—</strong><small id="sim-s-bal"></small></div>
+                </div>
+                <div class="sim-equity">
+                  <h3>Curba equity</h3>
+                  <div class="sim-eq-chart" id="sim-eq-chart" role="img" aria-label="Curba equity a sesiunii"></div>
+                </div>
               </div>
             </div>
-            <p class="sim-msg" id="sim-msg" role="status" aria-live="polite"></p>
           </aside>
         </div>
-      </section>
 
-      <!-- Statistici -->
-      <section class="sim-card sim-stats" id="sim-stats" hidden aria-labelledby="sim-stats-title">
-        <div class="sim-card-head">
-          <h2 id="sim-stats-title">Statisticile sesiunii</h2>
+        <dialog class="ws-summary" id="sim-summary" aria-labelledby="sim-sum-title">
+          <div class="ws-sum-head">
+            <h2 id="sim-sum-title">Rezultatele sesiunii</h2>
+            <button type="button" class="sim-help-x" id="sim-sum-close" aria-label="Închide rezumatul">×</button>
+          </div>
           <p class="sim-reveal" id="sim-reveal"></p>
-        </div>
-        <div class="sim-tiles">
-          <div class="sim-tile"><span>Tranzacții</span><strong id="sim-s-n">0</strong><small id="sim-s-wl"></small></div>
-          <div class="sim-tile"><span>Rata de câștig</span><strong id="sim-s-wr">—</strong></div>
-          <div class="sim-tile"><span>Total R</span><strong id="sim-s-tr">—</strong></div>
-          <div class="sim-tile"><span>R mediu</span><strong id="sim-s-ar">—</strong></div>
-          <div class="sim-tile"><span>Profit factor</span><strong id="sim-s-pf">—</strong></div>
-          <div class="sim-tile"><span>Drawdown maxim</span><strong id="sim-s-dd">—</strong><small id="sim-s-ddp"></small></div>
-          <div class="sim-tile"><span>Cea mai bună</span><strong id="sim-s-best">—</strong></div>
-          <div class="sim-tile"><span>Cea mai slabă</span><strong id="sim-s-worst">—</strong></div>
-          <div class="sim-tile sim-tile-wide"><span>Rezultat net</span><strong id="sim-s-net">—</strong><small id="sim-s-bal"></small></div>
-        </div>
-        <div class="sim-equity">
-          <h3>Curba equity (după fiecare tranzacție închisă)</h3>
-          <div class="sim-eq-chart" id="sim-eq-chart" role="img" aria-label="Curba equity a sesiunii"></div>
-        </div>
-        <div class="sim-table-wrap" tabindex="0" role="region" aria-label="Lista tranzacțiilor">
-          <table class="sim-table" id="sim-trades">
-            <caption class="sr-only">Tranzacțiile sesiunii</caption>
-            <thead><tr><th scope="col">#</th><th scope="col">Direcție</th><th scope="col">Intrare</th><th scope="col">Ieșire</th><th scope="col">Motiv</th><th scope="col">Pips</th><th scope="col">R</th><th scope="col">P/L</th></tr></thead>
-            <tbody></tbody>
-          </table>
-          <p class="sim-empty" id="sim-trades-empty">Nicio tranzacție închisă încă.</p>
-        </div>
-        <div class="sim-actions" id="sim-end-actions" hidden>
-          <button type="button" class="btn btn-ghost" id="sim-csv">Exportă CSV</button>
-          <button type="button" class="btn btn-ghost" id="sim-journal">Trimite în jurnal</button>
-          <button type="button" class="btn btn-primary" id="sim-new">Sesiune nouă</button>
-        </div>
-        <p class="sim-msg" id="sim-stats-msg" role="status" aria-live="polite"></p>
+          <p class="ws-sum-reason" id="sim-sum-reason"></p>
+          <div class="sim-tiles ws-sum-tiles">
+            <div class="sim-tile"><span>Tranzacții</span><strong id="sim-m-n">0</strong><small id="sim-m-wl"></small></div>
+            <div class="sim-tile"><span>Rata de câștig</span><strong id="sim-m-wr">—</strong></div>
+            <div class="sim-tile"><span>Total R</span><strong id="sim-m-tr">—</strong></div>
+            <div class="sim-tile"><span>Profit factor</span><strong id="sim-m-pf">—</strong></div>
+            <div class="sim-tile"><span>Drawdown maxim</span><strong id="sim-m-dd">—</strong></div>
+            <div class="sim-tile"><span>Rezultat net</span><strong id="sim-m-net">—</strong><small id="sim-m-bal"></small></div>
+          </div>
+          <div class="sim-eq-chart ws-sum-eq" id="sim-sum-eq" role="img" aria-label="Curba equity a sesiunii"></div>
+          <div class="sim-actions" id="sim-end-actions">
+            <button type="button" class="btn btn-primary" id="sim-new">Sesiune nouă</button>
+            <button type="button" class="btn btn-ghost" id="sim-journal">Trimite în jurnal</button>
+            <button type="button" class="btn btn-ghost" id="sim-csv">Export CSV</button>
+            <button type="button" class="btn btn-slate" id="sim-exit">Înapoi</button>
+          </div>
+          <p class="sim-msg" id="sim-stats-msg" role="status" aria-live="polite"></p>
+          <p class="sim-hint">Rezultatele din trecut nu garantează rezultate viitoare. Simulatorul are scop educativ.</p>
+        </dialog>
       </section>
 
       <!-- Istoric -->
@@ -301,9 +354,9 @@
       <dialog class="sim-help" id="sim-help" aria-labelledby="sim-help-title">
         <h2 id="sim-help-title">Cum folosești simulatorul</h2>
         <ol>
-          <li><strong>Alege instrumentul, intervalul și perioada.</strong> „Perioadă aleatorie” îți ascunde data, ca să nu fii influențat de ce știi despre acea perioadă.</li>
-          <li><strong>Avansează bară cu bară</strong> cu „Bara următoare” (sau tasta →), cu +10 sau cu redarea automată. Barele viitoare nu se văd și nu poți da înapoi.</li>
-          <li><strong>Plasează ordinul:</strong> alegi Buy sau Sell, stop loss-ul și take profit-ul, în pips sau în preț. Lotul se calculează din sold și riscul %. Liniile SL și TP se pot trage direct pe grafic.</li>
+          <li><strong>Apasă „Pornește sesiunea”.</strong> Implicit: EUR/USD, H1, perioadă aleatorie (data rămâne ascunsă) și risc 1%. Graficul se deschide pe tot ecranul; cu săgeata din stânga sus revii la setări.</li>
+          <li><strong>Avansează bară cu bară</strong> cu ▶| (sau tasta →), cu +10 sau cu redarea automată ▶ (tasta Space). Barele viitoare nu se văd și nu poți da înapoi.</li>
+          <li><strong>Plasează ordinul:</strong> alegi Sell sau Buy și apeși butonul mare (sau tastele S și B). Stop loss-ul și take profit-ul (1:2) sunt puse automat; trage liniile pe grafic unde vrei. Lotul se calculează din sold și riscul %.</li>
           <li><strong>Administrează poziția:</strong> la fiecare bară verificăm SL și TP. Poți muta stop loss-ul la break-even sau poți închide manual.</li>
           <li><strong>La final</strong> afli perioada reală și vezi statisticile, curba equity și lista tranzacțiilor. Le poți exporta în CSV sau trimite în jurnal.</li>
         </ol>
@@ -364,6 +417,6 @@
   <script src="script.js?v=36" defer></script>
   <script src="vendor/lightweight-charts-5.2.1/lightweight-charts.standalone.production.js" defer></script>
   <script src="sim-engine.js?v=1" defer></script>
-  <script src="sim.js?v=1" defer></script>
+  <script src="sim.js?v=2" defer></script>
 </body>
 </html>
