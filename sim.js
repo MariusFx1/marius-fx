@@ -131,7 +131,7 @@
         }
       },
       crosshair: { vertLine: { labelVisible: !hidden } },
-      localization: { locale: 'ro-RO', timeFormatter: hidden ? () => '' : t => fmtTime(t, tf), priceFormatter: p => nf(p, E.INSTR[S.sym].dec) }
+      localization: { locale: 'ro-RO', timeFormatter: hidden ? () => '' : t => fmtTime(t, tf) }   // prețurile: formatul fiecărei serii (zecimale românești)
     });
   }
   function makeChart() {
@@ -149,7 +149,7 @@
     });
     series = chart.addSeries(LW.CandlestickSeries, {
       upColor: C.green, downColor: C.red, borderUpColor: C.green, borderDownColor: C.red, wickUpColor: C.green, wickDownColor: C.red,
-      priceFormat: { type: 'price', precision: E.INSTR[S.sym].dec, minMove: Math.pow(10, -E.INSTR[S.sym].dec) },
+      priceFormat: { type: 'custom', minMove: Math.pow(10, -E.INSTR[S.sym].dec), formatter: p => nf(p, E.INSTR[S.sym].dec) },
       priceLineColor: 'rgba(203,213,225,.5)',
       // scala include mereu nivelurile pozițiilor și ordinelor (ca liniile să se vadă și să poată fi trase)
       autoscaleInfoProvider: original => {
@@ -268,9 +268,11 @@
   function chartY(e) { const r = $('sim-chart').getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width }; }
   function onDown(e) {
     if (!S || S.ended || !series || (window.SimExtra && SimExtra.busy && SimExtra.busy())) return;
-    const { y } = chartY(e);
+    const { x, y } = chartY(e);
     const key = lineAtY(y, e.pointerType === 'touch' ? 18 : 8);
     if (!key) return;
+    // dacă un desen e mai aproape de deget/cursor decât linia SL/TP, îl lăsăm pe el să fie tras
+    if (window.SimExtra && SimExtra.drawingDist && SimExtra.drawingDist(x, y) < Math.abs(series.priceToCoordinate(lines[key].options().price) - y)) return;
     drag = { key, id: e.pointerId };
     e.preventDefault(); e.stopPropagation();
     try { $('sim-chart').setPointerCapture(e.pointerId); } catch (_) { /* ignorat */ }
@@ -801,6 +803,7 @@
   /** Pornește (sau reia) o sesiune. Pentru reluare, `snap` conține curT, tranzacțiile etc. */
   async function begin(cfg, snap) {
     INDEX = INDEX || await loadJson('index.json'); applyIndex(INDEX);
+    if (window.SimExtra && SimExtra.unload) SimExtra.unload();
     const tf = cfg.tf;
     // istoric H1 suficient și pentru vederea D1 (~150 de zile de tranzacționare înainte de start)
     const curT = snap ? (snap.curBucket != null ? snap.curBucket + E.TF_SEC[snap.tf] : snap.curT) : cfg.startT;
@@ -839,7 +842,7 @@
     const I = E.INSTR[cfg.sym];
     $('sim-spread-note').textContent = `Spread fix: ${nf(I.spread, 1)} pips. Sugestie: stop loss-ul implicit (${sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări ${tf}.`;
     makeChart(); setChartData();
-    if (window.SimExtra && SimExtra.load) SimExtra.load(snap ? snap.extra : null, { chart, series, S, E, LW, C, $, nf, esc, fmtPrice, money, showMsg, legendRefresh: () => legend(null) });
+    if (window.SimExtra && SimExtra.load) SimExtra.load(snap ? snap.extra : null, { chart, series, S, E, LW, C, $, nf, esc, fmtPrice, money, showMsg, persist: () => save() });
     $('sim-pos-err').hidden = true; $('sim-order-err').hidden = true;
     showMsg(snap ? 'Sesiunea a fost reluată de unde ai rămas.' : 'Sesiunea a început. Analizează graficul, apoi avansează sau plasează un ordin.');
     renderStats();
@@ -893,6 +896,7 @@
     clearTimeout(saveTimer);
     if (S && !S.ended) store.set(KEY_CUR, snapshot());
     closeSummary();
+    if (window.SimExtra && SimExtra.unload) SimExtra.unload();
     S = null;
     if (chart) { chart.remove(); chart = null; series = null; }
     if (eqChart) { eqChart.remove(); eqChart = null; eqSeries = null; }
