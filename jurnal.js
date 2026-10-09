@@ -115,7 +115,8 @@
       emotii: str(o.emotii, 200),
       lectie: str(o.lectie, 600),
       creat: str(o.creat, 30) || new Date().toISOString(),
-      modificat: str(o.modificat, 30) || ''
+      modificat: str(o.modificat, 30) || '',
+      sursa: o.sursa === 'simulator' ? 'simulator' : ''
     };
   }
 
@@ -260,7 +261,7 @@
         id: editingId || uid(), data, pereche, directie, sesiune: F.sesiune.value,
         setup: F.setup.value, ...nums, rezultat: F.rezultat.value, plan: radio('plan')?.value || '',
         emotii: F.emotii.value, lectie: F.lectie.value,
-        creat: prev ? prev.creat : new Date().toISOString(), modificat: prev ? new Date().toISOString() : ''
+        creat: prev ? prev.creat : new Date().toISOString(), modificat: prev ? new Date().toISOString() : '', sursa: prev ? prev.sursa : ''
       })
     };
   }
@@ -324,6 +325,7 @@
             <strong class="jt-pair">${esc(t.pereche)}</strong>
             ${t.directie ? `<span class="jt-dir dir-${t.directie.toLowerCase()}">${esc(t.directie)}</span>` : ''}
             ${t.sesiune ? `<span class="jt-sess">${esc(t.sesiune)}</span>` : ''}
+            ${t.sursa === 'simulator' ? '<span class="jt-sess jt-src-sim" title="Adăugată din simulatorul de backtesting">Simulator</span>' : ''}
           </div>
           <div class="jt-item-result">
             <span class="jt-res ${resClass}">${t.rezultat ? esc(t.rezultat) : 'În desfășurare'}</span>

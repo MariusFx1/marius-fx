@@ -20,7 +20,7 @@ if (menuBtn && links) {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && links.classList.contains('open')) { setMenu(false); menuBtn.focus(); }
   });
-  const desktopMq = window.matchMedia('(min-width: 1081px)');
+  const desktopMq = window.matchMedia('(min-width: 1121px)');
   const onMq = () => { if (desktopMq.matches) setMenu(false); };
   if (desktopMq.addEventListener) desktopMq.addEventListener('change', onMq); else if (desktopMq.addListener) desktopMq.addListener(onMq);
 }
