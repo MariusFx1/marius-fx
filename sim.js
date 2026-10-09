@@ -14,8 +14,18 @@
   const KEY_SESS = 'mariusfx-sim-sesiuni-v1', KEY_CUR = 'mariusfx-sim-curenta-v1', KEY_HELP = 'mariusfx-sim-ajutor-v1', KEY_J = 'mariusfx-jurnal-v1';
   const HISTORY = 150, MIN_FUTURE = 300, MAX_SAVED = 30;
   const SPEED_MS = { 1: 900, 2: 450, 5: 180, 10: 90 };
-  const YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
-  const DATA_START = Date.UTC(2019, 0, 2) / 1000, DATA_END = Date.UTC(2025, 11, 31, 21) / 1000;
+  // intervalul datelor vine din data/sim/index.json (se actualizează odată cu datele)
+  let YEARS = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026], LAST_YEAR = 2026;
+  const DATA_START = Date.UTC(2019, 0, 2) / 1000;
+  let DATA_END = Date.UTC(2026, 8, 24, 21) / 1000, DATA_END_LABEL = 'septembrie 2026';   // valori de rezervă până se citește index.json
+  function applyIndex(ix) {
+    if (!ix || !ix.to) return;
+    const [y, m, d] = ix.to.split('-').map(Number);
+    DATA_END = Date.UTC(y, m - 1, d, 21) / 1000;
+    DATA_END_LABEL = new Intl.DateTimeFormat('ro-RO', { timeZone: 'UTC', month: 'long', year: 'numeric' }).format(new Date(DATA_END * 1000));
+    const any = Object.values(ix.instruments || {})[0];
+    if (any && Array.isArray(any.H1)) { YEARS = any.H1.slice(); LAST_YEAR = Math.max(...YEARS); }
+  }
   const CSS = getComputedStyle(document.documentElement);
   const C = { green: '#089981', red: '#f23645', amber: '#f7a600', blue: '#2962ff', text: '#b2b5be', grid: 'rgba(42,46,57,.6)', border: '#2a2e39', bg: '#131722' };
 
@@ -70,10 +80,11 @@
   }
   const yearOf = t => new Date(t * 1000).getUTCFullYear();
   /** Seria pentru instrument/interval, care acoperă cel puțin anii [y0, y1] (H1 e împărțit pe ani). */
-  async function loadSeries(sym, tf, y0, y1) {
-    if (tf !== 'H1') return { d: await loadJson(`${sym}-${tf}.json`), years: [2019, 2025] };
-    y0 = Math.max(2019, y0); y1 = Math.min(2025, y1);
-    const parts = await Promise.all(YEARS.filter(y => y >= y0 && y <= y1).map(y => loadJson(`${sym}-H1-${y}.json`)));
+  const loadYear = (sym, y) => loadJson(`${sym}-H1-${y}.json`);
+  /** Barele H1 pentru anii [y0, y1] (ceasul de bază al simulatorului; H4 și D1 se construiesc din ele). */
+  async function loadSeries(sym, y0, y1) {
+    y0 = Math.max(YEARS[0], y0); y1 = Math.min(LAST_YEAR, y1);
+    const parts = await Promise.all(YEARS.filter(y => y >= y0 && y <= y1).map(y => loadYear(sym, y)));
     return { d: parts.reduce((a, b) => E.concat(a, b), null), years: [y0, y1] };
   }
   /** Cursuri istorice (închiderea zilnică) pentru valoarea pipului în moneda contului. */
@@ -99,10 +110,11 @@
   const incompleteFor = sym => (INDEX && INDEX.instruments[sym] ? INDEX.instruments[sym].incomplete : []) || [];
 
   // ---------- stare ----------
-  let S = null;            // sesiunea curentă
+  let S = null;            // sesiunea curentă: S.d = barele H1 (ceasul de bază), S.cur = indexul H1 curent, S.tf = intervalul afișat
   let chart = null, series = null, markersApi = null, eqChart = null, eqSeries = null;
-  const lines = {};        // linii de preț pe grafic: entry, sl, tp, pend (poziție) și psl, ptp, ppr (previzualizare)
+  const lines = {};        // linii de preț: e:/sl:/tp:<id> (poziții), o:/osl:/otp:<id> (ordine), psl/ptp/ppr (previzualizare)
   let playTimer = null, loadingMore = null, legendHover = false, sumChart = null;
+  const VIEW_BARS = 150;   // câte bare din intervalul afișat se văd la început (restul istoricului e la derulare)
 
   // ---------- grafic ----------
   function timeLabels(hidden) {
@@ -128,7 +140,7 @@
     const el = $('sim-chart');
     chart = LW.createChart(el, {
       autoSize: true,
-      layout: { background: { type: 'solid', color: C.bg }, textColor: C.text, fontSize: 12, fontFamily: "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif", attributionLogo: true },
+      layout: { background: { type: 'solid', color: C.bg }, textColor: C.text, fontSize: 12, fontFamily: "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif", attributionLogo: true, panes: { separatorColor: C.border, separatorHoverColor: 'rgba(41,98,255,.35)' } },
       grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
       rightPriceScale: { borderColor: C.border, scaleMargins: { top: 0.12, bottom: 0.12 } },
       timeScale: { borderColor: C.border, rightOffset: 6, barSpacing: 8, shiftVisibleRangeOnNewBar: true },
@@ -139,7 +151,7 @@
       upColor: C.green, downColor: C.red, borderUpColor: C.green, borderDownColor: C.red, wickUpColor: C.green, wickDownColor: C.red,
       priceFormat: { type: 'price', precision: E.INSTR[S.sym].dec, minMove: Math.pow(10, -E.INSTR[S.sym].dec) },
       priceLineColor: 'rgba(203,213,225,.5)',
-      // scala include mereu nivelurile de intrare, SL, TP și ordinul în așteptare (ca liniile să se vadă și să poată fi trase)
+      // scala include mereu nivelurile pozițiilor și ordinelor (ca liniile să se vadă și să poată fi trase)
       autoscaleInfoProvider: original => {
         const res = original();
         const lv = Object.values(lines).map(l => l.options().price).filter(Number.isFinite);
@@ -155,71 +167,107 @@
     chart.subscribeCrosshairMove(p => {
       const d = p && p.time != null && series ? p.seriesData.get(series) : null;
       legendHover = !!d; legend(d || null);
+      if (window.SimExtra && SimExtra.onCrosshair) SimExtra.onCrosshair(p);
     });
   }
+  const V = () => S.view;
+  const lwBar = k => ({ time: V().time[k], open: V().o[k], high: V().h[k], low: V().l[k], close: V().c[k] });
+  const lastBar = () => lwBar(V().time.length - 1);
   /** Legenda OHLC din colțul stânga sus (ca în TradingView): bara de sub cursor sau ultima bară. */
   function legend(bar) {
-    if (!S) return;
-    const b = bar || lwBar(S.cur), f = p => fmtPrice(S.sym, p), up = b.close >= b.open;
+    if (!S || !S.view) return;
+    const b = bar || lastBar(), f = p => fmtPrice(S.sym, p), up = b.close >= b.open;
     const ch = b.close - b.open, pc = b.open ? ch / b.open * 100 : 0;
     $('sim-legend').innerHTML = `<strong>${esc(S.sym)} · ${esc(S.tf)}</strong>` +
       (S.hidden ? '' : `<span class="lg-t">${esc(fmtTime(b.time, S.tf))}</span>`) +
       `<span class="${up ? 'up' : 'dn'}"><i>O</i>${f(b.open)} <i>H</i>${f(b.high)} <i>L</i>${f(b.low)} <i>C</i>${f(b.close)} <em>${ch >= 0 ? '+' : '−'}${f(Math.abs(ch))} (${ch >= 0 ? '+' : '−'}${nf(Math.abs(pc), 2)}%)</em></span>`;
   }
-  /** Eticheta liniei: nivel + rezultat în bani și R dacă prețul ajunge acolo. */
-  function lineTitle(key, price) {
-    const P = S.pos, O = S.pending, pr = !P && !O ? preview() : null;
-    const x = P || O || (pr && pr.ok ? pr : null);
-    const base = key === 'sl' ? (P && P.be ? 'SL (BE)' : 'SL') : 'TP';
-    if (!x || price == null) return base;
-    const entry = P ? P.entry : O ? O.price : pr.ref, slp = P ? P.sl0 : x.sl;
-    const dir = x.side === 'buy' ? 1 : -1, pip = E.pipOf(S.sym);
-    const pips = (price - entry) * dir / pip, pipVal = x.pipVal, lot = x.lot;
-    const m = pips * pipVal * lot, risk = Math.abs(entry - slp) / pip * pipVal * lot;
-    const r = risk > 0 ? m / risk : 0;
-    return `${base}  ${money(m, S.ccy, true)}  ${r >= 0 ? '+' : '−'}${nf(Math.abs(r), 2)}R`;
+  /** Marcajele se păstrează cu ora H1; pe grafic se pun pe bara intervalului afișat care o conține. */
+  function renderMarkers() {
+    if (!markersApi) return;
+    const last = V().time[V().time.length - 1];
+    markersApi.setMarkers(S.markers.map(m => Object.assign({}, m, { time: E.bucketStart(m.t, S.tf) })).filter(m => m.time <= last).sort((a, b) => a.time - b.time));
   }
-  const lwBar = i => ({ time: S.d.t[i], open: S.d.o[i], high: S.d.h[i], low: S.d.l[i], close: S.d.c[i] });
-  function setChartData() {
-    const from = Math.max(0, S.firstIdx), arr = [];
-    for (let i = from; i <= S.cur; i++) arr.push(lwBar(i));
+  /** Recalculează barele intervalului afișat din H1 (până la ora curentă) și redesenează. */
+  function setChartData(keepRange) {
+    S.view = E.aggregate(S.d, S.cur, S.tf);
+    const n = S.view.time.length, arr = new Array(n);
+    for (let k = 0; k < n; k++) arr[k] = lwBar(k);
+    const range = keepRange ? chart.timeScale().getVisibleLogicalRange() : null;
     series.setData(arr);
-    markersApi.setMarkers(S.markers.slice());
-    chart.timeScale().scrollToRealTime();
+    renderMarkers();
+    if (range) chart.timeScale().setVisibleLogicalRange(range);
+    else chart.timeScale().setVisibleLogicalRange({ from: n - VIEW_BARS, to: n - 1 + 6 });
+    if (window.SimExtra && SimExtra.onData) SimExtra.onData(true);
   }
   function setLine(key, price, opts) {
     if (price == null || !Number.isFinite(price)) { if (lines[key]) { series.removePriceLine(lines[key]); delete lines[key]; } return; }
     const o = Object.assign({ price, lineWidth: 1, axisLabelVisible: true, lineStyle: LW.LineStyle.Solid }, opts);
     if (lines[key]) lines[key].applyOptions(o); else lines[key] = series.createPriceLine(o);
   }
+  const posById = id => S.positions.find(p => p.id === id) || null;
+  const ordById = id => S.orders.find(o => o.id === id) || null;
+  /** Eticheta liniei SL/TP: rezultatul în bani și R dacă prețul ajunge acolo. x = { side, entry, lot, pipVal, risk }. */
+  function levelLabel(base, x, price) {
+    if (!x || price == null) return base;
+    const dir = x.side === 'buy' ? 1 : -1, pips = (price - x.entry) * dir / E.pipOf(S.sym);
+    const m = pips * x.pipVal * x.lot, r = x.risk > 0 ? m / x.risk : 0;
+    const rs = `${r >= 0 ? '+' : '−'}${nf(Math.abs(r), 2)}R`;
+    // pe grafice înguste etichetele scurte nu acoperă legenda; suma în bani rămâne în panou
+    return $('sim-chart').clientWidth < 560 ? `${base} ${rs}` : `${base}  ${money(m, S.ccy, true)}  ${rs}`;
+  }
+  const posInfo = P => ({ side: P.side, entry: P.entry, lot: P.lot, pipVal: P.pipVal, risk: P.riskMoney * (P.lot / (P.lot0 || P.lot)) });
+  const ordInfo = O => ({ side: O.side, entry: O.price, lot: O.lot, pipVal: O.pipVal, risk: O.slPips * O.pipVal * O.lot });
+  const tag = x => (S.positions.length + S.orders.length > 1 ? '#' + x.n + ' ' : '');
   function drawLines() {
-    const P = S.pos, O = S.pending, prev = !P && !O ? preview() : null;
-    setLine('entry', P ? P.entry : null, { color: 'rgba(203,213,225,.85)', lineWidth: 1, lineStyle: LW.LineStyle.Dashed, title: P ? (P.side === 'buy' ? 'Buy' : 'Sell') : '' });
-    setLine('pend', O ? O.price : null, { color: C.amber, lineStyle: LW.LineStyle.Dashed, title: O ? (O.side === 'buy' ? 'Buy ' : 'Sell ') + O.kind : '' });
-    const sl = P ? P.sl : O ? O.sl : prev && prev.ok ? prev.sl : null;
-    const tp = P ? P.tp : O ? O.tp : prev && prev.ok ? prev.tp : null;
-    const ghost = !P && !O;
-    setLine('sl', sl, { color: ghost ? 'rgba(242,54,69,.65)' : C.red, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: lineTitle('sl', sl) });
-    setLine('tp', tp, { color: ghost ? 'rgba(8,153,129,.7)' : C.green, lineStyle: ghost ? LW.LineStyle.Dashed : LW.LineStyle.Solid, title: lineTitle('tp', tp) });
-    setLine('ppr', ghost && prev && prev.kind !== 'market' && prev.ref ? prev.ref : null, { color: 'rgba(251,191,36,.7)', lineStyle: LW.LineStyle.Dashed, title: 'Ordin' });
+    if (!series) return;
+    const want = new Set();
+    const put = (key, price, opts) => { if (price == null) return; want.add(key); setLine(key, price, opts); };
+    const sel = S.sel;
+    for (const P of S.positions) {
+      const s = sel === P.id, w = s ? 2 : 1, t = tag(P);
+      put('e:' + P.id, P.entry, { color: 'rgba(203,213,225,.85)', lineWidth: 1, lineStyle: LW.LineStyle.Dashed, title: `${t}${P.side === 'buy' ? 'Buy' : 'Sell'} ${nf(P.lot, 2)}` });
+      put('sl:' + P.id, P.sl, { color: C.red, lineWidth: w, title: levelLabel(t + (P.be ? 'SL (BE)' : 'SL'), posInfo(P), P.sl) });
+      put('tp:' + P.id, P.tp, { color: C.green, lineWidth: w, title: levelLabel(t + 'TP', posInfo(P), P.tp) });
+    }
+    for (const O of S.orders) {
+      const t = tag(O), w = sel === O.id ? 2 : 1;
+      put('o:' + O.id, O.price, { color: C.amber, lineWidth: w, lineStyle: LW.LineStyle.Dashed, title: `${t}${O.side === 'buy' ? 'Buy' : 'Sell'} ${O.kind} ${nf(O.lot, 2)}` });
+      put('osl:' + O.id, O.sl, { color: 'rgba(242,54,69,.8)', lineWidth: w, lineStyle: LW.LineStyle.Dotted, title: levelLabel(t + 'SL', ordInfo(O), O.sl) });
+      put('otp:' + O.id, O.tp, { color: 'rgba(8,153,129,.85)', lineWidth: w, lineStyle: LW.LineStyle.Dotted, title: levelLabel(t + 'TP', ordInfo(O), O.tp) });
+    }
+    // previzualizarea ordinului din bilet (linii punctate, se pot trage)
+    if (!S.ended && S.showPreview && !S.positions.length && !S.orders.length) {
+      const pr = preview();
+      if (pr.ok) {
+        const x = { side: pr.side, entry: pr.ref, lot: pr.lot, pipVal: pr.pipVal, risk: pr.risk };
+        put('psl', pr.sl, { color: 'rgba(242,54,69,.65)', lineStyle: LW.LineStyle.Dashed, title: levelLabel('SL', x, pr.sl) });
+        put('ptp', pr.tp, { color: 'rgba(8,153,129,.7)', lineStyle: LW.LineStyle.Dashed, title: levelLabel('TP', x, pr.tp) });
+      }
+      if (pr.kind !== 'market' && pr.ref) put('ppr', pr.ref, { color: 'rgba(247,166,0,.75)', lineStyle: LW.LineStyle.Dashed, title: 'Ordin' });
+    }
+    for (const k of Object.keys(lines)) if (!want.has(k)) { series.removePriceLine(lines[k]); delete lines[k]; }
   }
 
   // ---------- tragerea liniilor (mouse + atingere) ----------
   let drag = null;
+  const DRAGGABLE = /^(sl|tp|o|osl|otp):|^(psl|ptp|ppr)$/;
   function lineAtY(y, tol) {
     let best = null;
-    for (const key of ['sl', 'tp', 'pend', 'ppr']) {
-      const l = lines[key]; if (!l) continue;
-      const yy = series.priceToCoordinate(l.options().price);
+    for (const key of Object.keys(lines)) {
+      if (!DRAGGABLE.test(key)) continue;
+      const yy = series.priceToCoordinate(lines[key].options().price);
       if (yy == null) continue;
       const dist = Math.abs(yy - y);
-      if (dist <= tol && (!best || dist < best.dist)) best = { key, dist };
+      // la egalitate are prioritate elementul selectat
+      const pri = S.sel && key.endsWith(':' + S.sel) ? -0.5 : 0;
+      if (dist <= tol && (!best || dist + pri < best.dist)) best = { key, dist: dist + pri };
     }
     return best && best.key;
   }
   function chartY(e) { const r = $('sim-chart').getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width }; }
   function onDown(e) {
-    if (!S || S.ended || !series) return;
+    if (!S || S.ended || !series || (window.SimExtra && SimExtra.busy && SimExtra.busy())) return;
     const { y } = chartY(e);
     const key = lineAtY(y, e.pointerType === 'touch' ? 18 : 8);
     if (!key) return;
@@ -229,11 +277,13 @@
     chart.applyOptions({ handleScroll: false, handleScale: false });
     chart.priceScale('right').applyOptions({ autoScale: false });   // scala fixă cât timp tragi linia
     $('sim-chart').classList.add('is-dragging');
+    const id = key.includes(':') ? +key.split(':')[1] : null;
+    if (id != null && S.sel !== id) { S.sel = id; renderPos(); }
   }
   function onMove(e) {
     const el = $('sim-chart');
     if (!drag) {
-      if (e.pointerType === 'mouse' && S && series) el.classList.toggle('can-drag', !!lineAtY(chartY(e).y, 8));
+      if (e.pointerType === 'mouse' && S && series && !(window.SimExtra && SimExtra.busy && SimExtra.busy())) el.classList.toggle('can-drag', !!lineAtY(chartY(e).y, 8));
       return;
     }
     e.preventDefault(); e.stopPropagation();
@@ -244,11 +294,12 @@
     if (!drag) return;
     e.preventDefault(); e.stopPropagation();
     const p = series.coordinateToPrice(chartY(e).y);
-    if (p != null && p > 0 && e.type !== 'pointercancel') dragTo(drag.key, p, true);
+    const key = drag.key;
     drag = null;
     chart.applyOptions({ handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }, handleScale: true });
     $('sim-chart').classList.remove('is-dragging');
     chart.priceScale('right').applyOptions({ autoScale: true });
+    if (p != null && p > 0 && e.type !== 'pointercancel') dragTo(key, p, true);
     afterChange();
   }
   const stopIfDragging = e => { if (drag) { e.stopPropagation(); if (e.cancelable) e.preventDefault(); } };
@@ -260,46 +311,45 @@
     el.addEventListener('pointercancel', onUp, { capture: true });
     for (const t of ['mousedown', 'mousemove', 'touchstart', 'touchmove']) el.addEventListener(t, stopIfDragging, { capture: true, passive: false });
   }
-  /** Mută o linie trasă pe grafic: actualizează poziția/ordinul sau câmpurile formularului. */
+  /** Mută o linie trasă pe grafic: actualizează poziția/ordinul sau câmpurile biletului. */
   function dragTo(key, p, final) {
     const sym = S.sym, dec = E.INSTR[sym].dec;
     p = E.round(p, dec);
-    if (S.pos) {
-      if (key === 'sl') S.pos.slDraft = p; else if (key === 'tp') S.pos.tpDraft = p; else return;
-      setLine(key, p, { title: lineTitle(key, p) });
-      $(key === 'sl' ? 'sim-p-sl' : 'sim-p-tp').value = inputPrice(sym, p);
-      if (final) applyPosLevels();
+    const [kind, idS] = key.split(':'), id = idS == null ? null : +idS;
+    if (kind === 'sl' || kind === 'tp') {
+      const P = posById(id); if (!P) return;
+      if (!final) { setLine(key, p, { title: levelLabel(tag(P) + (kind === 'sl' ? 'SL' : 'TP'), posInfo(P), p) }); if (S.sel === id) $(kind === 'sl' ? 'sim-p-sl' : 'sim-p-tp').value = inputPrice(sym, p); return; }
+      const err = setLevels(P, kind === 'sl' ? p : P.sl, kind === 'tp' ? p : P.tp);
+      if (err) { showMsg(err, 'warn'); showPosErr(err); }
       return;
     }
-    if (S.pending) {
-      const k = key === 'pend' ? 'price' : key;
-      if (!['price', 'sl', 'tp'].includes(k)) return;
-      if (final) {
-        const o = Object.assign({}, S.pending, { [k]: p });
-        const err = pendingError(o) || E.validateLevels(o.side, o.price, o.sl, o.tp);
-        if (err) { showMsg(err, 'warn'); drawLines(); return; }
-        const slPips = Math.abs(o.price - o.sl) / E.pipOf(sym), lot = E.lotFor(S.balance * S.riskPct / 100, slPips, o.pipVal);
-        if (lot < 0.01) { showMsg('Cu acest stop loss lotul ar fi sub 0,01. Am păstrat nivelul anterior.', 'warn'); drawLines(); return; }
-        Object.assign(S.pending, { [k]: p, slPips, lot });
-        showMsg('Ordinul a fost modificat: ' + (k === 'price' ? 'preț ' : k.toUpperCase() + ' ') + fmtPrice(sym, p) + '.');
-        afterChange();
-      } else setLine(key, p, k === 'price' ? {} : { title: lineTitle(key, p) });
+    if (kind === 'o' || kind === 'osl' || kind === 'otp') {
+      const O = ordById(id); if (!O) return;
+      const field = kind === 'o' ? 'price' : kind === 'osl' ? 'sl' : 'tp';
+      if (!final) { setLine(key, p, field === 'price' ? {} : { title: levelLabel(tag(O) + field.toUpperCase(), ordInfo(Object.assign({}, O, { [field]: p })), p) }); return; }
+      const o = Object.assign({}, O, { [field]: p });
+      const err = pendingError(o) || E.validateLevels(o.side, o.price, o.sl, o.tp);
+      if (err) { showMsg(err, 'warn'); drawLines(); return; }
+      const slPips = Math.abs(o.price - o.sl) / E.pipOf(sym), lot = E.lotFor(S.balance * S.riskPct / 100, slPips, o.pipVal);
+      if (lot < 0.01) { showMsg('Cu acest stop loss lotul ar fi sub 0,01. Am păstrat nivelul anterior.', 'warn'); drawLines(); return; }
+      Object.assign(O, { [field]: p, slPips, lot });
+      showMsg('Ordinul a fost modificat: ' + (field === 'price' ? 'preț ' : field.toUpperCase() + ' ') + fmtPrice(sym, p) + '.');
       return;
     }
-    // previzualizare: actualizează câmpurile formularului
+    // previzualizare: actualizează câmpurile biletului
     const pr = preview();
-    if (key === 'ppr') { $('sim-price').value = inputPrice(sym, p); }
-    else if (key === 'sl' || key === 'tp') {
-      const field = $(key === 'sl' ? 'sim-sl' : 'sim-tp');
-      if (unit() === 'pips') { const ref = pr.ref || refPrice(side(), kind()); field.value = nf(Math.abs(ref - p) / E.pipOf(sym), 0, 1).replace(/\s/g, ''); }
+    if (kind === 'ppr') { $('sim-price').value = inputPrice(sym, p); }
+    else {
+      const field = $(kind === 'psl' ? 'sim-sl' : 'sim-tp');
+      if (unit() === 'pips') { const ref = pr.ref || refPrice(side(), ordKind()); field.value = nf(Math.abs(ref - p) / E.pipOf(sym), 0, 1).replace(/\s/g, ''); }
       else field.value = inputPrice(sym, p);
     }
     updateCalc();
   }
 
-  // ---------- formular ordin ----------
+  // ---------- bilet de ordin ----------
   const side = () => (document.querySelector('input[name="sim-side"]:checked') || {}).value || 'buy';
-  const kind = () => (document.querySelector('input[name="sim-kind"]:checked') || {}).value || 'market';
+  const ordKind = () => (document.querySelector('input[name="sim-kind"]:checked') || {}).value || 'market';
   const unit = () => (document.querySelector('input[name="sim-unit"]:checked') || {}).value || 'pips';
   const bid = () => S.d.c[S.cur];
   const ask = () => bid() + E.spreadPrice(S.sym);
@@ -317,9 +367,9 @@
     if (o.side === 'sell' && o.kind === 'stop' && o.price >= b) return `Sell stop se pune sub prețul curent (Bid ${sp}). Pentru intrare peste preț folosește Sell limit.`;
     return null;
   }
-  /** Calculează planul din formular (fără să-l execute). */
+  /** Calculează planul din bilet (fără să-l execute). */
   function preview() {
-    const sd = side(), kd = kind(), sym = S.sym, pip = E.pipOf(sym);
+    const sd = side(), kd = ordKind(), sym = S.sym, pip = E.pipOf(sym);
     const ref = refPrice(sd, kd);
     const res = { ok: false, side: sd, kind: kd, ref, sl: null, tp: null };
     if (kd !== 'market') { const e = pendingError({ side: sd, kind: kd, price: ref }); if (e) { res.err = e; return res; } }
@@ -365,161 +415,218 @@
   function placeOrder() {
     S.touched = true;
     const p = preview();
-    if (!p.ok) { updateCalc(); $('sim-order-err').hidden = false; $('sim-order-err').textContent = p.err; return; }
-    const t = S.d.t[S.cur];
+    if (!p.ok) { updateCalc(); $('sim-order-err').hidden = false; $('sim-order-err').textContent = p.err; return false; }
+    const t = S.d.t[S.cur], id = ++S.seq;
     if (p.kind === 'market') {
-      S.pos = E.openMarket({ sym: S.sym, side: p.side, bidClose: bid(), sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, time: t, idx: S.cur, type: 'piață' });
+      const P = E.openMarket({ sym: S.sym, side: p.side, bidClose: bid(), sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, time: t, idx: S.cur, type: 'piață' });
+      Object.assign(P, { id, n: id, lot0: P.lot, setup: currentSetup() });
+      S.positions.push(P); S.sel = id;
       addMarker(t, p.side, 'in');
-      showMsg(`${p.side === 'buy' ? 'Buy' : 'Sell'} ${nf(p.lot, 2)} loturi la ${fmtPrice(S.sym, S.pos.entry)}. Risc: ${money(S.pos.riskMoney, S.ccy)}.`);
+      showMsg(`${tag(P)}${p.side === 'buy' ? 'Buy' : 'Sell'} ${nf(p.lot, 2)} loturi la ${fmtPrice(S.sym, P.entry)}. Risc: ${money(P.riskMoney, S.ccy)}.`);
     } else {
-      S.pending = { sym: S.sym, side: p.side, kind: p.kind, price: p.ref, sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, slPips: p.slPips, placedIdx: S.cur, placedT: t };
+      const O = { id, n: id, sym: S.sym, side: p.side, kind: p.kind, price: p.ref, sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, slPips: p.slPips, placedIdx: S.cur, placedT: t, setup: currentSetup() };
+      S.orders.push(O); S.sel = id;
       showMsg(`Ordin ${p.side === 'buy' ? 'Buy' : 'Sell'} ${p.kind} plasat la ${fmtPrice(S.sym, p.ref)}. Se execută când prețul ajunge acolo.`);
     }
     S.touched = false;
     afterChange();
+    return true;
   }
+  const currentSetup = () => { const el = $('sim-setup-tag'); return el ? el.value.trim().slice(0, 40) : ''; };
 
-  // ---------- poziția deschisă ----------
+  // ---------- poziții deschise ----------
+  const selItem = () => posById(S.sel) || ordById(S.sel) || S.positions[0] || S.orders[0] || null;
+  function showPosErr(msg) { const e = $('sim-pos-err'); e.textContent = msg || ''; e.hidden = !msg; }
+  function openPL(P) { return E.round((E.markPrice(P, bid()) - P.entry) * (P.side === 'buy' ? 1 : -1) / E.pipOf(S.sym) * P.pipVal * P.lot, 2); }
   function renderPos() {
-    const P = S.pos, O = S.pending;
-    const wasPos = !$('sim-pos').hidden;
-    $('sim-order').hidden = !!(P || O) || S.ended;
-    if (wasPos !== !!(P || O)) $('sim-panes').scrollTop = 0;
-    $('sim-pos').hidden = !(P || O) || S.ended;
-    if (!P && !O) return;
-    const x = P || O, sym = S.sym;
-    $('sim-pos-title').textContent = P ? 'Poziție deschisă' : 'Ordin în așteptare';
+    const items = [...S.positions, ...S.orders];
+    $('sim-pos').hidden = !items.length || S.ended;
+    $('sim-order').hidden = !!S.ended;
+    const list = $('sim-pos-list');
+    list.hidden = !items.length || S.ended;
+    $('sim-close-all').hidden = S.positions.length < 2 || S.ended;
+    $('sim-pos-count').textContent = String(items.length);
+    list.innerHTML = items.map(x => {
+      const isP = !!posById(x.id) && S.positions.includes(x), pl = isP ? openPL(x) : null;
+      return `<li><button type="button" class="ws-pos-row${x.id === (selItem() || {}).id ? ' is-sel' : ''}" data-id="${x.id}" aria-pressed="${x.id === (selItem() || {}).id}">` +
+        `<span class="sim-side ${x.side}">${x.side === 'buy' ? 'Buy' : 'Sell'}</span> <span>#${x.n}${isP ? '' : ' ' + esc(x.kind)} · ${nf(x.lot, 2)} lot</span>` +
+        `<b class="${pl > 0 ? 'pos' : pl < 0 ? 'neg' : ''}">${isP ? money(pl, S.ccy, true) : fmtPrice(S.sym, x.price)}</b></button></li>`;
+    }).join('');
+    const x = selItem();
+    if (!x || S.ended) return;
+    const P = posById(x.id), O = P ? null : x, sym = S.sym;
+    $('sim-pos-title').textContent = (P ? 'Poziție deschisă' : 'Ordin în așteptare') + (items.length > 1 ? ' #' + x.n : '');
     $('sim-p-side').textContent = (x.side === 'buy' ? 'Buy' : 'Sell') + (O ? ' ' + O.kind : '');
     $('sim-p-entry').textContent = fmtPrice(sym, P ? P.entry : O.price);
-    $('sim-p-lot').textContent = nf(x.lot, 2);
+    $('sim-p-lot').textContent = nf(x.lot, 2) + (P && P.lot0 && P.lot0 !== P.lot ? ' din ' + nf(P.lot0, 2) : '');
     $('sim-p-risk').textContent = money(P ? P.riskMoney : E.round(O.slPips * O.pipVal * O.lot, 2), S.ccy);
     const sl = $('sim-p-sl'), tp = $('sim-p-tp');
     if (document.activeElement !== sl) sl.value = inputPrice(sym, x.sl);
     if (document.activeElement !== tp) tp.value = x.tp == null ? '' : inputPrice(sym, x.tp);
-    $('sim-be').hidden = !P;
+    $('sim-be').hidden = !P; $('sim-partial').hidden = !P;
     $('sim-close').textContent = P ? 'Închide acum' : 'Anulează ordinul';
     const pl = $('sim-p-pl');
     if (P) {
-      const r = E.result(P, E.markPrice(P, bid()));
-      pl.textContent = `P/L: ${money(r.money, S.ccy, true)} (${sign(r.pips)}${nf(Math.abs(r.pips), 1)} pips, ${fmtR(r.r)})`;
-      pl.className = 'sim-pl ' + (r.money > 0 ? 'pos' : r.money < 0 ? 'neg' : '');
+      const m = openPL(P), pips = (E.markPrice(P, bid()) - P.entry) * (P.side === 'buy' ? 1 : -1) / E.pipOf(sym);
+      const rNow = (m + (P.realized || 0)) / P.riskMoney;
+      pl.textContent = `P/L: ${money(m, S.ccy, true)} (${sign(pips)}${nf(Math.abs(pips), 1)} pips, ${fmtR(E.round(m / P.riskMoney, 2))})` + (P.realized ? ` · realizat ${money(P.realized, S.ccy, true)} · total ${fmtR(E.round(rNow, 2))}` : '');
+      pl.className = 'sim-pl ' + (m > 0 ? 'pos' : m < 0 ? 'neg' : '');
     } else { pl.textContent = 'Așteaptă prețul ' + fmtPrice(sym, O.price) + '.'; pl.className = 'sim-pl'; }
   }
-  function applyPosLevels() {
-    const x = S.pos || S.pending; if (!x) return;
-    const err = $('sim-pos-err');
-    let sl = S.pos && S.pos.slDraft != null ? S.pos.slDraft : num($('sim-p-sl').value);
-    let tp = S.pos && S.pos.tpDraft != null ? S.pos.tpDraft : ($('sim-p-tp').value.trim() ? num($('sim-p-tp').value) : null);
-    if (S.pos) { delete S.pos.slDraft; delete S.pos.tpDraft; }
+  /** Schimbă SL/TP pentru o poziție sau un ordin. Întoarce un mesaj de eroare sau null. */
+  function setLevels(x, sl, tp) {
+    const P = posById(x.id);
     let msg = null;
     if (!(sl > 0)) msg = 'Stop loss-ul nu este un preț valid.';
     else if (Number.isNaN(tp) || (tp != null && tp <= 0)) msg = 'Take profit-ul nu este un preț valid.';
-    else if (S.pos) {
-      const cur = E.markPrice(S.pos, bid());   // prețul la care s-ar închide acum
+    else if (P) {
+      const cur = E.markPrice(P, bid());   // prețul la care s-ar închide acum
       if (x.side === 'buy' && sl >= cur) msg = `La Buy, stop loss-ul trebuie să rămână sub prețul curent (${fmtPrice(S.sym, cur)}).`;
       else if (x.side === 'sell' && sl <= cur) msg = `La Sell, stop loss-ul trebuie să rămână deasupra prețului curent (${fmtPrice(S.sym, cur)}).`;
       else if (tp != null && x.side === 'buy' && tp <= cur) msg = `La Buy, take profit-ul trebuie să fie deasupra prețului curent (${fmtPrice(S.sym, cur)}).`;
       else if (tp != null && x.side === 'sell' && tp >= cur) msg = `La Sell, take profit-ul trebuie să fie sub prețul curent (${fmtPrice(S.sym, cur)}).`;
     } else msg = E.validateLevels(x.side, x.price, sl, tp);
-    if (msg) { err.textContent = msg; err.hidden = false; renderPos(); drawLines(); return false; }
-    err.hidden = true;
+    if (msg) { drawLines(); renderPos(); return msg; }
     const dec = E.INSTR[S.sym].dec;
-    if (!S.pos) {
+    if (!P) {
       const slPips = Math.abs(x.price - sl) / E.pipOf(S.sym), lot = E.lotFor(S.balance * S.riskPct / 100, slPips, x.pipVal);
-      if (lot < 0.01) { err.textContent = 'Cu acest stop loss lotul ar fi sub 0,01. Alege un stop loss mai apropiat.'; err.hidden = false; return false; }
+      if (lot < 0.01) { drawLines(); return 'Cu acest stop loss lotul ar fi sub 0,01. Alege un stop loss mai apropiat.'; }
       x.slPips = slPips; x.lot = lot;
     }
     x.sl = E.round(sl, dec + 1); x.tp = tp == null ? null : E.round(tp, dec + 1);
-    if (S.pos) S.pos.be = Math.abs(S.pos.sl - S.pos.entry) < 1e-9;
-    showMsg('Nivelurile au fost actualizate: SL ' + fmtPrice(S.sym, x.sl) + (x.tp != null ? ', TP ' + fmtPrice(S.sym, x.tp) : ', fără TP') + '.');
+    if (P) P.be = Math.abs(P.sl - P.entry) < 1e-9;
+    showPosErr('');
+    showMsg(tag(x) + 'Nivelurile au fost actualizate: SL ' + fmtPrice(S.sym, x.sl) + (x.tp != null ? ', TP ' + fmtPrice(S.sym, x.tp) : ', fără TP') + '.');
     afterChange();
+    return null;
+  }
+  function applyPosLevels() {
+    const x = selItem(); if (!x) return false;
+    const sl = num($('sim-p-sl').value), tp = $('sim-p-tp').value.trim() ? num($('sim-p-tp').value) : null;
+    const err = setLevels(x, sl, tp);
+    if (err) { showPosErr(err); return false; }
     return true;
   }
   function moveToBE() {
-    const P = S.pos; if (!P) return;
+    const P = posById((selItem() || {}).id); if (!P) return;
     const cur = E.markPrice(P, bid());
-    if (P.side === 'buy' ? cur <= P.entry : cur >= P.entry) {
-      $('sim-pos-err').textContent = 'Break-even se poate muta doar când poziția e pe plus (prețul trebuie să fie dincolo de intrare).';
-      $('sim-pos-err').hidden = false; return;
-    }
-    $('sim-pos-err').hidden = true;
+    if (P.side === 'buy' ? cur <= P.entry : cur >= P.entry) { showPosErr('Break-even se poate muta doar când poziția e pe plus (prețul trebuie să fie dincolo de intrare).'); return; }
+    showPosErr('');
     P.sl = P.entry; P.be = true;
-    showMsg('Stop loss mutat la break-even (' + fmtPrice(S.sym, P.entry) + '). Dacă prețul revine, ieși cu 0R.');
+    showMsg(tag(P) + 'Stop loss mutat la break-even (' + fmtPrice(S.sym, P.entry) + '). Dacă prețul revine, restul poziției iese la 0.');
     afterChange();
   }
+  /** Închide (complet) elementul selectat sau anulează ordinul. */
   function closeNow(reason) {
-    if (S.pending && !S.pos) { S.pending = null; showMsg('Ordinul în așteptare a fost anulat.'); afterChange(); return; }
-    if (!S.pos) return;
-    closePos({ price: E.markPrice(S.pos, bid()), reason: reason || 'Manual', both: false, gap: false }, S.cur);
+    const x = selItem(); if (!x) return;
+    if (ordById(x.id) && !posById(x.id)) { S.orders = S.orders.filter(o => o.id !== x.id); S.sel = null; showMsg('Ordinul în așteptare a fost anulat.'); afterChange(); return; }
+    closeFull(x, { price: E.markPrice(x, bid()), reason: reason || 'Manual', both: false, gap: false }, S.cur);
     afterChange();
   }
-  const REASON = { TP: 'Take profit', SL: 'Stop loss', BE: 'Break-even', Manual: 'Închidere manuală', Final: 'Final sesiune' };
-  function closePos(x, i) {
-    const P = S.pos, res = E.result(P, x.price);
+  function closeAll() {
+    for (const P of [...S.positions]) closeFull(P, { price: E.markPrice(P, bid()), reason: 'Manual', both: false, gap: false }, S.cur);
+    showMsg('Toate pozițiile au fost închise.');
+    afterChange();
+  }
+  /** Închidere parțială: frac (0..1) sau lot exact. */
+  function closePartial(frac, lotExact) {
+    const P = posById((selItem() || {}).id); if (!P) return;
+    const lot = lotExact != null ? Math.floor(lotExact * 100 + 1e-9) / 100 : E.partialLot(P, frac);
+    if (!(lot >= 0.01)) { showPosErr('Lotul de închis trebuie să fie de cel puțin 0,01.'); return; }
+    if (lot >= P.lot - 1e-9) { closeFull(P, { price: E.markPrice(P, bid()), reason: 'Manual', both: false, gap: false }, S.cur); afterChange(); return; }
+    const part = E.closePart(P, E.markPrice(P, bid()), lot, 'Parțial', S.d.t[S.cur]);
+    S.balance = E.round(S.balance + part.money, 2);
+    S.markers.push({ t: S.d.t[S.cur], position: P.side === 'buy' ? 'aboveBar' : 'belowBar', color: part.money >= 0 ? C.green : C.red, shape: 'square', text: `#${P.n} ${nf(lot, 2)}` });
+    renderMarkers();
+    showPosErr('');
+    showMsg(`${tag(P)}Închidere parțială ${nf(lot, 2)} loturi: ${money(part.money, S.ccy, true)} (${fmtR(E.round(part.r, 2))}). Rămân ${nf(P.lot, 2)} loturi.`, part.money > 0 ? 'good' : part.money < 0 ? 'bad' : '');
+    afterChange();
+  }
+  const REASON = { TP: 'Take profit', SL: 'Stop loss', BE: 'Break-even', Manual: 'Închidere manuală', Final: 'Final sesiune', 'Parțial': 'Închidere parțială', Provocare: 'Regulă provocare' };
+  /** Închide restul poziției și înregistrează tranzacția (cu toate părțile). */
+  function closeFull(P, x, i) {
+    const part = E.closePart(P, x.price, P.lot, x.reason, S.d.t[i]);
+    S.balance = E.round(S.balance + part.money, 2);
+    const sm = E.summarize(P);
     const tr = {
-      n: S.trades.length + 1, side: P.side, type: P.type, entryT: P.openTime, entry: P.entry, exitT: S.d.t[i], exit: E.round(x.price, E.INSTR[S.sym].dec + 1),
-      sl0: P.sl0, tp0: P.tp0, sl: P.sl, lot: P.lot, risk: P.riskMoney, reason: x.reason, both: !!x.both, gap: !!x.gap, pips: res.pips, r: res.r, money: res.money,
-      bars: i - P.openIdx
+      n: S.trades.length + 1, pid: P.n, sym: S.sym, side: P.side, type: P.type, entryT: P.openTime, entry: P.entry, exitT: S.d.t[i], exit: E.round(sm.exit, E.INSTR[S.sym].dec + 1),
+      sl0: P.sl0, tp0: P.tp0, sl: P.sl, lot: sm.lot0, risk: P.riskMoney, reason: x.reason, both: !!x.both, gap: !!x.gap, pips: sm.pips, r: sm.r, money: sm.money,
+      bars: i - P.openIdx, parts: sm.parts, setup: P.setup || '', note: P.note || ''
     };
     S.trades.push(tr);
-    S.balance = E.round(S.balance + res.money, 2);
-    S.pos = null;
+    S.positions = S.positions.filter(p => p !== P);
+    if (S.sel === P.id) S.sel = null;
     addMarker(S.d.t[i], tr, 'out');
-    let m = `${REASON[x.reason]}: ${fmtR(res.r)} (${money(res.money, S.ccy, true)}).`;
-    if (x.both) m += ' În aceeași bară au fost atinse și SL, și TP: am considerat SL primul (varianta prudentă).';
+    let m = `${tag(P) || ''}${REASON[x.reason]}: ${fmtR(tr.r)} (${money(tr.money, S.ccy, true)})${sm.parts > 1 ? ', cu închideri parțiale' : ''}.`;
+    if (x.both) m += ' În aceeași bară H1 au fost atinse și SL, și TP: am considerat SL primul (varianta prudentă).';
     if (x.gap) m += ' Prețul a sărit peste stop loss (gap), așa că ieșirea s-a făcut la deschiderea barei.';
-    showMsg(m, res.money > 0 ? 'good' : res.money < 0 ? 'bad' : '');
+    showMsg(m, tr.money > 0 ? 'good' : tr.money < 0 ? 'bad' : '');
     renderStats();
+    if (window.SimExtra && SimExtra.onTrade) SimExtra.onTrade(tr);
   }
   function addMarker(t, x, kind) {
-    if (kind === 'in') S.markers.push({ time: t, position: x === 'buy' ? 'belowBar' : 'aboveBar', color: x === 'buy' ? C.green : C.red, shape: x === 'buy' ? 'arrowUp' : 'arrowDown', text: x === 'buy' ? 'Buy' : 'Sell' });
-    else S.markers.push({ time: t, position: x.side === 'buy' ? 'aboveBar' : 'belowBar', color: x.money > 0 ? C.green : x.money < 0 ? C.red : C.text, shape: 'circle', text: (x.reason === 'Manual' || x.reason === 'Final' ? 'Închis' : x.reason) + ' ' + fmtR(x.r) });
-    S.markers.sort((a, b) => a.time - b.time);
-    markersApi.setMarkers(S.markers.slice());
+    if (kind === 'in') S.markers.push({ t, position: x === 'buy' ? 'belowBar' : 'aboveBar', color: x === 'buy' ? C.green : C.red, shape: x === 'buy' ? 'arrowUp' : 'arrowDown', text: x === 'buy' ? 'Buy' : 'Sell' });
+    else S.markers.push({ t, position: x.side === 'buy' ? 'aboveBar' : 'belowBar', color: x.money > 0 ? C.green : x.money < 0 ? C.red : C.text, shape: 'circle', text: (x.reason === 'Manual' || x.reason === 'Final' ? 'Închis' : x.reason) + ' ' + fmtR(x.r) });
+    renderMarkers();
   }
 
-  // ---------- redare ----------
-  function nextYearNeeded() { return S.tf === 'H1' && S.years[1] < 2025 && S.cur > S.d.n - 260; }
+  // ---------- redare (ceasul e mereu H1; un pas = o bară din intervalul afișat) ----------
+  function nextYearNeeded() { return S.years[1] < LAST_YEAR && S.cur > S.d.n - 260; }
   function ensureMore() {
     if (!nextYearNeeded() || loadingMore) return loadingMore;
     const y = S.years[1] + 1;
-    loadingMore = loadJson(`${S.sym}-H1-${y}.json`).then(d => { S.d = E.concat(S.d, d); S.years[1] = y; }).catch(() => showMsg('Nu am putut încărca datele pentru anul următor. Verifică conexiunea.', 'warn')).finally(() => { loadingMore = null; });
+    loadingMore = loadYear(S.sym, y).then(d => { S.d = E.concat(S.d, d); S.years[1] = y; }).catch(() => showMsg('Nu am putut încărca datele pentru perioada următoare. Verifică conexiunea.', 'warn')).finally(() => { loadingMore = null; });
     return loadingMore;
   }
-  /** Avansează o bară. Întoarce false dacă nu se mai poate avansa. */
+  /** Avansează o bară H1: execută ordinele, verifică SL/TP pe toate pozițiile, aplică regulile provocării. */
   function advance() {
     if (!S || S.ended) return false;
     const i = S.cur + 1;
     if (i >= S.d.n) {
-      if (S.tf === 'H1' && S.years[1] < 2025) { ensureMore(); showMsg('Se încarcă datele următoare…'); return false; }
-      endSession('Ai ajuns la finalul datelor disponibile (decembrie 2025).'); return false;
+      if (S.years[1] < LAST_YEAR) { ensureMore(); showMsg('Se încarcă datele următoare…'); return false; }
+      endSession('Ai ajuns la finalul datelor disponibile (' + DATA_END_LABEL + ').'); return false;
     }
     if (S.d.t[i] >= S.stopT) { endSession('Sesiunea s-a oprit: urmează o perioadă în care sursa are multe ore lipsă, așa că nu o folosim.'); return false; }
+    const balanceStart = S.balance;
     S.cur = i; S.barsPlayed++;
     const b = { o: S.d.o[i], h: S.d.h[i], l: S.d.l[i], c: S.d.c[i] };
-    if (S.pending) {
-      const fill = E.pendingTriggered(S.pending, b);
-      if (fill != null) {
-        const O = S.pending; S.pending = null;
-        S.pos = E.makePosition({ sym: S.sym, side: O.side, sl: O.sl, tp: O.tp, lot: O.lot, pipVal: O.pipVal, time: S.d.t[i], idx: i, type: O.kind }, E.round(fill, E.INSTR[S.sym].dec + 1));
-        addMarker(S.d.t[i], O.side, 'in');
-        showMsg(`Ordinul ${O.side === 'buy' ? 'Buy' : 'Sell'} ${O.kind} s-a executat la ${fmtPrice(S.sym, S.pos.entry)}.`);
-        const x = E.checkExit(S.pos, b, true);
-        if (x) closePos(x, i);
-      }
-    } else if (S.pos) {
-      const x = E.checkExit(S.pos, b);
-      if (x) closePos(x, i);
+    let events = 0;
+    // pozițiile deja deschise
+    for (const P of [...S.positions]) { const x = E.checkExit(P, b); if (x) { closeFull(P, x, i); events++; } }
+    // ordinele în așteptare
+    for (const O of [...S.orders]) {
+      const fill = E.pendingTriggered(O, b);
+      if (fill == null) continue;
+      S.orders = S.orders.filter(o => o !== O);
+      const P = E.makePosition({ sym: S.sym, side: O.side, sl: O.sl, tp: O.tp, lot: O.lot, pipVal: O.pipVal, time: S.d.t[i], idx: i, type: O.kind }, E.round(fill, E.INSTR[S.sym].dec + 1));
+      Object.assign(P, { id: O.id, n: O.n, lot0: P.lot, setup: O.setup || '' });
+      S.positions.push(P); events++;
+      addMarker(S.d.t[i], O.side, 'in');
+      showMsg(`${tag(P)}Ordinul ${O.side === 'buy' ? 'Buy' : 'Sell'} ${O.kind} s-a executat la ${fmtPrice(S.sym, P.entry)}.`);
+      const x = E.checkExit(P, b, true);
+      if (x) closeFull(P, x, i);
     }
-    series.update(lwBar(i));
+    if (window.SimExtra && SimExtra.onBar) SimExtra.onBar(i, b, balanceStart);
+    // graficul: actualizează bara în formare sau adaugă una nouă
+    E.appendBar(S.view, S.d, i, S.tf);
+    series.update(lastBar());
     ensureMore();
-    return true;
+    return events ? 'event' : true;
   }
+  /** n bare din intervalul afișat. La +10, oprește la primul eveniment (intrare/ieșire). */
   function step(n) {
     if (!S || S.ended) return;
     let moved = 0;
-    for (let k = 0; k < n; k++) { const hadPos = !!(S.pos || S.pending), trades = S.trades.length; if (!advance()) break; moved++; if (n > 1 && (S.trades.length !== trades || (!hadPos && S.pos))) break; }
-    if (moved) { if (S.pos && !S.pending) { /* noop */ } afterChange(); }
+    outer: for (let k = 0; k < n; k++) {
+      do {
+        const r = advance();
+        if (!r) break outer;
+        moved++;
+        if (r === 'event' && n > 1) break outer;
+        if (S.ended) break outer;
+      } while (!E.isBucketEnd(S.d, S.cur, S.tf));
+    }
+    if (moved) { if (window.SimExtra && SimExtra.onData) SimExtra.onData(false); afterChange(); }
   }
   function setPlaying(on) {
     clearInterval(playTimer); playTimer = null;
@@ -530,6 +637,18 @@
     b.title = on ? 'Pauză (Space)' : 'Redare (Space)';
     if (on) playTimer = setInterval(() => { if (!S || S.ended) return setPlaying(false); if (loadingMore) return; step(1); }, SPEED_MS[$('sim-speed').value] || 900);
   }
+  /** Schimbă intervalul afișat în sesiune. Ceasul (ora curentă) rămâne același; bara curentă a intervalului mare e construită doar din H1 trecute. */
+  function setTF(tf) {
+    if (!S || !E.TF_SEC[tf] || tf === S.tf) return;
+    S.tf = tf;
+    document.querySelectorAll('.ws-tf button').forEach(b => b.setAttribute('aria-pressed', b.dataset.tf === tf ? 'true' : 'false'));
+    $('sim-label').textContent = `${S.sym} · ${tf}`;
+    timeLabels(S.hidden);
+    setChartData(false);
+    legend(null);
+    afterChange();
+    showMsg(`Interval ${tf}. „Bara următoare” avansează o bară ${tf}; SL și TP se verifică în continuare pe fiecare oră (H1).`);
+  }
 
   // ---------- afișare generală ----------
   let toastTimer = null;
@@ -539,23 +658,24 @@
     clearTimeout(toastTimer);
     if (text) toastTimer = setTimeout(() => m.classList.remove('is-on'), tone === 'bad' || tone === 'warn' ? 7000 : 4500);
   }
+  const openTotal = () => S.positions.reduce((s, P) => s + openPL(P), 0);
   function renderAcct() {
-    const P = S.pos;
-    const open = P ? E.result(P, E.markPrice(P, bid())).money : 0;
+    const open = openTotal();
     $('sim-balance').textContent = money(S.balance, S.ccy);
     $('sim-equity').textContent = money(S.balance + open, S.ccy);
-    const o = $('sim-openpl'); o.textContent = P ? money(open, S.ccy, true) : '—';
+    const o = $('sim-openpl'); o.textContent = S.positions.length ? money(open, S.ccy, true) : '—';
     o.className = open > 0 ? 'pos' : open < 0 ? 'neg' : '';
     $('sim-bars').textContent = String(S.barsPlayed);
+    $('sim-when').textContent = S.hidden ? 'Data e ascunsă' : fmtTime(S.d.t[S.cur], 'H1');
     $('sim-bid').textContent = fmtPrice(S.sym, bid());
     $('sim-ask').textContent = nf(ask(), E.INSTR[S.sym].dec);
     $('sim-spread').textContent = nf(E.INSTR[S.sym].spread, 1);
     if (!legendHover) legend(null);
-    $('sim-when').textContent = S.hidden ? 'Data e ascunsă' : fmtTime(S.d.t[S.cur], S.tf);
   }
   function afterChange() {
     if (!S) return;
     renderAcct(); renderPos(); updateCalc(); drawLines();
+    if (window.SimExtra && SimExtra.onChange) SimExtra.onChange();
     save();
   }
   function renderStats() {
@@ -571,16 +691,18 @@
     set('sim-s-bal', 'Sold: ' + money(st.balance, ccy));
     for (const [id, v] of [['sim-s-tr', st.totalR], ['sim-s-ar', st.avgR], ['sim-s-net', st.net]]) { $(id).classList.toggle('pos', st.n > 0 && v > 0); $(id).classList.toggle('neg', st.n > 0 && v < 0); }
     const tb = $('sim-trades').tBodies[0];
+    const held = t => { const h = Math.max(1, Math.round((t.exitT - t.entryT) / 3600)); return h < 48 ? h + ' h' : nf(h / 24, 0, 1) + ' zile'; };
     tb.innerHTML = S.trades.map(t => `<tr>
-      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}</td>
-      <td>${S.hidden ? '<small>dată ascunsă</small>' : '<small>' + esc(fmtTime(t.entryT, S.tf)) + '</small>'}<br>${fmtPrice(S.sym, t.entry)}</td>
-      <td>${S.hidden ? '<small>după ' + t.bars + (t.bars === 1 ? ' bară' : ' bare') + '</small>' : '<small>' + esc(fmtTime(t.exitT, S.tf)) + '</small>'}<br>${fmtPrice(S.sym, t.exit)}</td>
-      <td>${REASON[t.reason]}${t.both ? ' <small>(SL și TP în aceeași bară)</small>' : ''}</td>
+      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}${t.setup ? '<br><small class="sim-tag">' + esc(t.setup) + '</small>' : ''}</td>
+      <td>${S.hidden ? '<small>dată ascunsă</small>' : '<small>' + esc(fmtTime(t.entryT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.entry)}</td>
+      <td>${S.hidden ? '<small>după ' + held(t) + '</small>' : '<small>' + esc(fmtTime(t.exitT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.exit)}</td>
+      <td>${REASON[t.reason]}${t.parts > 1 ? ' <small>(' + t.parts + ' părți)</small>' : ''}${t.both ? ' <small>(SL și TP în aceeași bară)</small>' : ''}</td>
       <td class="num">${sign(t.pips)}${nf(Math.abs(t.pips), 1)}</td><td class="num ${t.r > 0 ? 'pos' : t.r < 0 ? 'neg' : ''}">${fmtR(t.r)}</td>
       <td class="num ${t.money > 0 ? 'pos' : t.money < 0 ? 'neg' : ''}">${money(t.money, ccy, true)}</td></tr>`).join('');
     $('sim-trades-empty').hidden = S.trades.length > 0;
     $('sim-tcount').textContent = String(S.trades.length);
     if (!$('sim-stats').hidden) drawEquity(st.curve);
+    if (window.SimExtra && SimExtra.onStats) SimExtra.onStats();
     return st;
   }
   function eqChartOn(el) {
@@ -592,25 +714,37 @@
         handleScroll: false, handleScale: false, crosshair: { vertLine: { labelVisible: false } },
         localization: { locale: 'ro-RO', priceFormatter: p => nf(p, 0) }
       });
-    return { ch, se: ch.addSeries(LW.BaselineSeries, { baseValue: { type: 'price', price: S.bal0 }, topLineColor: C.green, bottomLineColor: C.red, topFillColor1: 'rgba(34,197,94,.25)', topFillColor2: 'rgba(34,197,94,.02)', bottomFillColor1: 'rgba(239,68,68,.02)', bottomFillColor2: 'rgba(239,68,68,.25)', lineWidth: 2, priceLineVisible: false }) };
+    return { ch, se: ch.addSeries(LW.BaselineSeries, { baseValue: { type: 'price', price: S.bal0 }, topLineColor: C.green, bottomLineColor: C.red, topFillColor1: 'rgba(8,153,129,.25)', topFillColor2: 'rgba(8,153,129,.02)', bottomFillColor1: 'rgba(242,54,69,.02)', bottomFillColor2: 'rgba(242,54,69,.25)', lineWidth: 2, priceLineVisible: false }) };
   }
   function drawEquity(curve, el) {
     let c;
     if (el) { if (!sumChart) sumChart = eqChartOn(el); c = sumChart; }
     else { if (!eqChart) { const x = eqChartOn($('sim-eq-chart')); eqChart = x.ch; eqSeries = x.se; } c = { ch: eqChart, se: eqSeries }; }
-    const eqSeries_ = c.se, eqChart_ = c.ch;
-    eqSeries_.applyOptions({ baseValue: { type: 'price', price: S.bal0 } });
-    eqSeries_.setData(curve.map((v, i) => ({ time: 946684800 + i * 86400, value: v })));
-    eqChart_.timeScale().fitContent();
+    c.se.applyOptions({ baseValue: { type: 'price', price: S.bal0 } });
+    c.se.setData(curve.map((v, i) => ({ time: 946684800 + i * 86400, value: v })));
+    c.ch.timeScale().fitContent();
   }
 
   // ---------- salvare ----------
   function snapshot() {
-    return { v: 1, id: S.id, sym: S.sym, tf: S.tf, ccy: S.ccy, bal0: S.bal0, riskPct: S.riskPct, mode: S.mode, hidden: S.hidden,
-      startT: S.startT, curT: S.d.t[S.cur], stopT: S.stopT, balance: S.balance, pos: S.pos, pending: S.pending, trades: S.trades, markers: S.markers, barsPlayed: S.barsPlayed };
+    return { v: 2, id: S.id, sym: S.sym, tf: S.tf, ccy: S.ccy, bal0: S.bal0, riskPct: S.riskPct, mode: S.mode, hidden: S.hidden,
+      startT: S.startT, curT: S.d.t[S.cur], stopT: S.stopT, balance: S.balance, positions: S.positions, orders: S.orders, seq: S.seq, sel: S.sel,
+      trades: S.trades, markers: S.markers, barsPlayed: S.barsPlayed, strategy: S.strategy || null, challenge: S.challenge || null,
+      extra: window.SimExtra && SimExtra.save ? SimExtra.save() : null };
+  }
+  /** Sesiuni salvate de versiunea anterioară (o singură poziție, date pe intervalul ales) → formatul nou. */
+  function upgradeSnap(sn) {
+    if (!sn || sn.v === 2) return sn;
+    if (sn.v !== 1) return null;
+    const positions = [], orders = []; let seq = 0;
+    if (sn.pos) positions.push(Object.assign({}, sn.pos, { id: ++seq, n: seq, lot0: sn.pos.lot }));
+    if (sn.pending) orders.push(Object.assign({}, sn.pending, { id: ++seq, n: seq }));
+    // la v1, curT era începutul barei curente din intervalul ales: ora H1 corespunzătoare e ultima din acea bară
+    const markers = (sn.markers || []).map(m => Object.assign({}, m, { t: m.time }));
+    return Object.assign({}, sn, { v: 2, positions, orders, seq, sel: null, markers, curBucket: sn.curT });
   }
   let saveTimer = null;
-  function save() { if (!S || S.ended) return; clearTimeout(saveTimer); saveTimer = setTimeout(() => store.set(KEY_CUR, snapshot()), 250); }
+  function save() { if (!S || S.ended) return; clearTimeout(saveTimer); saveTimer = setTimeout(() => { if (S && !S.ended) store.set(KEY_CUR, snapshot()); }, 250); }
 
   // ---------- pornire / reluare / final ----------
   function setupError(msg) { const e = $('sim-setup-err'); e.textContent = msg || ''; e.hidden = !msg; }
@@ -644,7 +778,7 @@
     setupError('');
     const btn = $('sim-start'); btn.disabled = true; btn.textContent = 'Se încarcă datele…';
     try {
-      INDEX = INDEX || await loadJson('index.json');
+      INDEX = INDEX || await loadJson('index.json'); applyIndex(INDEX);
       let T;
       if (cfg.mode === 'date') {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(cfg.date)) throw new Error('Alege data de start sau folosește „Perioadă aleatorie”.');
@@ -666,21 +800,27 @@
   }
   /** Pornește (sau reia) o sesiune. Pentru reluare, `snap` conține curT, tranzacțiile etc. */
   async function begin(cfg, snap) {
-    INDEX = INDEX || await loadJson('index.json');
-    const tf = cfg.tf, histSpan = spanSec(tf, HISTORY + 20);
-    const curT = snap ? snap.curT : cfg.startT;
-    const { d, years } = await loadSeries(cfg.sym, tf, yearOf(cfg.startT - histSpan), yearOf(curT) + (tf === 'H1' ? 0 : 0));
+    INDEX = INDEX || await loadJson('index.json'); applyIndex(INDEX);
+    const tf = cfg.tf;
+    // istoric H1 suficient și pentru vederea D1 (~150 de zile de tranzacționare înainte de start)
+    const curT = snap ? (snap.curBucket != null ? snap.curBucket + E.TF_SEC[snap.tf] : snap.curT) : cfg.startT;
+    const { d, years } = await loadSeries(cfg.sym, yearOf(cfg.startT - spanSec('D1', HISTORY + 10)), yearOf(curT));
     const rates = await loadRates(cfg.sym, cfg.ccy);
     let startIdx = 0; while (startIdx < d.n - 1 && d.t[startIdx] < cfg.startT) startIdx++;
     let cur = startIdx;
-    if (snap) { cur = 0; while (cur < d.n - 1 && d.t[cur] < snap.curT) cur++; }
+    if (snap && snap.curBucket != null) { cur = 0; while (cur < d.n - 1 && E.bucketStart(d.t[cur + 1], snap.tf) <= snap.curBucket) cur++; }
+    else if (snap) { cur = 0; while (cur < d.n - 1 && d.t[cur] < snap.curT) cur++; }
     let stopT = Infinity;
     for (const [a] of incompleteFor(cfg.sym)) if (a > cfg.startT && a < stopT) stopT = a;
     S = Object.assign({}, cfg, {
-      d, years: years.slice(), rates, cur, firstIdx: Math.max(0, startIdx - HISTORY), stopT,
-      balance: snap ? snap.balance : cfg.bal0, pos: snap ? snap.pos : null, pending: snap ? snap.pending : null,
-      trades: snap ? snap.trades : [], markers: snap ? snap.markers : [], barsPlayed: snap ? snap.barsPlayed : 0, ended: false, touched: false
+      d, years: years.slice(), rates, cur, startIdx, stopT, view: null,
+      balance: snap ? snap.balance : cfg.bal0, positions: snap ? snap.positions : [], orders: snap ? snap.orders : [], seq: snap ? snap.seq || 0 : 0, sel: snap ? snap.sel : null,
+      trades: snap ? snap.trades : [], markers: snap ? snap.markers : [], barsPlayed: snap ? snap.barsPlayed : 0, ended: false, touched: false, showPreview: true,
+      strategy: snap ? snap.strategy || cfg.strategy || null : cfg.strategy || null
     });
+    // compatibilitate (teste, cod vechi): prima poziție și primul ordin
+    Object.defineProperties(S, { pos: { get() { return this.positions[0] || null; } }, pending: { get() { return this.orders[0] || null; } } });
+    document.querySelectorAll('.ws-tf button').forEach(b => b.setAttribute('aria-pressed', b.dataset.tf === tf ? 'true' : 'false'));
     enterApp();
     $('sim-stats-msg').textContent = ''; $('sim-reveal').textContent = '';
     ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = false; });
@@ -689,8 +829,9 @@
     $('sim-risk-ws').value = nf(cfg.riskPct, 0, 2).replace(/\s/g, '');
     $('sim-adv').open = false;
     selectTab('order');
-    // valori implicite pentru SL/TP: ~1x amplitudinea mediană a ultimelor 50 de bare
-    const mr = E.medianRangePips(d, cur, 50, cfg.sym);
+    // valori implicite pentru SL/TP: ~1,5 x amplitudinea mediană a ultimelor 50 de bare ale intervalului ales
+    const vw = E.aggregate(d, cur, tf), vd = { h: vw.h, l: vw.l };
+    const mr = E.medianRangePips(vd, vw.h.length - 1, 50, cfg.sym);
     const sl = Math.max(5, Math.round(mr * 1.5 / 5) * 5 || 20);
     $('sim-sl').value = String(sl); $('sim-tp').value = String(sl * 2); $('sim-price').value = '';
     document.querySelector('input[name="sim-unit"][value="pips"]').checked = true;
@@ -698,6 +839,7 @@
     const I = E.INSTR[cfg.sym];
     $('sim-spread-note').textContent = `Spread fix: ${nf(I.spread, 1)} pips. Sugestie: stop loss-ul implicit (${sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări ${tf}.`;
     makeChart(); setChartData();
+    if (window.SimExtra && SimExtra.load) SimExtra.load(snap ? snap.extra : null, { chart, series, S, E, LW, C, $, nf, esc, fmtPrice, money, showMsg, legendRefresh: () => legend(null) });
     $('sim-pos-err').hidden = true; $('sim-order-err').hidden = true;
     showMsg(snap ? 'Sesiunea a fost reluată de unde ai rămas.' : 'Sesiunea a început. Analizează graficul, apoi avansează sau plasează un ordin.');
     renderStats();
@@ -707,17 +849,16 @@
   function endSession(reason) {
     if (!S || S.ended) return;
     setPlaying(false);
-    if (S.pending) S.pending = null;
-    if (S.pos) closePos({ price: E.markPrice(S.pos, bid()), reason: 'Final', both: false, gap: false }, S.cur);
+    S.orders = [];
+    for (const P of [...S.positions]) closeFull(P, { price: E.markPrice(P, bid()), reason: 'Final', both: false, gap: false }, S.cur);
     S.ended = true; S.hidden = false;
     timeLabels(false);
-    chart.timeScale().fitContent();
+    { const n = S.view.time.length; let k = 0; while (k < n - 1 && S.view.time[k + 1] <= E.bucketStart(S.d.t[S.startIdx], S.tf)) k++; chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, k - 30), to: n + 3 }); }
     drawLines();
-    const a = S.d.t[Math.max(S.firstIdx + HISTORY, 0)] || S.startT, b = S.d.t[S.cur];
-    let startIdx = 0; while (startIdx < S.d.n - 1 && S.d.t[startIdx] < S.startT) startIdx++;
-    const period = `${S.sym} ${S.tf}, ${fmtTime(S.d.t[startIdx], S.tf)} - ${fmtTime(b, S.tf)}`;
+    const b = S.d.t[S.cur], startIdx = S.startIdx;
+    const period = `${S.sym} ${S.tf}, ${fmtTime(S.d.t[startIdx], 'H1')} - ${fmtTime(b, 'H1')}`;
     $('sim-reveal').textContent = 'Perioada reală: ' + period + '.';
-    $('sim-when').textContent = fmtTime(b, S.tf);
+    $('sim-when').textContent = fmtTime(b, 'H1');
     $('sim-order').hidden = true; $('sim-pos').hidden = true;
     ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = true; });
     $('sim-end').textContent = 'Rezultate'; $('sim-end').title = 'Arată rezultatele sesiunii';
@@ -734,7 +875,8 @@
     const st = E.stats(S.trades, S.bal0);
     const list = store.get(KEY_SESS, []);
     list.unshift({ id: S.id, sym: S.sym, tf: S.tf, ccy: S.ccy, bal0: S.bal0, riskPct: S.riskPct, from: S.d.t[startIdx], to: b, bars: S.barsPlayed,
-      n: st.n, winRate: st.winRate, totalR: st.totalR, net: st.net, trades: S.trades, ended: new Date().toISOString() });
+      n: st.n, winRate: st.winRate, totalR: st.totalR, net: st.net, maxDDPct: st.maxDDPct, trades: S.trades, ended: new Date().toISOString(),
+      strategy: S.strategy || null, challenge: S.challenge ? { status: S.challenge.status, reason: S.challenge.reason, targetPct: S.challenge.targetPct, dailyPct: S.challenge.dailyPct, totalPct: S.challenge.totalPct } : null });
     store.set(KEY_SESS, list.slice(0, MAX_SAVED));
     store.del(KEY_CUR);
     renderHistory();
@@ -748,7 +890,8 @@
   /** Curăță sesiunea din memorie (cea neterminată rămâne salvată pentru reluare). */
   function teardown() {
     setPlaying(false);
-    if (S && !S.ended) { clearTimeout(saveTimer); store.set(KEY_CUR, snapshot()); }
+    clearTimeout(saveTimer);
+    if (S && !S.ended) store.set(KEY_CUR, snapshot());
     closeSummary();
     S = null;
     if (chart) { chart.remove(); chart = null; series = null; }
@@ -848,7 +991,7 @@
     const ccy = S.ccy, dec = E.INSTR[S.sym].dec;
     const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', ','));
     const head = ['Nr', 'Instrument', 'Interval', 'Direcție', 'Tip', 'Data intrare', 'Preț intrare', 'SL inițial', 'TP inițial', 'Lot', 'Risc (' + ccy + ')', 'Data ieșire', 'Preț ieșire', 'Motiv', 'Pips', 'R', 'Profit (' + ccy + ')'];
-    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', t.type, fmtTime(t.entryT, S.tf), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, S.tf), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2)]);
+    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', t.type, fmtTime(t.entryT, 'H1'), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, 'H1'), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2)]);
     const body = [head, ...rows].map(r => r.map(v => { const s = String(v); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(';')).join('\r\n');
     const blob = new Blob(['\ufeff' + body + '\r\n'], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
@@ -870,7 +1013,7 @@
     for (const t of S.trades) {
       const id = `sim-${S.id}-${t.n}`;
       if (ids.has(id)) continue;
-      list.push({ id, data: isoDate(t.entryT, S.tf), pereche: S.sym, directie: t.side === 'buy' ? 'Buy' : 'Sell', sesiune: '',
+      list.push({ id, data: isoDate(t.entryT, 'H1'), pereche: S.sym, directie: t.side === 'buy' ? 'Buy' : 'Sell', sesiune: '',
         setup: `Simulator (backtesting) · ${S.tf} · ordin ${t.type}`, intrare: E.round(t.entry, dec + 1), sl: t.sl0, tp: t.tp0, lot: t.lot,
         riscPct: S.riskPct, riscBani: t.risk, rezultat: JR[t.reason], r: t.r, plan: '', emotii: '', lectie: '', creat: now, modificat: '', sursa: 'simulator' });
       added++;
@@ -895,8 +1038,8 @@
   setupForm.addEventListener('submit', start);
   setupForm.addEventListener('change', syncSetup);
   $('sim-resume').addEventListener('click', async () => {
-    const snap = store.get(KEY_CUR, null);
-    if (!snap || snap.v !== 1) { $('sim-resume').hidden = true; return; }
+    const snap = upgradeSnap(store.get(KEY_CUR, null));
+    if (!snap) { $('sim-resume').hidden = true; return; }
     try { await begin({ id: snap.id, sym: snap.sym, tf: snap.tf, ccy: snap.ccy, bal0: snap.bal0, riskPct: snap.riskPct, mode: snap.mode, hidden: snap.hidden, startT: snap.startT }, snap); }
     catch (e) { setupError('Nu am putut relua sesiunea. Pornește una nouă.'); store.del(KEY_CUR); $('sim-resume').hidden = true; }
   });
@@ -906,7 +1049,7 @@
   // la schimbarea unității, convertește valorile existente
   document.querySelectorAll('input[name="sim-unit"]').forEach(r => r.addEventListener('change', () => {
     if (!S) return;
-    const ref = refPrice(side(), kind()), pip = E.pipOf(S.sym), dir = side() === 'buy' ? 1 : -1;
+    const ref = refPrice(side(), ordKind()), pip = E.pipOf(S.sym), dir = side() === 'buy' ? 1 : -1;
     if (!(ref > 0)) return;
     for (const [id, sgn] of [['sim-sl', -1], ['sim-tp', 1]]) {
       const v = num($(id).value); if (!(v > 0)) continue;
@@ -932,6 +1075,11 @@
   $('sim-p-apply').addEventListener('click', applyPosLevels);
   $('sim-pos').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'sim-p-sl' || e.target.id === 'sim-p-tp')) { e.preventDefault(); applyPosLevels(); } });
   $('sim-be').addEventListener('click', moveToBE);
+  $('sim-close-all').addEventListener('click', closeAll);
+  document.querySelectorAll('[data-part]').forEach(b => b.addEventListener('click', () => closePartial(+b.dataset.part / 100)));
+  $('sim-part-go').addEventListener('click', () => { const v = num($('sim-part-lot').value); if (!(v > 0)) { showPosErr('Scrie lotul de închis (de exemplu 0,10).'); return; } closePartial(null, v); });
+  $('sim-pos-list').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (!b || !S) return; S.sel = +b.dataset.id; showPosErr(''); renderPos(); drawLines(); });
+  document.querySelectorAll('.ws-tf button').forEach(b => b.addEventListener('click', () => setTF(b.dataset.tf)));
   $('sim-close').addEventListener('click', () => closeNow('Manual'));
   $('sim-csv').addEventListener('click', csv);
   $('sim-journal').addEventListener('click', toJournal);
@@ -944,12 +1092,14 @@
     if (e.key === 'ArrowRight' && e.target.getAttribute('role') !== 'tab') { e.preventDefault(); step(1); }
     else if ((e.key === ' ' || e.code === 'Space') && !onBtn) { e.preventDefault(); setPlaying(!playTimer); }
     else if (e.key === 'b' || e.key === 'B' || e.key === 's' || e.key === 'S') {
-      if (S.pos || S.pending) { showMsg('Ai deja o poziție sau un ordin. Închide-l înainte de unul nou.', 'warn'); return; }
       e.preventDefault();
       document.querySelector(`input[name="sim-side"][value="${/b/i.test(e.key) ? 'buy' : 'sell'}"]`).checked = true;
       updateCalc(); placeOrder();
     } else if (e.key === 'Escape' && $('sim-panel').dataset.open === 'true') sheet(false);
   });
+  // etichetele liniilor se scurtează/lungesc după lățimea graficului
+  let rzT = null;
+  window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (S && series) drawLines(); }, 150); });
   // ajutor
   const help = $('sim-help');
   $('sim-help-open').addEventListener('click', () => { if (help.showModal) help.showModal(); else help.setAttribute('open', ''); });
@@ -962,8 +1112,17 @@
   // inițializare
   setupForm.hidden = false;
   syncSetup();
+  loadJson('index.json').then(ix => { INDEX = ix; applyIndex(ix); syncSetup(); }).catch(() => {});
   $('sim-resume').hidden = !store.get(KEY_CUR, null);
   renderHistory();
   if (!store.get(KEY_HELP, 0) && help.showModal) help.showModal();
-  window.__sim = { get S() { return S; }, step, endSession, selectTab, sheet, get chart() { return chart; }, get series() { return series; }, lines };   // pentru teste
+  window.__sim = { get S() { return S; }, step, endSession, selectTab, sheet, setTF, closePartial, closeAll, get view() { return S && S.view; }, get chart() { return chart; }, get series() { return series; }, rawLines: lines,
+    get lines() {   // vedere compatibilă: prima poziție / primul ordin / previzualizarea
+      const L = {}, P = S && S.positions[0], O = S && S.orders[0];
+      if (P) { L.entry = lines['e:' + P.id]; L.sl = lines['sl:' + P.id]; L.tp = lines['tp:' + P.id]; }
+      else if (O) { L.pend = lines['o:' + O.id]; L.sl = lines['osl:' + O.id]; L.tp = lines['otp:' + O.id]; }
+      else { L.sl = lines.psl; L.tp = lines.ptp; L.ppr = lines.ppr; }
+      for (const k of Object.keys(L)) if (!L[k]) delete L[k];
+      return L;
+    } };   // pentru teste
 })();

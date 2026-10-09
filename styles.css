@@ -2144,3 +2144,30 @@ html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscro
 }
 .sim-ws .ws-sum-eq { height: 160px; }
 @media (max-height: 520px) { .sim-ws .ws-sum-eq { height: 70px; } }
+/* simulator: interval, poziții multiple, închidere parțială */
+.ws-tf { display: inline-flex; gap: 2px; margin-left: 4px; padding: 2px; border-radius: 5px; background: var(--tv-panel); }
+.ws-tf button { height: 28px; min-width: 34px; padding: 0 6px; border: 0; border-radius: 4px; background: none; color: var(--tv-muted); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.ws-tf button:hover { color: var(--tv-text); }
+.ws-tf button[aria-pressed="true"] { background: var(--tv-line); color: #fff; }
+.ws-tf button:focus-visible { outline: 2px solid var(--tv-blue); outline-offset: -2px; }
+.ws-positions { margin-top: 14px; }
+.ws-pos-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.ws-pos-head h2 { margin: 0; font-size: 13.5px; color: var(--tv-text); }
+.ws-link { border: 0; background: none; color: #5b9cf6; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 4px; }
+.ws-link:hover { text-decoration: underline; }
+.ws-pos-list { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 4px; }
+.ws-pos-row { width: 100%; display: flex; align-items: center; gap: 8px; padding: 7px 9px; border: 1px solid var(--tv-line); border-radius: 5px; background: var(--tv-panel); color: var(--tv-text); font: inherit; font-size: 12.5px; cursor: pointer; text-align: left; }
+.ws-pos-row b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.ws-pos-row.is-sel { border-color: var(--tv-blue); box-shadow: inset 0 0 0 1px var(--tv-blue); }
+.ws-pos-row:focus-visible { outline: 2px solid var(--tv-blue); outline-offset: 1px; }
+.sim-ws .sim-side { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+.sim-ws .sim-side.buy { background: rgba(41,98,255,.18); color: #5b9cf6; }
+.sim-ws .sim-side.sell { background: rgba(242,54,69,.16); color: #f77c87; }
+.ws-partial { display: grid; gap: 5px; font-size: 12.5px; color: var(--tv-muted); font-weight: 600; }
+.ws-partial-row { display: grid; grid-template-columns: repeat(3, 1fr) 1.2fr auto; gap: 4px; }
+.ws-chip { height: 32px; padding: 0 8px; border: 1px solid var(--tv-line); border-radius: 4px; background: var(--tv-panel); color: var(--tv-text); font: inherit; font-weight: 700; cursor: pointer; }
+.ws-chip:hover { border-color: #5b9cf6; }
+.sim-ws .ws-partial input[type="text"] { height: 32px; min-width: 0; }
+.sim-tag { color: #5b9cf6; }
+@media (max-width: 699px) { .ws-tf { margin-left: 2px; } .ws-tf button { min-width: 30px; padding: 0 4px; } }
+@media (min-width: 700px) and (max-height: 520px) { .ws-tf button { height: 26px; } }
