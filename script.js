@@ -83,10 +83,36 @@ if (menuBtn && links) {
   counters.forEach(el => co.observe(el));
 })();
 
+// ===== Graficele TradingView de pe home: se încarcă după pagină, când ajung aproape de ecran =====
+// În HTML scripturile au type="text/plain" + data-tv-src, ca să nu întârzie prima afișare a paginii.
+(function () {
+  const holders = [...document.querySelectorAll('script[data-tv-src]')];
+  if (!holders.length) return;
+  const load = holder => {
+    if (!holder.parentNode) return;
+    const sc = document.createElement('script');
+    sc.type = 'text/javascript'; sc.async = true; sc.src = holder.dataset.tvSrc;
+    sc.text = holder.textContent;   // configurația widgetului, citită de scriptul TradingView
+    holder.parentNode.replaceChild(sc, holder);
+  };
+  const start = () => {
+    if (!('IntersectionObserver' in window)) { holders.forEach(load); return; }
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.isIntersecting) { io.unobserve(en.target); load(en.target._tvHolder); }
+    }), { rootMargin: '300px 0px' });
+    holders.forEach(h => { const box = h.closest('.tradingview-widget-container') || h.parentNode; box._tvHolder = h; io.observe(box); });
+  };
+  const idle = window.requestIdleCallback || (cb => setTimeout(cb, 200));
+  if (document.readyState === 'complete') idle(start, { timeout: 1500 });
+  else window.addEventListener('load', () => idle(start, { timeout: 1500 }), { once: true });
+})();
+
 // ===== Galerie foto: click pentru mărire =====
 const lb = document.getElementById('lightbox');
 if (lb && typeof lb.showModal === 'function') {
-  const lbImg = lb.querySelector('img');
+  // imaginea mărită se creează la nevoie (fără <img src=""> gol în HTML)
+  let lbImg = lb.querySelector('img');
+  if (!lbImg) { lbImg = document.createElement('img'); lbImg.alt = ''; lb.appendChild(lbImg); }
   document.querySelectorAll('[data-lightbox]').forEach(a => a.addEventListener('click', e => {
     e.preventDefault();
     const img = a.querySelector('img');

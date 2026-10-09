@@ -1,0 +1,7 @@
+# Notă: site-ul este un „project site” GitHub Pages (/marius-fx/). Google citește robots.txt doar de la
+# rădăcina domeniului (mariusfx1.github.io/robots.txt), deci acest fișier e doar informativ.
+# Sitemap-ul se trimite direct în Google Search Console.
+User-agent: *
+Allow: /
+
+Sitemap: https://mariusfx1.github.io/marius-fx/sitemap.xml

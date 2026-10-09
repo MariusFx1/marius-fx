@@ -166,7 +166,7 @@ img { max-width: 100%; display: block; }
 .section-head { max-width: 40rem; margin-bottom: 2.15rem; }
 .kicker { display: flex; align-items: center; gap: .6rem; font-family: var(--mono); font-size: .74rem; color: var(--green); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 .65rem; }
 .kicker::before { content: ""; width: 1.1rem; height: 2px; border-radius: 2px; background: var(--green); flex: none; }
-.section h2 { font-size: clamp(1.85rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -.035em; }
+.section h1, .section h2 { font-size: clamp(1.85rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -.035em; }
 .section-sub { color: var(--muted); margin: .7rem 0 0; font-size: 1.02rem; line-height: 1.65; max-width: 38rem; }
 .fineprint { font-size: .85rem; color: var(--muted); margin-top: 1.75rem; }
 
@@ -228,7 +228,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   font-size: 4rem; font-weight: 800; line-height: 1; color: var(--green);
   letter-spacing: -.04em;
 }
-.about-copy h2 { font-size: clamp(1.85rem, 3.5vw, 2.45rem); margin-bottom: .3rem; letter-spacing: -.035em; }
+.about-copy h1, .about-copy h2 { font-size: clamp(1.85rem, 3.5vw, 2.45rem); margin-bottom: .3rem; letter-spacing: -.035em; }
 .about-lead { font-size: 1.12rem; color: var(--text) !important; }
 .about p:not(.kicker) { color: var(--muted); margin: 1rem 0 0; line-height: 1.75; }
 .about-list { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.75rem; }
@@ -925,7 +925,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .lc-toc-list a.is-active { color: var(--text); background: var(--green-soft); }
 .lc-toc-list a.is-active .lc-toc-num { border-color: var(--green); color: var(--green-2); }
 .lc-toc-list a.is-done .lc-toc-num { background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2304110a' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 13px no-repeat; border-color: var(--green); color: transparent; }
-.lc-toc-foot { margin: .8rem .45rem 0; font-size: .76rem; color: #6b7a93; line-height: 1.45; }
+.lc-toc-foot { margin: .8rem .45rem 0; font-size: .76rem; color: var(--muted); line-height: 1.45; }
 
 .lc-article { min-width: 0; max-width: 46rem; }
 .lc-chapter { padding-bottom: 2.6rem; margin-bottom: 2.6rem; border-bottom: 1px solid var(--border); }
@@ -1027,7 +1027,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .lc-roadmap li::before { content: counter(r); position: absolute; left: 0; top: 0; width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .95rem; color: #04110a; background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
 .lc-roadmap li::after { content: ""; position: absolute; left: calc(1.05rem - 1px); top: 2.4rem; bottom: .3rem; width: 2px; background: linear-gradient(var(--green), rgba(34,197,94,.1)); }
 .lc-roadmap li:last-child::after { display: none; }
-.lc-roadmap h4 { padding-top: .3rem; font-size: 1.04rem; }
+.lc-roadmap h3 { margin: 0; padding-top: .3rem; font-size: 1.04rem; font-weight: 750; letter-spacing: -.01em; line-height: 1.3; }
 .lc-roadmap p { margin-top: .3rem; font-size: .95rem; }
 
 .lc-checklist { margin-top: 1rem; padding: 1rem; border-radius: 16px; border: 1px solid rgba(34,197,94,.4); background: linear-gradient(180deg, rgba(34,197,94,.08), var(--bg-2) 70%); display: grid; gap: .45rem; transition: border-color .3s, box-shadow .3s; }
@@ -1117,7 +1117,7 @@ p { text-wrap: pretty; }
 .section { padding-block: clamp(3.4rem, 7vw, 5.75rem); }
 .page-inner main > .section { padding-top: clamp(3rem, 6vw, 4.6rem); padding-bottom: clamp(3.4rem, 7vw, 5.5rem); }
 .section-head { margin-bottom: clamp(1.8rem, 3.5vw, 2.6rem); }
-.section h2 { font-size: var(--fs-3xl); line-height: 1.08; letter-spacing: -.04em; color: #f4f7fc; }
+.section h1, .section h2 { font-size: var(--fs-3xl); line-height: 1.08; letter-spacing: -.04em; color: #f4f7fc; }
 .section-sub { font-size: var(--fs-lg); line-height: 1.7; }
 .kicker { font-size: .74rem; letter-spacing: .12em; }
 
@@ -1218,7 +1218,7 @@ input:hover, textarea:hover, .lot-form select:hover { border-color: #2a3b5c; }
 .feature-card:focus-visible { outline: none; box-shadow: var(--ring), var(--glow); }
 .feature-icon { grid-row: 1 / span 2; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: linear-gradient(160deg, rgba(34,197,94,.22), rgba(34,197,94,.06)); border: 1px solid rgba(34,197,94,.35); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 8px 22px -12px rgba(34,197,94,.7); }
 .feature-icon svg { width: 22px; height: 22px; fill: none; stroke: var(--green-2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.feature-card h3 { display: flex; align-items: center; gap: .45rem; font-size: 1.12rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; align-self: center; }
+.feature-card h3, .section .feature-card h2 { display: flex; align-items: center; gap: .45rem; font-size: 1.12rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; align-self: center; }
 .feature-arrow { color: var(--green-2); font-weight: 700; transition: transform .3s var(--ease); }
 .feature-card:hover .feature-arrow { transform: translateX(4px); }
 .feature-card p { margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.6; }
@@ -1503,3 +1503,10 @@ html:not(.js) .cal-hero, html:not(.js) .cal-toolbar, html:not(.js) .cal-list, ht
   .cal-row .cal-impact::before { width: 5px; height: 5px; }
   .cal-cd { font-size: .74rem; padding: .16rem .38rem; }
 }
+
+/* ---------- 404 ---------- */
+.feature-card h2 { color: inherit; }
+.nf-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: -.4rem 0 2rem; }
+.nf-links { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 980px) { .nf-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .nf-links { grid-template-columns: 1fr; } }
