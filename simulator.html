@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"></noscript>
-  <link rel="stylesheet" href="styles.css?v=44">
+  <link rel="stylesheet" href="styles.css?v=45">
   <link rel="icon" href="favicon.ico?v=15" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=15">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=15">
@@ -126,6 +126,42 @@
           </label>
           </div>
         </details>
+        <details class="sim-adv-setup sim-strat-setup" id="sim-strat-setup">
+          <summary>Strategie <small>opțional: nume, reguli, checklist, setup-uri</small></summary>
+          <div class="sim-setup-grid sim-strat-grid">
+          <label>Numele strategiei
+            <input type="text" id="sim-st-name" list="sim-st-names" maxlength="40" autocomplete="off" placeholder="ex. Pullback la EMA 50">
+          </label>
+          <datalist id="sim-st-names"></datalist>
+          <label>Setup-uri (separate prin virgulă)
+            <input type="text" id="sim-st-setups" maxlength="200" autocomplete="off" placeholder="ex. Pullback, Breakout, Pin bar">
+          </label>
+          <label class="sim-wide">Reguli
+            <textarea id="sim-st-rules" rows="3" maxlength="1500" placeholder="Când intri, unde pui SL și TP, când nu tranzacționezi"></textarea>
+          </label>
+          <label class="sim-wide">Checklist înainte de intrare <small>(câte un punct pe rând)</small>
+            <textarea id="sim-st-check" rows="3" maxlength="800" placeholder="Trend clar pe H4&#10;Retragere la zonă&#10;R:R minim 1:2"></textarea>
+          </label>
+          </div>
+          <p class="sim-hint">Numele strategiei grupează sesiunile în statisticile de mai jos, ca să compari strategiile între ele. În sesiune, fiecare tranzacție poate primi un setup și o notă.</p>
+        </details>
+        <details class="sim-adv-setup sim-ch-setup" id="sim-ch-setup">
+          <summary>Mod provocare <small>reguli de tip prop firm</small></summary>
+          <label class="sim-check"><input type="checkbox" id="sim-ch-on"> <span>Activează provocarea</span></label>
+          <div class="sim-setup-grid">
+          <label>Țintă de profit (%)
+            <input type="text" id="sim-ch-target" inputmode="decimal" value="8" autocomplete="off">
+          </label>
+          <label>Pierdere zilnică maximă (%)
+            <input type="text" id="sim-ch-daily" inputmode="decimal" value="5" autocomplete="off">
+          </label>
+          <label>Drawdown total maxim (%)
+            <input type="text" id="sim-ch-total" inputmode="decimal" value="10" autocomplete="off">
+          </label>
+          </div>
+          <p class="sim-hint">Ca la firmele de finanțare (prop firms): treci dacă equity-ul atinge ținta, pici dacă în cel mai rău punct al unei ore equity-ul coboară sub limita zilnică (calculată din soldul de la începutul zilei, 17:00 New York) sau sub limita totală (calculată din soldul inițial). Regulile reale diferă de la o firmă la alta; citește-le mereu înainte.</p>
+        </details>
+        <p class="sim-hint">Prima dată? Citește <a href="#sim-guide">Cum faci un backtest corect</a> (5 minute).</p>
         <p class="sim-hint" id="sim-mode-hint">Cu „Perioadă aleatorie” data rămâne ascunsă până la finalul sesiunii, ca să nu fii influențat de ce știi deja despre acea perioadă.</p>
         <p class="sim-error" id="sim-setup-err" role="alert" hidden></p>
         <div class="sim-actions">
@@ -211,6 +247,7 @@
           </div>
 
           <aside class="ws-panel" id="sim-panel" aria-label="Ordine, tranzacții și statistici" data-open="false">
+            <div class="ws-ch" id="sim-ch" hidden role="group" aria-label="Progresul provocării"></div>
             <div class="ws-tabs" role="tablist" aria-label="Panou">
               <button type="button" role="tab" id="sim-tab-order" aria-controls="sim-pane-order" aria-selected="true">Ordin</button>
               <button type="button" role="tab" id="sim-tab-trades" aria-controls="sim-pane-trades" aria-selected="false" tabindex="-1">Tranzacții <span class="ws-count" id="sim-tcount">0</span></button>
@@ -234,6 +271,20 @@
                       <input type="text" id="sim-tp" inputmode="decimal" autocomplete="off">
                     </label>
                   </div>
+                  <div class="sim-two ws-tagrow">
+                    <label><span>Setup</span>
+                      <input type="text" id="sim-setup-tag" list="sim-setup-list" maxlength="40" autocomplete="off" placeholder="opțional">
+                    </label>
+                    <label><span>Notă</span>
+                      <input type="text" id="sim-note" maxlength="140" autocomplete="off" placeholder="opțional">
+                    </label>
+                  </div>
+                  <datalist id="sim-setup-list"></datalist>
+                  <details class="ws-strat" id="sim-strat-box" hidden>
+                    <summary><span id="sim-strat-name">Strategie</span> <small id="sim-check-count"></small></summary>
+                    <p class="ws-strat-rules" id="sim-strat-rules"></p>
+                    <ul class="ws-checklist" id="sim-checklist"></ul>
+                  </details>
                   <details class="ws-adv" id="sim-adv">
                     <summary>Avansat <small>tip ordin, unitate, risc</small></summary>
                   <fieldset class="sim-seg sim-seg-3">
@@ -340,6 +391,7 @@
                   <h3>Curba equity</h3>
                   <div class="sim-eq-chart" id="sim-eq-chart" role="img" aria-label="Curba equity a sesiunii"></div>
                 </div>
+                <div class="st-detail" id="sim-detail"></div>
               </div>
             </div>
           </aside>
@@ -368,6 +420,7 @@
           </div>
           <p class="sim-reveal" id="sim-reveal"></p>
           <p class="ws-sum-reason" id="sim-sum-reason"></p>
+          <div class="ws-sum-ch" id="sim-sum-ch" hidden></div>
           <div class="sim-tiles ws-sum-tiles">
             <div class="sim-tile"><span>Tranzacții</span><strong id="sim-m-n">0</strong><small id="sim-m-wl"></small></div>
             <div class="sim-tile"><span>Rata de câștig</span><strong id="sim-m-wr">—</strong></div>
@@ -395,7 +448,36 @@
           <button type="button" class="sim-link-btn" id="sim-clear">Șterge istoricul</button>
         </div>
         <ul class="sim-history-list" id="sim-history-list"></ul>
+        <div class="sim-hstats" id="sim-hstats" hidden>
+          <h3>Statistici pe toate sesiunile</h3>
+          <div class="sim-hfilters">
+            <label>Strategie <select id="sim-hf-strat"></select></label>
+            <label>Instrument <select id="sim-hf-sym"></select></label>
+            <label>Setup <select id="sim-hf-setup"></select></label>
+            <button type="button" class="btn btn-ghost" id="sim-h-csv">Export CSV</button>
+          </div>
+          <p class="sim-msg" id="sim-h-msg" role="status" aria-live="polite"></p>
+          <div class="sim-tiles" id="sim-h-tiles"></div>
+          <h3>Compară strategiile</h3>
+          <p class="sim-hint">Rezultatele sunt în R, ca să poți compara sesiuni cu solduri sau monede diferite. Expectanța (R mediu pe tranzacție) e cel mai util indicator; ★ marchează cea mai mare.</p>
+          <div id="sim-h-compare"></div>
+          <h3>Detalii</h3>
+          <div class="st-detail" id="sim-h-detail"></div>
+        </div>
         <p class="sim-hint">Sesiunile se salvează doar în acest browser (localStorage). Nimic nu este trimis pe server.</p>
+      </section>
+
+      <!-- Ghid -->
+      <section class="sim-notes sim-guide" id="sim-guide" aria-labelledby="sim-guide-title">
+        <h2 id="sim-guide-title">Cum faci un backtest corect</h2>
+        <ol>
+          <li><strong>Scrie regulile înainte să pornești.</strong> Când intri, unde pui stop loss-ul și take profit-ul, ce risc folosești și când nu tranzacționezi. Completează câmpul „Strategie” și un checklist scurt; dacă nu poți scrie regula, nu o poți testa.</li>
+          <li><strong>Strânge minimum 30-50 de tranzacții</strong> cu aceleași reguli, de preferat în mai multe sesiuni și perioade (trend, range, volatilitate mare). Câteva tranzacții câștigătoare la rând nu dovedesc nimic.</li>
+          <li><strong>Fără lookahead.</strong> Folosește „Perioadă aleatorie”, ca data să rămână ascunsă, și nu derula înainte ca să „vezi ce urmează”. Decide doar cu ce e pe grafic la bara curentă; simulatorul nu te lasă să dai înapoi după intrare.</li>
+          <li><strong>Notează fiecare tranzacție.</strong> Pune setup-ul și o notă scurtă (de ce ai intrat), inclusiv la cele pierzătoare. Trimite apoi sesiunea în <a href="jurnal.html">jurnal</a>.</li>
+          <li><strong>Judecă după expectanță și drawdown, nu după rata de câștig.</strong> O strategie cu 40% câștigătoare poate fi profitabilă la 1:2. Compară strategiile în tabelul de mai sus și schimbă o singură regulă odată.</li>
+          <li><strong>Apoi pe demo.</strong> Un backtest bun e un punct de plecare: confirmă strategia câteva săptămâni pe un cont demo înainte de bani reali.</li>
+        </ol>
       </section>
 
       <!-- Cum funcționează -->
@@ -479,6 +561,7 @@
   <script src="vendor/lightweight-charts-5.2.1/lightweight-charts.standalone.production.js" defer></script>
   <script src="sim-engine.js?v=2" defer></script>
   <script src="sim-extra.js?v=1" defer></script>
-  <script src="sim.js?v=4" defer></script>
+  <script src="sim-stats.js?v=1" defer></script>
+  <script src="sim.js?v=5" defer></script>
 </body>
 </html>

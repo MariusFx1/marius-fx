@@ -11,7 +11,7 @@
 
   const $ = id => document.getElementById(id);
   const DATA = 'data/sim/';
-  const KEY_SESS = 'mariusfx-sim-sesiuni-v1', KEY_CUR = 'mariusfx-sim-curenta-v1', KEY_HELP = 'mariusfx-sim-ajutor-v1', KEY_J = 'mariusfx-jurnal-v1';
+  const KEY_STRAT = 'mariusfx-sim-strategii-v1', KEY_SESS = 'mariusfx-sim-sesiuni-v1', KEY_CUR = 'mariusfx-sim-curenta-v1', KEY_HELP = 'mariusfx-sim-ajutor-v1', KEY_J = 'mariusfx-jurnal-v1';
   const HISTORY = 150, MIN_FUTURE = 300, MAX_SAVED = 30;
   const SPEED_MS = { 1: 900, 2: 450, 5: 180, 10: 90 };
   // intervalul datelor vine din data/sim/index.json (se actualizează odată cu datele)
@@ -421,24 +421,46 @@
     const t = S.d.t[S.cur], id = ++S.seq;
     if (p.kind === 'market') {
       const P = E.openMarket({ sym: S.sym, side: p.side, bidClose: bid(), sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, time: t, idx: S.cur, type: 'piață' });
-      Object.assign(P, { id, n: id, lot0: P.lot, setup: currentSetup() });
+      Object.assign(P, { id, n: id, lot0: P.lot, setup: currentSetup(), note: currentNote() });
       S.positions.push(P); S.sel = id;
       addMarker(t, p.side, 'in');
       showMsg(`${tag(P)}${p.side === 'buy' ? 'Buy' : 'Sell'} ${nf(p.lot, 2)} loturi la ${fmtPrice(S.sym, P.entry)}. Risc: ${money(P.riskMoney, S.ccy)}.`);
     } else {
-      const O = { id, n: id, sym: S.sym, side: p.side, kind: p.kind, price: p.ref, sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, slPips: p.slPips, placedIdx: S.cur, placedT: t, setup: currentSetup() };
+      const O = { id, n: id, sym: S.sym, side: p.side, kind: p.kind, price: p.ref, sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, slPips: p.slPips, placedIdx: S.cur, placedT: t, setup: currentSetup(), note: currentNote() };
       S.orders.push(O); S.sel = id;
       showMsg(`Ordin ${p.side === 'buy' ? 'Buy' : 'Sell'} ${p.kind} plasat la ${fmtPrice(S.sym, p.ref)}. Se execută când prețul ajunge acolo.`);
     }
     S.touched = false;
+    $('sim-note').value = '';
+    document.querySelectorAll('#sim-checklist input').forEach(c => { c.checked = false; });
+    renderChecklistCount();
     afterChange();
     return true;
   }
   const currentSetup = () => { const el = $('sim-setup-tag'); return el ? el.value.trim().slice(0, 40) : ''; };
+  const currentNote = () => { const el = $('sim-note'); return el ? el.value.trim().slice(0, 140) : ''; };
+  /** Strategia sesiunii în panoul de ordin: reguli, checklist (se resetează după fiecare intrare), setup-uri sugerate. */
+  function renderStrategyBox() {
+    const st = S.strategy, box = $('sim-strat-box');
+    box.hidden = !st;
+    $('sim-setup-list').innerHTML = (st && st.setups || []).map(x => `<option value="${esc(x)}"></option>`).join('');
+    if (!st) return;
+    $('sim-strat-name').textContent = st.name;
+    $('sim-strat-rules').textContent = st.rules || '';
+    $('sim-strat-rules').hidden = !st.rules;
+    $('sim-checklist').innerHTML = (st.checklist || []).map((x, i) => `<li><label><input type="checkbox" data-ck="${i}"> <span>${esc(x)}</span></label></li>`).join('');
+    renderChecklistCount();
+  }
+  function renderChecklistCount() {
+    const all = document.querySelectorAll('#sim-checklist input'), on = document.querySelectorAll('#sim-checklist input:checked');
+    $('sim-check-count').textContent = all.length ? `checklist ${on.length}/${all.length}` : '';
+    $('sim-check-count').classList.toggle('is-done', all.length > 0 && on.length === all.length);
+  }
 
   // ---------- poziții deschise ----------
   const selItem = () => posById(S.sel) || ordById(S.sel) || S.positions[0] || S.orders[0] || null;
   function showPosErr(msg) { const e = $('sim-pos-err'); e.textContent = msg || ''; e.hidden = !msg; }
+  function plAt(P, bidPrice) { return (E.markPrice(P, bidPrice) - P.entry) * (P.side === 'buy' ? 1 : -1) / E.pipOf(S.sym) * P.pipVal * P.lot; }
   function openPL(P) { return E.round((E.markPrice(P, bid()) - P.entry) * (P.side === 'buy' ? 1 : -1) / E.pipOf(S.sym) * P.pipVal * P.lot, 2); }
   function renderPos() {
     const items = [...S.positions, ...S.orders];
@@ -601,7 +623,7 @@
       if (fill == null) continue;
       S.orders = S.orders.filter(o => o !== O);
       const P = E.makePosition({ sym: S.sym, side: O.side, sl: O.sl, tp: O.tp, lot: O.lot, pipVal: O.pipVal, time: S.d.t[i], idx: i, type: O.kind }, E.round(fill, E.INSTR[S.sym].dec + 1));
-      Object.assign(P, { id: O.id, n: O.n, lot0: P.lot, setup: O.setup || '' });
+      Object.assign(P, { id: O.id, n: O.n, lot0: P.lot, setup: O.setup || '', note: O.note || '' });
       S.positions.push(P); events++;
       addMarker(S.d.t[i], O.side, 'in');
       showMsg(`${tag(P)}Ordinul ${O.side === 'buy' ? 'Buy' : 'Sell'} ${O.kind} s-a executat la ${fmtPrice(S.sym, P.entry)}.`);
@@ -609,6 +631,16 @@
       if (x) closeFull(P, x, i);
     }
     if (window.SimExtra && SimExtra.onBar) SimExtra.onBar(i, b, balanceStart);
+    if (S.challenge && S.challenge.status === 'activ') {
+      // cel mai rău punct al barei pentru pozițiile rămase deschise (Buy la minim, Sell la maxim + spread)
+      const worst = S.balance + S.positions.reduce((s, P) => s + plAt(P, P.side === 'buy' ? b.l : b.h), 0);
+      E.challengeStep(S.challenge, { dayKey: E.bucketStart(S.d.t[i], 'D1'), balanceStart, worst, equity: S.balance + openTotal() });
+      if (S.challenge.status !== 'activ') {
+        E.appendBar(S.view, S.d, i, S.tf); series.update(lastBar());
+        endSession(challengeText(S.challenge).title + '.');
+        return false;
+      }
+    }
     // graficul: actualizează bara în formare sau adaugă una nouă
     E.appendBar(S.view, S.d, i, S.tf);
     series.update(lastBar());
@@ -673,6 +705,25 @@
     $('sim-ask').textContent = nf(ask(), E.INSTR[S.sym].dec);
     $('sim-spread').textContent = nf(E.INSTR[S.sym].spread, 1);
     if (!legendHover) legend(null);
+    renderChallenge();
+  }
+  function challengeText(ch) {
+    const lim = { tinta: `ai atins ținta de profit de ${nf(ch.targetPct, 0, 2)}%`, zilnic: `equity-ul a coborât sub limita de pierdere zilnică (${nf(ch.dailyPct, 0, 2)}% din soldul inițial)`, total: `equity-ul a coborât sub limita de drawdown total (${nf(ch.totalPct, 0, 2)}% din soldul inițial)` };
+    if (ch.status === 'trecut') return { title: 'Provocare trecută', tone: 'good', text: 'Felicitări: ' + lim.tinta + ' fără să încalci limitele de pierdere.' };
+    if (ch.status === 'picat') return { title: 'Provocare picată', tone: 'bad', text: 'Regula încălcată: ' + lim[ch.reason] + '. Pozițiile au fost închise automat.' };
+    return { title: 'Provocare neterminată', tone: '', text: `Sesiunea s-a încheiat înainte de ținta de ${nf(ch.targetPct, 0, 2)}%, fără să încalci limitele.` };
+  }
+  function renderChallenge() {
+    const box = $('sim-ch'), ch = S && S.challenge;
+    box.hidden = !ch; $('sim-panel').classList.toggle('has-ch', !!ch);
+    if (!ch) return;
+    const eq = S.balance + openTotal(), pr = E.challengeProgress(ch, eq), ccy = S.ccy;
+    const bar = (lab, v, val, kind, title) => `<div class="ws-ch-row ${kind}" title="${esc(title)}"><span>${lab}</span><i role="progressbar" aria-label="${esc(lab)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(v * 100)}"><b style="width:${(v * 100).toFixed(1)}%"></b></i><em>${val}</em></div>`;
+    const st = ch.status === 'activ' ? '' : `<p class="ws-ch-st ${ch.status === 'trecut' ? 'pos' : 'neg'}">${challengeText(ch).title}</p>`;
+    box.innerHTML = st +
+      bar('Profit', pr.profit, `${nf(Math.max(0, (eq - ch.start) / ch.start * 100), 1, 1)}% / ${nf(ch.targetPct, 0, 2)}%`, 'ok', 'Ținta: equity ' + money(pr.target, ccy)) +
+      bar('Azi', pr.daily, `${nf(pr.daily * ch.dailyPct, 1, 1)}% / ${nf(ch.dailyPct, 0, 2)}%`, pr.daily > 0.7 ? 'warn' : 'risk', 'Limita zilnică: equity ' + money(pr.dailyLimit, ccy)) +
+      bar('Total', pr.total, `${nf(pr.total * ch.totalPct, 1, 1)}% / ${nf(ch.totalPct, 0, 2)}%`, pr.total > 0.7 ? 'warn' : 'risk', 'Limita totală: equity ' + money(pr.totalLimit, ccy));
   }
   function afterChange() {
     if (!S) return;
@@ -695,7 +746,7 @@
     const tb = $('sim-trades').tBodies[0];
     const held = t => { const h = Math.max(1, Math.round((t.exitT - t.entryT) / 3600)); return h < 48 ? h + ' h' : nf(h / 24, 0, 1) + ' zile'; };
     tb.innerHTML = S.trades.map(t => `<tr>
-      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}${t.setup ? '<br><small class="sim-tag">' + esc(t.setup) + '</small>' : ''}</td>
+      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}${t.setup ? '<br><small class="sim-tag">' + esc(t.setup) + '</small>' : ''}${t.note ? '<br><small class="sim-note" title="' + esc(t.note) + '">' + esc(t.note) + '</small>' : ''}</td>
       <td>${S.hidden ? '<small>dată ascunsă</small>' : '<small>' + esc(fmtTime(t.entryT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.entry)}</td>
       <td>${S.hidden ? '<small>după ' + held(t) + '</small>' : '<small>' + esc(fmtTime(t.exitT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.exit)}</td>
       <td>${REASON[t.reason]}${t.parts > 1 ? ' <small>(' + t.parts + ' părți)</small>' : ''}${t.both ? ' <small>(SL și TP în aceeași bară)</small>' : ''}</td>
@@ -704,6 +755,7 @@
     $('sim-trades-empty').hidden = S.trades.length > 0;
     $('sim-tcount').textContent = String(S.trades.length);
     if (!$('sim-stats').hidden) drawEquity(st.curve);
+    if (window.SimStats) $('sim-detail').innerHTML = SimStats.detailHTML(S.trades.map(t => Object.assign({ sym: S.sym }, t)), { ccy, bal0: S.bal0 });
     if (window.SimExtra && SimExtra.onStats) SimExtra.onStats();
     return st;
   }
@@ -756,7 +808,32 @@
     const bal = numBal($('sim-bal').value), risk = num($('sim-risk').value);
     if (!(bal >= 100) || bal > 10000000) return { err: 'Soldul virtual trebuie să fie un număr între 100 și 10.000.000.' };
     if (!(risk > 0) || risk > 10) return { err: 'Riscul pe tranzacție trebuie să fie între 0 și 10% (de exemplu 1 sau 0,5).' };
-    return { sym, tf, mode, bal, risk, ccy: $('sim-ccy').value, date: $('sim-date').value };
+    let challenge = null;
+    if ($('sim-ch-on').checked) {
+      const tg = num($('sim-ch-target').value), dl = num($('sim-ch-daily').value), tt = num($('sim-ch-total').value);
+      if (!(tg >= 1 && tg <= 100)) return { err: 'Ținta de profit a provocării trebuie să fie între 1% și 100%.' };
+      if (!(dl >= 0.5 && dl <= 50) || !(tt >= 1 && tt <= 90)) return { err: 'Limitele provocării: pierdere zilnică între 0,5% și 50%, drawdown total între 1% și 90%.' };
+      if (dl > tt) return { err: 'Pierderea zilnică maximă nu poate fi mai mare decât drawdown-ul total maxim.' };
+      challenge = { targetPct: tg, dailyPct: dl, totalPct: tt };
+    }
+    return { sym, tf, mode, bal, risk, ccy: $('sim-ccy').value, date: $('sim-date').value, strategy: readStrategy(), challenge };
+  }
+  function readStrategy() {
+    const name = $('sim-st-name').value.trim().slice(0, 40), rules = $('sim-st-rules').value.trim().slice(0, 1500);
+    const lines = v => v.split(/\n/).map(x => x.trim()).filter(Boolean);
+    const checklist = lines($('sim-st-check').value).slice(0, 12).map(x => x.slice(0, 80));
+    const setups = [...new Set($('sim-st-setups').value.split(/[,;\n]/).map(x => x.trim().slice(0, 40)).filter(Boolean))].slice(0, 12);
+    if (!name && !rules && !checklist.length && !setups.length) return null;
+    const all = store.get(KEY_STRAT, {});
+    // doar numele unei strategii salvate: folosește regulile ei (nu le șterge)
+    if (name && !rules && !checklist.length && !setups.length && all[name]) return all[name];
+    const st = { name: name || 'Strategia mea', rules, checklist, setups };
+    all[st.name] = st; store.set(KEY_STRAT, all);
+    return st;
+  }
+  function fillStrategyNames() {
+    const all = store.get(KEY_STRAT, {});
+    $('sim-st-names').innerHTML = Object.keys(all).map(n => `<option value="${esc(n)}"></option>`).join('');
   }
   const spanSec = (tf, bars) => bars * E.TF_SEC[tf] * 1.45;   // ~1,45: weekenduri și sărbători
   const future = tf => (tf === 'D1' ? 150 : MIN_FUTURE);
@@ -795,7 +872,7 @@
         const { lo, hi } = { lo: DATA_START + spanSec(cfg.tf, HISTORY), hi: DATA_END - spanSec(cfg.tf, future(cfg.tf)) };
         for (let k = 0; k < 500; k++) { const c = lo + Math.random() * (hi - lo); if (validStart(cfg.sym, cfg.tf, c).ok) { T = c; break; } }
       }
-      await begin({ id: uid(), sym: cfg.sym, tf: cfg.tf, ccy: cfg.ccy, bal0: cfg.bal, riskPct: cfg.risk, mode: cfg.mode, hidden: cfg.mode === 'random', startT: T });
+      await begin({ id: uid(), sym: cfg.sym, tf: cfg.tf, ccy: cfg.ccy, bal0: cfg.bal, riskPct: cfg.risk, mode: cfg.mode, hidden: cfg.mode === 'random', startT: T, strategy: cfg.strategy, challenge: cfg.challenge ? E.challengeInit(Object.assign({ start: cfg.bal }, cfg.challenge)) : null });
     } catch (err) {
       setupError(err.message && !/^\d{3} /.test(err.message) && !/fetch|network/i.test(err.message) ? err.message : 'Nu am putut încărca datele. Verifică conexiunea și încearcă din nou.');
     } finally { btn.disabled = false; btn.textContent = 'Pornește sesiunea'; }
@@ -819,8 +896,11 @@
       d, years: years.slice(), rates, cur, startIdx, stopT, view: null,
       balance: snap ? snap.balance : cfg.bal0, positions: snap ? snap.positions : [], orders: snap ? snap.orders : [], seq: snap ? snap.seq || 0 : 0, sel: snap ? snap.sel : null,
       trades: snap ? snap.trades : [], markers: snap ? snap.markers : [], barsPlayed: snap ? snap.barsPlayed : 0, ended: false, touched: false, showPreview: true,
-      strategy: snap ? snap.strategy || cfg.strategy || null : cfg.strategy || null
+      strategy: snap ? snap.strategy || cfg.strategy || null : cfg.strategy || null,
+      challenge: snap ? snap.challenge || null : cfg.challenge || null
     });
+    $('sim-note').value = ''; $('sim-setup-tag').value = '';
+    renderStrategyBox();
     // compatibilitate (teste, cod vechi): prima poziție și primul ordin
     Object.defineProperties(S, { pos: { get() { return this.positions[0] || null; } }, pending: { get() { return this.orders[0] || null; } } });
     document.querySelectorAll('.ws-tf button').forEach(b => b.setAttribute('aria-pressed', b.dataset.tf === tf ? 'true' : 'false'));
@@ -853,7 +933,7 @@
     if (!S || S.ended) return;
     setPlaying(false);
     S.orders = [];
-    for (const P of [...S.positions]) closeFull(P, { price: E.markPrice(P, bid()), reason: 'Final', both: false, gap: false }, S.cur);
+    for (const P of [...S.positions]) closeFull(P, { price: E.markPrice(P, bid()), reason: S.challenge && S.challenge.status !== 'activ' ? 'Provocare' : 'Final', both: false, gap: false }, S.cur);
     S.ended = true; S.hidden = false;
     timeLabels(false);
     { const n = S.view.time.length; let k = 0; while (k < n - 1 && S.view.time[k + 1] <= E.bucketStart(S.d.t[S.startIdx], S.tf)) k++; chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, k - 30), to: n + 3 }); }
@@ -873,6 +953,9 @@
     g('sim-m-n', String(st0.n)); g('sim-m-wl', $('sim-s-wl').textContent); g('sim-m-wr', $('sim-s-wr').textContent); g('sim-m-tr', $('sim-s-tr').textContent);
     g('sim-m-pf', $('sim-s-pf').textContent); g('sim-m-dd', $('sim-s-dd').textContent); g('sim-m-net', $('sim-s-net').textContent); g('sim-m-bal', $('sim-s-bal').textContent);
     $('sim-m-tr').className = $('sim-s-tr').className; $('sim-m-net').className = $('sim-s-net').className;
+    { const box = $('sim-sum-ch'), ch = S.challenge; box.hidden = !ch;
+      if (ch) { const x = challengeText(ch); box.dataset.tone = x.tone;
+        box.innerHTML = `<strong>${x.title}</strong><p>${esc(x.text)}</p><p class="sim-hint">Cea mai mare pierdere într-o zi: ${money(ch.maxDayLoss, S.ccy)} (limita ${money(ch.start * ch.dailyPct / 100, S.ccy)}); cel mai adânc drawdown față de soldul inițial: ${money(Math.max(0, ch.maxTotalDD), S.ccy)} (limita ${money(ch.start * ch.totalPct / 100, S.ccy)}).</p><p class="sim-hint">De reținut: în provocări nu pici din cauza unei strategii slabe, ci aproape mereu din cauza riscului prea mare. Cu 1% pe tranzacție ai nevoie de 5 pierderi la rând ca să atingi limita zilnică de 5%; cu 2,5% ajung 2.</p>`; } }
     openSummary();
     // salvează în istoric
     const st = E.stats(S.trades, S.bal0);
@@ -989,13 +1072,15 @@
     $('sim-history').hidden = !list.length;
     $('sim-history-list').innerHTML = list.map(s => `<li><strong>${esc(s.sym)} ${esc(s.tf)}</strong> <span>${esc(fmtTime(s.from, s.tf === 'D1' ? 'D1' : 'D1'))} - ${esc(fmtTime(s.to, 'D1'))}</span>
       <span>${s.n} ${s.n === 1 ? 'tranzacție' : 'tranzacții'}</span><span>${s.n ? pct(s.winRate, 0) + ' câștigătoare' : ''}</span>
-      <span class="${s.totalR > 0 ? 'pos' : s.totalR < 0 ? 'neg' : ''}">${s.n ? fmtR(s.totalR) : ''}</span><span class="${s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : ''}">${s.n ? money(s.net, s.ccy, true) : ''}</span></li>`).join('');
+      <span class="${s.totalR > 0 ? 'pos' : s.totalR < 0 ? 'neg' : ''}">${s.n ? fmtR(s.totalR) : ''}</span><span class="${s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : ''}">${s.n ? money(s.net, s.ccy, true) : ''}</span>${s.strategy ? `<span class="sim-badge">${esc(s.strategy.name)}</span>` : ''}${s.challenge ? `<span class="sim-badge ${s.challenge.status === 'trecut' ? 'pos' : s.challenge.status === 'picat' ? 'neg' : ''}">${s.challenge.status === 'trecut' ? 'Provocare trecută' : s.challenge.status === 'picat' ? 'Provocare picată' : 'Provocare neterminată'}</span>` : ''}</li>`).join('');
+    if (window.SimStats) SimStats.renderHistoryStats(list);
+    fillStrategyNames();
   }
   function csv() {
     const ccy = S.ccy, dec = E.INSTR[S.sym].dec;
     const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', ','));
-    const head = ['Nr', 'Instrument', 'Interval', 'Direcție', 'Tip', 'Data intrare', 'Preț intrare', 'SL inițial', 'TP inițial', 'Lot', 'Risc (' + ccy + ')', 'Data ieșire', 'Preț ieșire', 'Motiv', 'Pips', 'R', 'Profit (' + ccy + ')'];
-    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', t.type, fmtTime(t.entryT, 'H1'), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, 'H1'), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2)]);
+    const head = ['Nr', 'Instrument', 'Interval', 'Direcție', 'Tip', 'Data intrare', 'Preț intrare', 'SL inițial', 'TP inițial', 'Lot', 'Risc (' + ccy + ')', 'Data ieșire', 'Preț ieșire', 'Motiv', 'Pips', 'R', 'Profit (' + ccy + ')', 'Setup', 'Notă', 'Strategie'];
+    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', t.type, fmtTime(t.entryT, 'H1'), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, 'H1'), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2), t.setup || '', t.note || '', (S.strategy && S.strategy.name) || '']);
     const body = [head, ...rows].map(r => r.map(v => { const s = String(v); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(';')).join('\r\n');
     const blob = new Blob(['\ufeff' + body + '\r\n'], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
@@ -1005,7 +1090,7 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     $('sim-stats-msg').textContent = 'Fișierul CSV a fost descărcat (' + S.trades.length + ' tranzacții, separator punct și virgulă).';
   }
-  const JR = { TP: 'TP', SL: 'SL', BE: 'BE', Manual: 'Manual', Final: 'Manual' };
+  const JR = { TP: 'TP', SL: 'SL', BE: 'BE', Manual: 'Manual', Final: 'Manual', 'Parțial': 'Manual', Provocare: 'Manual' };
   function toJournal() {
     if (!S || !S.ended) return;
     let list;
@@ -1088,7 +1173,15 @@
   $('sim-csv').addEventListener('click', csv);
   $('sim-journal').addEventListener('click', toJournal);
   $('sim-new').addEventListener('click', newSession);
-  $('sim-clear').addEventListener('click', () => { store.del(KEY_SESS); renderHistory(); });
+  $('sim-clear').addEventListener('click', () => { if (confirm('Ștergi toate sesiunile salvate și statisticile lor?')) { store.del(KEY_SESS); renderHistory(); } });
+  if (window.SimStats) SimStats.wireHistory(() => store.get(KEY_SESS, []));
+  $('sim-checklist').addEventListener('change', renderChecklistCount);
+  // alegerea unei strategii salvate completează câmpurile
+  $('sim-st-name').addEventListener('change', () => {
+    const st = store.get(KEY_STRAT, {})[$('sim-st-name').value.trim()];
+    if (!st) return;
+    $('sim-st-rules').value = st.rules || ''; $('sim-st-check').value = (st.checklist || []).join('\n'); $('sim-st-setups').value = (st.setups || []).join(', ');
+  });
   document.addEventListener('keydown', e => {
     if (!S || S.ended || $('sim-session').hidden || e.altKey || e.ctrlKey || e.metaKey) return;
     if (/^(INPUT|SELECT|TEXTAREA)$/.test((e.target.tagName || '')) || e.target.isContentEditable || $('sim-help').open || $('sim-summary').open) return;
@@ -1110,6 +1203,8 @@
   help.addEventListener('close', () => store.set(KEY_HELP, 1));
   help.addEventListener('click', e => { if (e.target === help) help.close(); });
   bindDrag();
+  // legenda indicatorilor stă mereu sub legenda OHLC (care se poate rupe pe două rânduri pe ecrane înguste)
+  if (window.ResizeObserver) new ResizeObserver(() => { const l = $('sim-legend'); if (l.offsetHeight) $('sim-ind-legend').style.top = (l.offsetTop + l.offsetHeight + 4) + 'px'; }).observe($('sim-legend'));
   document.body.appendChild(ws); document.body.appendChild(help);
   if (location.hash === '#sesiune') history.replaceState(null, '', location.pathname + location.search);
 
