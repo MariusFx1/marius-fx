@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador de backtesting Forex gratis | Marius FX</title>
+  <meta name="description" content="Simulador de backtesting Forex gratis: practica con gráficos históricos reales, barra por barra, con stop loss, take profit, lote calculado y estadísticas en R.">
+  <link rel="canonical" href="https://mariusfx1.github.io/marius-fx/es/simulator.html">
+<!-- i18n:alt -->
+  <link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/simulator.html">
+  <link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/simulator.html">
+  <link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/simulator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html">
+  <!-- /i18n:alt -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Marius FX">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Simulador de backtesting Forex gratis | Marius FX">
+  <meta property="og:description" content="Simulador de backtesting Forex gratis: practica con gráficos históricos reales, barra por barra, con stop loss, take profit, lote calculado y estadísticas en R.">
+  <meta property="og:url" content="https://mariusfx1.github.io/marius-fx/es/simulator.html">
+  <meta property="og:image" content="https://mariusfx1.github.io/marius-fx/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Marius FX: Educación · Disciplina · Gestión del riesgo">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simulador de backtesting Forex gratis | Marius FX">
+  <meta name="twitter:description" content="Simulador de backtesting Forex gratis: practica con gráficos históricos reales, barra por barra, con stop loss, take profit, lote calculado y estadísticas en R.">
+  <meta name="twitter:image" content="https://mariusfx1.github.io/marius-fx/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"></noscript>
+  <link rel="stylesheet" href="../styles.css?v=46">
+  <link rel="icon" href="../favicon.ico?v=15" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png?v=15">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png?v=15">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=15">
+  <link rel="manifest" href="../site.webmanifest?v=15">
+  <meta name="theme-color" content="#070b14">
+  <noscript><style>.sim-setup { display: none; }</style></noscript>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mariusfx1.github.io/marius-fx/es/#website",
+      "url": "https://mariusfx1.github.io/marius-fx/es/",
+      "name": "Marius FX",
+      "inLanguage": "es",
+      "description": "Educación Forex gratuita para principiantes: un curso paso a paso, gestión del riesgo, calculadora de lotaje, sesiones en vivo y calendario económico. Sin señales.",
+      "publisher": {
+        "@id": "https://mariusfx1.github.io/marius-fx/es/#org"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://mariusfx1.github.io/marius-fx/es/#org",
+      "name": "Marius FX",
+      "url": "https://mariusfx1.github.io/marius-fx/es/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mariusfx1.github.io/marius-fx/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://mariusfx1.github.io/marius-fx/og-image.png",
+      "email": "contact.mariusfx@gmail.com",
+      "founder": {
+        "@type": "Person",
+        "name": "Marius"
+      },
+      "sameAs": [
+        "https://t.me/FreeMariusFx"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mariusfx1.github.io/marius-fx/es/simulator.html#webpage",
+      "url": "https://mariusfx1.github.io/marius-fx/es/simulator.html",
+      "name": "Simulador de backtesting Forex gratis | Marius FX",
+      "description": "Simulador de backtesting Forex gratis: practica con gráficos históricos reales, barra por barra, con stop loss, take profit, lote calculado y estadísticas en R.",
+      "inLanguage": "es",
+      "isPartOf": {
+        "@id": "https://mariusfx1.github.io/marius-fx/es/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://mariusfx1.github.io/marius-fx/es/simulator.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://mariusfx1.github.io/marius-fx/es/simulator.html#app"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://mariusfx1.github.io/marius-fx/es/simulator.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://mariusfx1.github.io/marius-fx/es/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Simulador de backtesting",
+          "item": "https://mariusfx1.github.io/marius-fx/es/simulator.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://mariusfx1.github.io/marius-fx/es/simulator.html#app",
+      "name": "Simulador de backtesting Forex",
+      "url": "https://mariusfx1.github.io/marius-fx/es/simulator.html",
+      "description": "Simulador de backtesting Forex gratis: practica con gráficos históricos reales, barra por barra, con stop loss, take profit, lote calculado y estadísticas en R.",
+      "inLanguage": "es",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Orice browser modern",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "EUR"
+      },
+      "provider": {
+        "@id": "https://mariusfx1.github.io/marius-fx/es/#org"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body class="page-inner">
+  <a class="skip-link" href="#continut">Saltar al contenido</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navegación principal">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="lectie.html">Principiantes</a></li>
+        <li><a href="test.html">Test</a></li>
+        <li><a href="reguli.html">Reglas</a></li>
+        <li><a href="patternuri.html">Patrones</a></li>
+        <li><a href="sesiuni.html">Sesiones</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="jurnal.html">Diario</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="simulator.html" aria-current="page">Simulator</a></li>
+        <li><a href="despre.html">Sobre mí</a></li>
+        <li><a href="broker.html">Broker</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <!-- i18n:switch --><div class="lang-switch" translate="no"><button type="button" class="lang-btn" aria-expanded="false" aria-controls="lang-menu" aria-label="Idioma: Español. Elige el idioma" title="Elige el idioma"><img src="../images/flags/es.svg" alt="" width="20" height="15"><span>ES</span><svg class="lang-chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><ul class="lang-menu" id="lang-menu" hidden><li><a href="../simulator.html" hreflang="ro" lang="ro"><img src="../images/flags/ro.svg" alt="" width="20" height="15"><b>RO</b><span>Română</span></a></li><li><a href="../en/simulator.html" hreflang="en" lang="en"><img src="../images/flags/gb.svg" alt="" width="20" height="15"><b>EN</b><span>English</span></a></li><li><a href="simulator.html" hreflang="es" lang="es" aria-current="true"><img src="../images/flags/es.svg" alt="" width="20" height="15"><b>ES</b><span>Español</span></a></li></ul></div><!-- /i18n:switch -->
+    </nav>
+  </header>
+
+  <main id="continut">
+    <!-- ===== SIMULATOR DE BACKTESTING ===== -->
+    <section class="section container sim-page" aria-labelledby="sim-title">
+      <header class="section-head">
+        <p class="kicker">Backtesting con datos históricos reales</p>
+        <h1 id="sim-title">Simulador de backtesting Forex</h1>
+        <p class="section-sub">Practica con gráficos reales desde 2019, barra por barra, sin saber qué viene después. Colocas un Buy o un Sell con stop loss y take profit, y el simulador lleva la cuenta: lote, riesgo, R, estadísticas y curva de capital. Todo funciona en tu navegador, con dinero virtual.</p>
+      </header>
+      <noscript><p class="sim-nojs">Simulatorul are nevoie de JavaScript activat. Până atunci, poți exersa calculul riscului în <a href="calculator.html">calculatorul de lot</a>.</p></noscript>
+
+      <!-- Setări sesiune -->
+      <form class="sim-card sim-setup" id="sim-setup" novalidate>
+        <div class="sim-card-head">
+          <h2>Inicia una sesión</h2>
+          <button type="button" class="sim-link-btn" id="sim-help-open">Cómo usar el simulador</button>
+        </div>
+        <div class="sim-setup-grid">
+          <label>Instrumento
+            <select id="sim-sym" name="sym">
+              <option value="EURUSD">EUR/USD</option>
+              <option value="GBPUSD">GBP/USD</option>
+              <option value="USDJPY">USD/JPY</option>
+              <option value="XAUUSD">XAU/USD (oro)</option>
+              <option value="AUDUSD">AUD/USD</option>
+              <option value="GBPJPY">GBP/JPY</option>
+            </select>
+          </label>
+          <fieldset class="sim-seg">
+            <legend>Temporalidad</legend>
+            <div class="sim-seg-opts">
+              <label><input type="radio" name="sim-tf" value="H1" checked><span>H1</span></label>
+              <label><input type="radio" name="sim-tf" value="H4"><span>H4</span></label>
+              <label><input type="radio" name="sim-tf" value="D1"><span>D1</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="sim-seg sim-seg-wide">
+            <legend>Período</legend>
+            <div class="sim-seg-opts">
+              <label><input type="radio" name="sim-mode" value="random" checked><span>Período aleatorio</span></label>
+              <label><input type="radio" name="sim-mode" value="date"><span>Elegir la fecha</span></label>
+            </div>
+          </fieldset>
+          <label id="sim-date-wrap" hidden>Fecha de inicio
+            <input type="date" id="sim-date" name="date" min="2019-09-01" max="2026-06-30">
+          </label>
+        </div>
+        <details class="sim-adv-setup">
+          <summary>Avanzado <small>moneda, saldo, riesgo (por defecto 10.000 €, 1%)</small></summary>
+          <div class="sim-setup-grid">
+          <label>Moneda de la cuenta
+            <select id="sim-ccy" name="ccy">
+              <option value="EUR">EUR (€)</option>
+              <option value="USD">USD ($)</option>
+              <option value="GBP">GBP (£)</option>
+            </select>
+          </label>
+          <label>Saldo virtual
+            <input type="text" id="sim-bal" name="bal" inputmode="decimal" value="10000" autocomplete="off">
+          </label>
+          <label>Riesgo por operación (%)
+            <input type="text" id="sim-risk" name="risk" inputmode="decimal" value="1" autocomplete="off">
+          </label>
+          </div>
+        </details>
+        <details class="sim-adv-setup sim-strat-setup" id="sim-strat-setup">
+          <summary>Estrategia <small>opcional: nombre, reglas, checklist, setups</small></summary>
+          <div class="sim-setup-grid sim-strat-grid">
+          <label>Nombre de la estrategia
+            <input type="text" id="sim-st-name" list="sim-st-names" maxlength="40" autocomplete="off" placeholder="p. ej. Pullback a la EMA 50">
+          </label>
+          <datalist id="sim-st-names"></datalist>
+          <label>Setups (separados por comas)
+            <input type="text" id="sim-st-setups" maxlength="200" autocomplete="off" placeholder="p. ej. Pullback, Breakout, Pin bar">
+          </label>
+          <label class="sim-wide">Reglas
+            <textarea id="sim-st-rules" rows="3" maxlength="1500" placeholder="Când intri, unde pui SL și TP, când nu tranzacționezi"></textarea>
+          </label>
+          <label class="sim-wide">Checklist antes de entrar <small>(un punto por línea)</small>
+            <textarea id="sim-st-check" rows="3" maxlength="800" placeholder="Trend clar pe H4&#10;Retragere la zonă&#10;R:R minim 1:2"></textarea>
+          </label>
+          </div>
+          <p class="sim-hint">El nombre de la estrategia agrupa las sesiones en las estadísticas de abajo, para que puedas comparar estrategias entre sí. En la sesión, cada operación puede llevar un setup y una nota.</p>
+        </details>
+        <details class="sim-adv-setup sim-ch-setup" id="sim-ch-setup">
+          <summary>Modo desafío <small>reglas tipo prop firm</small></summary>
+          <label class="sim-check"><input type="checkbox" id="sim-ch-on"> <span>Activar el desafío</span></label>
+          <div class="sim-setup-grid">
+          <label>Objetivo de ganancia (%)
+            <input type="text" id="sim-ch-target" inputmode="decimal" value="8" autocomplete="off">
+          </label>
+          <label>Pérdida diaria máxima (%)
+            <input type="text" id="sim-ch-daily" inputmode="decimal" value="5" autocomplete="off">
+          </label>
+          <label>Drawdown total máximo (%)
+            <input type="text" id="sim-ch-total" inputmode="decimal" value="10" autocomplete="off">
+          </label>
+          </div>
+          <p class="sim-hint">Como en las empresas de fondeo (prop firms): superas el desafío si el capital alcanza el objetivo, y no lo superas si en el peor punto de cualquier hora el capital cae por debajo del límite diario (calculado sobre el saldo al inicio del día, 17:00 Nueva York) o del límite total (calculado sobre el saldo inicial). Las reglas reales cambian de una empresa a otra; léelas siempre antes.</p>
+        </details>
+        <p class="sim-hint">¿Primera vez? Lee <a href="#sim-guide">Cómo hacer un backtest correcto</a> (5 minutos).</p>
+        <p class="sim-hint" id="sim-mode-hint">Con "Período aleatorio" la fecha queda oculta hasta el final de la sesión, para que no te influya lo que ya sabes de ese período.</p>
+        <p class="sim-error" id="sim-setup-err" role="alert" hidden></p>
+        <div class="sim-actions">
+          <button type="submit" class="btn btn-primary btn-lg" id="sim-start">Iniciar la sesión</button>
+          <button type="button" class="btn btn-ghost" id="sim-resume" hidden>Continuar la sesión guardada</button>
+        </div>
+      </form>
+
+      <!-- Sesiunea în desfășurare -->
+      <section class="sim-ws" id="sim-session" hidden aria-label="Espacio de trabajo de backtesting">
+        <header class="ws-bar">
+          <div class="ws-group ws-id">
+            <button type="button" class="ws-btn ws-icon" id="sim-back" aria-label="Volver a los ajustes" title="Volver a los ajustes">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <span class="ws-logo logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>
+            <p class="ws-sym"><strong id="sim-label">EURUSD · H1</strong> <span id="sim-when">Fecha oculta</span></p>
+            <div class="ws-tf" role="group" aria-label="Temporalidad mostrada">
+              <button type="button" data-tf="H1" aria-pressed="true" title="1 hora">H1</button>
+              <button type="button" data-tf="H4" aria-pressed="false" title="4 horas">H4</button>
+              <button type="button" data-tf="D1" aria-pressed="false" title="1 día">D1</button>
+            </div>
+            <button type="button" class="ws-btn ws-ind-btn" id="sim-ind-open" aria-haspopup="dialog" title="Indicadores: medias móviles, Bollinger, RSI, MACD, ATR">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 4-7 5 5"/><path d="M3 21h18"/></svg><span class="ws-txt">Indicadores</span></button>
+          </div>
+          <div class="ws-group ws-replay" role="toolbar" aria-label="Controles de reproducción">
+            <button type="button" class="ws-btn ws-icon" id="sim-first" disabled aria-label="Retroceder en el tiempo (no se puede)" title="No puedes volver atrás: como en el mercado, solo ves el pasado">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M18 6l-8 6 8 6z"/></svg></button>
+            <button type="button" class="ws-btn ws-icon ws-play" id="sim-play" aria-pressed="false" aria-keyshortcuts="Space" title="Reproducir / pausa (Espacio)">
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><span class="sr-only" id="sim-play-lbl">Reproducir</span></button>
+            <button type="button" class="ws-btn ws-step" id="sim-next" aria-keyshortcuts="ArrowRight" title="Barra siguiente (→)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6l8 6-8 6zM16 5v14"/></svg><span class="ws-txt">Barra siguiente</span></button>
+            <button type="button" class="ws-btn" id="sim-next10" title="Avanzar 10 barras">+10</button>
+            <label class="ws-speed"><span class="sr-only">Velocidad de reproducción</span>
+              <select id="sim-speed">
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="5">5x</option>
+                <option value="10">10x</option>
+              </select>
+            </label>
+            <button type="button" class="ws-btn ws-ind-btn ws-ind-btn2" aria-haspopup="dialog" aria-label="Indicadores" title="Indicadores">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 4-7 5 5"/><path d="M3 21h18"/></svg></button>
+          </div>
+          <dl class="ws-group ws-acct">
+            <div><dt>Saldo</dt><dd id="sim-balance">—</dd></div>
+            <div><dt>Capital</dt><dd id="sim-equity">—</dd></div>
+            <div><dt>P/L</dt><dd id="sim-openpl">—</dd></div>
+            <div class="ws-bars"><dt>Barras</dt><dd id="sim-bars">0</dd></div>
+          </dl>
+          <div class="ws-group ws-end">
+            <button type="button" class="ws-btn ws-icon" id="sim-help-ws" aria-label="Cómo usar el simulador" title="Ayuda">?</button>
+            <button type="button" class="ws-btn ws-icon" id="sim-fs" aria-pressed="false" aria-label="Pantalla completa" title="Pantalla completa" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+            <button type="button" class="ws-btn ws-finish" id="sim-end">Terminar</button>
+          </div>
+        </header>
+
+        <div class="ws-body">
+          <div class="ws-chart-wrap">
+            <div class="sim-chart" id="sim-chart" role="img" aria-label="Gráfico de velas de la sesión actual. Avanza con la flecha derecha o con los botones de reproducción."></div>
+            <div class="ws-legend" id="sim-legend" aria-hidden="true"></div>
+            <div class="ws-ind-legend" id="sim-ind-legend" aria-label="Indicadores activos"></div>
+            <div class="ws-draw" id="sim-draw" data-open="false">
+              <button type="button" class="ws-dt ws-draw-toggle" id="sim-draw-toggle" aria-expanded="false" aria-controls="sim-draw-tools" title="Herramientas de dibujo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg><span class="sr-only">Herramientas de dibujo</span></button>
+              <div class="ws-draw-tools" id="sim-draw-tools" role="toolbar" aria-orientation="vertical" aria-label="Herramientas de dibujo">
+              <button type="button" class="ws-dt" data-tool="cursor" aria-pressed="false" title="Cursor: selecciona y mueve los dibujos" aria-keyshortcuts="Alt+C"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3l12 9-5.5 1L16 20l-2.5 1-3-6.8L6 18z"/></svg><span class="sr-only">Cursor: selecciona y mueve los dibujos</span></button>
+              <button type="button" class="ws-dt" data-tool="hline" aria-pressed="false" title="Línea horizontal" aria-keyshortcuts="Alt+H"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><circle cx="12" cy="12" r="2"/></svg><span class="sr-only">Línea horizontal</span></button>
+              <button type="button" class="ws-dt" data-tool="hray" aria-pressed="false" title="Rayo horizontal (hacia la derecha)" aria-keyshortcuts="Alt+J"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h15"/><circle cx="6" cy="12" r="2"/></svg><span class="sr-only">Rayo horizontal (hacia la derecha)</span></button>
+              <button type="button" class="ws-dt" data-tool="trend" aria-pressed="false" title="Línea de tendencia" aria-keyshortcuts="Alt+T"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19L20 5"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="5" r="2"/></svg><span class="sr-only">Línea de tendencia</span></button>
+              <button type="button" class="ws-dt" data-tool="rect" aria-pressed="false" title="Rectángulo (zona)" aria-keyshortcuts="Alt+R"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="1"/></svg><span class="sr-only">Rectángulo (zona)</span></button>
+              <button type="button" class="ws-dt" data-tool="fib" aria-pressed="false" title="Retroceso de Fibonacci" aria-keyshortcuts="Alt+F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18M3 9.5h18M3 13h18M3 19h18"/><path d="M5 19L19 5" stroke-dasharray="2 2"/></svg><span class="sr-only">Retroceso de Fibonacci</span></button>
+                <span class="ws-dt-sep" aria-hidden="true"></span>
+                <button type="button" class="ws-dt" id="sim-magnet" aria-pressed="false" title="Imán: ajusta los puntos a la apertura, el máximo, el mínimo o el cierre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v8a6 6 0 0 0 12 0V4h-4v8a2 2 0 0 1-4 0V4z"/><path d="M6 8h4M14 8h4"/></svg><span class="sr-only">Imán</span></button>
+                <div class="ws-color">
+                  <button type="button" class="ws-dt" id="sim-color" aria-haspopup="true" aria-expanded="false" title="Color"><span class="ws-swatch" id="sim-color-sw" aria-hidden="true"></span><span class="sr-only">Color</span></button>
+                  <div class="ws-palette" id="sim-palette" hidden role="group" aria-label="Elige el color"></div>
+                </div>
+                <button type="button" class="ws-dt" id="sim-draw-del" disabled aria-keyshortcuts="Delete" title="Eliminar el dibujo seleccionado (Supr)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg><span class="sr-only">Eliminar el dibujo seleccionado</span></button>
+                <button type="button" class="ws-dt" id="sim-draw-clear" title="Eliminar todos los dibujos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><path d="M10 11l4 4M14 11l-4 4"/></svg><span class="sr-only">Eliminar todos los dibujos</span></button>
+              </div>
+            </div>
+            <p class="ws-toast" id="sim-msg" role="status" aria-live="polite"></p>
+          </div>
+
+          <aside class="ws-panel" id="sim-panel" aria-label="Órdenes, operaciones y estadísticas" data-open="false">
+            <div class="ws-ch" id="sim-ch" hidden role="group" aria-label="Progreso del desafío"></div>
+            <div class="ws-tabs" role="tablist" aria-label="Panel">
+              <button type="button" role="tab" id="sim-tab-order" aria-controls="sim-pane-order" aria-selected="true">Orden</button>
+              <button type="button" role="tab" id="sim-tab-trades" aria-controls="sim-pane-trades" aria-selected="false" tabindex="-1">Operaciones <span class="ws-count" id="sim-tcount">0</span></button>
+              <button type="button" role="tab" id="sim-tab-stats" aria-controls="sim-pane-stats" aria-selected="false" tabindex="-1">Estadísticas</button>
+              <button type="button" class="ws-sheet-toggle" id="sim-sheet" aria-expanded="false" aria-controls="sim-panes" aria-label="Mostrar el panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+            </div>
+            <div class="ws-panes" id="sim-panes">
+              <div class="ws-pane" id="sim-pane-order" role="tabpanel" aria-labelledby="sim-tab-order">
+                <form class="sim-order" id="sim-order" novalidate>
+                  <fieldset class="ws-sides">
+                    <legend class="sr-only">Dirección</legend>
+                    <label class="ws-side-sell"><input type="radio" name="sim-side" value="sell"><span><small>Sell</small><b id="sim-bid">—</b></span></label>
+                    <span class="ws-spread" id="sim-spread" title="Spread">—</span>
+                    <label class="ws-side-buy"><input type="radio" name="sim-side" value="buy" checked><span><small>Buy</small><b id="sim-ask">—</b></span></label>
+                  </fieldset>
+                  <div class="sim-two">
+                    <label><span>Stop loss <span class="sim-unit-lbl">(pips)</span></span>
+                      <input type="text" id="sim-sl" inputmode="decimal" autocomplete="off">
+                    </label>
+                    <label><span>Take profit <span class="sim-unit-lbl">(pips)</span></span>
+                      <input type="text" id="sim-tp" inputmode="decimal" autocomplete="off">
+                    </label>
+                  </div>
+                  <div class="sim-two ws-tagrow">
+                    <label><span>Setup</span>
+                      <input type="text" id="sim-setup-tag" list="sim-setup-list" maxlength="40" autocomplete="off" placeholder="opcional">
+                    </label>
+                    <label><span>Nota</span>
+                      <input type="text" id="sim-note" maxlength="140" autocomplete="off" placeholder="opcional">
+                    </label>
+                  </div>
+                  <datalist id="sim-setup-list"></datalist>
+                  <details class="ws-strat" id="sim-strat-box" hidden>
+                    <summary><span id="sim-strat-name">Estrategia</span> <small id="sim-check-count"></small></summary>
+                    <p class="ws-strat-rules" id="sim-strat-rules"></p>
+                    <ul class="ws-checklist" id="sim-checklist"></ul>
+                  </details>
+                  <details class="ws-adv" id="sim-adv">
+                    <summary>Avanzado <small>tipo de orden, unidad, riesgo</small></summary>
+                  <fieldset class="sim-seg sim-seg-3">
+                    <legend>Tipo de orden</legend>
+                    <div class="sim-seg-opts">
+                      <label><input type="radio" name="sim-kind" value="market" checked><span>A mercado</span></label>
+                      <label><input type="radio" name="sim-kind" value="limit"><span>Limit</span></label>
+                      <label><input type="radio" name="sim-kind" value="stop"><span>Stop</span></label>
+                    </div>
+                  </fieldset>
+                  <label id="sim-price-wrap" hidden>Precio de la orden
+                    <input type="text" id="sim-price" inputmode="decimal" autocomplete="off">
+                  </label>
+                  <fieldset class="sim-seg sim-seg-small">
+                    <legend>SL y TP en</legend>
+                    <div class="sim-seg-opts">
+                      <label><input type="radio" name="sim-unit" value="pips" checked><span>Pips</span></label>
+                      <label><input type="radio" name="sim-unit" value="price"><span>Precio</span></label>
+                    </div>
+                  </fieldset>
+                  <label class="ws-risk">Riesgo por operación (%)
+                    <input type="text" id="sim-risk-ws" inputmode="decimal" autocomplete="off">
+                  </label>
+                  </details>
+                  <dl class="sim-calc" aria-live="polite">
+                    <div><dt>SL</dt><dd id="sim-c-sl">—</dd></div>
+                    <div><dt>TP</dt><dd id="sim-c-tp">—</dd></div>
+                    <div><dt>R:R</dt><dd id="sim-c-rr">—</dd></div>
+                    <div><dt>Lote</dt><dd id="sim-c-lot">—</dd></div>
+                    <div class="sim-calc-wide"><dt>Dinero en riesgo</dt><dd id="sim-c-risk">—</dd></div>
+                  </dl>
+                  <p class="sim-error" id="sim-order-err" role="alert" hidden></p>
+                  <button type="submit" class="btn sim-place is-buy" id="sim-place" aria-keyshortcuts="B S">Buy a mercado</button>
+                  <p class="sim-hint" id="sim-spread-note"></p>
+                </form>
+
+                <div class="ws-positions">
+                  <div class="ws-pos-head"><h2>Posiciones y órdenes <span class="ws-count" id="sim-pos-count">0</span></h2>
+                    <button type="button" class="ws-link" id="sim-close-all" hidden>Cerrar todo</button></div>
+                  <ul class="ws-pos-list" id="sim-pos-list" hidden></ul>
+                </div>
+                <div class="sim-pos" id="sim-pos" hidden>
+                  <h2 id="sim-pos-title">Posición abierta</h2>
+                  <dl class="sim-pos-dl">
+                    <div><dt>Dirección</dt><dd id="sim-p-side">—</dd></div>
+                    <div><dt>Entrada</dt><dd id="sim-p-entry">—</dd></div>
+                    <div><dt>Lote</dt><dd id="sim-p-lot">—</dd></div>
+                    <div><dt>Riesgo</dt><dd id="sim-p-risk">—</dd></div>
+                  </dl>
+                  <p class="sim-pl" id="sim-p-pl" aria-live="polite">—</p>
+                  <div class="sim-two">
+                    <label>Stop loss (precio)
+                      <input type="text" id="sim-p-sl" inputmode="decimal" autocomplete="off">
+                    </label>
+                    <label>Take profit (precio)
+                      <input type="text" id="sim-p-tp" inputmode="decimal" autocomplete="off">
+                    </label>
+                  </div>
+                  <p class="sim-error" id="sim-pos-err" role="alert" hidden></p>
+                  <div class="sim-pos-actions">
+                    <button type="button" class="btn btn-ghost" id="sim-p-apply">Aplicar SL/TP</button>
+                    <button type="button" class="btn btn-ghost" id="sim-be">SL a break-even</button>
+                    <button type="button" class="btn btn-slate" id="sim-close">Cerrar ahora</button>
+                  </div>
+                  <div class="ws-partial" id="sim-partial" role="group" aria-labelledby="sim-partial-lbl">
+                    <span id="sim-partial-lbl">Cerrar parcialmente</span>
+                    <div class="ws-partial-row">
+                      <button type="button" class="ws-chip" data-part="25">25%</button>
+                      <button type="button" class="ws-chip" data-part="50">50%</button>
+                      <button type="button" class="ws-chip" data-part="75">75%</button>
+                      <label class="sr-only" for="sim-part-lot">Lote a cerrar</label>
+                      <input type="text" id="sim-part-lot" inputmode="decimal" autocomplete="off" placeholder="lote">
+                      <button type="button" class="ws-chip" id="sim-part-go">OK</button>
+                    </div>
+                  </div>
+                </div>
+                <p class="sim-hint ws-keys">Teclas: <kbd>→</kbd> barra siguiente, <kbd>Space</kbd> reproducir/pausa, <kbd>B</kbd> buy, <kbd>S</kbd> sell, <kbd>Esc</kbd> cierra las ventanas. Las líneas de SL, TP y de la orden se arrastran con el mouse o con el dedo.</p>
+              </div>
+
+              <div class="ws-pane" id="sim-pane-trades" role="tabpanel" aria-labelledby="sim-tab-trades" hidden>
+                <div class="sim-table-wrap" tabindex="0" role="region" aria-label="Lista de operaciones">
+                  <table class="sim-table" id="sim-trades">
+                    <caption class="sr-only">Operaciones de la sesión</caption>
+                    <thead><tr><th scope="col">#</th><th scope="col">Dirección</th><th scope="col">Entrada</th><th scope="col">Salida</th><th scope="col">Motivo</th><th scope="col">Pips</th><th scope="col">R</th><th scope="col">P/L</th></tr></thead>
+                    <tbody></tbody>
+                  </table>
+                  <p class="sim-empty" id="sim-trades-empty">Todavía no hay operaciones cerradas.</p>
+                </div>
+              </div>
+
+              <div class="ws-pane sim-stats" id="sim-stats" role="tabpanel" aria-labelledby="sim-tab-stats" hidden>
+                <div class="sim-tiles">
+                  <div class="sim-tile"><span>Operaciones</span><strong id="sim-s-n">0</strong><small id="sim-s-wl"></small></div>
+                  <div class="sim-tile"><span>Tasa de acierto</span><strong id="sim-s-wr">—</strong></div>
+                  <div class="sim-tile"><span>R total</span><strong id="sim-s-tr">—</strong></div>
+                  <div class="sim-tile"><span>R promedio</span><strong id="sim-s-ar">—</strong></div>
+                  <div class="sim-tile"><span>Profit factor</span><strong id="sim-s-pf">—</strong></div>
+                  <div class="sim-tile"><span>Drawdown máximo</span><strong id="sim-s-dd">—</strong><small id="sim-s-ddp"></small></div>
+                  <div class="sim-tile"><span>La mejor</span><strong id="sim-s-best">—</strong></div>
+                  <div class="sim-tile"><span>La peor</span><strong id="sim-s-worst">—</strong></div>
+                  <div class="sim-tile sim-tile-wide"><span>Resultado neto</span><strong id="sim-s-net">—</strong><small id="sim-s-bal"></small></div>
+                </div>
+                <div class="sim-equity">
+                  <h3>Curva de capital</h3>
+                  <div class="sim-eq-chart" id="sim-eq-chart" role="img" aria-label="Curva de capital de la sesión"></div>
+                </div>
+                <div class="st-detail" id="sim-detail"></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <dialog class="ws-ind" id="sim-ind" aria-labelledby="sim-ind-title">
+          <div class="ws-ind-head"><h2 id="sim-ind-title">Indicadores</h2>
+            <button type="button" class="ws-btn ws-icon" id="sim-ind-close" aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <p class="ws-ind-note">Se calculan solo con las barras ya mostradas (sin mirar el futuro). Puedes agregar el mismo indicador varias veces, con otros ajustes.</p>
+          <div class="ws-ind-add" role="group" aria-label="Agregar un indicador">
+            <button type="button" class="ws-chip" data-add="ema">EMA</button>
+            <button type="button" class="ws-chip" data-add="sma">SMA</button>
+            <button type="button" class="ws-chip" data-add="bb">Bollinger</button>
+            <button type="button" class="ws-chip" data-add="rsi">RSI</button>
+            <button type="button" class="ws-chip" data-add="macd">MACD</button>
+            <button type="button" class="ws-chip" data-add="atr">ATR</button>
+          </div>
+          <h3 class="ws-ind-sub">Activos</h3>
+          <ul class="ws-ind-list" id="sim-ind-list"></ul>
+          <p class="ws-ind-empty" id="sim-ind-empty">Ningún indicador. Elige uno de arriba.</p>
+        </dialog>
+        <dialog class="ws-summary" id="sim-summary" aria-labelledby="sim-sum-title">
+          <div class="ws-sum-head">
+            <h2 id="sim-sum-title">Resultados de la sesión</h2>
+            <button type="button" class="sim-help-x" id="sim-sum-close" aria-label="Cerrar el resumen">×</button>
+          </div>
+          <p class="sim-reveal" id="sim-reveal"></p>
+          <p class="ws-sum-reason" id="sim-sum-reason"></p>
+          <div class="ws-sum-ch" id="sim-sum-ch" hidden></div>
+          <div class="sim-tiles ws-sum-tiles">
+            <div class="sim-tile"><span>Operaciones</span><strong id="sim-m-n">0</strong><small id="sim-m-wl"></small></div>
+            <div class="sim-tile"><span>Tasa de acierto</span><strong id="sim-m-wr">—</strong></div>
+            <div class="sim-tile"><span>R total</span><strong id="sim-m-tr">—</strong></div>
+            <div class="sim-tile"><span>Profit factor</span><strong id="sim-m-pf">—</strong></div>
+            <div class="sim-tile"><span>Drawdown máximo</span><strong id="sim-m-dd">—</strong></div>
+            <div class="sim-tile"><span>Resultado neto</span><strong id="sim-m-net">—</strong><small id="sim-m-bal"></small></div>
+          </div>
+          <div class="sim-eq-chart ws-sum-eq" id="sim-sum-eq" role="img" aria-label="Curva de capital de la sesión"></div>
+          <div class="sim-actions" id="sim-end-actions">
+            <button type="button" class="btn btn-primary" id="sim-new">Nueva sesión</button>
+            <button type="button" class="btn btn-ghost" id="sim-journal">Enviar al diario</button>
+            <button type="button" class="btn btn-ghost" id="sim-csv">Exportar CSV</button>
+            <button type="button" class="btn btn-slate" id="sim-exit">Volver</button>
+          </div>
+          <p class="sim-msg" id="sim-stats-msg" role="status" aria-live="polite"></p>
+          <p class="sim-hint">Los resultados pasados no garantizan resultados futuros. El simulador tiene fines educativos.</p>
+        </dialog>
+      </section>
+
+      <!-- Istoric -->
+      <section class="sim-card sim-history" id="sim-history" hidden aria-labelledby="sim-history-title">
+        <div class="sim-card-head">
+          <h2 id="sim-history-title">Tus sesiones guardadas</h2>
+          <button type="button" class="sim-link-btn" id="sim-clear">Borrar historial</button>
+        </div>
+        <ul class="sim-history-list" id="sim-history-list"></ul>
+        <div class="sim-hstats" id="sim-hstats" hidden>
+          <h3>Estadísticas de todas las sesiones</h3>
+          <div class="sim-hfilters">
+            <label>Estrategia <select id="sim-hf-strat"></select></label>
+            <label>Instrumento <select id="sim-hf-sym"></select></label>
+            <label>Setup <select id="sim-hf-setup"></select></label>
+            <button type="button" class="btn btn-ghost" id="sim-h-csv">Exportar CSV</button>
+          </div>
+          <p class="sim-msg" id="sim-h-msg" role="status" aria-live="polite"></p>
+          <div class="sim-tiles" id="sim-h-tiles"></div>
+          <h3>Comparar estrategias</h3>
+          <p class="sim-hint">Los resultados están en R, para que puedas comparar sesiones con saldos o monedas distintas. La esperanza matemática (R promedio por operación) es el indicador más útil; ★ marca la más alta.</p>
+          <div id="sim-h-compare"></div>
+          <h3>Detalles</h3>
+          <div class="st-detail" id="sim-h-detail"></div>
+        </div>
+        <p class="sim-hint">Las sesiones se guardan solo en este navegador (localStorage). No se envía nada a ningún servidor.</p>
+      </section>
+
+      <!-- Ghid -->
+      <section class="sim-notes sim-guide" id="sim-guide" aria-labelledby="sim-guide-title">
+        <h2 id="sim-guide-title">Cómo hacer un backtest correcto</h2>
+        <ol>
+          <li><strong>Escribe tus reglas antes de empezar.</strong> Cuándo entras, dónde pones el stop loss y el take profit, qué riesgo usas y cuándo no operas. Completa el campo "Estrategia" y un checklist corto; si no puedes escribir la regla, no puedes probarla.</li>
+          <li><strong>Junta como mínimo 30-50 operaciones</strong> con las mismas reglas, idealmente en varias sesiones y períodos (tendencia, rango, alta volatilidad). Unas cuantas operaciones ganadoras seguidas no prueban nada.</li>
+          <li><strong>Sin lookahead.</strong> Usa "Período aleatorio" para que la fecha quede oculta, y no avances para "ver qué pasa después". Decide solo con lo que hay en el gráfico en la barra actual; el simulador no te deja volver atrás después de entrar.</li>
+          <li><strong>Anota cada operación.</strong> Pon el setup y una nota corta (por qué entraste), también en las perdedoras. Después envía la sesión a tu <a href="jurnal.html">diario</a>.</li>
+          <li><strong>Juzga por la esperanza y el drawdown, no por la tasa de acierto.</strong> Una estrategia con 40% de ganadoras puede ser rentable con 1:2. Compara las estrategias en la tabla de arriba y cambia una sola regla a la vez.</li>
+          <li><strong>Después, en demo.</strong> Un buen backtest es un punto de partida: confirma la estrategia durante algunas semanas en una cuenta demo antes de usar dinero real.</li>
+        </ol>
+      </section>
+
+      <!-- Cum funcționează -->
+      <section class="sim-notes" aria-labelledby="sim-notes-title">
+        <h2 id="sim-notes-title">Cómo calcula el simulador</h2>
+        <ul>
+          <li>El gráfico muestra el precio <strong>Bid</strong>. Un Buy entra al Ask (Bid más un spread fijo) y sale al Bid; un Sell entra al Bid y sale al Ask. Spread fijo: EUR/USD 1,0 pip, GBP/USD 1,5, USD/JPY 1,2, AUD/USD 1,2, GBP/JPY 2,5, oro 3,0 pips (0,30 USD). Sin comisión ni swap.</li>
+          <li>En cada barra nueva revisamos el máximo y el mínimo. Si en la misma barra se tocan el stop loss y el take profit, asumimos que se tocó <strong>primero el stop loss</strong> (la opción prudente), porque la vela no muestra el orden.</li>
+          <li>Si la barra abre más allá del stop loss (gap), la salida se hace al precio de apertura, como en la realidad. Una orden limit o stop ejecutada en una barra puede cerrarse por stop loss en esa misma barra, pero el take profit se revisa recién desde la barra siguiente.</li>
+          <li>El lote se calcula como en la <a href="calculator.html">calculadora de lotaje</a> (redondeado hacia abajo a 0,01), a partir del saldo actual y el riesgo %. Pip: 0,0001; 0,01 en los pares con JPY; 0,10 en el oro. Para convertir a la moneda de la cuenta usamos la cotización histórica de cierre de ese día.</li>
+          <li>Los resultados están en R: 1R es el monto arriesgado al entrar. Así ves si la estrategia tiene sentido, sin importar el tamaño de la cuenta.</li>
+        </ul>
+        <p class="sim-disclaimer"><strong>Importante:</strong> los resultados pasados, incluidos los obtenidos en el simulador, no garantizan resultados futuros. El simulador es una herramienta educativa con dinero virtual, no una señal ni una recomendación de trading. Anota tus conclusiones en tu <a href="jurnal.html">diario</a> y luego practica en una cuenta demo.</p>
+        <p class="sim-attrib">Datos históricos: <a href="https://www.histdata.com/" target="_blank" rel="noopener">HistData.com</a> (velas de 1 minuto, que agregamos en H1, H4 y D1; el día de trading empieza a las 17:00 hora de Nueva York; los datos se actualizan cada mes). De febrero a julio de 2023 la fuente tiene muchas horas faltantes, así que ese período no se usa en las sesiones. Gráfico: <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView</a> Lightweight Charts™ v5.2.1, Copyright (c) 2025 TradingView, Inc., licencia <a href="../vendor/lightweight-charts-5.2.1/LICENSE">Apache 2.0</a> (<a href="../vendor/lightweight-charts-5.2.1/NOTICE">NOTICE</a>).</p>
+      </section>
+
+      <dialog class="sim-help" id="sim-help" aria-labelledby="sim-help-title">
+        <h2 id="sim-help-title">Cómo usar el simulador</h2>
+        <ol>
+          <li><strong>Pulsa "Iniciar la sesión".</strong> Por defecto: EUR/USD, H1, período aleatorio (la fecha queda oculta) y 1% de riesgo. El gráfico se abre en pantalla completa; con la flecha de arriba a la izquierda vuelves a los ajustes.</li>
+          <li><strong>Avanza barra por barra</strong> con ▶| (o la tecla →), con +10 o con la reproducción automática ▶ (la tecla Espacio). Las barras futuras no se ven y no puedes volver atrás.</li>
+          <li><strong>Coloca tu orden:</strong> eliges Sell o Buy y pulsas el botón grande (o las teclas S y B). El stop loss y el take profit (1:2) se colocan automáticamente; arrastra las líneas en el gráfico adonde quieras. El lote se calcula a partir del saldo y el riesgo %.</li>
+          <li><strong>Gestiona la posición:</strong> en cada barra revisamos el SL y el TP. Puedes mover el stop loss a break-even o cerrar manualmente.</li>
+          <li><strong>Al final</strong> descubres el período real y ves las estadísticas, la curva de capital y la lista de operaciones. Puedes exportarlas a CSV o enviarlas a tu diario.</li>
+        </ol>
+        <p class="sim-hint">Dinero virtual, datos reales del pasado. Los resultados pasados no garantizan resultados futuros.</p>
+        <form method="dialog"><button class="btn btn-primary" id="sim-help-close">Entendido</button></form>
+      </dialog>
+    </section>
+  </main>
+
+  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+        <p>Educación para un swing trading disciplinado: reglas claras, gestión del riesgo y un proceso que puedes repetir.</p>
+      </div>
+      <nav class="footer-col" aria-label="Aprende">
+        <h2 class="footer-title">Aprende</h2>
+        <ul>
+          <li><a href="lectie.html">Principiantes</a></li>
+          <li><a href="test.html">Test</a></li>
+          <li><a href="glosar.html">Glosario</a></li>
+          <li><a href="reguli.html">Reglas</a></li>
+          <li><a href="patternuri.html">Patrones</a></li>
+          <li><a href="despre.html">Sobre mí</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Herramientas">
+        <h2 class="footer-title">Herramientas</h2>
+        <ul>
+          <li><a href="calculator.html">Calculator</a></li>
+          <li><a href="simulator.html">Simulator</a></li>
+          <li><a href="sesiuni.html">Sesiones</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="jurnal.html">Diario</a></li>
+          <li><a href="broker.html">Broker</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col footer-col-community">
+        <h2 class="footer-title">Comunidad</h2>
+        <ul>
+          <li><a class="footer-tg" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.94 4.3c.27-1.2-.47-1.67-1.25-1.38L2.9 9.78c-1.2.47-1.18 1.15-.21 1.45l4.56 1.42 1.75 5.4c.22.6.11.84.75.84.49 0 .71-.23.98-.5l2.2-2.14 4.58 3.38c.84.47 1.45.23 1.66-.78l3.01-14.17-.24-.38zM8.44 12.36l9.53-6.01c.48-.29.92-.13.56.19l-8.16 7.36-.32 3.43-1.61-4.97z"/></svg>Telegram (gratis)</a></li>
+          <li><a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a></li>
+          <li><a href="intrebari.html">Preguntas frecuentes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-legal">
+      <p class="footer-risk" id="avertisment">El Forex y los CFD con apalancamiento pueden provocar pérdidas rápidas de dinero. Contenido educativo, no asesoramiento financiero.</p>
+      <div class="footer-bottom">
+        <p>© <span id="an"></span> Marius FX · Marius</p>
+        <a href="#continut">Volver arriba ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../i18n/es.js?v=7a1d6d0a" defer></script>
+  <script src="../i18n.js?v=245b24f1" defer></script>
+  <script src="../script.js?v=37" defer></script>
+  <script src="../vendor/lightweight-charts-5.2.1/lightweight-charts.standalone.production.js" defer></script>
+  <script src="../sim-engine.js?v=3" defer></script>
+  <script src="../sim-extra.js?v=2" defer></script>
+  <script src="../sim-stats.js?v=2" defer></script>
+  <script src="../sim.js?v=7" defer></script>
+</body>
+</html>

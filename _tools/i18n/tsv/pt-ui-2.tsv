@@ -1,0 +1,320 @@
+330	Ganho médio por hora
+331	Crescimento dos rendimentos
+332	Índice de salários
+333	Custos do trabalho
+334	Vagas de emprego (JOLTS)
+335	Vendas no varejo
+336	Vendas no varejo sem automóveis
+337	Crescimento econômico (PIB)
+338	Balança comercial
+339	Conta corrente
+340	Produção industrial
+341	Pedidos à indústria
+342	Encomendas de bens duráveis sem transporte
+343	Encomendas de bens duráveis
+344	Confiança do consumidor (Univ. de Michigan)
+345	Expectativas de inflação do consumidor (Univ. de Michigan)
+346	Confiança do consumidor (Conference Board)
+347	Confiança do consumidor
+348	Sentimento econômico ZEW
+349	Clima de negócios Ifo
+350	Confiança dos investidores (Sentix)
+351	Indústria do estado de Nova York (Empire State)
+352	Indústria da região da Filadélfia (Philly Fed)
+353	Vendas de imóveis usados
+354	Vendas de imóveis novos
+355	Vendas pendentes de imóveis
+356	Licenças de construção
+357	Início de construções de moradias
+358	Estoques de petróleo bruto dos EUA
+359	Estoques de gás natural dos EUA
+360	Pesquisa Tankan do BoJ
+361	Feriado bancário: menos liquidez
+362	Reuniões da OPEP (petróleo)
+363	Leilão de títulos públicos
+364	PMI {s}
+365	PMI
+366	: acima de 50 indica expansão
+367	em {x}
+368	Global
+369	Todas
+370	<strong>Não foi possível carregar o calendário.</strong> Pode ser um problema de conexão: recarregue a página daqui a pouco. Enquanto isso, você encontra as mesmas notícias, no seu horário, nos calendários abaixo.
+371	Previsão
+372	Anterior
+373	O dia todo
+374	bancos fechados
+375	Próxima
+376	AGORA
+377	passou
+378	Próxima notícia de impacto alto
+379	Não há mais notícias de impacto alto nesta semana para as moedas selecionadas.
+380	Não há mais notícias de impacto alto nesta semana.
+381	O calendário da próxima semana aparece automaticamente no domingo. Até lá, confira bem as posições que você mantém no fim de semana.
+382	Hoje
+383	Amanhã
+384	Próxima notícia (impacto médio)
+385	<b>{d}</b> às <b>{t}</b> (seu horário)
+386	No mesmo horário:
+387	Ver na lista
+388	a notícia acabou de sair
+389	dia
+390	dias
+391	hora
+392	horas
+393	Ocultar notícias passadas
+394	Mostrar as notícias passadas desta semana ({n})
+395	Não há mais notícias hoje para os filtros selecionados.
+396	<b>Nenhuma moeda selecionada.</b> Escolha pelo menos uma moeda acima.
+397	A semana terminou.
+398	Não há mais notícias hoje para os filtros selecionados.
+399	Não há mais notícias nesta semana para os filtros selecionados.
+400	O calendário da próxima semana aparece automaticamente no domingo.
+401	Você pode selecionar mais moedas ou "Todas" em impacto.
+402	Os dados do calendário não são atualizados desde {d}.
+403	Os dados do calendário não foram atualizados.
+404	Para você não ver horários desatualizados, nós os ocultamos. Até isso ser resolvido, confira as notícias diretamente em um dos calendários abaixo.
+405	Seu horário:
+406	Última atualização:
+407	1 termo
+408	{n} termos
+409	{n} termos
+410	{x} encontrados de {t}
+411	{x} encontrados de {t}
+412	Nenhum resultado
+413	Capítulo concluído
+414	Terminei este capítulo
+415	Comece pelo capítulo 1
+416	Você terminou o curso inteiro. Revise
+417	Continue com o capítulo {n}
+418	Os {n} pontos estão marcados. A operação segue o seu processo (isso não quer dizer que será vencedora).
+419	{c} de {n} marcados. Se faltar um ponto, você não entra.
+420	XAU/USD (ouro)
+421	O stop loss está faltando ou não é um preço válido.
+422	Linha horizontal
+423	Raio horizontal
+424	Linha de tendência
+425	Retângulo
+426	Linha horizontal: toque ou clique no nível que quiser.
+427	Raio horizontal: toque ou clique onde ele deve começar.
+428	Linha de tendência: arraste do primeiro ponto até o segundo (ou clique duas vezes).
+429	Retângulo: arraste de um canto até o canto oposto (ou clique duas vezes).
+430	Fibonacci: arraste do início do movimento (por exemplo a mínima) até o fim (a máxima). Os níveis 0,382-0,618 ficam destacados.
+431	 Esc cancela.
+432	{v} adicionado. Arraste para mover, ou exclua com a tecla Delete / a lixeira da barra de desenho.
+433	Ímã ligado: os pontos grudam na A/M/m/F do candle.
+434	Ímã desligado.
+435	Não há desenhos no gráfico.
+436	Toque de novo na lixeira para excluir os {length} desenhos.
+437	Todos os desenhos foram excluídos.
+438	Cor {c}
+439	Mostrar
+440	Ocultar
+441	Configurações
+442	Remover
+443	No máximo 10 indicadores, para o gráfico continuar legível.
+444	Aparece num painel abaixo do gráfico.
+445	{indName} adicionado.{v}
+446	Período
+447	Desvios
+448	Rápida
+449	Lenta
+450	Sinal
+451	Cor
+452	(sem setup)
+453	Sem estratégia
+454	< 1 hora
+455	{n} horas
+456	{n} dias
+457	Operações
+458	Acerto
+459	{r} após {n} operações
+460	<div class="st-block"><h4>Distribuição dos resultados (R)</h4><ul class="st-hist">
+461	<p class="sim-empty">As estatísticas detalhadas aparecem depois da sua primeira operação fechada.</p>
+462	Só 1 operação: as conclusões só ficam confiáveis depois de 30-50 operações com as mesmas regras.
+463	Só {n} operações: as conclusões só ficam confiáveis depois de 30-50 operações com as mesmas regras.
+464	Expectativa
+465	 / operação
+466	por operação
+467	Ganho médio
+468	Perda média
+469	Profit factor (R)
+470	Sequências mais longas
+471	ganhos / perdas seguidos
+472	Drawdown máximo
+473	 desde o pico
+474	desde o pico da curva R
+475	Duração média
+476	da entrada à saída
+477	Curva R acumulada
+478	Por setup
+479	Por instrumento
+480	Por dia (entrada, seu horário local)
+481	Dia
+482	Por hora de entrada (seu horário local)
+483	Hora
+484	Maior expectativa
+485	Sessões
+486	Operações
+487	 <small>(poucas)</small>
+488	R total
+489	Ganho / perda médio
+490	Drawdown máximo (R)
+491	Perdas seguidas (máx.)
+492	Desafios aprovados
+493	{a} de {b}
+494	Estratégia
+495	Nota
+496	Timeframe
+497	Entrada (seu horário local)
+498	Saída (seu horário local)
+499	Preço de saída
+500	Moeda
+501	Todas as estratégias
+502	Todos os instrumentos
+503	Todos os setups
+504	O arquivo CSV foi baixado ({length} operações).
+505	Ordem
+506	Com esse stop loss o lote ficaria abaixo de 0,01. O nível anterior foi mantido.
+507	Ordem alterada: 
+508	preço 
+509	Digite o preço da ordem (por exemplo 
+510	Um Buy limit fica abaixo do preço atual (Ask {sp}). Para entrar acima do preço, use um Buy stop.
+511	Um Buy stop fica acima do preço atual (Ask {sp}). Para entrar abaixo do preço, use um Buy limit.
+512	Um Sell limit fica acima do preço atual (Bid {sp}). Para entrar abaixo do preço, use um Sell stop.
+513	Um Sell stop fica abaixo do preço atual (Bid {sp}). Para entrar acima do preço, use um Sell limit.
+514	Digite o preço da ordem.
+515	Preencha o stop loss. Sem stop loss não dá para calcular o tamanho do lote.
+516	O stop loss precisa ser um número de pips maior que 0.
+517	O stop loss não é um preço válido.
+518	O take profit precisa ser um número de pips maior que 0 (ou vazio).
+519	O take profit não é um preço válido.
+520	O lote calculado é menor que 0,01 (stop loss de {nf} pips com {money} em risco). Encurte o stop loss ou aumente o risco %.
+521	 a mercado
+522	(preço)
+523	{tag}{v} {nf} lotes a {fmtPrice}. Risco: {money}.
+524	Ordem {v} {kind} colocada em {fmtPrice}. Ela é executada quando o preço chegar lá.
+525	checklist {a}/{b}
+526	lote
+527	Posição aberta
+528	Ordem pendente
+529	Fechar agora
+530	Cancelar ordem
+531	realizado {a} · total {b}
+532	Aguardando o preço 
+533	Num Buy, o stop loss precisa ficar abaixo do preço atual ({fmtPrice}).
+534	Num Sell, o stop loss precisa ficar acima do preço atual ({fmtPrice}).
+535	Num Buy, o take profit precisa ficar acima do preço atual ({fmtPrice}).
+536	Num Sell, o take profit precisa ficar abaixo do preço atual ({fmtPrice}).
+537	Com esse stop loss o lote ficaria abaixo de 0,01. Escolha um stop loss mais curto.
+538	Níveis atualizados: SL 
+539	, sem TP
+540	Você só pode mover para o break-even quando a posição está no lucro (o preço precisa estar além da entrada).
+541	Stop loss movido para o break-even (
+542	). Se o preço voltar, o restante da posição fecha no zero a zero.
+543	A ordem pendente foi cancelada.
+544	Todas as posições foram fechadas.
+545	O lote a fechar precisa ser de pelo menos 0,01.
+546	{tag}Fechamento parcial de {nf} lotes: {money} ({fmtR}). Restam {nf2} lotes.
+547	Take profit
+548	Stop loss
+549	Fechamento manual
+550	Fim da sessão
+551	Fechamento parcial
+552	Regra do desafio
+553	, com fechamentos parciais
+554	 O SL e o TP foram atingidos na mesma barra H1: consideramos que o SL veio primeiro (a opção conservadora).
+555	 O preço abriu com gap além do stop loss, então a saída foi na abertura da barra.
+556	Não foi possível carregar os dados do próximo período. Verifique sua conexão.
+557	Carregando os próximos dados…
+558	Você chegou ao fim dos dados disponíveis (
+559	A sessão parou: o próximo período tem muitas horas faltando na fonte, então não o usamos.
+560	{tag}Ordem {v} {kind} executada a {fmtPrice}.
+561	Pausar
+562	Reproduzir
+563	Pausar (Espaço)
+564	Reproduzir (Espaço)
+565	Timeframe {tf}. "Próxima barra" avança uma barra {tf2}; o SL e o TP continuam sendo verificados a cada hora (H1).
+566	Data oculta
+567	você atingiu a meta de lucro de {nf}%
+568	o patrimônio caiu abaixo do limite de perda diária ({nf}% do saldo inicial)
+569	o patrimônio caiu abaixo do limite de drawdown total ({nf}% do saldo inicial)
+570	Desafio aprovado
+571	Parabéns: 
+572	 sem romper os limites de perda.
+573	Desafio reprovado
+574	Regra quebrada: 
+575	. As posições foram fechadas automaticamente.
+576	Desafio não concluído
+577	A sessão terminou antes da meta de {nf}%, sem romper os limites.
+578	Meta: patrimônio 
+579	Limite diário: patrimônio 
+580	Limite total: patrimônio 
+581	{n} no break-even
+582	{wins} vencedoras · {losses} perdedoras{v}
+583	∞ (sem perdas)
+584	 desde o pico do patrimônio
+585	Saldo: 
+586	<br><small class="sim-note" title="
+587	<small>data oculta</small>
+588	<small>após 
+589	 partes)</small>
+590	 <small>(SL e TP na mesma barra)</small>
+591	O saldo virtual precisa ser um número entre 100 e 10.000.000.
+592	O risco por operação precisa estar entre 0 e 10% (por exemplo 1 ou 0,5).
+593	A meta de lucro do desafio precisa estar entre 1% e 100%.
+594	Limites do desafio: perda diária entre 0,5% e 50%, drawdown total entre 1% e 90%.
+595	A perda diária máxima não pode ser maior que o drawdown total máximo.
+596	Minha estratégia
+597	Carregando dados…
+598	Escolha uma data de início ou use "Período aleatório".
+599	Para {sym}, a fonte tem muitas horas faltando entre {f} e {f2}, então não usamos esse período (nem o tempo logo antes). Escolha outra data.
+600	Para {tf}, escolha uma data entre {f} e {f2}, para que haja barras suficientes antes e depois.
+601	Não foi possível carregar os dados. Verifique sua conexão e tente de novo.
+602	Iniciar sessão de treino
+603	Encerrar
+604	Encerrar a sessão e ver os resultados
+605	Spread fixo: {nf} pips. Dica: o stop loss padrão ({sl} pips) é cerca de 1,5 vez o range típico de um candle {tf}.
+606	Sessão retomada de onde você parou.
+607	A sessão começou. Estude o gráfico, depois avance ou coloque uma ordem.
+608	Período real: 
+609	Resultados
+610	Mostrar os resultados da sessão
+611	A sessão terminou.
+612	Maior perda em um único dia: {a} (limite {b}); drawdown mais profundo desde o saldo inicial: {c} (limite {d}).
+613	Lembre-se: nos desafios quase nunca se reprova por causa de uma estratégia fraca, quase sempre por risco demais. Com 1% por operação são precisas 5 perdas seguidas para atingir um limite diário de 5%; com 2,5%, só 2.
+614	Ocultar painel
+615	Mostrar painel
+616	O navegador não permitiu a tela cheia.
+617	Sair da tela cheia
+618	Tela cheia
+619	operação
+620	operações
+621	 vencedoras
+622	Nº
+623	Tipo
+624	Data de entrada
+625	SL inicial
+626	TP inicial
+627	Data de saída
+628	Motivo
+629	O arquivo CSV foi baixado ({n} operações, separado por ponto e vírgula).
+630	Não foi possível ler o diário neste navegador.
+631	Ordem {t}
+632	Você não tem operações fechadas para enviar ao diário.
+633	As operações desta sessão já estão no seu <a href="jurnal.html">diário</a>.
+634	Não foi possível salvar no diário (o armazenamento do navegador está cheio ou bloqueado).
+635	1 operação adicionada ao <a href="jurnal.html">seu diário</a>, com a etiqueta "Simulador".
+636	{n} operações adicionadas ao <a href="jurnal.html">seu diário</a>, com a etiqueta "Simulador".
+637	Com uma data escolhida por você, a data aparece no gráfico. Cuidado com a tentação de usar o que você já sabe sobre esse período.
+638	Com "Período aleatório" a data fica oculta até o fim da sessão, para você não ser influenciado pelo que já sabe sobre esse período.
+639	Não foi possível retomar a sessão. Comece uma nova.
+640	Digite o lote a fechar (por exemplo 0,10).
+641	Excluir todas as sessões salvas e suas estatísticas?
+642	Sim
+643	Não
+644	mercado
+645	mensal
+646	anual
+647	trimestral
+648	anual, média de 3 meses
+649	Simulador

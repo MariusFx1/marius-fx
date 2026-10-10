@@ -1,0 +1,140 @@
+480	Antes de entrar
+481	Checklist antes de entrar numa operação
+482	Tenho um plano claro para esta entrada?
+483	O stop loss está definido?
+484	Risco ≤ 1–2% da conta?
+485	Estou livre de operar por emoção (medo, FOMO, vingança)?
+486	Um único "não" = você não entra. O mercado sempre oferece outra oportunidade.
+487	<a class="jt-preview" href="images/jurnal-sablon-preview.png?v=31" data-lightbox> <img src="images/jurnal-sablon-preview.png?v=31" width="1600" height="1131" loading="lazy" decoding="async" alt="Prévia do modelo de diário de trading Marius FX (em romeno): uma tabela vazia com colunas para data, par, direção, sessão, setup, preço de entrada, stop loss, take profit, lote, risco, R:R, resultado, plano seguido, emoções e lição, além de um checklist antes da entrada"> <span class="jt-preview-zoom">Clique para ampliar</span> </a>
+488	Modelos gratuitos
+489	Prefere papel ou Excel?
+490	Baixe o modelo em branco e preencha offline. As mesmas colunas do diário acima. Por enquanto os modelos estão em romeno.
+491	<b>Excel (.xlsx)</b>: listas suspensas (Buy/Sell, sessão, resultado, Sim/Não), R:R e resultado em R calculados automaticamente, uma aba "Resumo" com estatísticas e instruções com um exemplo fictício. Também funciona no Google Sheets ou no LibreOffice.
+492	<b>PDF (A4, paisagem)</b>: uma tabela para imprimir com 13 linhas e um checklist antes da entrada.
+493	<a class="btn btn-primary" href="downloads/jurnal-tranzactionare-marius-fx.xlsx?v=31" download="jurnal-tranzactionare-marius-fx.xlsx">Baixar Excel</a> <a class="btn btn-ghost" href="downloads/jurnal-tranzactionare-marius-fx.pdf?v=31" download="jurnal-tranzactionare-marius-fx.pdf">Baixar PDF</a>
+494	Diário de trading gratuito: registre suas operações direto no navegador, salvas só no seu dispositivo, ou baixe o modelo em Excel e PDF. Sem cadastro.
+495	ex.: EURPLN
+496	ex.: 2 ou -1
+497	ex.: 20
+498	calmo, apressado, com medo, FOMO…
+499	O resumo do seu diário
+500	Exportar e backup
+501	Curso de Forex grátis para iniciantes, passo a passo | Marius FX
+502	<a href="lectie.html" aria-current="page">Iniciantes</a>
+503	Curso grátis · do zero
+504	Forex para iniciantes, <span class="accent">passo a passo</span>
+505	Oi, eu sou o Marius. Quando comecei, não tinha ninguém para me explicar o básico, então aprendi sozinho, com erros que me custaram tempo e dinheiro. Aqui coloquei só o que você precisa como iniciante, na ordem em que vale a pena aprender.
+506	Não prometo que você vai ganhar dinheiro. Prometo que você vai entender o que está fazendo, quanto está arriscando e como se proteger.
+507	<b>8</b> capítulos
+508	cerca de <b>15 minutos</b> de leitura
+509	um exemplo numérico para cada ideia
+510	Seu progresso
+511	<b id="lc-done-count">0</b> de <span id="lc-total">8</span> capítulos concluídos
+512	<a class="btn btn-primary lc-start" id="lc-start" href="#cap-1">Comece pelo capítulo 1</a>
+513	Marque cada capítulo quando terminar. Seu progresso fica salvo só no seu navegador.
+514	Sumário
+515	<a href="#cap-1" data-ch="1"><span class="lc-toc-num">1</span><span class="lc-toc-text">Forex, corretora, plataforma</span></a>
+516	<a href="#cap-2" data-ch="2"><span class="lc-toc-num">2</span><span class="lc-toc-text">Candles e timeframes</span></a>
+517	<a href="#cap-3" data-ch="3"><span class="lc-toc-num">3</span><span class="lc-toc-text">Pips, lotes e custos</span></a>
+518	<a href="#cap-4" data-ch="4"><span class="lc-toc-num">4</span><span class="lc-toc-text">Alavancagem e margem</span></a>
+519	<a href="#cap-5" data-ch="5"><span class="lc-toc-num">5</span><span class="lc-toc-text">Ordens, SL e TP</span></a>
+520	<a href="#cap-6" data-ch="6"><span class="lc-toc-num">6</span><span class="lc-toc-text">Gestão de risco</span></a>
+521	<a href="#cap-7" data-ch="7"><span class="lc-toc-num">7</span><span class="lc-toc-text">Psicologia e erros</span></a>
+522	<a href="#cap-8" data-ch="8"><span class="lc-toc-num">8</span><span class="lc-toc-text">Primeiros passos concretos</span></a>
+523	Conteúdo educacional. Não digo o que comprar ou vender.
+524	Algum termo não ficou claro? Veja o <a href="glosar.html">glossário Forex</a>.
+525	Capítulo 1 de 8
+526	Forex, a corretora e a plataforma
+527	Forex (de <em>Foreign Exchange</em>) é o mercado onde as moedas são trocadas umas pelas outras. É o maior mercado financeiro do mundo e funciona 24 horas, de segunda a sexta.
+528	Pares de moedas
+529	No Forex você sempre opera uma moeda contra outra, por isso os preços aparecem em pares: EURUSD, GBPUSD, USDJPY.
+530	<b>EUR</b><span>moeda base</span>
+531	<b>USD</b><span>moeda cotada</span>
+532	<b>1,1000</b><span>1 euro custa 1,10 dólar</span>
+533	O preço diz quantas unidades da moeda cotada custa uma unidade da moeda base.
+534	<strong>Buy (long):</strong> você espera que o preço suba.
+535	<strong>Sell (short):</strong> você espera que o preço caia.
+536	No começo, fique em poucos pares muito negociados, como EURUSD, GBPUSD ou USDJPY. Eles têm custos baixos e é fácil encontrar informações sobre eles. O ouro e os pares exóticos se movem de forma mais brusca e custam mais.
+537	Bid, ask e spread
+538	<strong>Bid:</strong> o preço pelo qual você pode <strong>vender</strong>.
+539	<strong>Ask:</strong> o preço pelo qual você pode <strong>comprar</strong>, sempre um pouco mais alto.
+540	A diferença entre eles é o <strong>spread</strong>, o principal custo de uma operação. Por isso toda posição começa um pouco no negativo.
+541	Você compra no ask e vende no bid. A distância entre eles é o spread.
+542	Exemplo
+543	EURUSD: bid 1,1000, ask 1,1001 → spread = 0,0001 = <b>1 pip</b>
+544	A corretora e a plataforma
+545	Você não opera direto no mercado interbancário, mas por meio de uma <strong>corretora</strong>. Você abre uma conta, deposita dinheiro e ganha acesso a uma <strong>plataforma de trading</strong>. As mais usadas são o MetaTrader 4 e o MetaTrader 5 (MT4/MT5), no computador e no celular.
+546	Nas corretoras para clientes de varejo, normalmente você não compra moeda de verdade, mas um <strong>CFD</strong>: um contrato que acompanha o preço. Você ganha ou perde a diferença de preço, com alavancagem (capítulo 4).
+547	As corretoras também oferecem uma <strong>conta demo</strong>, com dinheiro virtual e preços reais. É lá que você aprende a plataforma sem nenhum risco. Comece por ela.
+548	Quando o mercado se move
+549	O mercado abre no domingo à tarde (17:00 no horário de Nova York) e fecha na sexta às 17:00 no horário de Nova York. Aproximadamente, no horário local de cada centro:
+550	<b>Ásia (Sydney, Tóquio)</b><span>durante a noite e a madrugada europeias. Normalmente movimentos mais calmos.</span>
+551	<b>Londres</b><span>08:00–17:00 no horário de Londres, a maior liquidez do dia.</span>
+552	<b>Nova York</b><span>08:00–17:00 no horário de Nova York.</span>
+553	<b>Sobreposição Londres–Nova York</b><span>13:00–17:00 no horário de Londres, normalmente o período mais ativo.</span>
+554	Os EUA e a Europa mudam o horário em datas diferentes, então durante algumas semanas em março e a partir do fim de outubro a diferença entre Londres e Nova York é uma hora menor que o normal. A página <a href="sesiuni.html">Sessões</a> leva isso em conta e mostra tudo no seu horário.
+555	Buy significa que você espera que o preço suba; sell, que espera que caia.
+556	Você compra no ask e vende no bid. O spread é um custo em toda operação.
+557	Você opera por uma corretora, numa plataforma como MT4 ou MT5. Comece numa conta demo.
+558	O período mais ativo costuma ser a sobreposição Londres–Nova York, das 13:00 às 17:00 no horário de Londres.
+559	<span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Terminei este capítulo</span>
+560	<a class="lc-next" href="#cap-2">Capítulo 2: O gráfico: candles e timeframes <span aria-hidden="true">→</span></a>
+561	Capítulo 2 de 8
+562	O gráfico: candles e timeframes
+563	Antes de qualquer estratégia, você precisa saber ler um gráfico. O mais usado é o gráfico de candles.
+564	Cada candle mostra o que o preço fez num período: onde começou (<strong>abertura</strong>), onde terminou (<strong>fechamento</strong>) e até onde subiu e desceu (<strong>máxima</strong> e <strong>mínima</strong>).
+565	O corpo mostra a abertura e o fechamento. Os pavios mostram a máxima e a mínima.
+566	<strong>Candle verde:</strong> o fechamento está acima da abertura; o preço subiu naquele período.
+567	<strong>Candle vermelho:</strong> o fechamento está abaixo da abertura; o preço caiu.
+568	<strong>Os pavios</strong> mostram até onde o preço foi, mesmo que não tenha ficado lá.
+569	Com o tempo, os candles formam estruturas fáceis de reconhecer. Na página <a href="patternuri.html">Padrões</a> você encontra as mais conhecidas.
+570	Timeframes
+571	O mesmo par pode ser visto em diferentes timeframes: <strong>M15</strong> (um candle = 15 minutos), <strong>H1</strong> (uma hora), <strong>H4</strong> (4 horas), <strong>D1</strong> (um dia), <strong>W1</strong> (uma semana). Os timeframes curtos têm muito "ruído" e sinais falsos. Nos maiores, a direção fica bem mais clara.
+572	Sou swing trader: mantenho as posições de alguns dias a algumas semanas e trabalho principalmente no D1 e no H4. Começo pelo timeframe maior para ver a direção e depois desço para procurar a entrada. Para um iniciante, esse ritmo é mais tolerante: você tem tempo para pensar.
+573	Um candle mostra a abertura, o fechamento, a máxima e a mínima de um período.
+574	Verde = fechamento acima da abertura. Vermelho = fechamento abaixo da abertura.
+575	Os timeframes maiores (D1, H4) têm menos ruído. Trabalhe de cima para baixo.
+576	<a class="lc-next" href="#cap-3">Capítulo 3: Pips, lotes e custos <span aria-hidden="true">→</span></a>
+577	Capítulo 3 de 8
+578	Pips, lotes e custos
+579	Para saber quanto você arrisca, precisa saber quanto vale um movimento do preço. Tudo o que vem depois se apoia neste capítulo.
+580	O pip
+581	Na maioria dos pares, <strong>1 pip = 0,0001</strong> (a quarta casa decimal).
+582	Nos pares com iene (JPY), <strong>1 pip = 0,01</strong> (a segunda casa decimal).
+583	As plataformas mostram uma casa decimal a mais, chamada <strong>ponto</strong>: <strong>10 pontos = 1 pip</strong>. No MetaTrader, as distâncias costumam aparecer em pontos.
+584	<span><b class="lc-d-pip">5</b> o dígito do pip</span><span><i class="lc-d-pt">7</i> o ponto (1/10 de pip)</span>
+585	O lote
+586	O tamanho da posição é escolhido em <strong>lotes</strong>:
+587	Tipo
+588	Lotes
+589	Unidades
+590	1 pip no EURUSD
+591	Padrão
+592	Mini
+593	Micro
+594	Com 0,01 lote (normalmente o tamanho mínimo) você pode começar numa conta real pequena, com risco controlado.
+595	<span>Valor do pip</span> = tamanho do pip × número de unidades
+596	Exemplo · EURUSD
+597	1 lote: 0,0001 × 100.000 = <b>10 USD por pip</b>
+598	Você compra 0,10 lote (1 USD por pip) a 1,1000 e fecha a 1,1035, ou seja, 35 pips:
+599	35 × 1 USD = <b>35 USD</b>
+600	Se o preço tivesse caído 35 pips, você teria perdido os mesmos 35 USD. Para uma conta em euros, você divide pela cotação. Com EURUSD = 1,10:
+601	10 USD ÷ 1,10 ≈ <b>€ 9,09 por pip</b> para 1 lote
+602	Em outros instrumentos o valor muda: no USDJPY, um pip em 1 lote são 1.000 JPY, que a uma cotação de 150 dão cerca de 1.000 ÷ 150 ≈ 6,67 USD. No ouro, um lote costuma ser de 100 onças, então um movimento de 1 dólar são 100 USD em 1 lote. Confira as especificações do ativo na sua corretora. A <a href="calculator.html">calculadora de lote</a> faz as conversões por você.
+603	Os custos de uma operação
+604	<strong>O spread</strong>, em toda entrada. No EURUSD, com spread de 1 pip e 0,10 lote: 1 USD. Ele alarga em notícias, à noite e na reabertura do mercado.
+605	<strong>Comissão:</strong> algumas contas têm spread menor, mas uma comissão fixa por lote. Compare o custo total.
+606	<strong>Swap:</strong> se você mantém a posição de um dia para o outro, paga um custo (às vezes recebe um pequeno ganho), com base nas taxas de juros das duas moedas. Na maioria das corretoras é cobrado em triplo às quartas-feiras, para cobrir o fim de semana. Faz diferença no swing trading.
+607	1 pip = 0,0001 na maioria dos pares e 0,01 nos pares com JPY. 10 pontos = 1 pip.
+608	1 lote = 100.000 unidades. No EURUSD, 1 lote = 10 USD por pip, 0,01 lote = 0,10 USD por pip.
+609	Os custos reais são o spread, a comissão e o swap. Leve-os em conta.
+610	<a class="lc-next" href="#cap-4">Capítulo 4: Alavancagem e margem <span aria-hidden="true">→</span></a>
+611	Capítulo 4 de 8
+612	Alavancagem e margem
+613	A alavancagem atrai muita gente para o Forex. Também é o motivo pelo qual muitos zeram a conta.
+614	A alavancagem permite abrir uma posição muito maior que o dinheiro da sua conta. Com alavancagem de 1:30, para cada € 1 da sua conta você pode controlar uma posição de € 30. A corretora bloqueia uma parte da sua conta como garantia, e isso se chama <strong>margem</strong>.
+615	<span>Margem necessária</span> = valor da posição ÷ alavancagem
+616	<b>Importante:</b> o lucro e o prejuízo são calculados sobre o <strong>valor total da posição</strong>, não sobre a margem. A alavancagem amplia as perdas na mesma medida.
+617	Exemplo · conta de € 1.000, alavancagem 1:30
+618	Você compra 0,10 lote de EURUSD. Valor da posição: € 10.000.
+619	Margem = 10.000 ÷ 30 ≈ <b>€ 333,33</b> · 100 pips contra você ≈ 100 × € 0,909 ≈ <b>€ 90,91</b> (9% da conta)

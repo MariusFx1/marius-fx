@@ -1,0 +1,140 @@
+620	Para 1 lote você precisaria de € 3.333,33 de margem, então não consegue abri-lo. O limite te protege. Numa corretora fora da UE, com alavancagem de 1:500, a margem para 1 lote seria de apenas € 200:
+621	1 lote: 100 pips contra você ≈ 100 × € 9,09 ≈ <b>€ 909</b>, ou seja, 91% da conta
+622	Seu risco vem do tamanho da posição. Uma alavancagem alta só permite abrir posições grandes demais.
+623	Margin call e stop out
+624	<span>Nível de margem</span> = patrimônio ÷ margem usada × 100%
+625	<strong>Margin call:</strong> o aviso de que sua margem livre acabou. O nível é definido pela corretora.
+626	<strong>Stop out:</strong> a corretora fecha suas posições automaticamente. Na UE, para clientes de varejo, as regras da ESMA exigem o fechamento quando o patrimônio cai abaixo de 50% da margem inicial exigida. Fora da UE, a corretora escolhe o nível. Se você chegou aqui, arriscou demais.
+627	As proteções na UE
+628	Nas corretoras reguladas na UE, os clientes de varejo têm alavancagem máxima limitada pela ESMA (esses limites se aplicam a clientes da UE):
+629	Instrumento
+630	Alavancagem máxima
+631	Pares formados só por USD, EUR, JPY, GBP, CAD, CHF (ex.: EURUSD, USDJPY)
+632	Outros pares (ex.: AUDUSD), ouro, índices principais
+633	Outras commodities (ex.: petróleo), outros índices
+634	Ações
+635	Criptomoedas
+636	Também na UE, os clientes de varejo têm <strong>proteção contra saldo negativo</strong>: você não pode perder mais do que o dinheiro da sua conta. Corretoras fora da UE não são obrigadas a aplicar essas regras, então confira qual entidade da corretora abre a sua conta.
+637	A alavancagem amplia ganhos e perdas na mesma medida.
+638	A margem é uma garantia bloqueada pela corretora, não sua perda máxima.
+639	O stop out fecha as posições automaticamente. Na UE, a 50% da margem exigida.
+640	Você calcula o lote pelo risco, não pelo que a alavancagem permite.
+641	<a class="lc-next" href="#cap-5">Capítulo 5: Ordens, stop loss e take profit <span aria-hidden="true">→</span></a>
+642	Capítulo 5 de 8
+643	Ordens, stop loss e take profit
+644	Se você lembrar de uma só coisa desta lição inteira, gostaria que fosse esta: nenhuma operação sem stop loss.
+645	Tipos de ordem
+646	<strong>A mercado:</strong> você entra na hora, ao preço atual.
+647	<strong>Limit:</strong> você entra a um preço melhor. <strong>Buy limit</strong> abaixo do preço atual, <strong>sell limit</strong> acima.
+648	<strong>Stop:</strong> você entra quando o preço confirma a direção. <strong>Buy stop</strong> acima do preço atual, <strong>sell stop</strong> abaixo.
+649	Limit: você espera um preço melhor. Stop: você espera o movimento se confirmar.
+650	Um stop loss atingido é executado no primeiro preço disponível. Em notícias ou depois do fim de semana, o preço pode pular além do seu nível (<strong>gap</strong>) e você sai a um preço pior do que o planejado (<strong>slippage</strong>). O SL limita a perda, mas não a garante até o pip.
+651	Stop loss: sempre
+652	<strong>O stop loss (SL)</strong> fecha sua posição automaticamente a um preço definido antes. Sem SL, uma única notícia inesperada, ou uma noite em que você pensa "deixa, vai voltar", pode apagar meses de trabalho.
+653	O SL vai onde a sua ideia é invalidada, não a um número de pips escolhido ao acaso:
+654	<strong>Numa compra:</strong> abaixo da última mínima relevante ou abaixo de uma zona de suporte.
+655	<strong>Numa venda:</strong> acima da última máxima relevante ou acima de uma resistência.
+656	Deixe alguns pips de folga, mais o spread.
+657	Só então você calcula o lote (capítulo 6). O gráfico dita a distância, e o lote se adapta a ela.
+658	<b>Regra de ouro:</b> nunca afaste o SL quando o preço se aproxima dele. Você só pode movê-lo para reduzir o risco, por exemplo para o preço de entrada, e só se o seu plano disser isso.
+659	Take profit e a relação risco/retorno
+660	<strong>O take profit (TP)</strong> fecha sua posição automaticamente no seu alvo. <strong>R:R</strong> compara quanto você arrisca com quanto pode ganhar. O risco de uma operação se chama <strong>1R</strong>.
+661	SL abaixo da última mínima, TP antes da próxima resistência. Você arrisca 1R para ganhar 2R.
+662	Buy EURUSD a 1,1000, SL em 1,0975, TP em 1,1050.
+663	Risco 25 pips · alvo 50 pips → R:R = <b>1:2</b>
+664	Com um R:R de 1:2 você precisa ganhar pelo menos uma operação em cada três para empatar, antes dos custos: 1 ÷ (1 + 2) = 33,3%. Com 1:1 você precisa de mais de 50%.
+665	10 operações, 4 vencedoras e 6 perdedoras: 4 × 2R − 6 × 1R = <b>+2R</b>
+666	É um cálculo, não uma promessa: a relação importa mais do que a frequência com que você acerta.
+667	O TP vai num lugar lógico, antes de uma zona onde o preço pode virar, não só para conseguir uma relação grande.
+668	Mercado = agora, limit = a um preço melhor, stop = na confirmação.
+669	Nenhuma operação sem stop loss, colocado onde a ideia é invalidada.
+670	Nunca afaste o SL.
+671	Procure um R:R de pelo menos 1:2, com alvos lógicos.
+672	<a class="lc-next" href="#cap-6">Capítulo 6: Gestão de risco <span aria-hidden="true">→</span></a>
+673	Capítulo 6 de 8
+674	A estratégia te dá as entradas. A gestão de risco te mantém no jogo tempo suficiente para aprender.
+675	A regra de 1%
+676	Você arrisca <strong>no máximo 1% da conta por operação</strong>. Com € 1.000, isso significa uma perda de no máximo € 10 se o stop loss for atingido. Parece pouco, e é exatamente essa a ideia: você pode errar muitas vezes sem ser eliminado do jogo. No começo, até 0,5% é uma ótima escolha.
+677	O cálculo do lote
+678	<span>Lote</span> = valor em risco ÷ (stop loss em pips × valor do pip para 1 lote)
+679	Exemplo · conta de € 1.000, risco de 1%, SL de 25 pips, EURUSD
+680	<span>Valor em risco</span><b class="lc-calc-inline">€ 1.000 × 1% = € 10</b>
+681	<span>Stop loss</span><b class="lc-calc-inline">25 pips, abaixo da última mínima</b>
+682	<span>Valor do pip para 1 lote, em euros</span><b class="lc-calc-inline">10 USD ÷ 1,10 ≈ € 9,09</b>
+683	<span>Lote</span><b class="lc-calc-inline">10 ÷ (25 × 9,09) ≈ 0,044</b>
+684	<span>Arredonde para baixo</span><b class="lc-calc-inline">0,04 lote</b>
+685	<b>Conferência:</b> 0,04 × 25 × 9,09 ≈ € 9,09, abaixo de € 10. Arredonde sempre para baixo; caso contrário, você arrisca mais de 1%.
+686	Se o gráfico pedir um SL de 50 pips, o lote passa a 0,02. O risco em euros continua o mesmo; só muda o tamanho da posição. Na <a href="calculator.html">calculadora</a>, com EURUSD, moeda EUR, saldo 1000, risco 1, stop loss 25 e preço 1,10, você também obtém 0,04 lote.
+687	Sequências de perdas são normais
+688	Sequências de perdas vão aparecer mesmo com um bom método. Em termos estritamente matemáticos, com taxa de acerto de 50%, a chance de ter pelo menos 6 perdas seguidas em 100 operações é de cerca de 55%.
+689	O mesmo azar, contas muito diferentes. Cada perda é calculada sobre o saldo que sobrou.
+690	Perdas grandes são difíceis de recuperar
+691	<span role="columnheader">Perda</span><span role="columnheader">Ganho necessário para voltar</span>
+692	De € 1.000 você perde 50% e fica com € 500. Para voltar a € 1.000 você precisa de +€ 500, ou seja, +100% do que sobrou.
+693	Defina também um limite de perda diário e semanal, por exemplo 2% e 5%. Quando atingir, feche a plataforma.
+694	No máximo 1% de risco por operação. No começo, 0,5% é ainda melhor.
+695	Lote = valor em risco ÷ (SL em pips × valor do pip por 1 lote). Arredonde para baixo.
+696	Sequências de perdas são normais. Um risco pequeno as torna suportáveis.
+697	<a class="lc-next" href="#cap-7">Capítulo 7: Psicologia, disciplina e erros <span aria-hidden="true">→</span></a>
+698	Capítulo 7 de 8
+699	Psicologia, disciplina e erros
+700	Uma estratégia você aprende em algumas semanas. A disciplina leva anos. Muitas contas não se perdem por falta de conhecimento, mas por causa das emoções.
+701	O plano de trading
+702	Um documento <strong>escrito</strong>, não de cabeça. Quando as emoções sobem, o plano pensa por você. Ele precisa responder:
+703	O que você opera (2–3 pares) e em que horários.
+704	O que exatamente você precisa ver no gráfico para entrar.
+705	Onde você coloca o SL e o TP.
+706	Quanto você arrisca por operação, por dia e por semana.
+707	O que você faz depois de uma perda ou de uma sequência de perdas.
+708	O diário
+709	Registre cada operação: o par, o motivo da entrada, SL, TP, o resultado em R, como você se sentiu e se seguiu seu plano. Depois de 20–30 operações você verá o que funciona e onde erra. Neste site há um <a href="jurnal.html">diário gratuito</a>, salvo só no seu navegador.
+710	As armadilhas emocionais
+711	<strong>Revenge trading (operar por vingança):</strong> depois de uma perda você quer "recuperar" na hora, normalmente com um lote maior. Antídoto: depois de 2 perdas seguidas, feche a plataforma até o dia seguinte.
+712	<strong>FOMO (medo de ficar de fora):</strong> você entra atrasado num movimento grande, sem um SL lógico. Antídoto: uma entrada perdida não é uma perda. Outras oportunidades vão aparecer.
+713	<strong>Overtrading:</strong> operações demais, por tédio. Antídoto: entre só nos setups do seu plano.
+714	<strong>Medo e ganância:</strong> você fecha as vencedoras cedo demais e deixa as perdedoras correrem. Antídoto: SL e TP definidos desde o início e sem mexer.
+715	Os erros típicos
+716	Além dos que envolvem stop loss e risco, estes são os erros que eu mesmo cometi no começo:
+717	Aumentar uma posição perdedora
+718	Nunca faça "preço médio" numa perda.
+719	Mudar de estratégia depois de cada perda
+720	Teste em pelo menos 30–50 operações na demo antes de julgar.
+721	Operar notícias sem saber
+722	Confira o <a href="calendar.html">calendário econômico</a> todos os dias (juros, inflação, empregos nos EUA).
+723	Copiar sinais sem entender
+724	Se você não sabe por que entrou, também não vai saber quando sair.
+725	Um plano escrito antes da primeira operação, um registro no diário depois de cada uma.
+726	Depois das perdas: uma pausa, não vingança.
+727	Os grandes erros costumam vir de risco demais e falta de regras.
+728	<a class="lc-next" href="#cap-8">Capítulo 8: Seus primeiros passos concretos <span aria-hidden="true">→</span></a>
+729	Capítulo 8 de 8
+730	Seus primeiros passos concretos
+731	Você chegou ao fim. Aqui está exatamente o que eu faria se começasse do zero hoje.
+732	Domine os cálculos
+733	Releia os capítulos 3–6 até conseguir calcular o lote sozinho. Use a <a href="calculator.html">calculadora</a> para conferir.
+734	Conta demo, pelo menos 6–8 semanas
+735	E um mínimo de 30–50 operações, com o mesmo risco de 1%, o mesmo plano e um diário completo, como se fosse dinheiro real. Antes ou junto com isso, pratique com dados históricos no <a href="simulator.html">simulador de backtesting</a>: você vê o gráfico barra por barra, sem saber o que vem depois.
+736	Escreva seu plano
+737	Parta das <a href="reguli.html">regras básicas</a>. Escolha 2–3 pares, os horários em que vai operar (veja <a href="sesiuni.html">Sessões</a>) e 1–2 setups que você entende, por exemplo dos <a href="patternuri.html">padrões</a>.
+738	Um diário desde a primeira operação
+739	Registre tudo no <a href="jurnal.html">diário</a> e leia-o todo fim de semana.
+740	Vá para a conta real só se tiver sido disciplinado
+741	Não "se lucrou na demo", mas se seguiu seu plano. Comece com uma conta pequena, com dinheiro que você pode perder, e com 0,01 lote.
+742	Escolha sua corretora com cuidado
+743	Confira a regulamentação, os custos e a facilidade para sacar seu dinheiro. Na página <a href="broker.html">Corretora</a> você encontra a corretora que eu uso (link de afiliado).
+744	Checklist antes de cada operação
+745	Se faltar um único ponto, você não entra.
+746	<span>A operação se encaixa num setup do meu plano.</span>
+747	<span>Conferi a direção no timeframe maior (D1 / H4).</span>
+748	<span>Sei exatamente onde vai meu stop loss e por quê.</span>
+749	<span>O R:R é de pelo menos 1:2, com um alvo lógico.</span>
+750	<span>Calculei o lote para um risco máximo de 1%.</span>
+751	<span>Conferi o calendário econômico para as próximas horas.</span>
+752	<span>Estou calmo: não estou entrando por tédio, FOMO ou para recuperar perdas.</span>
+753	<span>Vou registrar a operação no meu diário.</span>
+754	Marque os 8 pontos antes de entrar.
+755	Trading não é corrida. O que importa não é a velocidade com que você chega, mas chegar com a conta intacta e um processo que você possa repetir. Se tiver dúvidas, entre na comunidade gratuita do Telegram ou me escreva.
+756	Bons estudos,<br><b>Marius</b>
+757	<a class="btn btn-primary" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener">Comunidade gratuita no Telegram</a> <a class="btn btn-ghost" href="contact.html">Me escreva</a>
+758	Primeiro a demo, com as mesmas regras da conta real.
+759	Conta real: valores pequenos e 0,01 lote, só depois de ter sido disciplinado.

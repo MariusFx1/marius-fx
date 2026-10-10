@@ -10,7 +10,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) pass++; else { fail++; console.log('FAIL', m); } };
 const pre = l => (l === 'ro' ? '' : l + '/');
-const RO_LEAK = /[ăâîșțşţĂÂÎȘȚ]|\b(și|pentru|este|sunt|tranzacți\w+|capitolul|Înapoi|Șterge|Acasă)\b/;
+// „este” există și în ES/PT, iar „â” e literă normală în PT: detectorul se adaptează limbii verificate
+const RO_LEAKS = {
+  en: /[ăâîșțşţĂÂÎȘȚ]|\b(și|pentru|este|sunt|tranzacți\w+|capitolul|Înapoi|Șterge|Acasă)\b/,
+  es: /[ăâîșțşţĂÂÎȘȚ]|(?<!\p{L})(pentru|sunt|tranzacți\p{L}*|capitolul|Înapoi|Șterge|Acasă|să|dacă|nu|cu|sau)(?!\p{L})/u,
+  pt: /[ăîșțşţĂÎȘȚ]|(?<!\p{L})(pentru|sunt|tranzacți\p{L}*|capitolul|Înapoi|Șterge|Acasă|să|dacă|sau)(?!\p{L})/u,
+};
+const RO_LEAK = RO_LEAKS.en;
 
 function staticChecks() {
   const href = {};
@@ -28,7 +34,7 @@ function staticChecks() {
       let j; try { j = JSON.parse(m[1]); } catch (e) { ok(false, `${l}/${p}: JSON-LD parse`); continue; }
       const txt = JSON.stringify(j);
       ok(!txt.includes('"inLanguage"') || !new RegExp(`"inLanguage":"(?!${l})`).test(txt), `${l}/${p}: JSON-LD inLanguage=${l}`);
-      if (l !== 'ro') ok(!RO_LEAK.test(txt.replace(/Iași/g, '')), `${l}/${p}: JSON-LD without Romanian`);
+      if (l !== 'ro') ok(!(RO_LEAKS[l] || RO_LEAK).test(txt.replace(/Iași/g, '')), `${l}/${p}: JSON-LD without Romanian`);
     }
     const ogl = (s.match(/og:locale" content="([^"]+)"/) || [])[1];
     if (ogl) ok(ogl.startsWith(l === 'en' ? 'en' : l), `${l}/${p}: og:locale ${ogl}`);
@@ -77,9 +83,9 @@ async function pageChecks(b, l, w) {
     ok(r.sw, `${l}/${p}@${w}: switcher present`);
     ok(r.oneRow, `${l}/${p}@${w}: nav + switcher on one row`);
     if (l !== 'ro') {
-      const lines = r.text.split('\n').map(s => s.replace(/Română|Iași/g, '')).filter(s => RO_LEAK.test(s));
+      const lines = r.text.split('\n').map(s => s.replace(/Română|Iași/g, '')).filter(s => (RO_LEAKS[l] || RO_LEAK).test(s));
       ok(lines.length === 0, `${l}/${p}@${w}: no Romanian at runtime: ${lines.slice(0, 3).join(' | ')}`);
-      ok(!RO_LEAK.test(r.title), `${l}/${p}: title translated`);
+      ok(!(RO_LEAKS[l] || RO_LEAK).test(r.title), `${l}/${p}: title translated`);
     }
   }
   // selectorul: deschide (în meniul mobil pe 390), link-urile duc la aceeași pagină
@@ -124,7 +130,7 @@ async function toolChecks(b, l) {
   await sleep(200);
   const qr = await q.evaluate(() => ({ score: document.getElementById('quiz-score').textContent, res: !document.getElementById('quiz-result').hidden, text: document.getElementById('quiz-result').innerText }));
   ok(qr.res && /\d+/.test(qr.score), `${l}: quiz completes (${qr.score})`);
-  if (l !== 'ro') ok(!RO_LEAK.test(qr.text), `${l}: quiz result translated`);
+  if (l !== 'ro') ok(!(RO_LEAKS[l] || RO_LEAK).test(qr.text), `${l}: quiz result translated`);
   await q.close();
   // jurnal
   const j = await b.newPage(); await j.setViewport({ width: 1280, height: 900 }); j.on('pageerror', e => errs.push(e.message));
@@ -136,7 +142,7 @@ async function toolChecks(b, l) {
   await j.evaluate(() => document.getElementById('jt-submit').click()); await sleep(200);
   const jr = await j.evaluate(() => ({ n: JSON.parse(localStorage.getItem('mariusfx-jurnal-v1') || '[]').length, text: document.querySelector('.jt-item')?.innerText || '', stats: document.querySelector('[data-stat="totalR"]').textContent }));
   ok(jr.n === 1, `${l}: journal add saved to shared key (${jr.n})`);
-  if (l !== 'ro') ok(!RO_LEAK.test(jr.text), `${l}: journal row translated: ${jr.text.slice(0, 80)}`);
+  if (l !== 'ro') ok(!(RO_LEAKS[l] || RO_LEAK).test(jr.text), `${l}: journal row translated: ${jr.text.slice(0, 80)}`);
   await j.close();
   // simulator: start, trade, statistici
   const s = await b.newPage(); await s.setViewport({ width: 1280, height: 900 }); s.on('pageerror', e => errs.push(e.message));
@@ -153,7 +159,7 @@ async function toolChecks(b, l) {
   const se = await s.evaluate(() => ({ n: document.getElementById('sim-m-n').textContent, text: document.body.innerText }));
   ok(se.n === '1' || +se.n >= 1, `${l}: simulator summary shows trades (${se.n})`);
   if (l !== 'ro') {
-    const lines = (st.ws + '\n' + se.text).split('\n').filter(x => RO_LEAK.test(x.replace(/Română/g, '')));
+    const lines = (st.ws + '\n' + se.text).split('\n').filter(x => (RO_LEAKS[l] || RO_LEAK).test(x.replace(/Română/g, '')));
     ok(lines.length === 0, `${l}: simulator UI has no Romanian: ${lines.slice(0, 4).join(' | ')}`);
   }
   await s.close();

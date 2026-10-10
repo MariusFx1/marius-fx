@@ -1,0 +1,140 @@
+480	Antes de entrar
+481	Checklist antes de entrar a una operación
+482	¿Tengo un plan claro para esta entrada?
+483	¿Está colocado el stop loss?
+484	¿Riesgo ≤ 1–2% de la cuenta?
+485	¿Estoy libre de operar por emoción (miedo, FOMO, revancha)?
+486	Un solo "no" = no entras. El mercado siempre te da otra oportunidad.
+487	<a class="jt-preview" href="images/jurnal-sablon-preview.png?v=31" data-lightbox> <img src="images/jurnal-sablon-preview.png?v=31" width="1600" height="1131" loading="lazy" decoding="async" alt="Vista previa de la plantilla del diario de trading Marius FX (en rumano): una tabla vacía con columnas para fecha, par, dirección, sesión, setup, precio de entrada, stop loss, take profit, lote, riesgo, R:R, resultado, plan respetado, emociones y lección, más un checklist antes de entrar"> <span class="jt-preview-zoom">Clic para ampliar</span> </a>
+488	Plantillas gratuitas
+489	¿Prefieres papel o Excel?
+490	Descarga la plantilla en blanco y complétala sin conexión. Las mismas columnas que el diario de arriba. Por ahora las plantillas están en rumano.
+491	<b>Excel (.xlsx)</b>: listas desplegables (Buy/Sell, sesión, resultado, Sí/No), R:R y resultado en R calculados automáticamente, una hoja "Resumen" con estadísticas e instrucciones con un ejemplo ficticio. También funciona en Google Sheets o LibreOffice.
+492	<b>PDF (A4, horizontal)</b>: una tabla para imprimir con 13 filas y un checklist antes de entrar.
+493	<a class="btn btn-primary" href="downloads/jurnal-tranzactionare-marius-fx.xlsx?v=31" download="jurnal-tranzactionare-marius-fx.xlsx">Descargar Excel</a> <a class="btn btn-ghost" href="downloads/jurnal-tranzactionare-marius-fx.pdf?v=31" download="jurnal-tranzactionare-marius-fx.pdf">Descargar PDF</a>
+494	Diario de trading gratuito: registra tus operaciones directamente en el navegador, guardadas solo en tu dispositivo, o descarga la plantilla en Excel y PDF. Sin crear cuenta.
+495	p. ej.: EURPLN
+496	p. ej.: 2 o -1
+497	p. ej.: 20
+498	tranquilo, apurado, con miedo, FOMO…
+499	El resumen de tu diario
+500	Exportar y copia de seguridad
+501	Curso de Forex gratis para principiantes, paso a paso | Marius FX
+502	<a href="lectie.html" aria-current="page">Principiantes</a>
+503	Curso gratis · desde cero
+504	Forex para principiantes, <span class="accent">paso a paso</span>
+505	Hola, soy Marius. Cuando empecé, no tenía a nadie que me explicara lo básico, así que aprendí solo, con errores que me costaron tiempo y dinero. Aquí puse solo lo que necesitas como principiante, en el orden en que conviene aprenderlo.
+506	No te prometo que vayas a ganar dinero. Te prometo que vas a entender qué haces, cuánto arriesgas y cómo protegerte.
+507	<b>8</b> capítulos
+508	unos <b>15 minutos</b> de lectura
+509	un ejemplo numérico para cada idea
+510	Tu progreso
+511	<b id="lc-done-count">0</b> de <span id="lc-total">8</span> capítulos completados
+512	<a class="btn btn-primary lc-start" id="lc-start" href="#cap-1">Empieza por el capítulo 1</a>
+513	Marca cada capítulo al terminarlo. Tu progreso se guarda solo en tu navegador.
+514	Contenido
+515	<a href="#cap-1" data-ch="1"><span class="lc-toc-num">1</span><span class="lc-toc-text">Forex, bróker, plataforma</span></a>
+516	<a href="#cap-2" data-ch="2"><span class="lc-toc-num">2</span><span class="lc-toc-text">Velas y temporalidades</span></a>
+517	<a href="#cap-3" data-ch="3"><span class="lc-toc-num">3</span><span class="lc-toc-text">Pips, lotes y costos</span></a>
+518	<a href="#cap-4" data-ch="4"><span class="lc-toc-num">4</span><span class="lc-toc-text">Apalancamiento y margen</span></a>
+519	<a href="#cap-5" data-ch="5"><span class="lc-toc-num">5</span><span class="lc-toc-text">Órdenes, SL y TP</span></a>
+520	<a href="#cap-6" data-ch="6"><span class="lc-toc-num">6</span><span class="lc-toc-text">Gestión del riesgo</span></a>
+521	<a href="#cap-7" data-ch="7"><span class="lc-toc-num">7</span><span class="lc-toc-text">Psicología y errores</span></a>
+522	<a href="#cap-8" data-ch="8"><span class="lc-toc-num">8</span><span class="lc-toc-text">Primeros pasos concretos</span></a>
+523	Contenido educativo. No te digo qué comprar ni qué vender.
+524	¿Un término no está claro? Mira el <a href="glosar.html">glosario Forex</a>.
+525	Capítulo 1 de 8
+526	Forex, el bróker y la plataforma
+527	Forex (de <em>Foreign Exchange</em>) es el mercado donde las monedas se intercambian entre sí. Es el mercado financiero más grande del mundo y funciona las 24 horas, de lunes a viernes.
+528	Pares de divisas
+529	En Forex siempre operas una moneda contra otra, por eso los precios aparecen en pares: EURUSD, GBPUSD, USDJPY.
+530	<b>EUR</b><span>moneda base</span>
+531	<b>USD</b><span>moneda cotizada</span>
+532	<b>1,1000</b><span>1 euro cuesta 1,10 dólares</span>
+533	El precio te dice cuántas unidades de la moneda cotizada cuesta una unidad de la moneda base.
+534	<strong>Buy (long):</strong> esperas que el precio suba.
+535	<strong>Sell (short):</strong> esperas que el precio baje.
+536	Al principio, quédate con unos pocos pares muy operados, como EURUSD, GBPUSD o USDJPY. Tienen costos bajos y es fácil encontrar información sobre ellos. El oro y los pares exóticos se mueven de forma más brusca y cuestan más.
+537	Bid, ask y spread
+538	<strong>Bid:</strong> el precio al que puedes <strong>vender</strong>.
+539	<strong>Ask:</strong> el precio al que puedes <strong>comprar</strong>, siempre un poco más alto.
+540	La diferencia entre ambos es el <strong>spread</strong>, el principal costo de una operación. Por eso toda posición empieza un poco en negativo.
+541	Compras al ask y vendes al bid. La distancia entre ambos es el spread.
+542	Ejemplo
+543	EURUSD: bid 1,1000, ask 1,1001 → spread = 0,0001 = <b>1 pip</b>
+544	El bróker y la plataforma
+545	No operas directamente en el mercado interbancario, sino a través de un <strong>bróker</strong>. Abres una cuenta, depositas dinero y obtienes acceso a una <strong>plataforma de trading</strong>. Las más usadas son MetaTrader 4 y MetaTrader 5 (MT4/MT5), en computadora y en el celular.
+546	En los brókers para clientes minoristas, normalmente no compras divisas reales, sino un <strong>CFD</strong>: un contrato que sigue el precio. Ganas o pierdes la diferencia de precio, con apalancamiento (capítulo 4).
+547	Los brókers también ofrecen una <strong>cuenta demo</strong>, con dinero virtual y precios reales. Ahí aprendes la plataforma sin ningún riesgo. Empieza por ahí.
+548	Cuándo se mueve el mercado
+549	El mercado abre el domingo por la tarde (17:00 hora de Nueva York) y cierra el viernes a las 17:00 hora de Nueva York. Aproximadamente, en la hora local de cada centro:
+550	<b>Asia (Sídney, Tokio)</b><span>durante la noche y la madrugada europeas. Normalmente con movimientos más tranquilos.</span>
+551	<b>Londres</b><span>08:00–17:00 hora de Londres, la mayor liquidez del día.</span>
+552	<b>Nueva York</b><span>08:00–17:00 hora de Nueva York.</span>
+553	<b>Solapamiento Londres–Nueva York</b><span>13:00–17:00 hora de Londres, normalmente el período más activo.</span>
+554	EE. UU. y Europa cambian la hora en fechas distintas, así que durante algunas semanas de marzo y desde finales de octubre la diferencia entre Londres y Nueva York es una hora menor de lo habitual. La página <a href="sesiuni.html">Sesiones</a> lo tiene en cuenta y muestra todo en tu hora.
+555	Buy significa que esperas que el precio suba; sell, que esperas que baje.
+556	Compras al ask y vendes al bid. El spread es un costo en cada operación.
+557	Operas a través de un bróker, en una plataforma como MT4 o MT5. Empieza en una cuenta demo.
+558	El período más activo suele ser el solapamiento Londres–Nueva York, de 13:00 a 17:00 hora de Londres.
+559	<span class="lc-done-box" aria-hidden="true"></span><span class="lc-done-label">Terminé este capítulo</span>
+560	<a class="lc-next" href="#cap-2">Capítulo 2: El gráfico: velas y temporalidades <span aria-hidden="true">→</span></a>
+561	Capítulo 2 de 8
+562	El gráfico: velas y temporalidades
+563	Antes de cualquier estrategia, tienes que saber leer un gráfico. El más usado es el gráfico de velas japonesas.
+564	Cada vela muestra lo que hizo el precio en un período: dónde empezó (<strong>apertura</strong>), dónde terminó (<strong>cierre</strong>) y qué tan alto y qué tan bajo llegó (<strong>máximo</strong> y <strong>mínimo</strong>).
+565	El cuerpo muestra la apertura y el cierre. Las mechas muestran el máximo y el mínimo.
+566	<strong>Vela verde:</strong> el cierre está por encima de la apertura; el precio subió en ese período.
+567	<strong>Vela roja:</strong> el cierre está por debajo de la apertura; el precio bajó.
+568	<strong>Las mechas</strong> muestran hasta dónde llegó el precio, aunque no se haya quedado ahí.
+569	Con el tiempo, las velas forman estructuras fáciles de reconocer. En la página <a href="patternuri.html">Patrones</a> encontrarás las más conocidas.
+570	Temporalidades
+571	El mismo par se puede ver en distintas temporalidades: <strong>M15</strong> (una vela = 15 minutos), <strong>H1</strong> (una hora), <strong>H4</strong> (4 horas), <strong>D1</strong> (un día), <strong>W1</strong> (una semana). En las temporalidades bajas hay mucho "ruido" y señales falsas. En las altas, la dirección se ve mucho más clara.
+572	Soy swing trader: mantengo las posiciones de unos días a unas semanas y trabajo sobre todo en D1 y H4. Empiezo por la temporalidad alta para ver la dirección y después bajo para buscar la entrada. Para un principiante, este ritmo es más indulgente: tienes tiempo para pensar.
+573	Una vela muestra la apertura, el cierre, el máximo y el mínimo de un período.
+574	Verde = cierre por encima de la apertura. Roja = cierre por debajo de la apertura.
+575	Las temporalidades altas (D1, H4) tienen menos ruido. Trabaja de arriba hacia abajo.
+576	<a class="lc-next" href="#cap-3">Capítulo 3: Pips, lotes y costos <span aria-hidden="true">→</span></a>
+577	Capítulo 3 de 8
+578	Pips, lotes y costos
+579	Para saber cuánto arriesgas, necesitas saber cuánto vale un movimiento del precio. Todo lo que sigue se basa en este capítulo.
+580	El pip
+581	En la mayoría de los pares, <strong>1 pip = 0,0001</strong> (el cuarto decimal).
+582	En los pares con yen (JPY), <strong>1 pip = 0,01</strong> (el segundo decimal).
+583	Las plataformas muestran un decimal más, llamado <strong>punto</strong>: <strong>10 puntos = 1 pip</strong>. En MetaTrader, las distancias suelen aparecer en puntos.
+584	<span><b class="lc-d-pip">5</b> el dígito del pip</span><span><i class="lc-d-pt">7</i> el punto (1/10 de pip)</span>
+585	El lote
+586	El tamaño de la posición se elige en <strong>lotes</strong>:
+587	Tipo
+588	Lotes
+589	Unidades
+590	1 pip en EURUSD
+591	Estándar
+592	Mini
+593	Micro
+594	Con 0,01 lotes (normalmente el tamaño mínimo) puedes empezar en una cuenta real pequeña, con el riesgo controlado.
+595	<span>Valor del pip</span> = tamaño del pip × cantidad de unidades
+596	Ejemplo · EURUSD
+597	1 lote: 0,0001 × 100.000 = <b>10 USD por pip</b>
+598	Compras 0,10 lotes (1 USD por pip) a 1,1000 y cierras a 1,1035, es decir, 35 pips:
+599	35 × 1 USD = <b>35 USD</b>
+600	Si el precio hubiera bajado 35 pips, habrías perdido los mismos 35 USD. Para una cuenta en euros, divides por la cotización. Con EURUSD = 1,10:
+601	10 USD ÷ 1,10 ≈ <b>9,09 € por pip</b> para 1 lote
+602	En otros instrumentos el valor cambia: en USDJPY, un pip con 1 lote son 1.000 JPY, que a una cotización de 150 son unos 1.000 ÷ 150 ≈ 6,67 USD. En el oro, un lote suele ser de 100 onzas, así que un movimiento de 1 dólar son 100 USD con 1 lote. Revisa las especificaciones del símbolo en tu bróker. La <a href="calculator.html">calculadora de lotaje</a> hace las conversiones por ti.
+603	Los costos de una operación
+604	<strong>El spread</strong>, en cada entrada. En EURUSD, con un spread de 1 pip y 0,10 lotes: 1 USD. Se amplía con las noticias, de noche y en la reapertura del mercado.
+605	<strong>La comisión:</strong> algunas cuentas tienen un spread más bajo pero una comisión fija por lote. Compara el costo total.
+606	<strong>El swap:</strong> si mantienes la posición de un día para otro, pagas un costo (a veces recibes una pequeña ganancia), según las tasas de interés de las dos monedas. En la mayoría de los brókers se cobra triple los miércoles, para cubrir el fin de semana. Importa en el swing trading.
+607	1 pip = 0,0001 en la mayoría de los pares y 0,01 en los pares con JPY. 10 puntos = 1 pip.
+608	1 lote = 100.000 unidades. En EURUSD, 1 lote = 10 USD por pip, 0,01 lotes = 0,10 USD por pip.
+609	Los costos reales son el spread, la comisión y el swap. Tenlos en cuenta.
+610	<a class="lc-next" href="#cap-4">Capítulo 4: Apalancamiento y margen <span aria-hidden="true">→</span></a>
+611	Capítulo 4 de 8
+612	Apalancamiento y margen
+613	El apalancamiento atrae a mucha gente al Forex. También es el motivo por el que muchos vacían su cuenta.
+614	El apalancamiento te permite abrir una posición mucho más grande que el dinero de tu cuenta. Con apalancamiento 1:30, por cada 1 € de tu cuenta puedes controlar una posición de 30 €. El bróker bloquea una parte de tu cuenta como garantía, y eso se llama <strong>margen</strong>.
+615	<span>Margen requerido</span> = valor de la posición ÷ apalancamiento
+616	<b>Importante:</b> la ganancia y la pérdida se calculan sobre el <strong>valor total de la posición</strong>, no sobre el margen. El apalancamiento amplifica igual las pérdidas.
+617	Ejemplo · cuenta de 1.000 €, apalancamiento 1:30
+618	Compras 0,10 lotes de EURUSD. Valor de la posición: 10.000 €.
+619	Margen = 10.000 ÷ 30 ≈ <b>333,33 €</b> · 100 pips en contra ≈ 100 × 0,909 € ≈ <b>90,91 €</b> (9% de la cuenta)

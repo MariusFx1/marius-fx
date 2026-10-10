@@ -325,7 +325,7 @@
             <strong class="jt-pair">${esc(t.pereche)}</strong>
             ${t.directie ? `<span class="jt-dir dir-${t.directie.toLowerCase()}">${esc(t.directie)}</span>` : ''}
             ${t.sesiune ? `<span class="jt-sess">${esc(T(t.sesiune))}</span>` : ''}
-            ${t.sursa === 'simulator' ? '<span class="jt-sess jt-src-sim" title="' + T('Adăugată din simulatorul de backtesting') + '">Simulator</span>' : ''}
+            ${t.sursa === 'simulator' ? '<span class="jt-sess jt-src-sim" title="' + T('Adăugată din simulatorul de backtesting') + '">' + T('Simulator') + '</span>' : ''}
           </div>
           <div class="jt-item-result">
             <span class="jt-res ${resClass}">${t.rezultat ? esc(t.rezultat) : T('În desfășurare')}</span>

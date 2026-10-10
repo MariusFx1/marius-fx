@@ -1,0 +1,330 @@
+0	Fechar menu
+1	Abrir menu
+2	Convenção XAUUSD: 1 lote = 100 oz, 1 pip = 0,10 (10 USD/pip).
+3	Convenção XAGUSD: 1 lote = 5.000 oz, 1 pip = 0,01 (50 USD/pip).
+4	Nos pares com JPY, 1 pip = 0,01.
+5	Preencha seu saldo, o risco % e o stop loss em pips.
+6	Conversão para EUR com EURUSD ≈ {x}.
+7	Conversão para GBP com GBPUSD ≈ {x}.
+8	Risco real com {lot} lotes: {bani}.
+9	Valor do pip usado: cerca de {pip} {moneda} por lote padrão, por pip.
+10	É uma estimativa. Confirme o valor do pip na plataforma da sua corretora. Não diz nada sobre lucros possíveis.
+11	Marius FX: mensagem de {nume}
+12	Nome
+13	Mensagem
+14	Londres
+15	USD, ouro
+16	d
+17	Sobreposição Londres–Nova York: alta volatilidade
+18	Sobreposição Tóquio–Londres
+19	Sobreposição Sydney–Tóquio
+20	Mercado: fechado no fim de semana
+21	Nenhuma sessão aberta agora
+22	Sessão agora: {s}
+23	Sessões agora: {s}
+24	Hora local lá:
+25	O mercado está fechado (fim de semana)
+26	Abertas agora: {s}
+27	Reabre no domingo às 17:00, horário de Nova York. No seu horário: {t} (em {d}).
+28	Fim de semana
+29	Aberta
+30	Fechada
+31	Horário local lá:
+32	No seu horário:
+33	abre em {d}
+34	fecha em {d}
+35	Preencha todos os campos: entrada, stop loss, take profit, saldo e risco %.
+36	O preço de entrada não é um número válido. Exemplo: 1,1200.
+37	O stop loss não é um preço válido. Digite o preço, não o número de pips (exemplo: 1,1175).
+38	O take profit não é um preço válido. Digite o preço, não o número de pips (exemplo: 1,1250).
+39	O saldo da conta precisa ser um número maior que 0.
+40	O risco % precisa estar entre 0 e 100 (por exemplo 1 ou 0,5).
+41	O stop loss não pode ser igual ao preço de entrada.
+42	O take profit não pode ser igual ao preço de entrada.
+43	Num Buy, o stop loss precisa ficar abaixo do preço de entrada.
+44	Num Sell, o stop loss precisa ficar acima do preço de entrada.
+45	Num Buy, o take profit precisa ficar acima do preço de entrada.
+46	Num Sell, o take profit precisa ficar abaixo do preço de entrada.
+47	O lote resultante é menor que 0,01, o tamanho mínimo habitual: com esse stop loss, o risco escolhido é pequeno demais para o saldo. Aumente o saldo ou escolha um stop loss mais curto, não um risco maior.
+48	Seu risco-alvo é {x}; como o lote é arredondado para baixo, você arrisca um pouco menos.
+49	Atenção: acima de 2% de risco por operação, uma sequência normal de perdas pode prejudicar seriamente sua conta.
+50	Relação abaixo de 1:1: o ganho-alvo é menor que o risco, então você precisa de mais de 50% de operações vencedoras.
+51	Confira o preço de entrada: ele parece muito diferente da cotação habitual do par.
+52	Valor do pip usado: cerca de {pip} {moneda} por lote padrão.
+53	Os custos (spread, comissão, swap) não estão incluídos. É uma estimativa: confirme os valores na plataforma da sua corretora.
+54	Num Buy, o SL fica abaixo da entrada e o TP acima.
+55	Num Sell, o SL fica acima da entrada e o TP abaixo.
+56	R:R planejado:
+57	preenchido ao fechar
+58	digite você, ex.: 0,6
+59	ex.: 2 ou -1
+60	Adicionar uma operação
+61	Salvar operação
+62	Editar operação
+63	Salvar alterações
+64	direção (Buy/Sell)
+65	Entrada
+66	Lote
+67	Risco %
+68	Risco em dinheiro
+69	Resultado em R
+70	(número)
+71	Risco % (entre 0 e 100)
+72	Preencha ou corrija: {x}.
+73	Suas alterações foram salvas.
+74	A operação foi salva no seu diário.
+75	Edição cancelada.
+76	{n} em andamento
+77	1 operação
+78	{n} operações
+79	Risco
+80	Emoções
+81	Lição
+82	Adicionada a partir do simulador de backtesting
+83	Em andamento
+84	✓ Plano seguido
+85	✗ Plano não seguido
+86	Plano: não preenchido
+87	Editar
+88	Excluir
+89	Excluir a operação de {d} ({p})?\nVocê só poderá recuperá-la a partir de um backup.
+90	A operação foi excluída.
+91	Backup baixado. Guarde o arquivo em um lugar seguro (ex.: Drive, ou envie por e-mail para você mesmo).
+92	Este arquivo não parece um backup válido do diário (.json).
+93	O backup não contém operações.
+94	O backup contém {a} operações. Adicioná-las às suas {b} operações atuais?\n(As que já existem não serão duplicadas.)
+95	1 operação importada
+96	{n} operações importadas
+97	({n} já existiam).
+98	Excluir TODAS as {n} operações deste navegador?\nNão dá para desfazer. Exporte um backup antes se quiser guardá-las.
+99	O diário foi esvaziado.
+100	Nº
+101	Data
+102	Par
+103	Direção
+104	Sessão
+105	Setup / motivo da entrada
+106	Preço de entrada
+107	R:R planejado
+108	Resultado
+109	Segui o plano?
+110	Lição / o que vou melhorar
+111	Resumo: seu diário de trading Marius FX
+112	Exportado em {d}
+113	Indicador
+114	Valor
+115	Total de operações
+116	Em andamento (sem resultado em R)
+117	Vencedoras
+118	Perdedoras
+119	Taxa de acerto
+120	R médio
+121	% de operações com o plano seguido
+122	Os dados ficam salvos só no seu dispositivo. Conteúdo educacional, não é recomendação financeira.
+123	Diário
+124	Resumo
+125	O arquivo Excel foi baixado.
+126	Capítulo {n}: {t}
+127	Sua melhor pontuação: <b>{x}</b>
+128	{a} de {b} perguntas respondidas
+129	Pergunta {a} de {b}
+130	Capítulo {n}
+131	Ver seu resultado
+132	Próxima pergunta
+133	resposta correta
+134	sua resposta
+135	Correto!
+136	Errado.
+137	Releia:
+138	Errado. A resposta correta: {x}.
+139	Você acertou {a} de {b} perguntas
+140	Releia os capítulos abaixo e faça o teste de novo. Sem pressa: os cálculos dos capítulos 3, 4, 5 e 6 são a base de tudo o que vem depois.
+141	Boa base. Releia os capítulos em que você errou e refaça o teste até passar de 85%.
+142	Muito bem! Você tem a base. Próximo passo: praticar numa conta demo, com 1% de risco e um diário completo.
+143	Nova melhor pontuação! Sua melhor pontuação: <b>{x}</b> (antes: {y})
+144	Perguntas que você errou ({n})
+145	Resposta correta:
+146	Nenhuma resposta errada. Parabéns! Agora aplique tudo na demo, com as mesmas regras que você usaria numa conta real.
+147	Forex, a corretora e a plataforma
+148	O gráfico: candles e timeframes
+149	Pips, lotes e custos
+150	Alavancagem e margem
+151	Ordens, stop loss e take profit
+152	Gestão de risco
+153	Psicologia, disciplina e erros
+154	Seus primeiros passos concretos
+155	No EURUSD você vê um bid de 1,1000 e um ask de 1,1001. O que é a diferença de 1 pip entre eles?
+156	O spread, um custo que você paga em toda operação
+157	A comissão fixa que a corretora cobra nos saques
+158	O swap por manter a posição de um dia para o outro
+159	A margem bloqueada como garantia
+160	Você compra no ask e vende no bid. A diferença entre eles é o spread, o principal custo de uma operação. Por isso toda posição começa um pouco no negativo.
+161	O que mostra um único candle no gráfico H4?
+162	A abertura, o fechamento, a máxima e a mínima do preço em um período de 4 horas
+163	O preço médio dos últimos 4 dias
+164	Quantas operações foram feitas nos últimos 4 minutos
+165	A direção que o preço vai tomar nas próximas 4 horas
+166	Cada candle mostra a abertura, o fechamento, a máxima e a mínima de um período. No H4, o período é de 4 horas. Um candle mostra o passado, não o que vem pela frente.
+167	Você compra EURUSD a 1,1000 e fecha a 1,1035. Quantos pips você ganhou?
+168	35 pips
+169	3,5 pips
+170	350 pips
+171	0,35 pips
+172	No EURUSD, 1 pip = 0,0001. A diferença é 1,1035 − 1,1000 = 0,0035, então 0,0035 ÷ 0,0001 = 35 pips.
+173	Quanto vale, aproximadamente, um pip no EURUSD para uma posição de 0,10 lote?
+174	1 USD
+175	0,10 USD
+176	10 USD
+177	100 USD
+178	0,10 lote são 10.000 unidades. Valor do pip = 0,0001 × 10.000 = 1 USD. Para 1 lote seriam 10 USD, e para 0,01 lote, 0,10 USD.
+179	O que é o swap?
+180	O custo (às vezes um pequeno ganho) de manter uma posição de um dia para o outro, com base nas taxas de juros das duas moedas
+181	A diferença entre o preço de compra e o de venda
+182	A taxa que você paga ao abrir sua conta
+183	A ordem que fecha sua posição automaticamente no prejuízo
+184	O swap se aplica às posições mantidas de um dia para o outro e depende das taxas de juros das duas moedas. Na maioria das corretoras ele é cobrado em triplo às quartas-feiras, para cobrir o fim de semana. Faz diferença no swing trading.
+185	Você tem uma conta com alavancagem de 1:30 e abre uma posição de € 10.000. Quanto de margem sua corretora bloqueia?
+186	Cerca de € 333,33
+187	€ 300
+188	€ 3.000
+189	€ 10.000
+190	Margem necessária = valor da posição ÷ alavancagem = 10.000 ÷ 30 ≈ € 333,33. Atenção: o lucro e o prejuízo são calculados sobre o valor total da posição, não sobre a margem.
+191	Qual é a alavancagem máxima para um cliente de varejo no EURUSD numa corretora regulada na UE?
+192	1:30
+193	1:2
+194	1:20
+195	1:500
+196	A ESMA limita a alavancagem dos clientes de varejo da UE a 1:30 nos pares formados só por USD, EUR, JPY, GBP, CAD e CHF. Na UE você também tem proteção contra saldo negativo.
+197	Você quer comprar EURUSD só se o preço cair para um nível melhor, abaixo do preço atual. Qual ordem você usa?
+198	Buy limit
+199	Buy stop
+200	Sell limit
+201	A mercado
+202	As ordens limit esperam um preço melhor: buy limit abaixo do preço atual, sell limit acima. As ordens stop esperam confirmação: buy stop acima do preço atual.
+203	Você está numa posição de compra e o preço se aproxima do seu stop loss. O que diz a lição?
+204	Você nunca afasta o stop loss; só pode movê-lo para reduzir o risco, se o seu plano disser isso
+205	Você abaixa o stop loss para dar mais espaço ao mercado
+206	Você tira o stop loss, porque o preço costuma voltar
+207	Você adiciona outra posição para conseguir um preço médio melhor
+208	O stop loss vai onde a sua ideia é invalidada (numa compra, abaixo da última mínima relevante) e nunca é afastado. Sem SL, uma única notícia pode apagar meses de trabalho.
+209	Você arrisca 25 pips para ganhar 50 (R:R 1:2). Qual taxa de acerto mínima você precisa para empatar, antes dos custos?
+210	Cerca de 33,3%
+211	20%
+212	50%
+213	66,7%
+214	Taxa de equilíbrio = 1 ÷ (1 + 2) = 33,3%. Com R:R 1:1 você precisaria de mais de 50%. É um cálculo, não uma promessa de lucro.
+215	Você tem uma conta de € 1.500 e segue a regra de 1%. Quanto é o máximo que você pode perder se o stop loss for atingido?
+216	€ 15
+217	€ 1,50
+218	€ 150
+219	€ 1 por pip, seja qual for o stop loss
+220	1% de € 1.500 = € 15. Parece pouco, e é exatamente essa a ideia: você pode errar muitas vezes sem ser eliminado do jogo. No começo, até 0,5% é uma ótima escolha.
+221	Conta de € 2.000, risco de 1%, stop loss de 40 pips no EURUSD com cotação de 1,10 (1 pip em 1 lote ≈ € 9,09). Qual tamanho de lote você escolhe?
+222	0,05 lote
+223	0,06 lote
+224	0,02 lote
+225	0,50 lote
+226	Valor em risco = € 20. Lote = 20 ÷ (40 × 9,09) ≈ 0,055, que arredondado para baixo dá 0,05 lote (risco ≈ € 18,18). Com 0,06 lote você arriscaria ≈ € 21,82, acima de 1%. Arredonde sempre para baixo.
+227	Sua conta cai 50%. Que ganho você precisa, sobre o que sobrou, para voltar ao ponto de partida?
+228	+100%
+229	+50%
+230	+75%
+231	+200%
+232	De € 1.000 você perde 50% e fica com € 500. Para voltar a € 1.000 você precisa de +€ 500, ou seja, +100% do que sobrou. Por isso perdas grandes são tão difíceis de recuperar.
+233	Você perdeu duas operações seguidas e sente vontade de "recuperar" na hora com um lote maior. O que você faz?
+234	Fecha a plataforma até o dia seguinte: essa vontade é revenge trading
+235	Dobra o lote para recuperar mais rápido
+236	Entra no primeiro sinal sem conferir seu plano
+237	Troca de estratégia, porque obviamente ela não funciona
+238	O revenge trading costuma levar a lotes maiores e perdas maiores. O antídoto da lição: depois de 2 perdas seguidas, feche a plataforma até o dia seguinte.
+239	Qual é o primeiro passo recomendado antes de operar com dinheiro real?
+240	Pelo menos 6 a 8 semanas numa conta demo, com o mesmo risco, o mesmo plano e um diário completo
+241	Um depósito grande, para ter espaço para as perdas
+242	Copiar os sinais de um trader com bons resultados
+243	A maior alavancagem possível, para fazer a conta crescer rápido
+244	Primeiro a demo: pelo menos 6 a 8 semanas e 30 a 50 operações, tratadas como dinheiro real. Vá para a conta real só se você foi disciplinado, com valores pequenos e 0,01 lote.
+245	Estados Unidos
+246	zona do euro
+247	Reino Unido
+248	Japão
+249	Suíça
+250	Canadá
+251	Austrália
+252	Nova Zelândia
+253	China
+254	global
+255	Alto
+256	Impacto alto
+257	Médio
+258	Impacto médio
+259	Baixo
+260	Impacto baixo
+261	Feriado
+262	Feriado bancário
+263	estimativa preliminar (flash)
+264	dados preliminares
+265	dados finais
+266	dados revisados
+267	estimativa antecipada
+268	Alemanha
+269	França
+270	Itália
+271	Espanha
+272	indústria
+273	serviços
+274	construção
+275	composto (indústria + serviços)
+276	BCE
+277	NFP: empregos nos EUA
+278	ADP: empregos no setor privado
+279	ADP: empregos, estimativa semanal
+280	Inflação núcleo (CPI)
+281	Inflação (CPI)
+282	Inflação PCE núcleo (o indicador preferido do Fed)
+283	Inflação PCE
+284	Preços ao produtor núcleo (PPI)
+285	Preços ao produtor (PPI)
+286	Decisão de juros do Fed
+287	Comunicado do Fed após a decisão de juros
+288	Coletiva de imprensa do Fed
+289	Ata da reunião do Fed (FOMC)
+290	Projeções econômicas do Fed
+291	Decisão de juros do BCE
+292	Coletiva de imprensa do BCE
+293	Ata da reunião do BCE
+294	Decisão de juros do BoE
+295	Como os membros do BoE votaram os juros
+296	Relatório de Política Monetária do BoE
+297	Decisão de juros do BoJ
+298	Coletiva de imprensa do BoJ
+299	Relatório de Perspectivas do BoJ
+300	Decisão de juros do SNB
+301	Coletiva de imprensa do SNB
+302	Decisão de juros do BoC
+303	Comunicado do BoC após a decisão de juros
+304	Coletiva de imprensa do BoC
+305	Decisão de juros do RBA
+306	Comunicado do RBA após a decisão de juros
+307	Coletiva de imprensa do RBA
+308	Decisão de juros do RBNZ
+309	Comunicado do RBNZ após a decisão de juros
+310	Coletiva de imprensa do RBNZ
+311	Declaração de política monetária: {b}
+312	Discurso: presidente do Fed
+313	Discurso: membro do Fed (FOMC)
+314	Discurso: presidente do BCE
+315	Discurso: presidente do BoE
+316	Discurso: membro do BoE (MPC)
+317	Discurso: presidente do BoJ
+318	Discurso: presidente do SNB
+319	Discurso: presidente do BoC
+320	Discurso: presidente do RBA
+321	Discurso: presidente do RBNZ
+322	Discurso: presidente do Bundesbank
+323	o banco central
+324	Discurso: membro da diretoria: {b}
+325	Discurso: presidente dos EUA
+326	Pedidos de seguro-desemprego (semanal)
+327	Taxa de desemprego
+328	Novos empregos
+329	Pedidos de seguro-desemprego
