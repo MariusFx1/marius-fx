@@ -74,7 +74,7 @@ async function pageChecks(b, l, w) {
       const sw = document.querySelector('.nav .lang-switch, header .lang-switch');
       const links = [...document.querySelectorAll('.nav-links > li, .nav-links > a')].filter(e => e.offsetParent);
       const tops = [...links, sw].filter(Boolean).filter(e => e.offsetParent).map(e => Math.round(e.getBoundingClientRect().top + e.getBoundingClientRect().height / 2));
-      return { overflow: de.scrollWidth - de.clientWidth, lang: de.lang, sw: !!sw, oneRow: mob || tops.length < 2 || Math.max(...tops) - Math.min(...tops) <= 8,
+      return { overflow: de.scrollWidth - de.clientWidth, lang: de.lang, sw: !!sw, noWrap: mob || (h => Math.max(...h) - Math.min(...h) <= 2)([...document.querySelectorAll('.nav-links > li > a')].filter(a => a.offsetParent).map(a => a.getBoundingClientRect().height)), oneRow: mob || tops.length < 2 || Math.max(...tops) - Math.min(...tops) <= 8,
         text: document.body.innerText, title: document.title };
     }, mob);
     ok(errs.length === 0, `${l}/${p}@${w}: no console errors ${errs.slice(0, 3).join(' | ')}`);
@@ -82,6 +82,7 @@ async function pageChecks(b, l, w) {
     ok(r.lang === l, `${l}/${p}@${w}: lang`);
     ok(r.sw, `${l}/${p}@${w}: switcher present`);
     ok(r.oneRow, `${l}/${p}@${w}: nav + switcher on one row`);
+    ok(r.noWrap, `${l}/${p}@${w}: no nav label wraps`);
     if (l !== 'ro') {
       const lines = r.text.split('\n').map(s => s.replace(/Română|Iași/g, '')).filter(s => (RO_LEAKS[l] || RO_LEAK).test(s));
       ok(lines.length === 0, `${l}/${p}@${w}: no Romanian at runtime: ${lines.slice(0, 3).join(' | ')}`);

@@ -44,7 +44,7 @@ def has_words(t):
 
 AUTO_KEEP = re.compile(r'^[A-Z0-9 /:.,·+×%€$£–\-()&#;|]+$')   # coduri: EURUSD, H4, R:R, 1:30
 BRANDS = {'Marius FX', 'Marius', 'Telegram', 'TradingView', 'MetaTrader', 'ForexFactory', 'Investing.com', 'Myfxbook', 'FX', 'XTB', 'XM', 'HistData.com',
-          'contact.mariusfx@gmail.com', 'Marius FX · Marius', 'Buy', 'Sell', 'Stop loss', 'Take profit', 'Swing trading', 'Simulator', 'Calculator', 'Calendar', 'Broker', 'Contact', 'Forex', 'Long', 'Short'}
+          'contact.mariusfx@gmail.com', 'Marius FX · Marius', 'Buy', 'Sell', 'Stop loss', 'Take profit', 'Swing trading', 'Forex', 'Long', 'Short'}
 
 def auto_keep(key):
     t = visible(key)
