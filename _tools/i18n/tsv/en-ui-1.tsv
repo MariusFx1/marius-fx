@@ -1,0 +1,170 @@
+0	Close menu
+1	Open menu
+2	XAUUSD convention: 1 lot = 100 oz, 1 pip = 0.10 (10 USD/pip).
+3	XAGUSD convention: 1 lot = 5,000 oz, 1 pip = 0.01 (50 USD/pip).
+4	For JPY pairs, 1 pip = 0.01.
+5	Fill in your balance, risk % and stop loss in pips.
+6	EUR conversion using EURUSD ≈ {x}.
+7	GBP conversion using GBPUSD ≈ {x}.
+8	Actual risk at {lot} lots: {bani}.
+9	Pip value used: about {pip} {moneda} per standard lot, per pip.
+10	This is an estimate. Confirm the pip value on your broker's platform. It says nothing about possible profit.
+11	Marius FX: message from {nume}
+12	Name
+13	Message
+14	London
+15	USD, gold
+16	d
+17	London–New York overlap: high volatility
+18	Tokyo–London overlap
+19	Sydney–Tokyo overlap
+20	Market: closed for the weekend
+21	No session open right now
+22	Session now: {s}
+23	Sessions now: {s}
+24	Local time there:
+25	The market is closed (weekend)
+26	Open now: {s}
+27	Reopens Sunday 17:00 New York time. Your time: {t} (in {d}).
+28	Weekend
+29	Open
+30	Closed
+31	Local hours there:
+32	Your time:
+33	opens in {d}
+34	closes in {d}
+35	Fill in every field: entry, stop loss, take profit, balance and risk %.
+36	The entry price is not a valid number. Example: 1.1200.
+37	The stop loss is not a valid price. Enter the price, not the number of pips (example: 1.1175).
+38	The take profit is not a valid price. Enter the price, not the number of pips (example: 1.1250).
+39	The account balance must be a number greater than 0.
+40	Risk % must be between 0 and 100 (for example 1 or 0.5).
+41	The stop loss can't be equal to the entry price.
+42	The take profit can't be equal to the entry price.
+43	On a Buy, the stop loss must be below the entry price.
+44	On a Sell, the stop loss must be above the entry price.
+45	On a Buy, the take profit must be above the entry price.
+46	On a Sell, the take profit must be below the entry price.
+47	The resulting lot is below 0.01, the usual minimum size: with this stop loss, the chosen risk is too small for the balance. Increase the balance or choose a tighter stop loss, not a bigger risk.
+48	Your risk target is {x}; because the lot is rounded down, you risk slightly less.
+49	Careful: above 2% risk per trade, a normal losing streak can seriously damage your account.
+50	Ratio below 1:1: the target gain is smaller than the risk, so you need more than 50% winning trades.
+51	Check the entry price: it looks very different from the pair's usual rate.
+52	Pip value used: about {pip} {moneda} per standard lot.
+53	Costs (spread, commission, swap) are not included. This is an estimate: confirm the values on your broker's platform.
+54	On a Buy, SL goes below the entry and TP above it.
+55	On a Sell, SL goes above the entry and TP below it.
+56	Planned R:R:
+57	filled in when you close
+58	enter it yourself, e.g. 0.6
+59	e.g. 2 or -1
+60	Add a trade
+61	Save trade
+62	Edit trade
+63	Save changes
+64	direction (Buy/Sell)
+65	Entry
+66	Lot
+67	Risk %
+68	Risk in money
+69	Result in R
+70	(number)
+71	Risk % (between 0 and 100)
+72	Fill in or correct: {x}.
+73	Your changes have been saved.
+74	The trade has been saved to your journal.
+75	Editing cancelled.
+76	{n} in progress
+77	1 trade
+78	{n} trades
+79	Risk
+80	Emotions
+81	Lesson
+82	Added from the backtesting simulator
+83	In progress
+84	✓ Plan followed
+85	✗ Plan not followed
+86	Plan: not filled in
+87	Edit
+88	Delete
+89	Delete the trade from {d} ({p})?\nYou can only recover it from a backup.
+90	The trade has been deleted.
+91	Backup downloaded. Keep the file somewhere safe (e.g. Drive, or email it to yourself).
+92	This file doesn't look like a valid journal backup (.json).
+93	The backup doesn't contain any trades.
+94	The backup contains {a} trades. Add them to your {b} existing ones?\n(Trades that already exist won't be duplicated.)
+95	Imported 1 trade
+96	Imported {n} trades
+97	({n} already existed).
+98	Delete ALL {n} trades from this browser?\nThis can't be undone. Export a backup first if you want to keep them.
+99	The journal has been cleared.
+100	No.
+101	Date
+102	Pair
+103	Direction
+104	Session
+105	Setup / entry reason
+106	Entry price
+107	Planned R:R
+108	Result
+109	Did I follow the plan?
+110	Lesson / what I'll improve
+111	Summary: your Marius FX trading journal
+112	Exported on {d}
+113	Metric
+114	Value
+115	Total trades
+116	In progress (no result in R)
+117	Won
+118	Lost
+119	Win rate
+120	Average R
+121	% of trades with the plan followed
+122	Data is saved only on your device. Educational content, not financial advice.
+123	Journal
+124	Summary
+125	The Excel file has been downloaded.
+126	Chapter {n}: {t}
+127	Your best score: <b>{x}</b>
+128	{a} of {b} questions answered
+129	Question {a} of {b}
+130	Chapter {n}
+131	See your result
+132	Next question
+133	correct answer
+134	your answer
+135	Correct!
+136	Wrong.
+137	Reread:
+138	Wrong. The correct answer: {x}.
+139	You answered {a} of {b} questions correctly
+140	Reread the chapters below and take the quiz again. Don't rush: the calculations in chapters 3, 4, 5 and 6 are the foundation for everything that follows.
+141	Good foundation. Reread the chapters where you slipped, then retake the quiz until you score above 85%.
+142	Very good! You've got the basics. Next step: practise on a demo account, with 1% risk and a complete journal.
+143	New best score! Your best score: <b>{x}</b> (before: {y})
+144	Questions you got wrong ({n})
+145	Correct answer:
+146	Not a single wrong answer. Congratulations! Now apply everything on demo, with the same rules you'd use on a live account.
+147	Forex, the broker and the platform
+148	The chart: candlesticks and timeframes
+149	Pips, lots and costs
+150	Leverage and margin
+151	Orders, stop loss and take profit
+152	Risk management
+153	Psychology, discipline and mistakes
+154	Your first concrete steps
+155	On EURUSD you see a bid of 1.1000 and an ask of 1.1001. What is the 1-pip difference between them?
+156	The spread, a cost you pay on every trade
+157	The fixed commission the broker charges on withdrawals
+158	The swap for holding the position overnight
+159	The margin locked up as collateral
+160	You buy at the ask and sell at the bid. The difference between them is the spread, the main cost of a trade. That's why every position starts slightly in the red.
+161	What does a single candlestick on the H4 chart show?
+162	The open, close, high and low of the price over a 4-hour period
+163	The average price over the last 4 days
+164	How many trades were made in the last 4 minutes
+165	The direction the price will take over the next 4 hours
+166	Each candlestick shows the open, close, high and low for a period. On H4, the period is 4 hours. A candlestick shows the past, not what comes next.
+167	You buy EURUSD at 1.1000 and close at 1.1035. How many pips did you make?
+168	35 pips
+169	3.5 pips

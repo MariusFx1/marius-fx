@@ -1,0 +1,134 @@
+[
+ {
+  "case": "EURUSD buy USD",
+  "sl_pips": 25.0,
+  "tp_pips": 50.0,
+  "rr": "1:2.00",
+  "lot": 0.4,
+  "target": 100.0,
+  "risked": 100.0,
+  "profit": 200.0,
+  "be": "33.3%",
+  "pip_value": 10.0,
+  "input": {
+   "pair": "EURUSD",
+   "dir": "buy",
+   "entry": 1.12,
+   "sl": 1.1175,
+   "tp": 1.125,
+   "bal": 10000,
+   "ccy": "USD",
+   "risk": 1
+  }
+ },
+ {
+  "case": "USDJPY sell EUR",
+  "sl_pips": 70.0,
+  "tp_pips": 105.0,
+  "rr": "1:1.50",
+  "lot": 0.12,
+  "target": 50.0,
+  "risked": 50.0,
+  "profit": 75.0,
+  "be": "40.0%",
+  "pip_value": 5.9524,
+  "input": {
+   "pair": "USDJPY",
+   "dir": "sell",
+   "entry": 150.0,
+   "sl": 150.7,
+   "tp": 148.95,
+   "bal": 5000,
+   "ccy": "EUR",
+   "risk": 1
+  }
+ },
+ {
+  "case": "XAUUSD buy USD",
+  "sl_pips": 200.0,
+  "tp_pips": 400.0,
+  "rr": "1:2.00",
+  "lot": 0.05,
+  "target": 100.0,
+  "risked": 100.0,
+  "profit": 200.0,
+  "be": "33.3%",
+  "pip_value": 10.0,
+  "input": {
+   "pair": "XAUUSD",
+   "dir": "buy",
+   "entry": 4150.0,
+   "sl": 4130.0,
+   "tp": 4190.0,
+   "bal": 20000,
+   "ccy": "USD",
+   "risk": 0.5
+  }
+ },
+ {
+  "case": "EURJPY buy GBP",
+  "sl_pips": 60.0,
+  "tp_pips": 150.0,
+  "rr": "1:2.50",
+  "lot": 0.41,
+  "target": 120.0,
+  "risked": 117.95,
+  "profit": 294.88,
+  "be": "28.6%",
+  "pip_value": 4.7948,
+  "input": {
+   "pair": "EURJPY",
+   "dir": "buy",
+   "entry": 177.0,
+   "sl": 176.4,
+   "tp": 178.5,
+   "bal": 8000,
+   "ccy": "GBP",
+   "risk": 1.5
+  }
+ },
+ {
+  "case": "EURGBP sell GBP",
+  "sl_pips": 30.0,
+  "tp_pips": 60.0,
+  "rr": "1:2.00",
+  "lot": 0.2,
+  "target": 60.0,
+  "risked": 60.0,
+  "profit": 120.0,
+  "be": "33.3%",
+  "pip_value": 10.0,
+  "input": {
+   "pair": "EURGBP",
+   "dir": "sell",
+   "entry": 0.85,
+   "sl": 0.853,
+   "tp": 0.844,
+   "bal": 3000,
+   "ccy": "GBP",
+   "risk": 2
+  }
+ },
+ {
+  "case": "XAGUSD sell USD",
+  "sl_pips": 40.0,
+  "tp_pips": 90.0,
+  "rr": "1:2.25",
+  "lot": 0.05,
+  "target": 100.0,
+  "risked": 100.0,
+  "profit": 225.0,
+  "be": "30.8%",
+  "pip_value": 50.0,
+  "input": {
+   "pair": "XAGUSD",
+   "dir": "sell",
+   "entry": 61.0,
+   "sl": 61.4,
+   "tp": 60.1,
+   "bal": 10000,
+   "ccy": "USD",
+   "risk": 1
+  }
+ }
+]

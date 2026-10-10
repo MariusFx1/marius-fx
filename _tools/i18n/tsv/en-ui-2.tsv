@@ -1,0 +1,230 @@
+170	350 pips
+171	0.35 pips
+172	On EURUSD, 1 pip = 0.0001. The difference is 1.1035 − 1.1000 = 0.0035, so 0.0035 ÷ 0.0001 = 35 pips.
+173	Roughly how much is one pip worth on EURUSD for a 0.10-lot position?
+174	1 USD
+175	0.10 USD
+176	10 USD
+177	100 USD
+178	0.10 lots means 10,000 units. Pip value = 0.0001 × 10,000 = 1 USD. For 1 lot it would be 10 USD, and for 0.01 lots, 0.10 USD.
+179	What is swap?
+180	The cost (sometimes a small gain) of holding a position overnight, based on the interest rates of the two currencies
+181	The difference between the buy price and the sell price
+182	The fee you pay when you open your account
+183	The order that automatically closes your position at a loss
+184	Swap applies to positions held overnight and depends on the interest rates of the two currencies. At most brokers it is charged triple on Wednesdays, to cover the weekend. It matters for swing trading.
+185	You have an account with 1:30 leverage and open a position worth €10,000. How much margin does your broker lock up?
+186	About €333.33
+187	€300
+188	€3,000
+189	€10,000
+190	Required margin = position value ÷ leverage = 10,000 ÷ 30 ≈ €333.33. Careful: profit and loss are calculated on the full position value, not on the margin.
+191	What is the maximum leverage for a retail client on EURUSD at an EU-regulated broker?
+192	1:30
+193	1:2
+194	1:20
+195	1:500
+196	ESMA caps leverage for EU retail clients at 1:30 on pairs made up only of USD, EUR, JPY, GBP, CAD and CHF. In the EU you also get negative balance protection.
+197	You want to buy EURUSD only if the price drops to a better level, below the current price. Which order do you use?
+198	Buy limit
+199	Buy stop
+200	Sell limit
+201	Market
+202	Limit orders wait for a better price: buy limit below the current price, sell limit above it. Stop orders wait for confirmation: buy stop above the current price.
+203	You're in a buy position and the price is approaching your stop loss. What does the lesson say?
+204	You never move the stop loss further away; you may only move it to reduce risk, if your plan says so
+205	You move the stop loss lower to give the market more room
+206	You remove the stop loss, because price usually comes back
+207	You add another position to get a better average price
+208	The stop loss goes where your idea is proven wrong (for a buy, below the last relevant low) and is never moved further away. Without an SL, a single news release can wipe out months of work.
+209	You risk 25 pips to make 50 (R:R 1:2). What minimum win rate do you need to break even, before costs?
+210	About 33.3%
+211	20%
+212	50%
+213	66.7%
+214	Break-even rate = 1 ÷ (1 + 2) = 33.3%. With R:R 1:1 you would need more than 50%. This is a calculation, not a promise of profit.
+215	You have a €1,500 account and follow the 1% rule. What is the most you can lose if your stop loss is hit?
+216	€15
+217	€1.50
+218	€150
+219	€1 per pip, whatever the stop loss
+220	1% of €1,500 = €15. It looks small, and that's exactly the point: you can be wrong many times without being knocked out of the game. When you're starting out, even 0.5% is a very good choice.
+221	€2,000 account, 1% risk, 40-pip stop loss on EURUSD at a rate of 1.10 (1 pip on 1 lot ≈ €9.09). Which lot size do you choose?
+222	0.05 lots
+223	0.06 lots
+224	0.02 lots
+225	0.50 lots
+226	Amount at risk = €20. Lot = 20 ÷ (40 × 9.09) ≈ 0.055, which rounded down gives 0.05 lots (risk ≈ €18.18). With 0.06 lots you would risk ≈ €21.82, above 1%. Always round down.
+227	Your account drops by 50%. What gain do you need, on what's left, to get back to where you started?
+228	+100%
+229	+50%
+230	+75%
+231	+200%
+232	From €1,000 you lose 50% and are left with €500. To get back to €1,000 you need +€500, which is +100% of what you have left. That's why big losses are so hard to recover.
+233	You've lost two trades in a row and feel the urge to "win it back" right away with a bigger lot. What do you do?
+234	Close the platform until the next day: that urge is revenge trading
+235	Double the lot to recover faster
+236	Jump on the first signal without checking your plan
+237	Switch strategies, because it obviously doesn't work
+238	Revenge trading usually leads to bigger lots and bigger losses. The antidote from the lesson: after 2 losses in a row, close the platform until the next day.
+239	What is the recommended first step before trading with real money?
+240	At least 6 to 8 weeks on a demo account, with the same risk, the same plan and a complete journal
+241	A large deposit, so you have room for losses
+242	Copying the signals of a trader with good results
+243	As much leverage as possible, to grow the account quickly
+244	Demo first: at least 6 to 8 weeks and 30 to 50 trades, treated like real money. Go live only if you've been disciplined, with small amounts and 0.01 lots.
+245	United States
+246	euro area
+247	United Kingdom
+248	Japan
+249	Switzerland
+250	Canada
+251	Australia
+252	New Zealand
+253	China
+254	global
+255	High
+256	High impact
+257	Medium
+258	Medium impact
+259	Low
+260	Low impact
+261	Holiday
+262	Bank holiday
+263	flash estimate
+264	preliminary data
+265	final data
+266	revised data
+267	advance estimate
+268	Germany
+269	France
+270	Italy
+271	Spain
+272	manufacturing
+273	services
+274	construction
+275	composite (manufacturing + services)
+276	ECB
+277	NFP: US jobs
+278	ADP: private-sector jobs
+279	ADP: jobs, weekly estimate
+280	Core inflation (CPI)
+281	Inflation (CPI)
+282	Core PCE inflation (the Fed's preferred gauge)
+283	PCE inflation
+284	Core producer prices (PPI)
+285	Producer prices (PPI)
+286	Fed interest rate decision
+287	Fed statement after the rate decision
+288	Fed press conference
+289	Fed meeting minutes (FOMC)
+290	Fed economic projections
+291	ECB interest rate decision
+292	ECB press conference
+293	ECB meeting minutes
+294	BoE interest rate decision
+295	How BoE members voted on rates
+296	BoE Monetary Policy Report
+297	BoJ interest rate decision
+298	BoJ press conference
+299	BoJ Outlook Report
+300	SNB interest rate decision
+301	SNB press conference
+302	BoC interest rate decision
+303	BoC statement after the rate decision
+304	BoC press conference
+305	RBA interest rate decision
+306	RBA statement after the rate decision
+307	RBA press conference
+308	RBNZ interest rate decision
+309	RBNZ statement after the rate decision
+310	RBNZ press conference
+311	{b} monetary policy statement
+312	Speech: Fed Chair
+313	Speech: Fed member (FOMC)
+314	Speech: ECB President
+315	Speech: BoE Governor
+316	Speech: BoE member (MPC)
+317	Speech: BoJ Governor
+318	Speech: SNB Chairman
+319	Speech: BoC Governor
+320	Speech: RBA Governor
+321	Speech: RBNZ Governor
+322	Speech: Bundesbank President
+323	the central bank
+324	Speech: {b} board member
+325	Speech: US President
+326	Jobless claims (weekly)
+327	Unemployment rate
+328	New jobs
+329	Unemployment benefit claims
+330	Average hourly earnings
+331	Earnings growth
+332	Wage index
+333	Labour costs
+334	Job openings (JOLTS)
+335	Retail sales
+336	Retail sales excluding autos
+337	Economic growth (GDP)
+338	Trade balance
+339	Current account
+340	Industrial production
+341	Factory orders
+342	Durable goods orders excluding transport
+343	Durable goods orders
+344	Consumer sentiment (Univ. of Michigan)
+345	Consumer inflation expectations (Univ. of Michigan)
+346	Consumer confidence (Conference Board)
+347	Consumer confidence
+348	ZEW economic sentiment
+349	Ifo business climate
+350	Investor confidence (Sentix)
+351	New York State manufacturing (Empire State)
+352	Philadelphia region manufacturing (Philly Fed)
+353	Existing home sales
+354	New home sales
+355	Pending home sales
+356	Building permits
+357	Housing starts
+358	US crude oil inventories
+359	US natural gas storage
+360	BoJ Tankan survey
+361	Bank holiday: lower liquidity
+362	OPEC meetings (oil)
+363	Government bond auction
+364	{s} PMI
+365	PMI
+366	: above 50 means expansion
+367	in {x}
+368	Global
+369	All
+370	<strong>The calendar couldn't be loaded.</strong> It may be a connection problem: reload the page in a few moments. Meanwhile, you'll find the same news, in your time, in the calendars below.
+371	Forecast
+372	Previous
+373	All day
+374	banks closed
+375	Next
+376	NOW
+377	passed
+378	Next high-impact news
+379	No more high-impact news this week for the selected currencies.
+380	No more high-impact news this week.
+381	Next week's calendar appears automatically on Sunday. Until then, double-check any positions you're holding over the weekend.
+382	Today
+383	Tomorrow
+384	Next news (medium impact)
+385	<b>{d}</b> at <b>{t}</b> (your time)
+386	At the same time:
+387	See in list
+388	the news has just been released
+389	day
+390	days
+391	hour
+392	hours
+393	Hide past news
+394	Show this week's past news ({n})
+395	No more news today for the selected filters.
+396	<b>No currency selected.</b> Choose at least one currency above.
+397	The week is over.
+398	No more news today for the selected filters.
+399	No more news this week for the selected filters.

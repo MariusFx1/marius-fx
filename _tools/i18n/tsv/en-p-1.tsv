@@ -1,0 +1,150 @@
+0	Page not found (404) | Marius FX
+1	<a class="skip-link" href="#continut">Skip to content</a>
+2	<a href="/marius-fx/lectie.html">Beginners</a>
+3	<a href="/marius-fx/test.html">Quiz</a>
+4	<a href="/marius-fx/reguli.html">Rules</a>
+5	<a href="/marius-fx/patternuri.html">Patterns</a>
+6	<a href="/marius-fx/sesiuni.html">Sessions</a>
+7	<a href="/marius-fx/jurnal.html">Journal</a>
+8	<a href="/marius-fx/despre.html">About</a>
+9	Error 404
+10	Page not found
+11	The link is wrong or the page has moved. No problem: from here you can easily get anywhere on the site.
+12	<a class="btn btn-primary" href="/marius-fx/">Go to the home page</a> <a class="btn btn-ghost" href="/marius-fx/lectie.html">Start the free course</a>
+13	Beginners <span class="feature-arrow" aria-hidden="true">→</span>
+14	The free Forex course, step by step, in 8 chapters.
+15	Calculator <span class="feature-arrow" aria-hidden="true">→</span>
+16	Work out your position size based on the risk you choose.
+17	Sessions <span class="feature-arrow" aria-hidden="true">→</span>
+18	Which markets are open right now, in your time.
+19	Calendar <span class="feature-arrow" aria-hidden="true">→</span>
+20	The week's key economic news.
+21	Education for disciplined swing trading: clear rules, risk management and a process you can repeat.
+22	Learn
+23	<a href="/marius-fx/glosar.html">Glossary</a>
+24	Tools
+25	Community
+26	Telegram (free)
+27	<a href="/marius-fx/intrebari.html">FAQ</a>
+28	Forex and leveraged CFDs can lead to rapid loss of money. Educational content, not financial advice.
+29	© <span id="an"></span> Marius FX · Marius
+30	<a href="#continut">Back to top ↑</a>
+31	The page you're looking for doesn't exist on Marius FX. Go to the home page, the free Forex course for beginners or the site's tools.
+32	Page not found | Marius FX
+33	Marius FX: Education · Discipline · Risk management
+34	Main navigation
+35	Open menu
+36	The broker Marius uses: RoboForex (affiliate link)
+37	<a href="lectie.html">Beginners</a>
+38	<a href="test.html">Quiz</a>
+39	<a href="reguli.html">Rules</a>
+40	<a href="patternuri.html">Patterns</a>
+41	<a href="sesiuni.html">Sessions</a>
+42	<a href="jurnal.html">Journal</a>
+43	<a href="despre.html">About</a>
+44	05 · Broker
+45	Recommended broker
+46	Marius uses RoboForex. The link below is his referral (affiliate) link, not an independent recommendation.
+47	If you open a RoboForex account through this link, you're using Marius's referral code. This is not financial advice and it doesn't promise any results.
+48	Referral code: <code>qakl</code>
+49	You can enter the code <strong>qakl</strong> manually when you sign up, if the link doesn't apply it automatically.
+50	<a class="btn btn-primary" href="https://my.roboforex.com/en/?a=qakl" target="_blank" rel="noopener noreferrer">Open a RoboForex account</a>
+51	This is Marius's <strong>referral link</strong> (affiliate) to RoboForex. Opening an account is optional. Leveraged trading carries a risk of loss: see the <a href="#avertisment">risk warning</a>.
+52	<a href="glosar.html">Glossary</a>
+53	<a href="intrebari.html">FAQ</a>
+54	The broker Marius uses for Forex: RoboForex. This is an affiliate link, not an independent recommendation. Read about the risks first.
+55	Forex lot size and risk/reward (R:R) calculator | Marius FX
+56	03 · Tool
+57	Forex lot size calculator
+58	Estimate how many lots match the risk you choose and, in the Risk/Reward tab, the risk-to-reward ratio of a planned trade. These are educational estimates, not trading recommendations.
+59	Lot
+60	Risk/Reward
+61	Pair
+62	Account currency
+63	Account balance
+64	Risk %
+65	Stop loss (pips)
+66	Approximate price <span class="opt">(optional)</span>
+67	<span>Amount at risk</span>
+68	<span>Lots</span>
+69	<small>2 decimals</small>
+70	Risk/reward calculator
+71	Enter your entry, stop loss and take profit. You'll get the distances in pips, the R:R ratio, the lot size for your chosen risk and the minimum win rate needed to break even.
+72	Direction
+73	Entry price
+74	Stop loss (price)
+75	Take profit (price)
+76	<small>pips</small>
+77	<span>Risk/reward ratio</span>
+78	<small>rounded down to 0.01</small>
+79	<small>if SL is hit</small>
+80	<span>Potential profit</span>
+81	<small>if TP is hit</small>
+82	<span>Break-even win rate</span>
+83	<small>1 ÷ (1 + R), before costs</small>
+84	<span>Entry <b id="rr-v-in"></b></span>
+85	Free Forex calculator: lot size from your risk and stop loss, plus the risk/reward ratio (R:R), potential profit and break-even win rate. Educational only.
+86	Choose a calculator
+87	Live Forex economic calendar (your local time) | Marius FX
+88	Economic news
+89	Economic calendar
+90	The week's key economic news in one place, shown in your local time. I check it before I open any trade.
+91	The economic calendar shows you when the data and decisions that can move currencies sharply come out: the US jobs report, inflation, central bank decisions and much more. For each release you see the currency affected, your local time, how long until the announcement, how important it is and the expected figures.
+92	As a beginner, you don't need to trade the news. You just need to know when it's coming, so a sudden move doesn't catch you with an open position or a stop loss that's too tight. That's why I check the calendar every Sunday for the week ahead and every morning for the day.
+93	<span class="cal-hero-dot"></span>Next high-impact news
+94	Loading this week's news…
+95	This week's calendar
+96	<span class="cal-filter-label" id="cal-lbl-ccy">Currencies</span>
+97	<span class="cal-filter-label" id="cal-lbl-imp">Impact</span>
+98	High
+99	High + medium
+100	All
+101	<span class="cal-switch" aria-hidden="true"></span>Today only
+102	<strong>The live calendar needs JavaScript.</strong> If it doesn't show up, you'll find the same news, in your time, in the calendars below.
+103	<a class="btn btn-ghost" href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener nofollow">ForexFactory calendar ↗</a> <a class="btn btn-ghost" href="https://www.tradingview.com/economic-calendar/" target="_blank" rel="noopener nofollow">TradingView calendar ↗</a>
+104	The data comes from the public <a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener nofollow">ForexFactory</a> calendar and updates automatically about every 30 minutes. Headlines stay in English, as in the source, with a short plain-English explanation underneath for the important releases. The result (the actual figure) isn't shown here: you'll see it on ForexFactory or TradingView right after the announcement.
+105	Quick guide
+106	The news that moves the market
+107	You don't need to know them all. These are the ones I follow every month. Times are given in the local time of the market that publishes them; the live calendar above converts everything to your time.
+108	NFP (Non-Farm Payrolls)
+109	<span class="cal-impact cal-impact-high">High impact</span>
+110	The US jobs report: how many new jobs were created outside agriculture, plus the unemployment rate and wage growth.
+111	<span>When</span>Usually on the first Friday of the month, at 8:30 New York time, which is <b>12:30 UTC</b> for most of the year.
+112	CPI (inflation)
+113	The consumer price index shows how fast prices are rising. It matters a lot, because central banks set interest rates based on inflation.
+114	<span>When</span>Monthly, for every major economy. In the US, usually around the middle of the month, at 8:30 New York time (<b>12:30 UTC</b> for most of the year).
+115	Interest rate decisions
+116	The Fed (US), the ECB (euro area), the BoE (UK) and the BoJ (Japan) set their benchmark rate 8 times a year each. The press conference afterwards matters too: a different tone than expected can move a currency as much as the decision itself.
+117	<span>When</span>Fed: decision at <b>14:00</b> New York time, press conference at <b>14:30</b>. ECB: decision at <b>14:15</b> Frankfurt time, press conference at <b>14:45</b>. BoE: <b>12:00</b> London time. BoJ: no fixed time, usually during the Tokyo morning (local times of each central bank).
+118	FOMC minutes
+119	<span class="cal-impact cal-impact-med">Medium impact</span>
+120	The detailed summary of the Fed's last meeting. The market searches it for clues about the next rate decisions.
+121	<span>When</span>Three weeks after each Fed decision, at 14:00 New York time (<b>18:00 UTC</b> for most of the year).
+122	<span class="cal-impact cal-impact-med">Medium to high impact</span>
+123	Gross domestic product shows how much the economy has grown or shrunk. It's published quarterly, often in several successive estimates.
+124	<span>When</span>Quarterly. In the US, the first estimate comes out at 8:30 New York time (<b>12:30 UTC</b> for most of the year).
+125	Surveys of purchasing managers in manufacturing and services. Above 50 means expansion, below 50 means contraction. They're among the earliest signals of how the economy is doing.
+126	<span>When</span>Monthly, for the US, the euro area, Germany, the UK and other economies.
+127	Retail sales
+128	How much consumers spent in stores and online. Consumer spending is a very large part of the US economy.
+129	<span>When</span>Monthly. In the US, usually around the middle of the month, at 8:30 New York time (<b>12:30 UTC</b> for most of the year).
+130	Jobless claims
+131	How many people in the US filed for unemployment benefits for the first time in the previous week (Initial Jobless Claims). A quick thermometer for the labour market.
+132	<span>When</span>Weekly, usually on Thursday, at 8:30 New York time (<b>12:30 UTC</b> for most of the year).
+133	The US and Europe change their clocks on different dates. For a few weeks in March and from late October, the time gap between New York and Europe is one hour shorter than usual, so US news arrives an hour earlier for European traders. The calendar above converts everything to your time automatically, and on the <a href="sesiuni.html">Sessions</a> page you can see live which markets are open.
+134	How important is a release
+135	<span class="cal-impact cal-impact-low">Low</span>
+136	Usually has a small effect on price.
+137	<span class="cal-impact cal-impact-med">Medium</span>
+138	Can move the pairs tied to that currency, especially if the figure surprises.
+139	<span class="cal-impact cal-impact-high">High</span>
+140	NFP, inflation, rate decisions. Sudden moves, wide spreads and slippage.
+141	By default, the calendar on this page shows high and medium impact news. You can also see low impact news by choosing "All".
+142	Actual, forecast, previous
+143	Actual
+144	The published figure. It only appears at the moment of the announcement.
+145	Forecast <span>(consensus)</span>
+146	What the market expects: the average of the estimates made before the announcement.
+147	Previous <span>(prior)</span>
+148	The figure from the previous period, sometimes revised.
+149	In the calendar above you see the forecast and the previous value. You'll find the actual figure on ForexFactory or TradingView right after the announcement.

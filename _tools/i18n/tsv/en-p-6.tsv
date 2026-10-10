@@ -1,0 +1,140 @@
+760	Every trade goes through the checklist and ends up in your journal.
+761	<a class="lc-next" href="#cuprins">Back to contents <span aria-hidden="true">↑</span></a>
+762	Came across a term you don't know? You'll find it explained simply in the <a href="glosar.html">Forex glossary</a>.
+763	Finished the course?
+764	Test your knowledge
+765	15 questions from the 8 chapters, with an explanation after each answer and links to the chapters worth rereading.
+766	<a class="btn btn-primary lc-quiz-btn" href="test.html">Start the quiz <span aria-hidden="true">→</span></a>
+767	This lesson is for educational purposes only. It is not financial or investment advice and does not recommend buying or selling any instrument. The numerical examples are illustrative: exchange rates, contract sizes, leverage and margin call or stop out levels vary from one broker to another. Leveraged trading can lead to rapid loss of money.
+768	Free Forex course for beginners in 8 chapters: brokers, candlesticks, pips and lots, leverage, stop loss, risk management and psychology, step by step.
+769	About the course
+770	Chapters done
+771	Lesson contents
+772	EURUSD equals 1.1000: the euro is the base currency, the dollar is the quote currency
+773	Examples of reading the price
+774	Loss and the gain needed to recover
+775	Forex chart patterns explained simply | Marius FX
+776	<a href="patternuri.html" aria-current="page">Patterns</a>
+777	Shapes on the chart
+778	Chart patterns
+779	Five shapes you'll often meet in Forex education. Each drawing shows how the pattern is built, so you know what to look for.
+780	The patterns below are schematic examples, not trading signals.
+781	Head and shoulders
+782	Head and Shoulders usually appears after a rise. The price makes a first peak, the left shoulder, drops, climbs higher to form the head, then drops again and makes a third peak, the right shoulder, lower than the head. The lows between the peaks can be joined into a neckline. On the chart you look for the three peaks and watch whether the price breaks below the neckline; the shape alone doesn't tell you what comes next.
+783	Double top
+784	A Double Top forms when the price rises twice to roughly the same level and doesn't clearly break above it. Between the two peaks there's a low, and the neckline is drawn through that low. The outline looks like the letter "M". A drop below the neckline is what you note as a possible breakout, not as a certainty.
+785	Double bottom
+786	A Double Bottom is the reverse shape and often appears after a decline. The price touches a similar low zone twice, with a peak between them. The neckline runs through that peak. You watch whether the price rises and breaks above the line. It's a pattern to recognise on the chart, not an invitation to enter a trade.
+787	Flag
+788	A Flag starts with a short, steep move, called the impulse or the pole. After it, the price settles into a small channel, usually sloping against the impulse: that's the flag, with two almost parallel edges. In the drawing, the breakout leaves the channel in the direction of the impulse. The channel may not be confirmed; the picture only shows the shape.
+789	Triangle
+790	A symmetrical Triangle is drawn when the highs keep getting lower and the lows keep getting higher, until the two lines converge. The price moves in an ever narrower space. You mark the upper line as resistance and the lower line as support and watch where the price breaks out. There are also ascending and descending triangles; none of them tells you the direction on its own.
+791	Forex chart patterns explained simply, with drawings: head and shoulders, double top, double bottom, flag and triangle. How they form and what to look for on the chart.
+792	Schematic candlestick chart: left shoulder, higher head, right shoulder, neckline and a breakout downwards.
+793	Schematic chart with two peaks at a similar level, a neckline between them and a breakout downwards.
+794	Schematic chart with two similar lows, a neckline at the peak between them and a breakout upwards.
+795	Schematic chart: a steep impulse, then a small channel called the flag and a breakout in the direction of the impulse.
+796	Schematic chart with a symmetrical triangle: a falling resistance line, a rising support line and a breakout.
+797	10 rules of disciplined trading for beginners
+798	<a href="reguli.html" aria-current="page">Rules</a>
+799	01 · The foundation
+800	Basic trading rules
+801	Ten simple principles that separate disciplined trading from gambling. Read them before every session.
+802	Risk a maximum of 1–2% per trade
+803	Never risk more than 1–2% of your account on a single position. That's how you survive a losing streak, too.
+804	Always use a stop loss
+805	Every trade has a stop loss set in advance. Don't move it further away when the price goes against you.
+806	Have a written trading plan
+807	Define in writing what you trade, when you enter, when you exit and how much you risk. Without a plan, decisions become impulsive.
+808	Respect the risk/reward ratio
+809	Look for trades with a ratio of at least 1:2: the potential gain should be at least twice the risk you take.
+810	Keep a trading journal
+811	Log every entry, the reason, the result and your emotional state. The journal shows you what really works.
+812	Beware of leverage
+813	Leverage magnifies both gains and losses. High leverage can empty an account very quickly.
+814	No revenge trading
+815	After a loss, take a break. Don't try to "win it back" right away: emotions lead to bad decisions.
+816	Be careful around major news
+817	Major economic announcements (interest rates, NFP, inflation) can cause sudden moves and slippage.
+818	Start on a demo account
+819	Practise your strategy on a demo account until you're consistent. Only then move to small amounts of real money.
+820	Protect your capital, above all
+821	Your first job isn't to win, it's not to lose your capital. Without capital, there are no more trades.
+822	Ten basic rules for disciplined trading: 1–2% risk per trade, always a stop loss, a written plan, a journal and care with leverage. Education, no signals.
+823	Live Forex sessions: Sydney, Tokyo, London, New York (your local time)
+824	<a href="sesiuni.html" aria-current="page">Sessions</a>
+825	Market hours
+826	Live Forex sessions
+827	The Forex market runs non-stop on weekdays, in a relay of sessions: Sydney, Tokyo, London and New York. Liquidity and volatility rise when they overlap, especially London with New York.
+828	<span class="sessions-clock-label">Your local time</span> <time class="sessions-clock-time" id="visitor-clock" datetime="">—:—:—</time> <span class="sessions-clock-date" id="visitor-date"></span>
+829	<span class="dot"></span> <span id="open-badge-text">Loading…</span>
+830	<strong>The market is closed (weekend)</strong>
+831	It reopens on Sunday at 17:00 New York time.
+832	<span>24h timeline (your time)</span> <span class="tl-legend" id="tl-legend"></span>
+833	<span class="tl-now-line"></span> <span class="tl-now-label">now</span>
+834	Sessions matter because liquidity (how easily you can trade) and volatility (how much the price moves) change throughout the day. Yen pairs move more during the Asian session; EUR/USD and GBP/USD usually move most in the London–New York window.
+835	Live Forex sessions in your local time: Sydney, Tokyo, London and New York. See which markets are open right now, the overlaps and how long until the next open.
+836	24-hour timeline
+837	Free Forex backtesting simulator | Marius FX
+838	Backtesting on real historical data
+839	Forex backtesting simulator
+840	Practise on real charts from 2019 onwards, bar by bar, without knowing what comes next. You place a Buy or Sell with stop loss and take profit, and the simulator keeps score: lot size, risk, R, statistics and the equity curve. Everything runs in your browser, with virtual money.
+841	Start a session
+842	How to use the simulator
+843	XAU/USD (gold)
+844	Timeframe
+845	Period
+846	<span>Random period</span>
+847	<span>Choose a date</span>
+848	Start date
+849	Advanced <small>currency, balance, risk (default €10,000, 1%)</small>
+850	Virtual balance
+851	Risk per trade (%)
+852	Strategy <small>optional: name, rules, checklist, setups</small>
+853	Strategy name
+854	Setups (comma-separated)
+855	Rules
+856	Checklist before entry <small>(one point per line)</small>
+857	The strategy name groups sessions in the statistics below, so you can compare strategies with each other. During the session, each trade can get a setup and a note.
+858	Challenge mode <small>prop firm style rules</small>
+859	<span>Enable the challenge</span>
+860	Profit target (%)
+861	Maximum daily loss (%)
+862	Maximum total drawdown (%)
+863	Like at funding firms (prop firms): you pass if equity reaches the target, and you fail if at the worst point of any hour equity drops below the daily limit (calculated from the balance at the start of the day, 17:00 New York) or below the total limit (calculated from the starting balance). Real rules differ from one firm to another; always read them first.
+864	First time? Read <a href="#sim-guide">How to backtest properly</a> (5 minutes).
+865	With "Random period" the date stays hidden until the end of the session, so you aren't influenced by what you already know about that period.
+866	Start session
+867	Continue saved session
+868	<strong id="sim-label">EURUSD · H1</strong> <span id="sim-when">Date hidden</span>
+869	<span class="ws-txt">Indicators</span>
+870	<span class="sr-only" id="sim-play-lbl">Play</span>
+871	<span class="ws-txt">Next bar</span>
+872	<span class="sr-only">Replay speed</span>
+873	Balance
+874	Equity
+875	Bars
+876	Finish
+877	<span class="sr-only">Drawing tools</span>
+878	<span class="sr-only">Cursor: select and move drawings</span>
+879	<span class="sr-only">Horizontal line</span>
+880	<span class="sr-only">Horizontal ray (to the right)</span>
+881	<span class="sr-only">Trend line</span>
+882	<span class="sr-only">Rectangle (zone)</span>
+883	<span class="sr-only">Fibonacci retracement</span>
+884	<span class="sr-only">Magnet</span>
+885	<span class="ws-swatch" id="sim-color-sw" aria-hidden="true"></span><span class="sr-only">Colour</span>
+886	<span class="sr-only">Delete the selected drawing</span>
+887	<span class="sr-only">Delete all drawings</span>
+888	Order
+889	Trades <span class="ws-count" id="sim-tcount">0</span>
+890	Statistics
+891	<span><small>Sell</small><b id="sim-bid">—</b></span>
+892	<span><small>Buy</small><b id="sim-ask">—</b></span>
+893	<span>Stop loss <span class="sim-unit-lbl">(pips)</span></span>
+894	<span>Take profit <span class="sim-unit-lbl">(pips)</span></span>
+895	<span>Setup</span>
+896	<span>Note</span>
+897	<span id="sim-strat-name">Strategy</span> <small id="sim-check-count"></small>
+898	Advanced <small>order type, unit, risk</small>
+899	Order type

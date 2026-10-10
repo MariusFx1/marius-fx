@@ -1,0 +1,140 @@
+620	For 1 lot you would need €3,333.33 of margin, so you can't open it. The limit protects you. At a broker outside the EU, with 1:500 leverage, the margin for 1 lot would be only €200:
+621	1 lot: 100 pips against you ≈ 100 × €9.09 ≈ <b>€909</b>, which is 91% of the account
+622	Your risk comes from position size. High leverage only lets you open positions that are too big.
+623	Margin call and stop out
+624	<span>Margin level</span> = equity ÷ margin used × 100%
+625	<strong>Margin call:</strong> the warning that your free margin has run out. The level is set by the broker.
+626	<strong>Stop out:</strong> the broker closes your positions automatically. In the EU, for retail clients, ESMA rules require positions to be closed when equity falls below 50% of the initial margin required. Outside the EU, the broker chooses the level. If you get here, you've risked far too much.
+627	Protections in the EU
+628	At EU-regulated brokers, retail clients have maximum leverage capped by ESMA (these limits apply to EU clients):
+629	Instrument
+630	Maximum leverage
+631	Pairs made up only of USD, EUR, JPY, GBP, CAD, CHF (e.g. EURUSD, USDJPY)
+632	Other pairs (e.g. AUDUSD), gold, major indices
+633	Other commodities (e.g. oil), other indices
+634	Shares
+635	Cryptocurrencies
+636	Also in the EU, retail clients have <strong>negative balance protection</strong>: you can't lose more than the money in your account. Brokers outside the EU aren't required to apply these rules, so check which of the broker's entities opens your account.
+637	Leverage magnifies gains and losses equally.
+638	Margin is collateral locked up by the broker, not your maximum loss.
+639	Stop out closes positions automatically. In the EU, at 50% of the required margin.
+640	You size your lot by risk, not by how much leverage allows.
+641	<a class="lc-next" href="#cap-5">Chapter 5: Orders, stop loss and take profit <span aria-hidden="true">→</span></a>
+642	Chapter 5 of 8
+643	Orders, stop loss and take profit
+644	If you only remember one thing from this whole lesson, I'd like it to be this: no trade without a stop loss.
+645	Order types
+646	<strong>Market:</strong> you enter immediately, at the current price.
+647	<strong>Limit:</strong> you enter at a better price. <strong>Buy limit</strong> below the current price, <strong>sell limit</strong> above it.
+648	<strong>Stop:</strong> you enter when the price confirms the direction. <strong>Buy stop</strong> above the current price, <strong>sell stop</strong> below it.
+649	Limit: you wait for a better price. Stop: you wait for the move to be confirmed.
+650	A stop loss that gets hit fills at the first available price. Around news or after the weekend, the price can jump past your level (a <strong>gap</strong>) and you exit at a worse price than planned (<strong>slippage</strong>). The SL limits your loss, but it doesn't guarantee it to the pip.
+651	Stop loss: always
+652	<strong>The stop loss (SL)</strong> closes your position automatically at a price you set in advance. Without an SL, a single unexpected news release, or one evening where you tell yourself "leave it, it'll come back", can wipe out months of work.
+653	The SL goes where your idea is proven wrong, not at a number of pips picked at random:
+654	<strong>On a buy:</strong> below the last relevant low or below a support zone.
+655	<strong>On a sell:</strong> above the last relevant high or above a resistance.
+656	Leave a few pips of buffer, plus the spread.
+657	Only then do you calculate the lot size (chapter 6). The chart dictates the distance, and the lot adapts to it.
+658	<b>Golden rule:</b> never move the SL further away when the price gets close to it. You may only move it to reduce your risk, for example to your entry price, and only if your plan says so.
+659	Take profit and the risk/reward ratio
+660	<strong>The take profit (TP)</strong> closes your position automatically at your target. <strong>R:R</strong> compares how much you risk with how much you can make. The risk on one trade is called <strong>1R</strong>.
+661	SL below the last low, TP before the next resistance. You risk 1R to make 2R.
+662	Buy EURUSD at 1.1000, SL at 1.0975, TP at 1.1050.
+663	Risk 25 pips · target 50 pips → R:R = <b>1:2</b>
+664	With an R:R of 1:2 you need to win at least one trade in three to break even, before costs: 1 ÷ (1 + 2) = 33.3%. At 1:1 you need more than 50%.
+665	10 trades, 4 won and 6 lost: 4 × 2R − 6 × 1R = <b>+2R</b>
+666	This is a calculation, not a promise: the ratio matters more than how often you're right.
+667	The TP goes in a logical place, before a zone where the price may turn around, not just to get a big ratio.
+668	Market = now, limit = at a better price, stop = on confirmation.
+669	No trade without a stop loss, placed where the idea is proven wrong.
+670	Never move the SL further away.
+671	Look for an R:R of at least 1:2, with logical targets.
+672	<a class="lc-next" href="#cap-6">Chapter 6: Risk management <span aria-hidden="true">→</span></a>
+673	Chapter 6 of 8
+674	Your strategy gives you entries. Risk management keeps you in the game long enough to learn.
+675	The 1% rule
+676	You risk <strong>a maximum of 1% of your account per trade</strong>. On €1,000, that means a loss of no more than €10 if your stop loss is hit. It looks small, and that's exactly the point: you can be wrong many times without being knocked out of the game. When you're starting out, even 0.5% is a very good choice.
+677	Calculating the lot size
+678	<span>Lot</span> = amount at risk ÷ (stop loss in pips × pip value for 1 lot)
+679	Example · €1,000 account, 1% risk, 25-pip SL, EURUSD
+680	<span>Amount at risk</span><b class="lc-calc-inline">€1,000 × 1% = €10</b>
+681	<span>Stop loss</span><b class="lc-calc-inline">25 pips, below the last low</b>
+682	<span>Pip value for 1 lot, in euros</span><b class="lc-calc-inline">10 USD ÷ 1.10 ≈ €9.09</b>
+683	<span>Lot</span><b class="lc-calc-inline">10 ÷ (25 × 9.09) ≈ 0.044</b>
+684	<span>Round down</span><b class="lc-calc-inline">0.04 lots</b>
+685	<b>Check:</b> 0.04 × 25 × 9.09 ≈ €9.09, below €10. Always round down, otherwise you risk more than 1%.
+686	If the chart calls for a 50-pip SL, the lot becomes 0.02. The risk in euros stays the same; only the position size changes. In the <a href="calculator.html">calculator</a>, with EURUSD, currency EUR, balance 1000, risk 1, stop loss 25 and price 1.10, you also get 0.04 lots.
+687	Losing streaks are normal
+688	Losing streaks will come even with a good method. Strictly mathematically, at a 50% win rate, the chance of at least 6 losses in a row over 100 trades is about 55%.
+689	The same bad luck, very different accounts. Each loss is calculated from the remaining balance.
+690	Big losses are hard to recover
+691	<span role="columnheader">Loss</span><span role="columnheader">Gain needed to get back</span>
+692	From €1,000 you lose 50% and are left with €500. To get back to €1,000 you need +€500, which is +100% of what you have left.
+693	Also set yourself a daily and weekly loss limit, for example 2% and 5%. When you hit it, close the platform.
+694	A maximum of 1% risk per trade. At the beginning, 0.5% is even better.
+695	Lot = amount at risk ÷ (SL in pips × pip value per 1 lot). Round down.
+696	Losing streaks are normal. Small risk makes them bearable.
+697	<a class="lc-next" href="#cap-7">Chapter 7: Psychology, discipline and mistakes <span aria-hidden="true">→</span></a>
+698	Chapter 7 of 8
+699	Psychology, discipline and mistakes
+700	You can learn a strategy in a few weeks. Discipline takes years. Many accounts are lost not for lack of knowledge, but because of emotions.
+701	The trading plan
+702	A <strong>written</strong> document, not one in your head. When emotions run high, the plan does the thinking for you. It has to answer:
+703	What you trade (2–3 pairs) and at what times.
+704	What exactly you need to see on the chart to enter.
+705	Where you place your SL and TP.
+706	How much you risk per trade, per day and per week.
+707	What you do after a loss or a losing streak.
+708	The journal
+709	Log every trade: the pair, the reason for entering, SL, TP, the result in R, how you felt and whether you followed your plan. After 20–30 trades you'll see what works and where you go wrong. There's a <a href="jurnal.html">free journal</a> on this site, saved only in your browser.
+710	The emotional traps
+711	<strong>Revenge trading:</strong> after a loss you want to "win it back" right away, usually with a bigger lot. Antidote: after 2 losses in a row, close the platform until the next day.
+712	<strong>FOMO (fear of missing out):</strong> you jump late into a big move, without a logical SL. Antidote: a missed entry isn't a loss. Other opportunities will come.
+713	<strong>Overtrading:</strong> too many trades, out of boredom. Antidote: only enter the setups in your plan.
+714	<strong>Fear and greed:</strong> you close winners too early and let losers run. Antidote: SL and TP set from the start and left alone.
+715	Typical mistakes
+716	Besides the ones about stop loss and risk, here are the mistakes I made myself at the beginning:
+717	Adding to a losing position
+718	Never "average down" a loss.
+719	Changing strategy after every loss
+720	Test it on at least 30–50 demo trades before you judge it.
+721	Trading the news without knowing it
+722	Check the <a href="calendar.html">economic calendar</a> every day (interest rates, inflation, US jobs).
+723	Copying signals without understanding them
+724	If you don't know why you entered, you won't know when to get out either.
+725	A written plan before the first trade, a journal entry after each one.
+726	After losses: a break, not revenge.
+727	The big mistakes usually come from too much risk and no rules.
+728	<a class="lc-next" href="#cap-8">Chapter 8: Your first concrete steps <span aria-hidden="true">→</span></a>
+729	Chapter 8 of 8
+730	Your first concrete steps
+731	You've reached the end. Here's exactly what I would do if I were starting from zero today.
+732	Master the calculations
+733	Reread chapters 3–6 until you can work out the lot size yourself. Use the <a href="calculator.html">calculator</a> to check.
+734	Demo account, at least 6–8 weeks
+735	And a minimum of 30–50 trades, with the same 1% risk, the same plan and a complete journal, as if it were real money. Before or alongside that, practise on historical data in the <a href="simulator.html">backtesting simulator</a>: you see the chart bar by bar, without knowing what comes next.
+736	Write your plan
+737	Start from the <a href="reguli.html">basic rules</a>. Choose 2–3 pairs, the hours you'll trade (see <a href="sesiuni.html">Sessions</a>) and 1–2 setups you understand, for example from the <a href="patternuri.html">patterns</a>.
+738	A journal from your first trade
+739	Log everything in the <a href="jurnal.html">journal</a> and read it every weekend.
+740	Go live only if you've been disciplined
+741	Not "if you made a profit on demo", but if you followed your plan. Start with a small account, with money you can afford to lose, and with 0.01 lots.
+742	Choose your broker carefully
+743	Check the regulation, the costs and how easily you can withdraw your money. On the <a href="broker.html">Broker</a> page you'll find the broker I use (affiliate link).
+744	Checklist before every trade
+745	If a single point is missing, you don't enter.
+746	<span>The trade matches a setup in my plan.</span>
+747	<span>I've checked the direction on the higher timeframe (D1 / H4).</span>
+748	<span>I know exactly where my stop loss goes and why.</span>
+749	<span>The R:R is at least 1:2, with a logical target.</span>
+750	<span>I've calculated the lot size for a maximum of 1% risk.</span>
+751	<span>I've checked the economic calendar for the next few hours.</span>
+752	<span>I'm calm: I'm not entering out of boredom, FOMO or to win back losses.</span>
+753	<span>I'll log the trade in my journal.</span>
+754	Tick all 8 points before you enter.
+755	Trading isn't a race. What matters isn't how fast you get there, but getting there with your account intact and a process you can repeat. If you have questions, join the free Telegram community or write to me.
+756	Happy learning,<br><b>Marius</b>
+757	<a class="btn btn-primary" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener">Free Telegram community</a> <a class="btn btn-ghost" href="contact.html">Write to me</a>
+758	Demo first, with the same rules you'd use live.
+759	Live: small amounts and 0.01 lots, only after you've been disciplined.

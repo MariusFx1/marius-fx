@@ -1,0 +1,249 @@
+400	Next week's calendar appears automatically on Sunday.
+401	You can select more currencies or "All" under impact.
+402	The calendar data hasn't been updated since {d}.
+403	The calendar data hasn't been updated.
+404	So you don't see outdated times, we've hidden them. Until this is fixed, check the news directly in one of the calendars below.
+405	Your time:
+406	Last updated:
+407	1 term
+408	{n} terms
+409	{n} terms
+410	{x} found out of {t}
+411	{x} found out of {t}
+412	No results
+413	Chapter done
+414	I've finished this chapter
+415	Start with chapter 1
+416	You've finished the whole course. Review it
+417	Continue with chapter {n}
+418	All {n} points are checked. The trade follows your process (that doesn't mean it will be a winner).
+419	{c} of {n} checked. If a point is missing, you don't enter.
+420	XAU/USD (gold)
+421	The stop loss is missing or isn't a valid price.
+422	Horizontal line
+423	Horizontal ray
+424	Trend line
+425	Rectangle
+426	Horizontal line: tap or click on the level you want.
+427	Horizontal ray: tap or click where it should start.
+428	Trend line: drag from the first point to the second (or click twice).
+429	Rectangle: drag from one corner to the opposite corner (or click twice).
+430	Fibonacci: drag from the start of the move (for example the low) to its end (the high). The 0.382-0.618 levels are highlighted.
+431	 Esc cancels.
+432	{v} added. Drag it to move it, or delete it with the Delete key / the bin in the drawing toolbar.
+433	Magnet on: points snap to the candle's O/H/L/C.
+434	Magnet off.
+435	There are no drawings on the chart.
+436	Press the bin again to delete all {length} drawings.
+437	All drawings have been deleted.
+438	Colour {c}
+439	Show
+440	Hide
+441	Settings
+442	Remove
+443	Maximum 10 indicators, so the chart stays readable.
+444	It appears in a pane below the chart.
+445	{indName} added.{v}
+446	Length
+447	Deviations
+448	Fast
+449	Slow
+450	Signal
+451	Colour
+452	(no setup)
+453	No strategy
+454	< 1 hour
+455	{n} hours
+456	{n} days
+457	Trades
+458	Win
+459	{r} after {n} trades
+460	<div class="st-block"><h4>Distribution of results (R)</h4><ul class="st-hist">
+461	<p class="sim-empty">Detailed statistics appear after your first closed trade.</p>
+462	Only 1 trade: conclusions only become credible after 30-50 trades with the same rules.
+463	Only {n} trades: conclusions only become credible after 30-50 trades with the same rules.
+464	Expectancy
+465	 / trade
+466	per trade
+467	Average win
+468	Average loss
+469	Profit factor (R)
+470	Longest streaks
+471	wins / losses in a row
+472	Max drawdown
+473	 from peak
+474	from the peak of the R curve
+475	Average duration
+476	from entry to exit
+477	Cumulative R curve
+478	By setup
+479	By instrument
+480	By day (entry, your local time)
+481	Day
+482	By entry hour (your local time)
+483	Hour
+484	Highest expectancy
+485	Sessions
+486	Trades
+487	 <small>(few)</small>
+488	Total R
+489	Average win / loss
+490	Max drawdown (R)
+491	Losses in a row (max)
+492	Challenges passed
+493	{a} of {b}
+494	Strategy
+495	Note
+496	Timeframe
+497	Entry (your local time)
+498	Exit (your local time)
+499	Exit price
+500	Currency
+501	All strategies
+502	All instruments
+503	All setups
+504	The CSV file has been downloaded ({length} trades).
+505	Order
+506	With this stop loss the lot would be below 0.01. The previous level was kept.
+507	Order modified: 
+508	price 
+509	Enter the order price (for example 
+510	A Buy limit goes below the current price (Ask {sp}). To enter above the price, use a Buy stop.
+511	A Buy stop goes above the current price (Ask {sp}). To enter below the price, use a Buy limit.
+512	A Sell limit goes above the current price (Bid {sp}). To enter below the price, use a Sell stop.
+513	A Sell stop goes below the current price (Bid {sp}). To enter above the price, use a Sell limit.
+514	Enter the order price.
+515	Fill in the stop loss. Without a stop loss we can't calculate the lot size.
+516	The stop loss must be a number of pips greater than 0.
+517	The stop loss isn't a valid price.
+518	The take profit must be a number of pips greater than 0 (or empty).
+519	The take profit isn't a valid price.
+520	The calculated lot is below 0.01 (a {nf}-pip stop loss with {money} at risk). Tighten the stop loss or increase the risk %.
+521	 at market
+522	(price)
+523	{tag}{v} {nf} lots at {fmtPrice}. Risk: {money}.
+524	{v} {kind} order placed at {fmtPrice}. It fills when the price gets there.
+525	checklist {a}/{b}
+526	lot
+527	Open position
+528	Pending order
+529	Close now
+530	Cancel order
+531	realised {a} · total {b}
+532	Waiting for price 
+533	On a Buy, the stop loss must stay below the current price ({fmtPrice}).
+534	On a Sell, the stop loss must stay above the current price ({fmtPrice}).
+535	On a Buy, the take profit must be above the current price ({fmtPrice}).
+536	On a Sell, the take profit must be below the current price ({fmtPrice}).
+537	With this stop loss the lot would be below 0.01. Choose a tighter stop loss.
+538	Levels updated: SL 
+539	, no TP
+540	You can only move to break-even when the position is in profit (the price must be beyond the entry).
+541	Stop loss moved to break-even (
+542	). If the price comes back, the rest of the position closes at 0.
+543	The pending order has been cancelled.
+544	All positions have been closed.
+545	The lot to close must be at least 0.01.
+546	{tag}Partial close of {nf} lots: {money} ({fmtR}). {nf2} lots remain.
+547	Take profit
+548	Stop loss
+549	Manual close
+550	End of session
+551	Partial close
+552	Challenge rule
+553	, with partial closes
+554	 Both SL and TP were hit in the same H1 bar: we assumed SL came first (the conservative option).
+555	 The price gapped past the stop loss, so the exit was at the bar's open.
+556	We couldn't load the data for the next period. Check your connection.
+557	Loading the next data…
+558	You've reached the end of the available data (
+559	The session stopped: the next period has many missing hours in the source, so we don't use it.
+560	{tag}{v} {kind} order filled at {fmtPrice}.
+561	Pause
+562	Play
+563	Pause (Space)
+564	Play (Space)
+565	Timeframe {tf}. "Next bar" moves forward one {tf2} bar; SL and TP are still checked on every hour (H1).
+566	Date hidden
+567	you reached the {nf}% profit target
+568	equity fell below the daily loss limit ({nf}% of the starting balance)
+569	equity fell below the total drawdown limit ({nf}% of the starting balance)
+570	Challenge passed
+571	Congratulations: 
+572	 without breaking the loss limits.
+573	Challenge failed
+574	Rule broken: 
+575	. Positions were closed automatically.
+576	Challenge not finished
+577	The session ended before the {nf}% target, without breaking the limits.
+578	Target: equity 
+579	Daily limit: equity 
+580	Total limit: equity 
+581	{n} at break-even
+582	{wins} won · {losses} lost{v}
+583	∞ (no losses)
+584	 from the equity peak
+585	Balance: 
+586	<br><small class="sim-note" title="
+587	<small>date hidden</small>
+588	<small>after 
+589	 parts)</small>
+590	 <small>(SL and TP in the same bar)</small>
+591	The virtual balance must be a number between 100 and 10,000,000.
+592	Risk per trade must be between 0 and 10% (for example 1 or 0.5).
+593	The challenge profit target must be between 1% and 100%.
+594	Challenge limits: daily loss between 0.5% and 50%, total drawdown between 1% and 90%.
+595	The maximum daily loss can't be larger than the maximum total drawdown.
+596	My strategy
+597	Loading data…
+598	Choose a start date or use "Random period".
+599	For {sym}, the source has many missing hours between {f} and {f2}, so we don't use that period (or the time just before it). Choose another date.
+600	For {tf}, choose a date between {f} and {f2}, so there are enough bars before and after.
+601	We couldn't load the data. Check your connection and try again.
+602	Start session
+603	Finish
+604	Finish the session and see the results
+605	Fixed spread: {nf} pips. Tip: the default stop loss ({sl} pips) is about 1.5 x the typical range of a {tf} candle.
+606	Session resumed where you left off.
+607	The session has started. Study the chart, then move forward or place an order.
+608	Actual period: 
+609	Results
+610	Show the session results
+611	The session has ended.
+612	Largest loss in a single day: {a} (limit {b}); deepest drawdown from the starting balance: {c} (limit {d}).
+613	Keep in mind: in challenges you rarely fail because of a weak strategy, almost always because of too much risk. At 1% per trade it takes 5 losses in a row to hit a 5% daily limit; at 2.5%, just 2.
+614	Hide panel
+615	Show panel
+616	The browser didn't allow full screen.
+617	Exit full screen
+618	Full screen
+619	trade
+620	trades
+621	 winners
+622	No.
+623	Type
+624	Entry date
+625	Initial SL
+626	Initial TP
+627	Exit date
+628	Reason
+629	The CSV file has been downloaded ({n} trades, comma-separated).
+630	We couldn't read the journal in this browser.
+631	{t} order
+632	You have no closed trades to send to the journal.
+633	The trades from this session are already in your <a href="jurnal.html">journal</a>.
+634	We couldn't save to the journal (browser storage is full or blocked).
+635	Added 1 trade to <a href="jurnal.html">your journal</a>, tagged "Simulator".
+636	Added {n} trades to <a href="jurnal.html">your journal</a>, tagged "Simulator".
+637	With a date you choose, the date is visible on the chart. Beware the temptation to use what you already know about that period.
+638	With "Random period" the date stays hidden until the end of the session, so you aren't influenced by what you already know about that period.
+639	Couldn't resume the session. Start a new one.
+640	Enter the lot to close (for example 0.10).
+641	Delete all saved sessions and their statistics?
+642	Yes
+643	No
+644	market
+645	monthly
+646	yearly
+647	quarterly
+648	yearly, 3-month average

@@ -1,0 +1,151 @@
+900	<span>Market</span>
+901	<span>Limit</span>
+902	<span>Stop</span>
+903	Order price
+904	SL and TP in
+905	<span>Pips</span>
+906	<span>Price</span>
+907	Money at risk
+908	Buy at market
+909	Positions and orders <span class="ws-count" id="sim-pos-count">0</span>
+910	Close all
+911	Open position
+912	Risk
+913	Apply SL/TP
+914	SL to break-even
+915	Close now
+916	<span id="sim-partial-lbl">Close partially</span>
+917	Lot to close
+918	Keys: <kbd>→</kbd> next bar, <kbd>Space</kbd> play/pause, <kbd>B</kbd> buy, <kbd>S</kbd> sell, <kbd>Esc</kbd> closes windows. The SL, TP and order lines can be dragged with the mouse or your finger.
+919	Session trades
+920	Exit
+921	Reason
+922	Pips
+923	No closed trades yet.
+924	<span>Trades</span><strong id="sim-s-n">0</strong><small id="sim-s-wl"></small>
+925	<span>Win rate</span><strong id="sim-s-wr">—</strong>
+926	<span>Total R</span><strong id="sim-s-tr">—</strong>
+927	<span>Average R</span><strong id="sim-s-ar">—</strong>
+928	<span>Profit factor</span><strong id="sim-s-pf">—</strong>
+929	<span>Max drawdown</span><strong id="sim-s-dd">—</strong><small id="sim-s-ddp"></small>
+930	<span>Best</span><strong id="sim-s-best">—</strong>
+931	<span>Worst</span><strong id="sim-s-worst">—</strong>
+932	<span>Net result</span><strong id="sim-s-net">—</strong><small id="sim-s-bal"></small>
+933	Equity curve
+934	Indicators
+935	Calculated only from the bars already shown (no peeking into the future). You can add the same indicator several times, with different settings.
+936	Bollinger
+937	Active
+938	No indicators. Choose one above.
+939	Session results
+940	<span>Trades</span><strong id="sim-m-n">0</strong><small id="sim-m-wl"></small>
+941	<span>Win rate</span><strong id="sim-m-wr">—</strong>
+942	<span>Total R</span><strong id="sim-m-tr">—</strong>
+943	<span>Profit factor</span><strong id="sim-m-pf">—</strong>
+944	<span>Max drawdown</span><strong id="sim-m-dd">—</strong>
+945	<span>Net result</span><strong id="sim-m-net">—</strong><small id="sim-m-bal"></small>
+946	New session
+947	Send to journal
+948	Export CSV
+949	Back
+950	Past results don't guarantee future results. The simulator is for educational purposes.
+951	Your saved sessions
+952	Clear history
+953	Statistics across all sessions
+954	Strategy
+955	Setup
+956	Compare strategies
+957	Results are in R, so you can compare sessions with different balances or currencies. Expectancy (average R per trade) is the most useful metric; ★ marks the highest.
+958	Details
+959	Sessions are saved only in this browser (localStorage). Nothing is sent to a server.
+960	How to backtest properly
+961	<strong>Write your rules before you start.</strong> When you enter, where you put the stop loss and take profit, what risk you use and when you don't trade. Fill in the "Strategy" field and a short checklist; if you can't write the rule down, you can't test it.
+962	<strong>Collect at least 30-50 trades</strong> with the same rules, ideally across several sessions and periods (trend, range, high volatility). A few winning trades in a row prove nothing.
+963	<strong>No lookahead.</strong> Use "Random period" so the date stays hidden, and don't skip ahead to "see what happens next". Decide only with what's on the chart at the current bar; the simulator won't let you go back after entering.
+964	<strong>Log every trade.</strong> Add the setup and a short note (why you entered), including on the losing ones. Then send the session to your <a href="jurnal.html">journal</a>.
+965	<strong>Judge by expectancy and drawdown, not by win rate.</strong> A strategy with 40% winners can be profitable at 1:2. Compare strategies in the table above and change only one rule at a time.
+966	<strong>Then on demo.</strong> A good backtest is a starting point: confirm the strategy for a few weeks on a demo account before using real money.
+967	How the simulator calculates
+968	The chart shows the <strong>Bid</strong> price. A Buy enters at the Ask (Bid plus a fixed spread) and exits at the Bid; a Sell enters at the Bid and exits at the Ask. Fixed spread: EUR/USD 1.0 pip, GBP/USD 1.5, USD/JPY 1.2, AUD/USD 1.2, GBP/JPY 2.5, gold 3.0 pips (0.30 USD). No commission or swap.
+969	On every new bar we check the high and the low. If both the stop loss and the take profit are hit in the same bar, we assume the <strong>stop loss was hit first</strong> (the conservative option), because the candle doesn't show the order.
+970	If the bar opens beyond the stop loss (a gap), the exit is at the open price, as in reality. A limit or stop order filled in a bar can be stopped out in that same bar, but the take profit is only checked from the next bar onwards.
+971	The lot is calculated as in the <a href="calculator.html">lot size calculator</a> (rounded down to 0.01), from the current balance and the risk %. Pip: 0.0001; 0.01 on JPY pairs; 0.10 on gold. To convert into the account currency we use the historical closing rate for that day.
+972	Results are in R: 1R is the amount risked at entry. That way you can see whether the strategy makes sense, whatever the account size.
+973	<strong>Important:</strong> past results, including those obtained in the simulator, don't guarantee future results. The simulator is an educational tool with virtual money, not a signal or a trading recommendation. Write your conclusions down in your <a href="jurnal.html">journal</a> and then practise on a demo account.
+974	Historical data: <a href="https://www.histdata.com/" target="_blank" rel="noopener">HistData.com</a> (1-minute candles, which we aggregate into H1, H4 and D1; the trading day starts at 17:00 New York time; the data is updated monthly). From February to July 2023 the source has many missing hours, so that period isn't used in sessions. Chart: <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView</a> Lightweight Charts™ v5.2.1, Copyright (c) 2025 TradingView, Inc., <a href="vendor/lightweight-charts-5.2.1/LICENSE">Apache 2.0</a> licence (<a href="vendor/lightweight-charts-5.2.1/NOTICE">NOTICE</a>).
+975	<strong>Press "Start session".</strong> Defaults: EUR/USD, H1, random period (the date stays hidden) and 1% risk. The chart opens full screen; the arrow at the top left takes you back to the settings.
+976	<strong>Move forward bar by bar</strong> with ▶| (or the → key), with +10 or with auto-play ▶ (the Space key). Future bars aren't visible and you can't go back.
+977	<strong>Place your order:</strong> choose Sell or Buy and press the big button (or the S and B keys). The stop loss and take profit (1:2) are placed automatically; drag the lines on the chart to where you want them. The lot size is calculated from your balance and risk %.
+978	<strong>Manage the position:</strong> on every bar we check the SL and TP. You can move the stop loss to break-even or close manually.
+979	<strong>At the end</strong> you find out the real period and see the statistics, the equity curve and the list of trades. You can export them to CSV or send them to your journal.
+980	Virtual money, real data from the past. Past results don't guarantee future results.
+981	Got it
+982	Free Forex backtesting simulator: practise on real historical charts, bar by bar, with stop loss, take profit, automatic lot sizing and statistics in R.
+983	e.g. Pullback to the 50 EMA
+984	e.g. Pullback, Breakout, Pin bar
+985	Backtesting workspace
+986	Back to settings
+987	Displayed timeframe
+988	1 hour
+989	4 hours
+990	1 day
+991	Indicators: moving averages, Bollinger, RSI, MACD, ATR
+992	Replay controls
+993	Step back in time (not possible)
+994	You can't go back: just like in the market, you only see the past
+995	Play / pause (Space)
+996	Next bar (→)
+997	Move forward 10 bars
+998	Help
+999	Full screen
+1000	Candlestick chart for the current session. Move forward with the right arrow key or the replay buttons.
+1001	Active indicators
+1002	Drawing tools
+1003	Cursor: select and move drawings
+1004	Horizontal line
+1005	Horizontal ray (to the right)
+1006	Trend line
+1007	Rectangle (zone)
+1008	Fibonacci retracement
+1009	Magnet: snaps points to the open, high, low or close
+1010	Colour
+1011	Choose a colour
+1012	Delete the selected drawing (Delete)
+1013	Delete all drawings
+1014	Orders, trades and statistics
+1015	Challenge progress
+1016	Panel
+1017	Show panel
+1018	optional
+1019	lot
+1020	List of trades
+1021	Session equity curve
+1022	Add an indicator
+1023	Close the summary
+1024	Forex quiz for beginners: 15 questions | Marius FX
+1025	<a href="test.html" aria-current="page">Quiz</a>
+1026	Quiz for beginners
+1027	15 questions from the 8 chapters of the <a href="lectie.html">free course</a>. After each answer you see the explanation and the chapter to reread.
+1028	<b>15</b> questions
+1029	<b>4</b> options, one correct
+1030	<b>~5</b> minutes
+1031	You answer one question at a time and find out straight away whether you got it right, with a short explanation. At the end you see your score and the chapters worth rereading. You can retake the quiz any time: the questions and options are shuffled every time.
+1032	Start the quiz
+1033	<a class="btn btn-ghost" href="lectie.html">Reread the course</a>
+1034	What the quiz covers
+1035	<a href="lectie.html#cap-1"><span class="quiz-topic-n" aria-hidden="true">01</span>Forex, the broker and the platform</a>
+1036	<a href="lectie.html#cap-2"><span class="quiz-topic-n" aria-hidden="true">02</span>The chart: candlesticks and timeframes</a>
+1037	<a href="lectie.html#cap-3"><span class="quiz-topic-n" aria-hidden="true">03</span>Pips, lots and costs</a>
+1038	<a href="lectie.html#cap-4"><span class="quiz-topic-n" aria-hidden="true">04</span>Leverage and margin</a>
+1039	<a href="lectie.html#cap-5"><span class="quiz-topic-n" aria-hidden="true">05</span>Orders, stop loss and take profit</a>
+1040	<a href="lectie.html#cap-6"><span class="quiz-topic-n" aria-hidden="true">06</span>Risk management</a>
+1041	<a href="lectie.html#cap-7"><span class="quiz-topic-n" aria-hidden="true">07</span>Psychology, discipline and mistakes</a>
+1042	<a href="lectie.html#cap-8"><span class="quiz-topic-n" aria-hidden="true">08</span>Your first concrete steps</a>
+1043	<span id="quiz-count">Question 1 of 15</span><span class="quiz-ch" id="quiz-ch"></span>
+1044	Keyboard: A, B, C, D or 1 to 4
+1045	Next question
+1046	Retake the quiz
+1047	<a class="btn btn-ghost" href="lectie.html">Back to the course</a>
+1048	Your best score is saved only in your browser. We don't send anything anywhere. The quiz is educational and doesn't assess whether you're ready to trade with real money.
+1049	Free Forex quiz for beginners: 15 questions about pips, lots, leverage, stop loss, risk and psychology, with explanations and links to the course chapters.
+1050	Quiz progress

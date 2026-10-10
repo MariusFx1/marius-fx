@@ -1,0 +1,17 @@
+{
+ "_doc": "Zile cu mișcări extreme reale, verificate în presă; validarea le acceptă (le raportează ca notă). Adaugă doar după verificare.",
+ "XAUUSD": {
+  "2026-01-29": "Aur: record ~5.595 $ și prăbușire intraday ~500 $ (Babypips, CNBC)",
+  "2026-01-30": "Aur: cea mai mare scădere zilnică din 1980, nominalizarea Warsh la Fed (CNBC, WSJ, Mining.com)",
+  "2026-02-02": "Aur: volatilitate extremă după prăbușirea din 30 ian.",
+  "2026-02-03": "Aur: volatilitate extremă după prăbușirea din 30 ian.",
+  "2026-02-06": "Aur: volatilitate extremă după prăbușirea din 30 ian."
+ },
+ "USDJPY": {
+  "2026-07-30": "Intervenție Japonia/BOJ pentru yen, USDJPY 163,73 → 157,96 (Reuters, Nikkei, Asahi)",
+  "2026-08-02": "Intervenție comună SUA-Japonia confirmată duminică seara (NY), USDJPY ~157,8 → 155,22 la deschiderea Asiei pe 3 aug. (Reuters, Nikkei, Mainichi)"
+ },
+ "GBPJPY": {
+  "2026-07-30": "Intervenție Japonia/BOJ pentru yen (Reuters, Nikkei)"
+ }
+}
