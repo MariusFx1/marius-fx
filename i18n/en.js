@@ -485,7 +485,7 @@ window.I18N_DICT.en = {
 "Soldul virtual trebuie să fie un număr între 100 și 10.000.000.": "The virtual balance must be a number between 100 and 10,000,000.",
 "Sondajul Tankan al BoJ": "BoJ Tankan survey",
 "Spania": "Spain",
-"Spread fix: {nf} pips. Sugestie: stop loss-ul implicit ({sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări {tf}.": "Fixed spread: {nf} pips. Tip: the default stop loss ({sl} pips) is about 1.5 x the typical range of a {tf} candle.",
+"Spread fix: {nf} pips. Sugestie: stop loss-ul implicit ({sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări {tf}.": "Fixed spread: {nf} pips. Tip: the default stop loss ({sl} pips) is about 1.5 x the typical range of one {tf} candle.",
 "Spread-ul, un cost pe care îl plătești la fiecare tranzacție": "The spread, a cost you pay on every trade",
 "Stocurile de gaze naturale din SUA": "US natural gas storage",
 "Stocurile de petrol din SUA": "US crude oil inventories",
