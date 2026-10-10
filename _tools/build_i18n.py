@@ -250,12 +250,14 @@ def ensure_scripts(src, lang, dict_ver, i18n_ver, page=''):
     tags += '\n%s<script src="%si18n.js?v=%s" defer></script>' % (ind, root, i18n_ver)
     return src[:m.start()] + tags + src[m.start():]
 
-LOADER = ("<!-- i18n:404 --><script>(function(){var m=location.pathname.match(/^\\/marius-fx\\/(%s)\\//);if(!m)return;"
-          "document.documentElement.style.visibility='hidden';fetch('/marius-fx/'+m[1]+'/404.html').then(function(r){if(!r.ok)throw 0;return r.text();})"
-          ".then(function(t){document.open();document.write(t);document.close();}).catch(function(){document.documentElement.style.visibility='';});})();</script><!-- /i18n:404 -->")
+# copiile traduse se afișează la URL-ul greșit: oprim încărcarea paginii RO, aducem /<lang>/404.html și înlocuim DOM-ul
+# (fără document.write: după window.stop() Chrome îl ignoră), apoi rulăm scripturile paginii traduse o singură dată.
+LOADER = ("<!-- i18n:404 --><script>(function(){var m=location.pathname.match(/^\\/marius-fx\\/(%s)\\//);if(!m||document.documentElement.lang!=='ro')return;document.documentElement.style.visibility='hidden';try{window.stop();}catch(e){}setTimeout(function(){fetch('/marius-fx/'+m[1]+'/404.html').then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var n=new DOMParser().parseFromString(t,'text/html'),ss=[].slice.call(n.querySelectorAll('script[src]'));ss.forEach(function(x){x.parentNode.removeChild(x);});document.replaceChild(document.importNode(n.documentElement,true),document.documentElement);document.title=n.title;ss.forEach(function(x){var e=document.createElement('script');e.src=x.getAttribute('src');e.async=false;document.body.appendChild(e);});}).catch(function(){location.replace('/marius-fx/404.html');});},0);})();</script><!-- /i18n:404 -->")
 def decorate(src, lang, page, langs, dict_ver, i18n_ver):
     if page == '404.html':
-        if lang == 'ro' and len(langs) > 1:
+        if lang != 'ro':   # copiile traduse nu au voie să conțină loader-ul (altfel se reîncarcă la infinit)
+            src = re.sub(r'<!-- i18n:404 -->.*?<!-- /i18n:404 -->\n?\s*', '', src, flags=re.S)
+        elif len(langs) > 1:
             src = replace_block(src, '404', LOADER % '|'.join(l for l in langs if l != 'ro'), r'<meta name="robots"[^>]*>\n  ', pad='\n  ')
     else:
         src = replace_block(src, 'alt', hreflang_block(page, langs), r'<link rel="canonical"[^>]*>\n  ', pad='\n  ')

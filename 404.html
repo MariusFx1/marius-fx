@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="robots" content="noindex">
-<!-- i18n:404 --><script>(function(){var m=location.pathname.match(/^\/marius-fx\/(en|es|pt)\//);if(!m)return;document.documentElement.style.visibility='hidden';fetch('/marius-fx/'+m[1]+'/404.html').then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){document.open();document.write(t);document.close();}).catch(function(){document.documentElement.style.visibility='';});})();</script><!-- /i18n:404 -->
+<!-- i18n:404 --><script>(function(){var m=location.pathname.match(/^\/marius-fx\/(en|es|pt)\//);if(!m||document.documentElement.lang!=='ro')return;document.documentElement.style.visibility='hidden';try{window.stop();}catch(e){}setTimeout(function(){fetch('/marius-fx/'+m[1]+'/404.html').then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var n=new DOMParser().parseFromString(t,'text/html'),ss=[].slice.call(n.querySelectorAll('script[src]'));ss.forEach(function(x){x.parentNode.removeChild(x);});document.replaceChild(document.importNode(n.documentElement,true),document.documentElement);document.title=n.title;ss.forEach(function(x){var e=document.createElement('script');e.src=x.getAttribute('src');e.async=false;document.body.appendChild(e);});}).catch(function(){location.replace('/marius-fx/404.html');});},0);})();</script><!-- /i18n:404 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pagina nu a fost găsită (404) | Marius FX</title>
   <meta name="description" content="Pagina căutată nu există pe Marius FX. Mergi la pagina principală, la cursul Forex gratuit pentru începători sau la instrumentele site-ului.">
