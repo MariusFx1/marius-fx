@@ -49,7 +49,7 @@ if (menuBtn && links) {
       el.classList.add('is-revealed');
       io.unobserve(el);
       // după animație, scoatem clasele ca hover-ul cardurilor să-și păstreze tranzițiile proprii
-      setTimeout(() => { el.classList.remove('reveal', 'is-revealed'); el.style.removeProperty('--reveal-delay'); }, 1300);
+      setTimeout(() => { el.classList.remove('reveal', 'is-revealed'); el.style.removeProperty('--reveal-delay'); }, 500);
     });
   }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
 
@@ -57,7 +57,7 @@ if (menuBtn && links) {
     if (el.closest('.hero, .lc-article, .lc-hero')) return;
     if (el.getBoundingClientRect().top < vh * 0.92) return;   // deja în ecran: nu îl ascundem deloc
     const sibs = Array.prototype.indexOf.call(el.parentElement.children, el);
-    el.style.setProperty('--reveal-delay', (sibs % 6) * 70 + 'ms');
+    el.style.setProperty('--reveal-delay', (sibs % 6) * 30 + 'ms');
     el.classList.add('reveal');
     io.observe(el);
   });
@@ -686,4 +686,35 @@ if (contactForm) contactForm.addEventListener('submit', e => {
 
   tick();
   setInterval(() => tick(), 1000);
+})();
+
+// ===== Navigare rapidă: preîncărcăm pagina spre care urmează să mergi (hover / atingere) =====
+// Chrome/Edge: Speculation Rules (prefetch, „moderate” = la hover ~200 ms sau pointerdown).
+// Restul (Safari, Firefox): fetch cu prioritate mică la hover/touchstart, ca pagina să fie deja în cache-ul HTTP.
+(function () {
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) return;   // respectăm economisirea de date
+  const base = location.pathname.replace(/[^/]*$/, '').replace(/\/(en|es|pt)\/$/, '/');
+  const sameSitePage = a => a && a.href && a.origin === location.origin && !a.hasAttribute('download') && a.target !== '_blank'
+    && a.pathname.startsWith(base) && /(\.html|\/)$/.test(a.pathname) && !(a.pathname === location.pathname && a.hash);
+  if (window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
+    const s = document.createElement('script');
+    s.type = 'speculationrules';
+    s.textContent = JSON.stringify({ prefetch: [{ source: 'document', eagerness: 'moderate',
+      where: { and: [{ href_matches: base + '*' }, { not: { href_matches: '*/downloads/*' } }, { not: { selector_matches: '[download], [target="_blank"]' } }] } }] });
+    document.head.appendChild(s);
+    return;
+  }
+  const done = new Set();
+  const warm = e => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!sameSitePage(a)) return;
+    const url = a.href.split('#')[0];
+    if (done.has(url) || url === location.href.split('#')[0]) return;
+    done.add(url);
+    try { fetch(url, { credentials: 'same-origin', priority: 'low' }).catch(() => {}); } catch (_) {}
+  };
+  document.addEventListener('mouseover', warm, { passive: true });
+  document.addEventListener('touchstart', warm, { passive: true });
+  document.addEventListener('focusin', warm);
 })();

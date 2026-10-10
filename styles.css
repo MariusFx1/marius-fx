@@ -1,6 +1,12 @@
 /* ============================================================
    CULORI — modifică aici
    ============================================================ */
+/* Fonturi găzduite local (subset latin + latin-ext, diacritice RO/ES/PT), fără Google Fonts */
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 200 800; font-display: swap; src: url(fonts/manrope-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 200 800; font-display: swap; src: url(fonts/manrope-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/jbmono-500-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/jbmono-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
 :root {
   --bg: #070b14;
   --bg-2: #0b1220;
@@ -244,10 +250,11 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   display: block; border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--border); background: var(--surface);
   cursor: zoom-in; line-height: 0;
-  opacity: 0; transform: translateY(12px);
-  animation: galleryIn .7s ease forwards;
+  opacity: .2; transform: translateY(6px);
+  animation: galleryIn .2s ease forwards;
 }
-.gallery-item:nth-child(2) { animation-delay: .12s; }
+.gallery-item:nth-child(2) { animation-delay: .04s; }
+.gallery-item picture { display: contents; }
 @keyframes galleryIn { to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .gallery-item { opacity: 1; transform: none; animation: none; }
@@ -1182,15 +1189,15 @@ input:hover, textarea:hover, .lot-form select:hover { border-color: #2a3b5c; }
   100% { transform: translate3d(3%, 3%, 0) scale(1.08); opacity: 1; }
 }
 .hero h1 .accent { text-shadow: 0 0 42px rgba(34,197,94,.35); }
-@keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-.page-home .hero-inner > * { animation: riseIn .8s var(--ease) both; }
-.page-home .hero-inner > :nth-child(2) { animation-delay: .08s; }
-.page-home .hero-inner > :nth-child(3) { animation-delay: .16s; }
-.page-home .hero-inner > :nth-child(4) { animation-delay: .24s; }
-.page-home .hero-inner > :nth-child(5) { animation-delay: .32s; }
-.page-home .hero-inner > :nth-child(6) { animation-delay: .40s; }
-.page-home .hero-inner > :nth-child(7) { animation-delay: .46s; }
-.page-home .hero-inner > :nth-child(8) { animation-delay: .52s; }
+@keyframes riseIn { from { opacity: .2; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.page-home .hero-inner > * { animation: riseIn .2s var(--ease) both; }
+.page-home .hero-inner > :nth-child(2) { animation-delay: .02s; }
+.page-home .hero-inner > :nth-child(3) { animation-delay: .04s; }
+.page-home .hero-inner > :nth-child(4) { animation-delay: .06s; }
+.page-home .hero-inner > :nth-child(5) { animation-delay: .08s; }
+.page-home .hero-inner > :nth-child(6) { animation-delay: .1s; }
+.page-home .hero-inner > :nth-child(7) { animation-delay: .1s; }
+.page-home .hero-inner > :nth-child(8) { animation-delay: .1s; }
 .pair-tile { border-radius: var(--r-md); transition: border-color .3s, box-shadow .3s; }
 .pair-tile:hover { border-color: rgba(34,197,94,.45); box-shadow: 0 18px 40px -26px rgba(34,197,94,.55); }
 
@@ -1224,7 +1231,7 @@ input:hover, textarea:hover, .lot-form select:hover { border-color: #2a3b5c; }
 .feature-card p { margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.6; }
 
 /* ---------- Animații la scroll (adăugate doar din JS; fără JS totul rămâne vizibil) ---------- */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease) var(--reveal-delay, 0ms), transform .7s var(--ease) var(--reveal-delay, 0ms); }
+.reveal { opacity: 0; transform: translateY(8px); transition: opacity .2s var(--ease) var(--reveal-delay, 0ms), transform .2s var(--ease) var(--reveal-delay, 0ms); }
 .reveal.is-revealed { opacity: 1; transform: none; }
 
 /* ---------- Subsol premium ---------- */
@@ -1572,7 +1579,7 @@ html:not(.js) .cal-hero, html:not(.js) .cal-toolbar, html:not(.js) .cal-list, ht
 .quiz-opt.is-wrong { color: var(--text); border-color: rgba(248,113,113,.75); background: linear-gradient(150deg, rgba(248,113,113,.14), rgba(15,24,41,.8)); }
 .quiz-opt.is-wrong .quiz-letter { background: var(--red); color: #1b0606; border-color: var(--red); }
 .quiz-opt.is-wrong .quiz-mark { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f87171' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center / contain no-repeat; }
-.quiz-feedback { margin-top: 1.1rem; padding: 1rem 1.1rem; border-radius: 14px; border: 1px solid var(--border); background: rgba(15,24,41,.7); display: grid; gap: .45rem; animation: quizIn .35s var(--ease); }
+.quiz-feedback { margin-top: 1.1rem; padding: 1rem 1.1rem; border-radius: 14px; border: 1px solid var(--border); background: rgba(15,24,41,.7); display: grid; gap: .45rem; animation: quizIn .2s var(--ease); }
 .quiz-feedback[hidden] { display: none; }
 .quiz-feedback.is-ok { border-color: rgba(34,197,94,.5); background: linear-gradient(150deg, rgba(34,197,94,.1), rgba(15,24,41,.75) 60%); }
 .quiz-feedback.is-bad { border-color: rgba(248,113,113,.5); background: linear-gradient(150deg, rgba(248,113,113,.09), rgba(15,24,41,.75) 60%); }

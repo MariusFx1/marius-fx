@@ -45,8 +45,8 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
       assert(i.ogTitle && i.ogDesc && i.ogImg === SITE + 'og-image.png' && i.ogUrl === url && i.ogW === '1200' && i.ogH === '630', `${label} ${f}: Open Graph tags`);
       assert(i.tw === 'summary_large_image' && i.twImg === SITE + 'og-image.png', `${label} ${f}: Twitter card tags`);
       assert(i.canon === url && i.theme === '#070b14' && i.favicon, `${label} ${f}: canonical + theme-color + favicon kept`);
-      { const v = 47; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
-      assert(i.js[0] === 'script.js?v=37 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
+      { const v = 48; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
+      assert(i.js[0] === 'script.js?v=38 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
       assert(i.risks.length === 1 && i.risks[0] === RISK, `${label} ${f}: exact footer risk line (once)`);
       for (const h of ['lectie.html', 'test.html', 'intrebari.html', 'reguli.html', 'patternuri.html', 'calculator.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'contact.html', 'https://t.me/FreeMariusFx', 'mailto:contact.mariusfx@gmail.com'])
         if (!i.footLinks.includes(h)) assert(false, `${label} ${f}: footer link ${h}`);
@@ -99,7 +99,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
   assert(h.headerPos === 'sticky', 'header is sticky');
   assert(JSON.stringify(h.stats) === JSON.stringify(['6+ ani de experiență în swing trading', '8 capitole gratuite pentru începători', '5 instrumente gratuite: calculator, sesiuni, calendar, jurnal, patternuri', '0 semnale, doar educație și disciplină']), 'home: stats strip shows only true numbers ' + JSON.stringify(h.stats));
   assert(JSON.stringify(h.feats) === JSON.stringify(['lectie.html|Începători|true', 'test.html|Test|true', 'reguli.html|Reguli|true', 'patternuri.html|Patternuri|true', 'sesiuni.html|Sesiuni|true', 'calendar.html|Calendar|true', 'jurnal.html|Jurnal|true', 'calculator.html|Calculator|true', 'glosar.html|Glosar|true', 'intrebari.html|Întrebări frecvente|true']), 'home: 10 feature cards with icons + links');
-  assert(h.preconnect.some(u => u.includes('s3.tradingview.com')) && h.preconnect.some(u => u.includes('fonts.gstatic.com')), 'home: preconnect fonts + TradingView');
+  assert(h.preconnect.some(u => u.includes('s3.tradingview.com')) && !h.preconnect.some(u => /fonts\.(gstatic|googleapis)\.com/.test(u)), 'home: preconnect TradingView, no Google Fonts (fonts self-hosted)');
   // count-up runs and ends on the true value
   await page.evaluate(() => { scrollTo({ top: 0, behavior: 'instant' }); });
   await page.reload({ waitUntil: 'networkidle2' });

@@ -260,7 +260,7 @@ const rows = p => p.$$eval('.cal-row', rs => rs.map(r => ({
     assert(!/limba engleză\. Din bara|marchează prognoza cu F/.test(c.text) && /Rezultatul \(cifra actuală\) nu apare aici/.test(c.text), 'old widget text replaced; no-actuals note present');
     assert(!/—/.test(c.text), 'no em-dash in calendar page text');
     assert(c.canon === SITE + 'calendar.html' && c.og === SITE + 'calendar.html' && c.risk === RISK && c.current === 'calendar.html', 'meta + risk line + aria-current');
-    assert(c.js.includes('calendar.js?v=2') && c.js.includes('script.js?v=37'), 'calendar.js?v=2 + script.js?v=37 loaded');
+    assert(c.js.includes('calendar.js?v=2') && c.js.includes('script.js?v=38'), 'calendar.js?v=2 + script.js?v=38 loaded');
     await p.close();
   }
 
