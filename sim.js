@@ -942,6 +942,7 @@
     const period = `${S.sym} ${S.tf}, ${fmtTime(S.d.t[startIdx], 'H1')} - ${fmtTime(b, 'H1')}`;
     $('sim-reveal').textContent = 'Perioada reală: ' + period + '.';
     $('sim-when').textContent = fmtTime(b, 'H1');
+    renderAcct(); renderPos();   // pozițiile închise mai sus dispar din panou și din bara de sus
     $('sim-order').hidden = true; $('sim-pos').hidden = true;
     ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = true; });
     $('sim-end').textContent = 'Rezultate'; $('sim-end').title = 'Arată rezultatele sesiunii';
