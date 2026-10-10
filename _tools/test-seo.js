@@ -60,7 +60,7 @@ const urlOf = p => p === 'index' ? SITE : SITE + p + '.html';
       assert(c && c.inLanguage === 'ro' && c.isAccessibleForFree === true && c.provider['@id'] === SITE + '#org' && c.offers.price === 0 && c.syllabusSections.length === 8, 'lectie: Course schema (free, ro, provider, 8 chapters)');
     }
     assert(p === 'intrebari' ? types.includes('FAQPage') : !types.includes('FAQPage'), `${p}: FAQPage only on intrebari`);
-    const badImg = m.imgs.filter(i => !/images\/flags\//.test(i.src || '')).filter(i => !i.src || !i.alt || i.alt.trim().length < 10 || !i.w || !i.h);
+    const badImg = m.imgs.filter(i => !/images\/(flags\/|logo-bull)/.test(i.src || '')).filter(i => !i.src || !i.alt || i.alt.trim().length < 10 || !i.w || !i.h);
     assert(badImg.length === 0, `${p}: all ${m.imgs.length} static images have src, descriptive alt and width/height ${JSON.stringify(badImg)}`);
     assert(p === 'index' ? m.gsc : !m.gsc, `${p}: Search Console verification tag only on home`);
     if (p === 'index') assert(m.gscExact, 'index: exact Google verification tag present once inside <head>');

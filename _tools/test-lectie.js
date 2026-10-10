@@ -35,7 +35,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
       }));
       assert(JSON.stringify(info.nav) === JSON.stringify(NAV), `${label} ${f}: nav = Începători + existing links + Calendar after Sesiuni`);
       assert(info.first === 'Începători', `${label} ${f}: first nav label "Începători"`);
-      { const v = 48; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
+      { const v = 51; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(info.risk === 'Forex și CFD-urile cu levier pot duce la pierderea rapidă a banilor. Conținut educațional, nu consultanță financiară.', `${label} ${f}: footer risk line`);
       assert(info.sw <= info.iw, `${label} ${f}: no horizontal overflow (${info.sw} <= ${info.iw})`);
       if (f !== 'index') assert(info.current === f + '.html', `${label} ${f}: aria-current on own link`);

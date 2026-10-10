@@ -114,7 +114,7 @@ MAIN = f'''  <main id="continut">
           <div class="ws-group ws-id">
             <button type="button" class="ws-btn ws-icon" id="sim-back" aria-label="Înapoi la setări" title="Înapoi la setări">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <span class="ws-logo logo-mark" aria-hidden="true"><img src="images/logo-mark.webp?v=1" width="34" height="34" alt="" decoding="async"></span>
+            <span class="ws-logo logo-mark" aria-hidden="true"><picture><source srcset="images/logo-bull.webp?v=1" type="image/webp"><img src="images/logo-bull.png?v=1" width="49" height="40" alt="" decoding="async"></picture></span>
             <p class="ws-sym"><strong id="sim-label">EURUSD · H1</strong> <span id="sim-when">Data e ascunsă</span></p>
             <div class="ws-tf" role="group" aria-label="Interval afișat">
               <button type="button" data-tf="H1" aria-pressed="true" title="1 oră">H1</button>
