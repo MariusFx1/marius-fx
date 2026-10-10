@@ -9,12 +9,14 @@
    ============================================================ */
 (function (root) {
   'use strict';
+  // traducere (în Node și pe paginile în română: textul original)
+  const T = (root && root.T) || ((s, v) => (v ? s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m)) : s));
 
   const INSTR = {
     EURUSD: { dec: 5, pip: 0.0001, spread: 1.0, nume: 'EUR/USD' },
     GBPUSD: { dec: 5, pip: 0.0001, spread: 1.5, nume: 'GBP/USD' },
     USDJPY: { dec: 3, pip: 0.01, spread: 1.2, nume: 'USD/JPY' },
-    XAUUSD: { dec: 2, pip: 0.1, spread: 3.0, nume: 'XAU/USD (aur)' },
+    XAUUSD: { dec: 2, pip: 0.1, spread: 3.0, nume: T('XAU/USD (aur)') },
     AUDUSD: { dec: 5, pip: 0.0001, spread: 1.2, nume: 'AUD/USD' },
     GBPJPY: { dec: 3, pip: 0.01, spread: 2.5, nume: 'GBP/JPY' }
   };
@@ -72,13 +74,13 @@
 
   /** Verifică dacă SL și TP sunt de partea corectă. Întoarce null sau un mesaj în română. */
   function validateLevels(side, entry, sl, tp) {
-    if (!(sl > 0)) return 'Stop loss-ul lipsește sau nu e un preț valid.';
+    if (!(sl > 0)) return T('Stop loss-ul lipsește sau nu e un preț valid.');
     if (side === 'buy') {
-      if (sl >= entry) return 'La Buy, stop loss-ul trebuie să fie sub prețul de intrare.';
-      if (tp != null && tp <= entry) return 'La Buy, take profit-ul trebuie să fie deasupra prețului de intrare.';
+      if (sl >= entry) return T('La Buy, stop loss-ul trebuie să fie sub prețul de intrare.');
+      if (tp != null && tp <= entry) return T('La Buy, take profit-ul trebuie să fie deasupra prețului de intrare.');
     } else {
-      if (sl <= entry) return 'La Sell, stop loss-ul trebuie să fie deasupra prețului de intrare.';
-      if (tp != null && tp >= entry) return 'La Sell, take profit-ul trebuie să fie sub prețul de intrare.';
+      if (sl <= entry) return T('La Sell, stop loss-ul trebuie să fie deasupra prețului de intrare.');
+      if (tp != null && tp >= entry) return T('La Sell, take profit-ul trebuie să fie sub prețul de intrare.');
     }
     return null;
   }
@@ -189,6 +191,16 @@
     const x = new Date((t + roOffset(t) * 3600) * 1000);
     const y = x.getUTCFullYear(), m = x.getUTCMonth() + 1, d = x.getUTCDate();
     return { y, m, d, wd: x.getUTCDay(), h: x.getUTCHours(), key: `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` };
+  }
+  /** Ora pentru statistici: ora României pe site-ul în română, ora locală a vizitatorului în celelalte limbi. */
+  const LOCAL_FMT = {};
+  function userParts(t) {
+    const L = typeof window !== 'undefined' && window.I18N;
+    if (!L || L.lang === 'ro') return roParts(t);
+    const f = LOCAL_FMT.f || (LOCAL_FMT.f = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', weekday: 'short', hourCycle: 'h23' }));
+    const p = {}; for (const x of f.formatToParts(new Date(t * 1000))) p[x.type] = x.value;
+    const y = +p.year, m = +p.month, d = +p.day;
+    return { y, m, d, wd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), h: +p.hour % 24, key: `${y}-${p.month}-${p.day}` };
   }
   /** Începutul barei H4/D1 care conține ora `t` (aceeași convenție ca sim_build.py: ziua începe la 17:00 New York).
       D1 primește ca timp miezul nopții UTC al zilei de tranzacționare; H4, ora UTC reală a începutului slotului. */
@@ -353,7 +365,7 @@
     const rCurve = [0];
     for (const t of trades) {
       add(bySym[t.sym] || (bySym[t.sym] = grp()), t);
-      const p = roParts(t.entryT); add(byWd[p.wd], t); add(byHour[p.h], t); add(bySide[t.side], t);
+      const p = userParts(t.entryT); add(byWd[p.wd], t); add(byHour[p.h], t); add(bySide[t.side], t);
       hist[binOf(t.r)].n++;
       if (t.money > 0) { cw++; cl = 0; } else if (t.money < 0) { cl++; cw = 0; } else { cw = 0; cl = 0; }
       maxCW = Math.max(maxCW, cw); maxCL = Math.max(maxCL, cl);
@@ -379,7 +391,7 @@
   }
 
   const api = { INSTR, TF_SEC, decode, concat, round, pipOf, spreadPrice, pipUsd, pipValueAcct, lotFor, validateLevels, openMarket, makePosition, pendingTriggered, checkExit, result, markPrice, stats, medianRangePips,
-    nyOffset, roOffset, roParts, bucketStart, aggregate, appendBar, isBucketEnd, closePart, partialLot, summarize, sma, ema, bollinger, rsi, macd, atr, challengeInit, challengeStep, challengeProgress, detailed, R_BINS };
+    nyOffset, roOffset, roParts, userParts, bucketStart, aggregate, appendBar, isBucketEnd, closePart, partialLot, summarize, sma, ema, bollinger, rsi, macd, atr, challengeInit, challengeStep, challengeProgress, detailed, R_BINS };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.SimEngine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

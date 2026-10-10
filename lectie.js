@@ -41,14 +41,14 @@
       const on = done.has(Number(b.dataset.done));
       b.classList.toggle('is-done', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      b.querySelector('.lc-done-label').textContent = on ? 'Capitol parcurs' : 'Am parcurs capitolul';
+      b.querySelector('.lc-done-label').textContent = on ? T('Capitol parcurs') : T('Am parcurs capitolul');
     });
     if (startEl) {
       let next = 1;
       while (next <= TOTAL && done.has(next)) next++;
-      if (n === 0) { startEl.textContent = 'Începe cu capitolul 1'; startEl.href = '#cap-1'; }
-      else if (next > TOTAL) { startEl.textContent = 'Ai parcurs tot cursul. Recapitulează'; startEl.href = '#cap-1'; }
-      else { startEl.textContent = 'Continuă cu capitolul ' + next; startEl.href = '#cap-' + next; }
+      if (n === 0) { startEl.textContent = T('Începe cu capitolul 1'); startEl.href = '#cap-1'; }
+      else if (next > TOTAL) { startEl.textContent = T('Ai parcurs tot cursul. Recapitulează'); startEl.href = '#cap-1'; }
+      else { startEl.textContent = T('Continuă cu capitolul {n}', { n: next }); startEl.href = '#cap-' + next; }
     }
   }
   doneBtns.forEach(b => {
@@ -108,8 +108,8 @@
       const all = c === boxes.length;
       list.classList.toggle('is-complete', all);
       status.textContent = all
-        ? 'Toate cele ' + boxes.length + ' puncte sunt bifate. Tranzacția respectă procesul tău (nu înseamnă că va fi câștigătoare).'
-        : c + ' din ' + boxes.length + ' bifate. Dacă un punct lipsește, nu intri.';
+        ? T('Toate cele {n} puncte sunt bifate. Tranzacția respectă procesul tău (nu înseamnă că va fi câștigătoare).', { n: boxes.length })
+        : T('{c} din {n} bifate. Dacă un punct lipsește, nu intri.', { c, n: boxes.length });
     };
     boxes.forEach(b => b.addEventListener('change', upd));
   }

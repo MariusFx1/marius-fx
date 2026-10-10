@@ -1,63 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/lectie.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/lectie.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/lectie.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/lectie.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/test.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/test.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/test.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/test.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/reguli.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/reguli.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/reguli.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/reguli.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/patternuri.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/patternuri.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/patternuri.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/patternuri.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/sesiuni.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/sesiuni.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/sesiuni.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/sesiuni.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/calendar.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/calendar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/calendar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/calendar.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/jurnal.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/jurnal.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/jurnal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/jurnal.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/calculator.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/calculator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/calculator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/calculator.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/despre.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/despre.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/despre.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/despre.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/broker.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/broker.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/broker.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/broker.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/contact.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/contact.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/intrebari.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/intrebari.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/intrebari.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/intrebari.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/glosar.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/glosar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/glosar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/glosar.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/simulator.html</loc>
     <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/simulator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/lectie.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/lectie.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/lectie.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/lectie.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/test.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/test.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/test.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/test.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/reguli.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/reguli.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/reguli.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/reguli.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/patternuri.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/patternuri.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/patternuri.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/patternuri.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/sesiuni.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/sesiuni.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/sesiuni.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/sesiuni.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/calendar.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/calendar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/calendar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/calendar.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/jurnal.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/jurnal.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/jurnal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/jurnal.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/calculator.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/calculator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/calculator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/calculator.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/despre.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/despre.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/despre.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/despre.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/broker.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/broker.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/broker.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/broker.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/contact.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/contact.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/intrebari.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/intrebari.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/intrebari.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/intrebari.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/glosar.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/glosar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/glosar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/glosar.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/simulator.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/simulator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
   </url>
 </urlset>

@@ -10,7 +10,7 @@
   if (!setupForm || !E || !LW) return;
 
   const $ = id => document.getElementById(id);
-  const DATA = 'data/sim/';
+  const DATA = I18N.root + 'data/sim/';
   const KEY_STRAT = 'mariusfx-sim-strategii-v1', KEY_SESS = 'mariusfx-sim-sesiuni-v1', KEY_CUR = 'mariusfx-sim-curenta-v1', KEY_HELP = 'mariusfx-sim-ajutor-v1', KEY_J = 'mariusfx-jurnal-v1';
   const HISTORY = 150, MIN_FUTURE = 300, MAX_SAVED = 30;
   const SPEED_MS = { 1: 900, 2: 450, 5: 180, 10: 90 };
@@ -22,7 +22,7 @@
     if (!ix || !ix.to) return;
     const [y, m, d] = ix.to.split('-').map(Number);
     DATA_END = Date.UTC(y, m - 1, d, 21) / 1000;
-    DATA_END_LABEL = new Intl.DateTimeFormat('ro-RO', { timeZone: 'UTC', month: 'long', year: 'numeric' }).format(new Date(DATA_END * 1000));
+    DATA_END_LABEL = new Intl.DateTimeFormat(I18N.locale, { timeZone: 'UTC', month: 'long', year: 'numeric' }).format(new Date(DATA_END * 1000));
     const any = Object.values(ix.instruments || {})[0];
     if (any && Array.isArray(any.H1)) { YEARS = any.H1.slice(); LAST_YEAR = Math.max(...YEARS); }
   }
@@ -48,18 +48,18 @@
   }
   /** Sume (sold): acceptă și separatorul de mii românesc „10.000” sau „10.000,50”. */
   const numBal = raw => { const t = String(raw == null ? '' : raw).trim().replace(/\s/g, ''); return /^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t) ? num(t.replace(/\./g, '')) : num(t); };
-  const nf = (x, min, max) => Number(x).toLocaleString('ro-RO', { minimumFractionDigits: min, maximumFractionDigits: max == null ? min : max });
+  const nf = (x, min, max) => I18N.num(Number(x), { minimumFractionDigits: min, maximumFractionDigits: max == null ? min : max });
   const sign = x => (x > 0 ? '+' : x < 0 ? '−' : '');
-  const money = (x, ccy, signed) => (signed ? sign(x) : (x < 0 ? '−' : '')) + new Intl.NumberFormat('ro-RO', { style: 'currency', currency: ccy }).format(Math.abs(x));
+  const money = (x, ccy, signed) => (signed ? sign(x) : (x < 0 ? '−' : '')) + I18N.NF({ style: 'currency', currency: ccy }).format(Math.abs(x));
   const fmtR = x => (x == null ? '—' : sign(x) + nf(Math.abs(x), 2) + 'R');
   const pct = (x, d = 1) => (x == null ? '—' : nf(x * 100, d) + '%');
   const esc = s => String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   const fmtPrice = (sym, p) => (p == null ? '—' : nf(p, E.INSTR[sym].dec));
   const inputPrice = (sym, p) => p.toFixed(E.INSTR[sym].dec);
-  const TZ = 'Europe/Bucharest';
-  const dtf = new Intl.DateTimeFormat('ro-RO', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const df = new Intl.DateTimeFormat('ro-RO', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' });
-  const dfLong = new Intl.DateTimeFormat('ro-RO', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
+  const TZ = I18N.lang === 'ro' ? 'Europe/Bucharest' : undefined;   // în celelalte limbi: ora locală a vizitatorului
+  const dtf = new Intl.DateTimeFormat(I18N.locale, { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const df = new Intl.DateTimeFormat(I18N.locale, { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' });
+  const dfLong = new Intl.DateTimeFormat(I18N.locale, { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
   const fmtTime = (t, tf) => (tf === 'D1' ? df.format(new Date(t * 1000)) : dtf.format(new Date(t * 1000)).replace(',', ''));
   const isoDate = (t, tf) => {   // AAAA-LL-ZZ (ora României pentru H1/H4, data de tranzacționare pentru D1)
     const p = new Intl.DateTimeFormat('en-CA', { timeZone: tf === 'D1' ? 'UTC' : TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(t * 1000));
@@ -124,14 +124,14 @@
         timeVisible: tf !== 'D1', secondsVisible: false,
         tickMarkFormatter: hidden ? () => '' : (t, type) => {
           const d = new Date(t * 1000), z = tf === 'D1' ? 'UTC' : TZ;
-          if (type === 0) return String(new Intl.DateTimeFormat('ro-RO', { timeZone: z, year: 'numeric' }).format(d));
-          if (type === 1) return new Intl.DateTimeFormat('ro-RO', { timeZone: z, month: 'short' }).format(d);
-          if (type === 2) return new Intl.DateTimeFormat('ro-RO', { timeZone: z, day: 'numeric', month: 'short' }).format(d);
-          return new Intl.DateTimeFormat('ro-RO', { timeZone: z, hour: '2-digit', minute: '2-digit' }).format(d);
+          if (type === 0) return String(new Intl.DateTimeFormat(I18N.locale, { timeZone: z, year: 'numeric' }).format(d));
+          if (type === 1) return new Intl.DateTimeFormat(I18N.locale, { timeZone: z, month: 'short' }).format(d);
+          if (type === 2) return new Intl.DateTimeFormat(I18N.locale, { timeZone: z, day: 'numeric', month: 'short' }).format(d);
+          return new Intl.DateTimeFormat(I18N.locale, { timeZone: z, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
         }
       },
       crosshair: { vertLine: { labelVisible: !hidden } },
-      localization: { locale: 'ro-RO', timeFormatter: hidden ? () => '' : t => fmtTime(t, tf) }   // prețurile: formatul fiecărei serii (zecimale românești)
+      localization: { locale: I18N.locale, timeFormatter: hidden ? () => '' : t => fmtTime(t, tf) }   // prețurile: formatul fiecărei serii (zecimale românești)
     });
   }
   function makeChart() {
@@ -244,7 +244,7 @@
         put('psl', pr.sl, { color: 'rgba(242,54,69,.65)', lineStyle: LW.LineStyle.Dashed, title: levelLabel('SL', x, pr.sl) });
         put('ptp', pr.tp, { color: 'rgba(8,153,129,.7)', lineStyle: LW.LineStyle.Dashed, title: levelLabel('TP', x, pr.tp) });
       }
-      if (pr.kind !== 'market' && pr.ref) put('ppr', pr.ref, { color: 'rgba(247,166,0,.75)', lineStyle: LW.LineStyle.Dashed, title: 'Ordin' });
+      if (pr.kind !== 'market' && pr.ref) put('ppr', pr.ref, { color: 'rgba(247,166,0,.75)', lineStyle: LW.LineStyle.Dashed, title: T('Ordin') });
     }
     for (const k of Object.keys(lines)) if (!want.has(k)) { series.removePriceLine(lines[k]); delete lines[k]; }
   }
@@ -333,9 +333,9 @@
       const err = pendingError(o) || E.validateLevels(o.side, o.price, o.sl, o.tp);
       if (err) { showMsg(err, 'warn'); drawLines(); return; }
       const slPips = Math.abs(o.price - o.sl) / E.pipOf(sym), lot = E.lotFor(S.balance * S.riskPct / 100, slPips, o.pipVal);
-      if (lot < 0.01) { showMsg('Cu acest stop loss lotul ar fi sub 0,01. Am păstrat nivelul anterior.', 'warn'); drawLines(); return; }
+      if (lot < 0.01) { showMsg(T('Cu acest stop loss lotul ar fi sub 0,01. Am păstrat nivelul anterior.'), 'warn'); drawLines(); return; }
       Object.assign(O, { [field]: p, slPips, lot });
-      showMsg('Ordinul a fost modificat: ' + (field === 'price' ? 'preț ' : field.toUpperCase() + ' ') + fmtPrice(sym, p) + '.');
+      showMsg(T('Ordinul a fost modificat: ') + (field === 'price' ? T('preț ') : field.toUpperCase() + ' ') + fmtPrice(sym, p) + '.');
       return;
     }
     // previzualizare: actualizează câmpurile biletului
@@ -361,12 +361,12 @@
     return p > 0 ? p : null;
   }
   function pendingError(o) {
-    if (!(o.price > 0)) return 'Scrie prețul ordinului (de exemplu ' + inputPrice(S.sym, bid()) + ').';
+    if (!(o.price > 0)) return T('Scrie prețul ordinului (de exemplu ') + inputPrice(S.sym, bid()) + ').';
     const a = ask(), b = bid(), sp = fmtPrice(S.sym, o.side === 'buy' ? a : b);
-    if (o.side === 'buy' && o.kind === 'limit' && o.price >= a) return `Buy limit se pune sub prețul curent (Ask ${sp}). Pentru intrare peste preț folosește Buy stop.`;
-    if (o.side === 'buy' && o.kind === 'stop' && o.price <= a) return `Buy stop se pune deasupra prețului curent (Ask ${sp}). Pentru intrare sub preț folosește Buy limit.`;
-    if (o.side === 'sell' && o.kind === 'limit' && o.price <= b) return `Sell limit se pune deasupra prețului curent (Bid ${sp}). Pentru intrare sub preț folosește Sell stop.`;
-    if (o.side === 'sell' && o.kind === 'stop' && o.price >= b) return `Sell stop se pune sub prețul curent (Bid ${sp}). Pentru intrare peste preț folosește Sell limit.`;
+    if (o.side === 'buy' && o.kind === 'limit' && o.price >= a) return T('Buy limit se pune sub prețul curent (Ask {sp}). Pentru intrare peste preț folosește Buy stop.', { sp: sp });
+    if (o.side === 'buy' && o.kind === 'stop' && o.price <= a) return T('Buy stop se pune deasupra prețului curent (Ask {sp}). Pentru intrare sub preț folosește Buy limit.', { sp: sp });
+    if (o.side === 'sell' && o.kind === 'limit' && o.price <= b) return T('Sell limit se pune deasupra prețului curent (Bid {sp}). Pentru intrare sub preț folosește Sell stop.', { sp: sp });
+    if (o.side === 'sell' && o.kind === 'stop' && o.price >= b) return T('Sell stop se pune sub prețul curent (Bid {sp}). Pentru intrare peste preț folosește Sell limit.', { sp: sp });
     return null;
   }
   /** Calculează planul din bilet (fără să-l execute). */
@@ -375,12 +375,12 @@
     const ref = refPrice(sd, kd);
     const res = { ok: false, side: sd, kind: kd, ref, sl: null, tp: null };
     if (kd !== 'market') { const e = pendingError({ side: sd, kind: kd, price: ref }); if (e) { res.err = e; return res; } }
-    if (!(ref > 0)) { res.err = 'Scrie prețul ordinului.'; return res; }
+    if (!(ref > 0)) { res.err = T('Scrie prețul ordinului.'); return res; }
     const rs = $('sim-sl').value.trim(), rt = $('sim-tp').value.trim();
     const vs = num(rs), vt = rt ? num(rt) : null;
-    if (vs == null) { res.err = 'Completează stop loss-ul. Fără stop loss nu putem calcula lotul.'; return res; }
-    if (Number.isNaN(vs) || vs <= 0) { res.err = unit() === 'pips' ? 'Stop loss-ul trebuie să fie un număr de pips mai mare decât 0.' : 'Stop loss-ul nu este un preț valid.'; return res; }
-    if (Number.isNaN(vt) || (vt != null && vt <= 0)) { res.err = unit() === 'pips' ? 'Take profit-ul trebuie să fie un număr de pips mai mare decât 0 (sau gol).' : 'Take profit-ul nu este un preț valid.'; return res; }
+    if (vs == null) { res.err = T('Completează stop loss-ul. Fără stop loss nu putem calcula lotul.'); return res; }
+    if (Number.isNaN(vs) || vs <= 0) { res.err = unit() === 'pips' ? T('Stop loss-ul trebuie să fie un număr de pips mai mare decât 0.') : T('Stop loss-ul nu este un preț valid.'); return res; }
+    if (Number.isNaN(vt) || (vt != null && vt <= 0)) { res.err = unit() === 'pips' ? T('Take profit-ul trebuie să fie un număr de pips mai mare decât 0 (sau gol).') : T('Take profit-ul nu este un preț valid.'); return res; }
     const dir = sd === 'buy' ? 1 : -1, dec = E.INSTR[sym].dec;
     if (unit() === 'pips') { res.sl = E.round(ref - dir * vs * pip, dec + 1); res.tp = vt == null ? null : E.round(ref + dir * vt * pip, dec + 1); }
     else { res.sl = vs; res.tp = vt; }
@@ -392,7 +392,7 @@
     res.riskTarget = S.balance * S.riskPct / 100;
     res.lot = E.lotFor(res.riskTarget, res.slPips, res.pipVal);
     res.risk = E.round(res.slPips * res.pipVal * res.lot, 2);
-    if (res.lot < 0.01) { res.err = `Lotul calculat e sub 0,01 (stop loss de ${nf(res.slPips, 1)} pips la un risc de ${money(res.riskTarget, S.ccy)}). Micșorează stop loss-ul sau mărește riscul %.`; return res; }
+    if (res.lot < 0.01) { res.err = T('Lotul calculat e sub 0,01 (stop loss de {nf} pips la un risc de {money}). Micșorează stop loss-ul sau mărește riscul %.', { nf: nf(res.slPips, 1), money: money(res.riskTarget, S.ccy) }); return res; }
     res.ok = true;
     return res;
   }
@@ -408,10 +408,10 @@
     const showErr = !!p.err && S.touched;
     err.hidden = !showErr; err.textContent = showErr ? p.err : '';
     const btn = $('sim-place');
-    btn.textContent = (p.side === 'buy' ? 'Buy' : 'Sell') + (p.kind === 'market' ? ' la piață' : p.kind === 'limit' ? ' limit' : ' stop');
+    btn.textContent = (p.side === 'buy' ? 'Buy' : 'Sell') + (p.kind === 'market' ? T(' la piață') : p.kind === 'limit' ? ' limit' : ' stop');
     btn.classList.toggle('is-buy', p.side === 'buy'); btn.classList.toggle('is-sell', p.side === 'sell');
     $('sim-price-wrap').hidden = p.kind === 'market';
-    document.querySelectorAll('.sim-unit-lbl').forEach(e => { e.textContent = unit() === 'pips' ? '(pips)' : '(preț)'; });
+    document.querySelectorAll('.sim-unit-lbl').forEach(e => { e.textContent = unit() === 'pips' ? '(pips)' : T('(preț)'); });
     drawLines();
   }
   function placeOrder() {
@@ -424,11 +424,11 @@
       Object.assign(P, { id, n: id, lot0: P.lot, setup: currentSetup(), note: currentNote() });
       S.positions.push(P); S.sel = id;
       addMarker(t, p.side, 'in');
-      showMsg(`${tag(P)}${p.side === 'buy' ? 'Buy' : 'Sell'} ${nf(p.lot, 2)} loturi la ${fmtPrice(S.sym, P.entry)}. Risc: ${money(P.riskMoney, S.ccy)}.`);
+      showMsg(T('{tag}{v} {nf} loturi la {fmtPrice}. Risc: {money}.', { tag: tag(P), v: p.side === 'buy' ? 'Buy' : 'Sell', nf: nf(p.lot, 2), fmtPrice: fmtPrice(S.sym, P.entry), money: money(P.riskMoney, S.ccy) }));
     } else {
       const O = { id, n: id, sym: S.sym, side: p.side, kind: p.kind, price: p.ref, sl: p.sl, tp: p.tp, lot: p.lot, pipVal: p.pipVal, slPips: p.slPips, placedIdx: S.cur, placedT: t, setup: currentSetup(), note: currentNote() };
       S.orders.push(O); S.sel = id;
-      showMsg(`Ordin ${p.side === 'buy' ? 'Buy' : 'Sell'} ${p.kind} plasat la ${fmtPrice(S.sym, p.ref)}. Se execută când prețul ajunge acolo.`);
+      showMsg(T('Ordin {v} {kind} plasat la {fmtPrice}. Se execută când prețul ajunge acolo.', { v: p.side === 'buy' ? 'Buy' : 'Sell', kind: p.kind, fmtPrice: fmtPrice(S.sym, p.ref) }));
     }
     S.touched = false;
     $('sim-note').value = '';
@@ -453,7 +453,7 @@
   }
   function renderChecklistCount() {
     const all = document.querySelectorAll('#sim-checklist input'), on = document.querySelectorAll('#sim-checklist input:checked');
-    $('sim-check-count').textContent = all.length ? `checklist ${on.length}/${all.length}` : '';
+    $('sim-check-count').textContent = all.length ? T('checklist {a}/{b}', { a: on.length, b: all.length }) : '';
     $('sim-check-count').classList.toggle('is-done', all.length > 0 && on.length === all.length);
   }
 
@@ -473,13 +473,13 @@
     list.innerHTML = items.map(x => {
       const isP = !!posById(x.id) && S.positions.includes(x), pl = isP ? openPL(x) : null;
       return `<li><button type="button" class="ws-pos-row${x.id === (selItem() || {}).id ? ' is-sel' : ''}" data-id="${x.id}" aria-pressed="${x.id === (selItem() || {}).id}">` +
-        `<span class="sim-side ${x.side}">${x.side === 'buy' ? 'Buy' : 'Sell'}</span> <span>#${x.n}${isP ? '' : ' ' + esc(x.kind)} · ${nf(x.lot, 2)} lot</span>` +
+        `<span class="sim-side ${x.side}">${x.side === 'buy' ? 'Buy' : 'Sell'}</span> <span>#${x.n}${isP ? '' : ' ' + esc(x.kind)} · ${nf(x.lot, 2)} ${T('lot')}</span>` +
         `<b class="${pl > 0 ? 'pos' : pl < 0 ? 'neg' : ''}">${isP ? money(pl, S.ccy, true) : fmtPrice(S.sym, x.price)}</b></button></li>`;
     }).join('');
     const x = selItem();
     if (!x || S.ended) return;
     const P = posById(x.id), O = P ? null : x, sym = S.sym;
-    $('sim-pos-title').textContent = (P ? 'Poziție deschisă' : 'Ordin în așteptare') + (items.length > 1 ? ' #' + x.n : '');
+    $('sim-pos-title').textContent = (P ? T('Poziție deschisă') : T('Ordin în așteptare')) + (items.length > 1 ? ' #' + x.n : '');
     $('sim-p-side').textContent = (x.side === 'buy' ? 'Buy' : 'Sell') + (O ? ' ' + O.kind : '');
     $('sim-p-entry').textContent = fmtPrice(sym, P ? P.entry : O.price);
     $('sim-p-lot').textContent = nf(x.lot, 2) + (P && P.lot0 && P.lot0 !== P.lot ? ' din ' + nf(P.lot0, 2) : '');
@@ -488,39 +488,39 @@
     if (document.activeElement !== sl) sl.value = inputPrice(sym, x.sl);
     if (document.activeElement !== tp) tp.value = x.tp == null ? '' : inputPrice(sym, x.tp);
     $('sim-be').hidden = !P; $('sim-partial').hidden = !P;
-    $('sim-close').textContent = P ? 'Închide acum' : 'Anulează ordinul';
+    $('sim-close').textContent = P ? T('Închide acum') : T('Anulează ordinul');
     const pl = $('sim-p-pl');
     if (P) {
       const m = openPL(P), pips = (E.markPrice(P, bid()) - P.entry) * (P.side === 'buy' ? 1 : -1) / E.pipOf(sym);
       const rNow = (m + (P.realized || 0)) / P.riskMoney;
-      pl.textContent = `P/L: ${money(m, S.ccy, true)} (${sign(pips)}${nf(Math.abs(pips), 1)} pips, ${fmtR(E.round(m / P.riskMoney, 2))})` + (P.realized ? ` · realizat ${money(P.realized, S.ccy, true)} · total ${fmtR(E.round(rNow, 2))}` : '');
+      pl.textContent = `P/L: ${money(m, S.ccy, true)} (${sign(pips)}${nf(Math.abs(pips), 1)} pips, ${fmtR(E.round(m / P.riskMoney, 2))})` + (P.realized ? ' · ' + T('realizat {a} · total {b}', { a: money(P.realized, S.ccy, true), b: fmtR(E.round(rNow, 2)) }) : '');
       pl.className = 'sim-pl ' + (m > 0 ? 'pos' : m < 0 ? 'neg' : '');
-    } else { pl.textContent = 'Așteaptă prețul ' + fmtPrice(sym, O.price) + '.'; pl.className = 'sim-pl'; }
+    } else { pl.textContent = T('Așteaptă prețul ') + fmtPrice(sym, O.price) + '.'; pl.className = 'sim-pl'; }
   }
   /** Schimbă SL/TP pentru o poziție sau un ordin. Întoarce un mesaj de eroare sau null. */
   function setLevels(x, sl, tp) {
     const P = posById(x.id);
     let msg = null;
-    if (!(sl > 0)) msg = 'Stop loss-ul nu este un preț valid.';
-    else if (Number.isNaN(tp) || (tp != null && tp <= 0)) msg = 'Take profit-ul nu este un preț valid.';
+    if (!(sl > 0)) msg = T('Stop loss-ul nu este un preț valid.');
+    else if (Number.isNaN(tp) || (tp != null && tp <= 0)) msg = T('Take profit-ul nu este un preț valid.');
     else if (P) {
       const cur = E.markPrice(P, bid());   // prețul la care s-ar închide acum
-      if (x.side === 'buy' && sl >= cur) msg = `La Buy, stop loss-ul trebuie să rămână sub prețul curent (${fmtPrice(S.sym, cur)}).`;
-      else if (x.side === 'sell' && sl <= cur) msg = `La Sell, stop loss-ul trebuie să rămână deasupra prețului curent (${fmtPrice(S.sym, cur)}).`;
-      else if (tp != null && x.side === 'buy' && tp <= cur) msg = `La Buy, take profit-ul trebuie să fie deasupra prețului curent (${fmtPrice(S.sym, cur)}).`;
-      else if (tp != null && x.side === 'sell' && tp >= cur) msg = `La Sell, take profit-ul trebuie să fie sub prețul curent (${fmtPrice(S.sym, cur)}).`;
+      if (x.side === 'buy' && sl >= cur) msg = T('La Buy, stop loss-ul trebuie să rămână sub prețul curent ({fmtPrice}).', { fmtPrice: fmtPrice(S.sym, cur) });
+      else if (x.side === 'sell' && sl <= cur) msg = T('La Sell, stop loss-ul trebuie să rămână deasupra prețului curent ({fmtPrice}).', { fmtPrice: fmtPrice(S.sym, cur) });
+      else if (tp != null && x.side === 'buy' && tp <= cur) msg = T('La Buy, take profit-ul trebuie să fie deasupra prețului curent ({fmtPrice}).', { fmtPrice: fmtPrice(S.sym, cur) });
+      else if (tp != null && x.side === 'sell' && tp >= cur) msg = T('La Sell, take profit-ul trebuie să fie sub prețul curent ({fmtPrice}).', { fmtPrice: fmtPrice(S.sym, cur) });
     } else msg = E.validateLevels(x.side, x.price, sl, tp);
     if (msg) { drawLines(); renderPos(); return msg; }
     const dec = E.INSTR[S.sym].dec;
     if (!P) {
       const slPips = Math.abs(x.price - sl) / E.pipOf(S.sym), lot = E.lotFor(S.balance * S.riskPct / 100, slPips, x.pipVal);
-      if (lot < 0.01) { drawLines(); return 'Cu acest stop loss lotul ar fi sub 0,01. Alege un stop loss mai apropiat.'; }
+      if (lot < 0.01) { drawLines(); return T('Cu acest stop loss lotul ar fi sub 0,01. Alege un stop loss mai apropiat.'); }
       x.slPips = slPips; x.lot = lot;
     }
     x.sl = E.round(sl, dec + 1); x.tp = tp == null ? null : E.round(tp, dec + 1);
     if (P) P.be = Math.abs(P.sl - P.entry) < 1e-9;
     showPosErr('');
-    showMsg(tag(x) + 'Nivelurile au fost actualizate: SL ' + fmtPrice(S.sym, x.sl) + (x.tp != null ? ', TP ' + fmtPrice(S.sym, x.tp) : ', fără TP') + '.');
+    showMsg(tag(x) + T('Nivelurile au fost actualizate: SL ') + fmtPrice(S.sym, x.sl) + (x.tp != null ? ', TP ' + fmtPrice(S.sym, x.tp) : T(', fără TP')) + '.');
     afterChange();
     return null;
   }
@@ -534,39 +534,39 @@
   function moveToBE() {
     const P = posById((selItem() || {}).id); if (!P) return;
     const cur = E.markPrice(P, bid());
-    if (P.side === 'buy' ? cur <= P.entry : cur >= P.entry) { showPosErr('Break-even se poate muta doar când poziția e pe plus (prețul trebuie să fie dincolo de intrare).'); return; }
+    if (P.side === 'buy' ? cur <= P.entry : cur >= P.entry) { showPosErr(T('Break-even se poate muta doar când poziția e pe plus (prețul trebuie să fie dincolo de intrare).')); return; }
     showPosErr('');
     P.sl = P.entry; P.be = true;
-    showMsg(tag(P) + 'Stop loss mutat la break-even (' + fmtPrice(S.sym, P.entry) + '). Dacă prețul revine, restul poziției iese la 0.');
+    showMsg(tag(P) + T('Stop loss mutat la break-even (') + fmtPrice(S.sym, P.entry) + T('). Dacă prețul revine, restul poziției iese la 0.'));
     afterChange();
   }
   /** Închide (complet) elementul selectat sau anulează ordinul. */
   function closeNow(reason) {
     const x = selItem(); if (!x) return;
-    if (ordById(x.id) && !posById(x.id)) { S.orders = S.orders.filter(o => o.id !== x.id); S.sel = null; showMsg('Ordinul în așteptare a fost anulat.'); afterChange(); return; }
+    if (ordById(x.id) && !posById(x.id)) { S.orders = S.orders.filter(o => o.id !== x.id); S.sel = null; showMsg(T('Ordinul în așteptare a fost anulat.')); afterChange(); return; }
     closeFull(x, { price: E.markPrice(x, bid()), reason: reason || 'Manual', both: false, gap: false }, S.cur);
     afterChange();
   }
   function closeAll() {
     for (const P of [...S.positions]) closeFull(P, { price: E.markPrice(P, bid()), reason: 'Manual', both: false, gap: false }, S.cur);
-    showMsg('Toate pozițiile au fost închise.');
+    showMsg(T('Toate pozițiile au fost închise.'));
     afterChange();
   }
   /** Închidere parțială: frac (0..1) sau lot exact. */
   function closePartial(frac, lotExact) {
     const P = posById((selItem() || {}).id); if (!P) return;
     const lot = lotExact != null ? Math.floor(lotExact * 100 + 1e-9) / 100 : E.partialLot(P, frac);
-    if (!(lot >= 0.01)) { showPosErr('Lotul de închis trebuie să fie de cel puțin 0,01.'); return; }
+    if (!(lot >= 0.01)) { showPosErr(T('Lotul de închis trebuie să fie de cel puțin 0,01.')); return; }
     if (lot >= P.lot - 1e-9) { closeFull(P, { price: E.markPrice(P, bid()), reason: 'Manual', both: false, gap: false }, S.cur); afterChange(); return; }
     const part = E.closePart(P, E.markPrice(P, bid()), lot, 'Parțial', S.d.t[S.cur]);
     S.balance = E.round(S.balance + part.money, 2);
     S.markers.push({ t: S.d.t[S.cur], position: P.side === 'buy' ? 'aboveBar' : 'belowBar', color: part.money >= 0 ? C.green : C.red, shape: 'square', text: `#${P.n} ${nf(lot, 2)}` });
     renderMarkers();
     showPosErr('');
-    showMsg(`${tag(P)}Închidere parțială ${nf(lot, 2)} loturi: ${money(part.money, S.ccy, true)} (${fmtR(E.round(part.r, 2))}). Rămân ${nf(P.lot, 2)} loturi.`, part.money > 0 ? 'good' : part.money < 0 ? 'bad' : '');
+    showMsg(T('{tag}Închidere parțială {nf} loturi: {money} ({fmtR}). Rămân {nf2} loturi.', { tag: tag(P), nf: nf(lot, 2), money: money(part.money, S.ccy, true), fmtR: fmtR(E.round(part.r, 2)), nf2: nf(P.lot, 2) }), part.money > 0 ? 'good' : part.money < 0 ? 'bad' : '');
     afterChange();
   }
-  const REASON = { TP: 'Take profit', SL: 'Stop loss', BE: 'Break-even', Manual: 'Închidere manuală', Final: 'Final sesiune', 'Parțial': 'Închidere parțială', Provocare: 'Regulă provocare' };
+  const REASON = { TP: T('Take profit'), SL: T('Stop loss'), BE: 'Break-even', Manual: T('Închidere manuală'), Final: T('Final sesiune'), 'Parțial': T('Închidere parțială'), Provocare: T('Regulă provocare') };
   /** Închide restul poziției și înregistrează tranzacția (cu toate părțile). */
   function closeFull(P, x, i) {
     const part = E.closePart(P, x.price, P.lot, x.reason, S.d.t[i]);
@@ -581,16 +581,16 @@
     S.positions = S.positions.filter(p => p !== P);
     if (S.sel === P.id) S.sel = null;
     addMarker(S.d.t[i], tr, 'out');
-    let m = `${tag(P) || ''}${REASON[x.reason]}: ${fmtR(tr.r)} (${money(tr.money, S.ccy, true)})${sm.parts > 1 ? ', cu închideri parțiale' : ''}.`;
-    if (x.both) m += ' În aceeași bară H1 au fost atinse și SL, și TP: am considerat SL primul (varianta prudentă).';
-    if (x.gap) m += ' Prețul a sărit peste stop loss (gap), așa că ieșirea s-a făcut la deschiderea barei.';
+    let m = `${tag(P) || ''}${REASON[x.reason]}: ${fmtR(tr.r)} (${money(tr.money, S.ccy, true)})${sm.parts > 1 ? T(', cu închideri parțiale') : ''}.`;
+    if (x.both) m += T(' În aceeași bară H1 au fost atinse și SL, și TP: am considerat SL primul (varianta prudentă).');
+    if (x.gap) m += T(' Prețul a sărit peste stop loss (gap), așa că ieșirea s-a făcut la deschiderea barei.');
     showMsg(m, tr.money > 0 ? 'good' : tr.money < 0 ? 'bad' : '');
     renderStats();
     if (window.SimExtra && SimExtra.onTrade) SimExtra.onTrade(tr);
   }
   function addMarker(t, x, kind) {
     if (kind === 'in') S.markers.push({ t, position: x === 'buy' ? 'belowBar' : 'aboveBar', color: x === 'buy' ? C.green : C.red, shape: x === 'buy' ? 'arrowUp' : 'arrowDown', text: x === 'buy' ? 'Buy' : 'Sell' });
-    else S.markers.push({ t, position: x.side === 'buy' ? 'aboveBar' : 'belowBar', color: x.money > 0 ? C.green : x.money < 0 ? C.red : C.text, shape: 'circle', text: (x.reason === 'Manual' || x.reason === 'Final' ? 'Închis' : x.reason) + ' ' + fmtR(x.r) });
+    else S.markers.push({ t, position: x.side === 'buy' ? 'aboveBar' : 'belowBar', color: x.money > 0 ? C.green : x.money < 0 ? C.red : C.text, shape: 'circle', text: (x.reason === 'Manual' || x.reason === 'Final' ? T('Închis') : x.reason) + ' ' + fmtR(x.r) });
     renderMarkers();
   }
 
@@ -599,7 +599,7 @@
   function ensureMore() {
     if (!nextYearNeeded() || loadingMore) return loadingMore;
     const y = S.years[1] + 1;
-    loadingMore = loadYear(S.sym, y).then(d => { S.d = E.concat(S.d, d); S.years[1] = y; }).catch(() => showMsg('Nu am putut încărca datele pentru perioada următoare. Verifică conexiunea.', 'warn')).finally(() => { loadingMore = null; });
+    loadingMore = loadYear(S.sym, y).then(d => { S.d = E.concat(S.d, d); S.years[1] = y; }).catch(() => showMsg(T('Nu am putut încărca datele pentru perioada următoare. Verifică conexiunea.'), 'warn')).finally(() => { loadingMore = null; });
     return loadingMore;
   }
   /** Avansează o bară H1: execută ordinele, verifică SL/TP pe toate pozițiile, aplică regulile provocării. */
@@ -607,10 +607,10 @@
     if (!S || S.ended) return false;
     const i = S.cur + 1;
     if (i >= S.d.n) {
-      if (S.years[1] < LAST_YEAR) { ensureMore(); showMsg('Se încarcă datele următoare…'); return false; }
-      endSession('Ai ajuns la finalul datelor disponibile (' + DATA_END_LABEL + ').'); return false;
+      if (S.years[1] < LAST_YEAR) { ensureMore(); showMsg(T('Se încarcă datele următoare…')); return false; }
+      endSession(T('Ai ajuns la finalul datelor disponibile (') + DATA_END_LABEL + ').'); return false;
     }
-    if (S.d.t[i] >= S.stopT) { endSession('Sesiunea s-a oprit: urmează o perioadă în care sursa are multe ore lipsă, așa că nu o folosim.'); return false; }
+    if (S.d.t[i] >= S.stopT) { endSession(T('Sesiunea s-a oprit: urmează o perioadă în care sursa are multe ore lipsă, așa că nu o folosim.')); return false; }
     const balanceStart = S.balance;
     S.cur = i; S.barsPlayed++;
     const b = { o: S.d.o[i], h: S.d.h[i], l: S.d.l[i], c: S.d.c[i] };
@@ -626,7 +626,7 @@
       Object.assign(P, { id: O.id, n: O.n, lot0: P.lot, setup: O.setup || '', note: O.note || '' });
       S.positions.push(P); events++;
       addMarker(S.d.t[i], O.side, 'in');
-      showMsg(`${tag(P)}Ordinul ${O.side === 'buy' ? 'Buy' : 'Sell'} ${O.kind} s-a executat la ${fmtPrice(S.sym, P.entry)}.`);
+      showMsg(T('{tag}Ordinul {v} {kind} s-a executat la {fmtPrice}.', { tag: tag(P), v: O.side === 'buy' ? 'Buy' : 'Sell', kind: O.kind, fmtPrice: fmtPrice(S.sym, P.entry) }));
       const x = E.checkExit(P, b, true);
       if (x) closeFull(P, x, i);
     }
@@ -667,8 +667,8 @@
     const b = $('sim-play');
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
     b.classList.toggle('is-on', !!on);
-    $('sim-play-lbl').textContent = on ? 'Pauză' : 'Redare';
-    b.title = on ? 'Pauză (Space)' : 'Redare (Space)';
+    $('sim-play-lbl').textContent = on ? T('Pauză') : T('Redare');
+    b.title = on ? T('Pauză (Space)') : T('Redare (Space)');
     if (on) playTimer = setInterval(() => { if (!S || S.ended) return setPlaying(false); if (loadingMore) return; step(1); }, SPEED_MS[$('sim-speed').value] || 900);
   }
   /** Schimbă intervalul afișat în sesiune. Ceasul (ora curentă) rămâne același; bara curentă a intervalului mare e construită doar din H1 trecute. */
@@ -681,7 +681,7 @@
     setChartData(false);
     legend(null);
     afterChange();
-    showMsg(`Interval ${tf}. „Bara următoare” avansează o bară ${tf}; SL și TP se verifică în continuare pe fiecare oră (H1).`);
+    showMsg(T('Interval {tf}. „Bara următoare” avansează o bară {tf2}; SL și TP se verifică în continuare pe fiecare oră (H1).', { tf: tf, tf2: tf }));
   }
 
   // ---------- afișare generală ----------
@@ -700,7 +700,7 @@
     const o = $('sim-openpl'); o.textContent = S.positions.length ? money(open, S.ccy, true) : '—';
     o.className = open > 0 ? 'pos' : open < 0 ? 'neg' : '';
     $('sim-bars').textContent = String(S.barsPlayed);
-    $('sim-when').textContent = S.hidden ? 'Data e ascunsă' : fmtTime(S.d.t[S.cur], 'H1');
+    $('sim-when').textContent = S.hidden ? T('Data e ascunsă') : fmtTime(S.d.t[S.cur], 'H1');
     $('sim-bid').textContent = fmtPrice(S.sym, bid());
     $('sim-ask').textContent = nf(ask(), E.INSTR[S.sym].dec);
     $('sim-spread').textContent = nf(E.INSTR[S.sym].spread, 1);
@@ -708,10 +708,10 @@
     renderChallenge();
   }
   function challengeText(ch) {
-    const lim = { tinta: `ai atins ținta de profit de ${nf(ch.targetPct, 0, 2)}%`, zilnic: `equity-ul a coborât sub limita de pierdere zilnică (${nf(ch.dailyPct, 0, 2)}% din soldul inițial)`, total: `equity-ul a coborât sub limita de drawdown total (${nf(ch.totalPct, 0, 2)}% din soldul inițial)` };
-    if (ch.status === 'trecut') return { title: 'Provocare trecută', tone: 'good', text: 'Felicitări: ' + lim.tinta + ' fără să încalci limitele de pierdere.' };
-    if (ch.status === 'picat') return { title: 'Provocare picată', tone: 'bad', text: 'Regula încălcată: ' + lim[ch.reason] + '. Pozițiile au fost închise automat.' };
-    return { title: 'Provocare neterminată', tone: '', text: `Sesiunea s-a încheiat înainte de ținta de ${nf(ch.targetPct, 0, 2)}%, fără să încalci limitele.` };
+    const lim = { tinta: T('ai atins ținta de profit de {nf}%', { nf: nf(ch.targetPct, 0, 2) }), zilnic: T('equity-ul a coborât sub limita de pierdere zilnică ({nf}% din soldul inițial)', { nf: nf(ch.dailyPct, 0, 2) }), total: T('equity-ul a coborât sub limita de drawdown total ({nf}% din soldul inițial)', { nf: nf(ch.totalPct, 0, 2) }) };
+    if (ch.status === 'trecut') return { title: T('Provocare trecută'), tone: 'good', text: T('Felicitări: ') + lim.tinta + T(' fără să încalci limitele de pierdere.') };
+    if (ch.status === 'picat') return { title: T('Provocare picată'), tone: 'bad', text: T('Regula încălcată: ') + lim[ch.reason] + T('. Pozițiile au fost închise automat.') };
+    return { title: T('Provocare neterminată'), tone: '', text: T('Sesiunea s-a încheiat înainte de ținta de {nf}%, fără să încalci limitele.', { nf: nf(ch.targetPct, 0, 2) }) };
   }
   function renderChallenge() {
     const box = $('sim-ch'), ch = S && S.challenge;
@@ -721,9 +721,9 @@
     const bar = (lab, v, val, kind, title) => `<div class="ws-ch-row ${kind}" title="${esc(title)}"><span>${lab}</span><i role="progressbar" aria-label="${esc(lab)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(v * 100)}"><b style="width:${(v * 100).toFixed(1)}%"></b></i><em>${val}</em></div>`;
     const st = ch.status === 'activ' ? '' : `<p class="ws-ch-st ${ch.status === 'trecut' ? 'pos' : 'neg'}">${challengeText(ch).title}</p>`;
     box.innerHTML = st +
-      bar('Profit', pr.profit, `${nf(Math.max(0, (eq - ch.start) / ch.start * 100), 1, 1)}% / ${nf(ch.targetPct, 0, 2)}%`, 'ok', 'Ținta: equity ' + money(pr.target, ccy)) +
-      bar('Azi', pr.daily, `${nf(pr.daily * ch.dailyPct, 1, 1)}% / ${nf(ch.dailyPct, 0, 2)}%`, pr.daily > 0.7 ? 'warn' : 'risk', 'Limita zilnică: equity ' + money(pr.dailyLimit, ccy)) +
-      bar('Total', pr.total, `${nf(pr.total * ch.totalPct, 1, 1)}% / ${nf(ch.totalPct, 0, 2)}%`, pr.total > 0.7 ? 'warn' : 'risk', 'Limita totală: equity ' + money(pr.totalLimit, ccy));
+      bar('Profit', pr.profit, `${nf(Math.max(0, (eq - ch.start) / ch.start * 100), 1, 1)}% / ${nf(ch.targetPct, 0, 2)}%`, 'ok', T('Ținta: equity ') + money(pr.target, ccy)) +
+      bar(T('Azi'), pr.daily, `${nf(pr.daily * ch.dailyPct, 1, 1)}% / ${nf(ch.dailyPct, 0, 2)}%`, pr.daily > 0.7 ? 'warn' : 'risk', T('Limita zilnică: equity ') + money(pr.dailyLimit, ccy)) +
+      bar('Total', pr.total, `${nf(pr.total * ch.totalPct, 1, 1)}% / ${nf(ch.totalPct, 0, 2)}%`, pr.total > 0.7 ? 'warn' : 'risk', T('Limita totală: equity ') + money(pr.totalLimit, ccy));
   }
   function afterChange() {
     if (!S) return;
@@ -734,22 +734,22 @@
   function renderStats() {
     const st = E.stats(S.trades, S.bal0), ccy = S.ccy;
     const set = (id, v) => { $(id).textContent = v; };
-    set('sim-s-n', String(st.n)); set('sim-s-wl', st.n ? `${st.wins} câștigate · ${st.losses} pierdute${st.be ? ' · ' + st.be + ' la zero' : ''}` : '');
+    set('sim-s-n', String(st.n)); set('sim-s-wl', st.n ? T('{wins} câștigate · {losses} pierdute{v}', { wins: st.wins, losses: st.losses, v: st.be ? ' · ' + T('{n} la zero', { n: st.be }) : '' }) : '');
     set('sim-s-wr', pct(st.winRate)); set('sim-s-tr', st.n ? fmtR(st.totalR) : '—'); set('sim-s-ar', st.n ? fmtR(st.avgR) : '—');
-    set('sim-s-pf', st.profitFactor == null ? '—' : st.profitFactor === Infinity ? '∞ (fără pierderi)' : nf(st.profitFactor, 2));
-    set('sim-s-dd', st.n ? money(st.maxDD, ccy) : '—'); set('sim-s-ddp', st.n ? pct(st.maxDDPct, 2) + ' din vârful equity' : '');
+    set('sim-s-pf', st.profitFactor == null ? '—' : st.profitFactor === Infinity ? T('∞ (fără pierderi)') : nf(st.profitFactor, 2));
+    set('sim-s-dd', st.n ? money(st.maxDD, ccy) : '—'); set('sim-s-ddp', st.n ? pct(st.maxDDPct, 2) + T(' din vârful equity') : '');
     set('sim-s-best', st.best ? money(st.best.money, ccy, true) + ' (' + fmtR(st.best.r) + ')' : '—');
     set('sim-s-worst', st.worst ? money(st.worst.money, ccy, true) + ' (' + fmtR(st.worst.r) + ')' : '—');
     set('sim-s-net', st.n ? money(st.net, ccy, true) + ' (' + sign(st.returnPct) + pct(Math.abs(st.returnPct), 2) + ')' : '—');
-    set('sim-s-bal', 'Sold: ' + money(st.balance, ccy));
+    set('sim-s-bal', T('Sold: ') + money(st.balance, ccy));
     for (const [id, v] of [['sim-s-tr', st.totalR], ['sim-s-ar', st.avgR], ['sim-s-net', st.net]]) { $(id).classList.toggle('pos', st.n > 0 && v > 0); $(id).classList.toggle('neg', st.n > 0 && v < 0); }
     const tb = $('sim-trades').tBodies[0];
-    const held = t => { const h = Math.max(1, Math.round((t.exitT - t.entryT) / 3600)); return h < 48 ? h + ' h' : nf(h / 24, 0, 1) + ' zile'; };
+    const held = t => { const h = Math.max(1, Math.round((t.exitT - t.entryT) / 3600)); return h < 48 ? h + ' h' : T('{n} zile', { n: nf(h / 24, 0, 1) }); };
     tb.innerHTML = S.trades.map(t => `<tr>
-      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}${t.setup ? '<br><small class="sim-tag">' + esc(t.setup) + '</small>' : ''}${t.note ? '<br><small class="sim-note" title="' + esc(t.note) + '">' + esc(t.note) + '</small>' : ''}</td>
-      <td>${S.hidden ? '<small>dată ascunsă</small>' : '<small>' + esc(fmtTime(t.entryT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.entry)}</td>
-      <td>${S.hidden ? '<small>după ' + held(t) + '</small>' : '<small>' + esc(fmtTime(t.exitT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.exit)}</td>
-      <td>${REASON[t.reason]}${t.parts > 1 ? ' <small>(' + t.parts + ' părți)</small>' : ''}${t.both ? ' <small>(SL și TP în aceeași bară)</small>' : ''}</td>
+      <td>${t.n}</td><td><span class="sim-side ${t.side}">${t.side === 'buy' ? 'Buy' : 'Sell'}</span>${t.type !== 'piață' ? ' <small>' + esc(t.type) + '</small>' : ''}${t.setup ? '<br><small class="sim-tag">' + esc(t.setup) + '</small>' : ''}${t.note ? T('<br><small class="sim-note" title="') + esc(t.note) + '">' + esc(t.note) + '</small>' : ''}</td>
+      <td>${S.hidden ? T('<small>dată ascunsă</small>') : '<small>' + esc(fmtTime(t.entryT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.entry)}</td>
+      <td>${S.hidden ? T('<small>după ') + held(t) + '</small>' : '<small>' + esc(fmtTime(t.exitT, 'H1')) + '</small>'}<br>${fmtPrice(S.sym, t.exit)}</td>
+      <td>${REASON[t.reason]}${t.parts > 1 ? ' <small>(' + t.parts + T(' părți)</small>') : ''}${t.both ? T(' <small>(SL și TP în aceeași bară)</small>') : ''}</td>
       <td class="num">${sign(t.pips)}${nf(Math.abs(t.pips), 1)}</td><td class="num ${t.r > 0 ? 'pos' : t.r < 0 ? 'neg' : ''}">${fmtR(t.r)}</td>
       <td class="num ${t.money > 0 ? 'pos' : t.money < 0 ? 'neg' : ''}">${money(t.money, ccy, true)}</td></tr>`).join('');
     $('sim-trades-empty').hidden = S.trades.length > 0;
@@ -766,7 +766,7 @@
         grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
         rightPriceScale: { borderColor: C.border }, timeScale: { visible: false, borderColor: C.border },
         handleScroll: false, handleScale: false, crosshair: { vertLine: { labelVisible: false } },
-        localization: { locale: 'ro-RO', priceFormatter: p => nf(p, 0) }
+        localization: { locale: I18N.locale, priceFormatter: p => nf(p, 0) }
       });
     return { ch, se: ch.addSeries(LW.BaselineSeries, { baseValue: { type: 'price', price: S.bal0 }, topLineColor: C.green, bottomLineColor: C.red, topFillColor1: 'rgba(8,153,129,.25)', topFillColor2: 'rgba(8,153,129,.02)', bottomFillColor1: 'rgba(242,54,69,.02)', bottomFillColor2: 'rgba(242,54,69,.25)', lineWidth: 2, priceLineVisible: false }) };
   }
@@ -806,14 +806,14 @@
     const sym = $('sim-sym').value, tf = (document.querySelector('input[name="sim-tf"]:checked') || {}).value || 'H1';
     const mode = (document.querySelector('input[name="sim-mode"]:checked') || {}).value || 'random';
     const bal = numBal($('sim-bal').value), risk = num($('sim-risk').value);
-    if (!(bal >= 100) || bal > 10000000) return { err: 'Soldul virtual trebuie să fie un număr între 100 și 10.000.000.' };
-    if (!(risk > 0) || risk > 10) return { err: 'Riscul pe tranzacție trebuie să fie între 0 și 10% (de exemplu 1 sau 0,5).' };
+    if (!(bal >= 100) || bal > 10000000) return { err: T('Soldul virtual trebuie să fie un număr între 100 și 10.000.000.') };
+    if (!(risk > 0) || risk > 10) return { err: T('Riscul pe tranzacție trebuie să fie între 0 și 10% (de exemplu 1 sau 0,5).') };
     let challenge = null;
     if ($('sim-ch-on').checked) {
       const tg = num($('sim-ch-target').value), dl = num($('sim-ch-daily').value), tt = num($('sim-ch-total').value);
-      if (!(tg >= 1 && tg <= 100)) return { err: 'Ținta de profit a provocării trebuie să fie între 1% și 100%.' };
-      if (!(dl >= 0.5 && dl <= 50) || !(tt >= 1 && tt <= 90)) return { err: 'Limitele provocării: pierdere zilnică între 0,5% și 50%, drawdown total între 1% și 90%.' };
-      if (dl > tt) return { err: 'Pierderea zilnică maximă nu poate fi mai mare decât drawdown-ul total maxim.' };
+      if (!(tg >= 1 && tg <= 100)) return { err: T('Ținta de profit a provocării trebuie să fie între 1% și 100%.') };
+      if (!(dl >= 0.5 && dl <= 50) || !(tt >= 1 && tt <= 90)) return { err: T('Limitele provocării: pierdere zilnică între 0,5% și 50%, drawdown total între 1% și 90%.') };
+      if (dl > tt) return { err: T('Pierderea zilnică maximă nu poate fi mai mare decât drawdown-ul total maxim.') };
       challenge = { targetPct: tg, dailyPct: dl, totalPct: tt };
     }
     return { sym, tf, mode, bal, risk, ccy: $('sim-ccy').value, date: $('sim-date').value, strategy: readStrategy(), challenge };
@@ -827,7 +827,7 @@
     const all = store.get(KEY_STRAT, {});
     // doar numele unei strategii salvate: folosește regulile ei (nu le șterge)
     if (name && !rules && !checklist.length && !setups.length && all[name]) return all[name];
-    const st = { name: name || 'Strategia mea', rules, checklist, setups };
+    const st = { name: name || T('Strategia mea'), rules, checklist, setups };
     all[st.name] = st; store.set(KEY_STRAT, all);
     return st;
   }
@@ -837,10 +837,10 @@
   }
   const spanSec = (tf, bars) => bars * E.TF_SEC[tf] * 1.45;   // ~1,45: weekenduri și sărbători
   const future = tf => (tf === 'D1' ? 150 : MIN_FUTURE);
-  function validStart(sym, tf, T) {
+  function validStart(sym, tf, t0) {
     const lo = DATA_START + spanSec(tf, HISTORY), hi = DATA_END - spanSec(tf, future(tf));
-    if (T < lo || T > hi) return { ok: false, lo, hi };
-    for (const [a, b] of incompleteFor(sym)) if (T + spanSec(tf, future(tf)) > a && T - spanSec(tf, HISTORY) < b) return { ok: false, lo, hi, bad: [a, b] };
+    if (t0 < lo || t0 > hi) return { ok: false, lo, hi };
+    for (const [a, b] of incompleteFor(sym)) if (t0 + spanSec(tf, future(tf)) > a && t0 - spanSec(tf, HISTORY) < b) return { ok: false, lo, hi, bad: [a, b] };
     return { ok: true, lo, hi };
   }
   function dateLimits() {
@@ -855,27 +855,27 @@
     const cfg = readSetup();
     if (cfg.err) return setupError(cfg.err);
     setupError('');
-    const btn = $('sim-start'); btn.disabled = true; btn.textContent = 'Se încarcă datele…';
+    const btn = $('sim-start'); btn.disabled = true; btn.textContent = T('Se încarcă datele…');
     try {
       INDEX = INDEX || await loadJson('index.json'); applyIndex(INDEX);
-      let T;
+      let t0;
       if (cfg.mode === 'date') {
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(cfg.date)) throw new Error('Alege data de start sau folosește „Perioadă aleatorie”.');
-        T = Date.UTC(+cfg.date.slice(0, 4), +cfg.date.slice(5, 7) - 1, +cfg.date.slice(8, 10)) / 1000;
-        const v = validStart(cfg.sym, cfg.tf, T);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(cfg.date)) throw new Error(T('Alege data de start sau folosește „Perioadă aleatorie”.'));
+        t0 = Date.UTC(+cfg.date.slice(0, 4), +cfg.date.slice(5, 7) - 1, +cfg.date.slice(8, 10)) / 1000;
+        const v = validStart(cfg.sym, cfg.tf, t0);
         if (!v.ok) {
           const f = t => dfLong.format(new Date(t * 1000));
-          throw new Error(v.bad ? `Pentru ${cfg.sym} sursa are multe ore lipsă între ${f(v.bad[0])} și ${f(v.bad[1] - 86400)}, așa că nu folosim acea perioadă (nici chiar înainte de ea). Alege altă dată.`
-            : `Pentru ${cfg.tf} alege o dată între ${f(v.lo)} și ${f(v.hi)}, ca să avem destule bare înainte și după.`);
+          throw new Error(v.bad ? T('Pentru {sym} sursa are multe ore lipsă între {f} și {f2}, așa că nu folosim acea perioadă (nici chiar înainte de ea). Alege altă dată.', { sym: cfg.sym, f: f(v.bad[0]), f2: f(v.bad[1] - 86400) })
+            : T('Pentru {tf} alege o dată între {f} și {f2}, ca să avem destule bare înainte și după.', { tf: cfg.tf, f: f(v.lo), f2: f(v.hi) }));
         }
       } else {
         const { lo, hi } = { lo: DATA_START + spanSec(cfg.tf, HISTORY), hi: DATA_END - spanSec(cfg.tf, future(cfg.tf)) };
-        for (let k = 0; k < 500; k++) { const c = lo + Math.random() * (hi - lo); if (validStart(cfg.sym, cfg.tf, c).ok) { T = c; break; } }
+        for (let k = 0; k < 500; k++) { const c = lo + Math.random() * (hi - lo); if (validStart(cfg.sym, cfg.tf, c).ok) { t0 = c; break; } }
       }
-      await begin({ id: uid(), sym: cfg.sym, tf: cfg.tf, ccy: cfg.ccy, bal0: cfg.bal, riskPct: cfg.risk, mode: cfg.mode, hidden: cfg.mode === 'random', startT: T, strategy: cfg.strategy, challenge: cfg.challenge ? E.challengeInit(Object.assign({ start: cfg.bal }, cfg.challenge)) : null });
+      await begin({ id: uid(), sym: cfg.sym, tf: cfg.tf, ccy: cfg.ccy, bal0: cfg.bal, riskPct: cfg.risk, mode: cfg.mode, hidden: cfg.mode === 'random', startT: t0, strategy: cfg.strategy, challenge: cfg.challenge ? E.challengeInit(Object.assign({ start: cfg.bal }, cfg.challenge)) : null });
     } catch (err) {
-      setupError(err.message && !/^\d{3} /.test(err.message) && !/fetch|network/i.test(err.message) ? err.message : 'Nu am putut încărca datele. Verifică conexiunea și încearcă din nou.');
-    } finally { btn.disabled = false; btn.textContent = 'Pornește sesiunea'; }
+      setupError(err.message && !/^\d{3} /.test(err.message) && !/fetch|network/i.test(err.message) ? err.message : T('Nu am putut încărca datele. Verifică conexiunea și încearcă din nou.'));
+    } finally { btn.disabled = false; btn.textContent = T('Pornește sesiunea'); }
   }
   /** Pornește (sau reia) o sesiune. Pentru reluare, `snap` conține curT, tranzacțiile etc. */
   async function begin(cfg, snap) {
@@ -907,7 +907,7 @@
     enterApp();
     $('sim-stats-msg').textContent = ''; $('sim-reveal').textContent = '';
     ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = false; });
-    $('sim-end').textContent = 'Termină'; $('sim-end').title = 'Termină sesiunea și vezi rezultatele';
+    $('sim-end').textContent = T('Termină'); $('sim-end').title = T('Termină sesiunea și vezi rezultatele');
     $('sim-label').textContent = `${cfg.sym} · ${tf}`;
     $('sim-risk-ws').value = nf(cfg.riskPct, 0, 2).replace(/\s/g, '');
     $('sim-adv').open = false;
@@ -920,11 +920,11 @@
     document.querySelector('input[name="sim-unit"][value="pips"]').checked = true;
     document.querySelector('input[name="sim-kind"][value="market"]').checked = true;
     const I = E.INSTR[cfg.sym];
-    $('sim-spread-note').textContent = `Spread fix: ${nf(I.spread, 1)} pips. Sugestie: stop loss-ul implicit (${sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări ${tf}.`;
+    $('sim-spread-note').textContent = T('Spread fix: {nf} pips. Sugestie: stop loss-ul implicit ({sl} pips) e cam 1,5 x amplitudinea obișnuită a unei lumânări {tf}.', { nf: nf(I.spread, 1), sl: sl, tf: tf });
     makeChart(); setChartData();
     if (window.SimExtra && SimExtra.load) SimExtra.load(snap ? snap.extra : null, { chart, series, S, E, LW, C, $, nf, esc, fmtPrice, money, showMsg, persist: () => save() });
     $('sim-pos-err').hidden = true; $('sim-order-err').hidden = true;
-    showMsg(snap ? 'Sesiunea a fost reluată de unde ai rămas.' : 'Sesiunea a început. Analizează graficul, apoi avansează sau plasează un ordin.');
+    showMsg(snap ? T('Sesiunea a fost reluată de unde ai rămas.') : T('Sesiunea a început. Analizează graficul, apoi avansează sau plasează un ordin.'));
     renderStats();
     afterChange();
     $('sim-next').focus({ preventScroll: true });
@@ -940,23 +940,23 @@
     drawLines();
     const b = S.d.t[S.cur], startIdx = S.startIdx;
     const period = `${S.sym} ${S.tf}, ${fmtTime(S.d.t[startIdx], 'H1')} - ${fmtTime(b, 'H1')}`;
-    $('sim-reveal').textContent = 'Perioada reală: ' + period + '.';
+    $('sim-reveal').textContent = T('Perioada reală: ') + period + '.';
     $('sim-when').textContent = fmtTime(b, 'H1');
     renderAcct(); renderPos();   // pozițiile închise mai sus dispar din panou și din bara de sus
     $('sim-order').hidden = true; $('sim-pos').hidden = true;
     ['sim-next', 'sim-next10', 'sim-play', 'sim-speed'].forEach(id => { $(id).disabled = true; });
-    $('sim-end').textContent = 'Rezultate'; $('sim-end').title = 'Arată rezultatele sesiunii';
+    $('sim-end').textContent = T('Rezultate'); $('sim-end').title = T('Arată rezultatele sesiunii');
     const st0 = renderStats();
     legend(null);
     showMsg('');
-    $('sim-sum-reason').textContent = (reason ? reason + ' ' : '') + 'Sesiunea s-a încheiat.';
+    $('sim-sum-reason').textContent = (reason ? reason + ' ' : '') + T('Sesiunea s-a încheiat.');
     const g = (id, v) => { $(id).textContent = v; };
     g('sim-m-n', String(st0.n)); g('sim-m-wl', $('sim-s-wl').textContent); g('sim-m-wr', $('sim-s-wr').textContent); g('sim-m-tr', $('sim-s-tr').textContent);
     g('sim-m-pf', $('sim-s-pf').textContent); g('sim-m-dd', $('sim-s-dd').textContent); g('sim-m-net', $('sim-s-net').textContent); g('sim-m-bal', $('sim-s-bal').textContent);
     $('sim-m-tr').className = $('sim-s-tr').className; $('sim-m-net').className = $('sim-s-net').className;
     { const box = $('sim-sum-ch'), ch = S.challenge; box.hidden = !ch;
       if (ch) { const x = challengeText(ch); box.dataset.tone = x.tone;
-        box.innerHTML = `<strong>${x.title}</strong><p>${esc(x.text)}</p><p class="sim-hint">Cea mai mare pierdere într-o zi: ${money(ch.maxDayLoss, S.ccy)} (limita ${money(ch.start * ch.dailyPct / 100, S.ccy)}); cel mai adânc drawdown față de soldul inițial: ${money(Math.max(0, ch.maxTotalDD), S.ccy)} (limita ${money(ch.start * ch.totalPct / 100, S.ccy)}).</p><p class="sim-hint">De reținut: în provocări nu pici din cauza unei strategii slabe, ci aproape mereu din cauza riscului prea mare. Cu 1% pe tranzacție ai nevoie de 5 pierderi la rând ca să atingi limita zilnică de 5%; cu 2,5% ajung 2.</p>`; } }
+        box.innerHTML = `<strong>${x.title}</strong><p>${esc(x.text)}</p><p class="sim-hint">${T('Cea mai mare pierdere într-o zi: {a} (limita {b}); cel mai adânc drawdown față de soldul inițial: {c} (limita {d}).', { a: money(ch.maxDayLoss, S.ccy), b: money(ch.start * ch.dailyPct / 100, S.ccy), c: money(Math.max(0, ch.maxTotalDD), S.ccy), d: money(ch.start * ch.totalPct / 100, S.ccy) })}</p><p class="sim-hint">${T('De reținut: în provocări nu pici din cauza unei strategii slabe, ci aproape mereu din cauza riscului prea mare. Cu 1% pe tranzacție ai nevoie de 5 pierderi la rând ca să atingi limita zilnică de 5%; cu 2,5% ajung 2.')}</p>`; } }
     openSummary();
     // salvează în istoric
     const st = E.stats(S.trades, S.bal0);
@@ -1038,7 +1038,7 @@
   function sheet(open) {
     $('sim-panel').dataset.open = open ? 'true' : 'false';
     $('sim-sheet').setAttribute('aria-expanded', open ? 'true' : 'false');
-    $('sim-sheet').setAttribute('aria-label', open ? 'Ascunde panoul' : 'Arată panoul');
+    $('sim-sheet').setAttribute('aria-label', open ? T('Ascunde panoul') : T('Arată panoul'));
   }
   TABS.forEach((t, i) => {
     const b = $('sim-tab-' + t);
@@ -1057,13 +1057,13 @@
     fsBtn.hidden = false;
     fsBtn.addEventListener('click', () => {
       if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-      else document.documentElement.requestFullscreen().catch(() => showMsg('Browserul nu a permis ecranul complet.', 'warn'));
+      else document.documentElement.requestFullscreen().catch(() => showMsg(T('Browserul nu a permis ecranul complet.'), 'warn'));
     });
     document.addEventListener('fullscreenchange', () => {
       const on = !!document.fullscreenElement;
       fsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      fsBtn.setAttribute('aria-label', on ? 'Ieși din ecranul complet' : 'Ecran complet');
-      fsBtn.title = on ? 'Ieși din ecranul complet' : 'Ecran complet';
+      fsBtn.setAttribute('aria-label', on ? T('Ieși din ecranul complet') : T('Ecran complet'));
+      fsBtn.title = on ? T('Ieși din ecranul complet') : T('Ecran complet');
     });
   }
 
@@ -1072,31 +1072,31 @@
     const list = store.get(KEY_SESS, []);
     $('sim-history').hidden = !list.length;
     $('sim-history-list').innerHTML = list.map(s => `<li><strong>${esc(s.sym)} ${esc(s.tf)}</strong> <span>${esc(fmtTime(s.from, s.tf === 'D1' ? 'D1' : 'D1'))} - ${esc(fmtTime(s.to, 'D1'))}</span>
-      <span>${s.n} ${s.n === 1 ? 'tranzacție' : 'tranzacții'}</span><span>${s.n ? pct(s.winRate, 0) + ' câștigătoare' : ''}</span>
-      <span class="${s.totalR > 0 ? 'pos' : s.totalR < 0 ? 'neg' : ''}">${s.n ? fmtR(s.totalR) : ''}</span><span class="${s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : ''}">${s.n ? money(s.net, s.ccy, true) : ''}</span>${s.strategy ? `<span class="sim-badge">${esc(s.strategy.name)}</span>` : ''}${s.challenge ? `<span class="sim-badge ${s.challenge.status === 'trecut' ? 'pos' : s.challenge.status === 'picat' ? 'neg' : ''}">${s.challenge.status === 'trecut' ? 'Provocare trecută' : s.challenge.status === 'picat' ? 'Provocare picată' : 'Provocare neterminată'}</span>` : ''}</li>`).join('');
+      <span>${s.n} ${s.n === 1 ? T('tranzacție') : T('tranzacții')}</span><span>${s.n ? pct(s.winRate, 0) + T(' câștigătoare') : ''}</span>
+      <span class="${s.totalR > 0 ? 'pos' : s.totalR < 0 ? 'neg' : ''}">${s.n ? fmtR(s.totalR) : ''}</span><span class="${s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : ''}">${s.n ? money(s.net, s.ccy, true) : ''}</span>${s.strategy ? `<span class="sim-badge">${esc(s.strategy.name)}</span>` : ''}${s.challenge ? `<span class="sim-badge ${s.challenge.status === 'trecut' ? 'pos' : s.challenge.status === 'picat' ? 'neg' : ''}">${s.challenge.status === 'trecut' ? T('Provocare trecută') : s.challenge.status === 'picat' ? T('Provocare picată') : T('Provocare neterminată')}</span>` : ''}</li>`).join('');
     if (window.SimStats) SimStats.renderHistoryStats(list);
     fillStrategyNames();
   }
   function csv() {
     const ccy = S.ccy, dec = E.INSTR[S.sym].dec;
-    const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', ','));
-    const head = ['Nr', 'Instrument', 'Interval', 'Direcție', 'Tip', 'Data intrare', 'Preț intrare', 'SL inițial', 'TP inițial', 'Lot', 'Risc (' + ccy + ')', 'Data ieșire', 'Preț ieșire', 'Motiv', 'Pips', 'R', 'Profit (' + ccy + ')', 'Setup', 'Notă', 'Strategie'];
-    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', t.type, fmtTime(t.entryT, 'H1'), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, 'H1'), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2), t.setup || '', t.note || '', (S.strategy && S.strategy.name) || '']);
-    const body = [head, ...rows].map(r => r.map(v => { const s = String(v); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(';')).join('\r\n');
+    const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', I18N.csvDec));
+    const head = [T('Nr'), 'Instrument', T('Interval'), T('Direcție'), T('Tip'), T('Data intrare'), T('Preț intrare'), T('SL inițial'), T('TP inițial'), 'Lot', T('Risc') + ' (' + ccy + ')', T('Data ieșire'), T('Preț ieșire'), T('Motiv'), 'Pips', 'R', 'Profit (' + ccy + ')', 'Setup', T('Notă'), T('Strategie')];
+    const rows = S.trades.map(t => [t.n, S.sym, S.tf, t.side === 'buy' ? 'Buy' : 'Sell', T(t.type), fmtTime(t.entryT, 'H1'), n(t.entry, dec + 1), n(t.sl0, dec + 1), n(t.tp0, dec + 1), n(t.lot, 2), n(t.risk, 2), fmtTime(t.exitT, 'H1'), n(t.exit, dec + 1), REASON[t.reason], n(t.pips, 1), n(t.r, 2), n(t.money, 2), t.setup || '', t.note || '', (S.strategy && S.strategy.name) || '']);
+    const body = [head, ...rows].map(r => r.map(v => { const s = String(v); return (s.includes(I18N.csvSep) || /["\n]/.test(s)) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(I18N.csvSep)).join('\r\n');
     const blob = new Blob(['\ufeff' + body + '\r\n'], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = `simulator-${S.sym}-${S.tf}-${isoDate(S.startT, 'D1')}.csv`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    $('sim-stats-msg').textContent = 'Fișierul CSV a fost descărcat (' + S.trades.length + ' tranzacții, separator punct și virgulă).';
+    $('sim-stats-msg').textContent = T('Fișierul CSV a fost descărcat ({n} tranzacții, separator punct și virgulă).', { n: S.trades.length });
   }
   const JR = { TP: 'TP', SL: 'SL', BE: 'BE', Manual: 'Manual', Final: 'Manual', 'Parțial': 'Manual', Provocare: 'Manual' };
   function toJournal() {
     if (!S || !S.ended) return;
     let list;
     try { list = JSON.parse(localStorage.getItem(KEY_J) || '[]'); if (!Array.isArray(list)) list = []; }
-    catch (e) { $('sim-stats-msg').textContent = 'Nu am putut citi jurnalul din acest browser.'; return; }
+    catch (e) { $('sim-stats-msg').textContent = T('Nu am putut citi jurnalul din acest browser.'); return; }
     const ids = new Set(list.map(t => t && t.id));
     const now = new Date().toISOString(), dec = E.INSTR[S.sym].dec;
     let added = 0;
@@ -1104,15 +1104,15 @@
       const id = `sim-${S.id}-${t.n}`;
       if (ids.has(id)) continue;
       list.push({ id, data: isoDate(t.entryT, 'H1'), pereche: S.sym, directie: t.side === 'buy' ? 'Buy' : 'Sell', sesiune: '',
-        setup: `Simulator (backtesting) · ${S.tf} · ordin ${t.type}`, intrare: E.round(t.entry, dec + 1), sl: t.sl0, tp: t.tp0, lot: t.lot,
+        setup: `Simulator (backtesting) · ${S.tf} · ${T('ordin {t}', { t: T(t.type) })}`, intrare: E.round(t.entry, dec + 1), sl: t.sl0, tp: t.tp0, lot: t.lot,
         riscPct: S.riskPct, riscBani: t.risk, rezultat: JR[t.reason], r: t.r, plan: '', emotii: '', lectie: '', creat: now, modificat: '', sursa: 'simulator' });
       added++;
     }
     const m = $('sim-stats-msg');
-    if (!S.trades.length) { m.textContent = 'Nu ai tranzacții închise de trimis în jurnal.'; return; }
-    if (!added) { m.innerHTML = 'Tranzacțiile din această sesiune sunt deja în <a href="jurnal.html">jurnal</a>.'; return; }
-    if (!store.set(KEY_J, list)) { m.textContent = 'Nu am putut salva în jurnal (spațiul browserului e plin sau blocat).'; return; }
-    m.innerHTML = `Am adăugat ${added} ${added === 1 ? 'tranzacție' : 'tranzacții'} în <a href="jurnal.html">jurnalul tău</a>, marcate cu „Simulator”.`;
+    if (!S.trades.length) { m.textContent = T('Nu ai tranzacții închise de trimis în jurnal.'); return; }
+    if (!added) { m.innerHTML = T('Tranzacțiile din această sesiune sunt deja în <a href="jurnal.html">jurnal</a>.'); return; }
+    if (!store.set(KEY_J, list)) { m.textContent = T('Nu am putut salva în jurnal (spațiul browserului e plin sau blocat).'); return; }
+    m.innerHTML = added === 1 ? T('Am adăugat 1 tranzacție în <a href="jurnal.html">jurnalul tău</a>, marcate cu „Simulator”.') : T('Am adăugat {n} tranzacții în <a href="jurnal.html">jurnalul tău</a>, marcate cu „Simulator”.', { n: added });
   }
 
   // ---------- evenimente ----------
@@ -1120,8 +1120,8 @@
     const mode = (document.querySelector('input[name="sim-mode"]:checked') || {}).value;
     $('sim-date-wrap').hidden = mode !== 'date';
     $('sim-mode-hint').textContent = mode === 'date'
-      ? 'Cu o dată aleasă de tine, data se vede pe grafic. Atenție la tentația de a folosi ce știi deja despre acea perioadă.'
-      : 'Cu „Perioadă aleatorie” data rămâne ascunsă până la finalul sesiunii, ca să nu fii influențat de ce știi deja despre acea perioadă.';
+      ? T('Cu o dată aleasă de tine, data se vede pe grafic. Atenție la tentația de a folosi ce știi deja despre acea perioadă.')
+      : T('Cu „Perioadă aleatorie” data rămâne ascunsă până la finalul sesiunii, ca să nu fii influențat de ce știi deja despre acea perioadă.');
     const { lo, hi } = dateLimits();
     if (mode === 'date' && !$('sim-date').value) $('sim-date').value = new Date(((lo + hi) / 2) * 1000).toISOString().slice(0, 10);
   }
@@ -1131,7 +1131,7 @@
     const snap = upgradeSnap(store.get(KEY_CUR, null));
     if (!snap) { $('sim-resume').hidden = true; return; }
     try { await begin({ id: snap.id, sym: snap.sym, tf: snap.tf, ccy: snap.ccy, bal0: snap.bal0, riskPct: snap.riskPct, mode: snap.mode, hidden: snap.hidden, startT: snap.startT }, snap); }
-    catch (e) { setupError('Nu am putut relua sesiunea. Pornește una nouă.'); store.del(KEY_CUR); $('sim-resume').hidden = true; }
+    catch (e) { setupError(T('Nu am putut relua sesiunea. Pornește una nouă.')); store.del(KEY_CUR); $('sim-resume').hidden = true; }
   });
   $('sim-order').addEventListener('submit', e => { e.preventDefault(); placeOrder(); });
   $('sim-order').addEventListener('input', e => { if (e.target.id === 'sim-sl' || e.target.id === 'sim-tp' || e.target.id === 'sim-price') S.touched = true; updateCalc(); });
@@ -1167,14 +1167,14 @@
   $('sim-be').addEventListener('click', moveToBE);
   $('sim-close-all').addEventListener('click', closeAll);
   document.querySelectorAll('[data-part]').forEach(b => b.addEventListener('click', () => closePartial(+b.dataset.part / 100)));
-  $('sim-part-go').addEventListener('click', () => { const v = num($('sim-part-lot').value); if (!(v > 0)) { showPosErr('Scrie lotul de închis (de exemplu 0,10).'); return; } closePartial(null, v); });
+  $('sim-part-go').addEventListener('click', () => { const v = num($('sim-part-lot').value); if (!(v > 0)) { showPosErr(T('Scrie lotul de închis (de exemplu 0,10).')); return; } closePartial(null, v); });
   $('sim-pos-list').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (!b || !S) return; S.sel = +b.dataset.id; showPosErr(''); renderPos(); drawLines(); });
   document.querySelectorAll('.ws-tf button').forEach(b => b.addEventListener('click', () => setTF(b.dataset.tf)));
   $('sim-close').addEventListener('click', () => closeNow('Manual'));
   $('sim-csv').addEventListener('click', csv);
   $('sim-journal').addEventListener('click', toJournal);
   $('sim-new').addEventListener('click', newSession);
-  $('sim-clear').addEventListener('click', () => { if (confirm('Ștergi toate sesiunile salvate și statisticile lor?')) { store.del(KEY_SESS); renderHistory(); } });
+  $('sim-clear').addEventListener('click', () => { if (confirm(T('Ștergi toate sesiunile salvate și statisticile lor?'))) { store.del(KEY_SESS); renderHistory(); } });
   if (window.SimStats) SimStats.wireHistory(() => store.get(KEY_SESS, []));
   $('sim-checklist').addEventListener('change', renderChecklistCount);
   // alegerea unei strategii salvate completează câmpurile

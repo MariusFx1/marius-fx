@@ -64,6 +64,9 @@
       a: ['Cel puțin 6 până la 8 săptămâni pe cont demo, cu același risc, același plan și jurnal complet', 'Un depozit mare, ca să ai spațiu pentru pierderi', 'Copierea semnalelor unui trader cu rezultate bune', 'Levier cât mai mare, ca să crești contul rapid'],
       ex: 'Mai întâi demo, cel puțin 6 până la 8 săptămâni și 30 până la 50 de tranzacții, ca pe bani reali. Treci pe real doar dacă ai fost disciplinat, cu sume mici și 0,01 loturi.' },
   ];
+  // traducere (identitate în română): întrebări, variante, explicații, capitole
+  QUESTIONS.forEach(x => { x.q = T(x.q); x.a = x.a.map(s => T(s)); x.ex = T(x.ex); });
+  Object.keys(CH).forEach(k => { CH[k] = T(CH[k]); });
   const TOTAL = QUESTIONS.length;
   const KEY = 'mfx-quiz-best';
   const LETTERS = ['A', 'B', 'C', 'D'];
@@ -78,7 +81,7 @@
 
   const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const chLink = ch => `lectie.html#cap-${ch}`;
-  const chLabel = ch => `Capitolul ${ch}: ${CH[ch]}`;
+  const chLabel = ch => T('Capitolul {n}: {t}', { n: ch, t: CH[ch] });
   const pctOf = s => Math.round(s / TOTAL * 100);
   const readBest = () => { try { const b = JSON.parse(localStorage.getItem(KEY) || 'null'); return b && Number.isInteger(b.score) && b.score >= 0 && b.score <= TOTAL ? b : null; } catch (e) { return null; } };
   const saveBest = s => { try { localStorage.setItem(KEY, JSON.stringify({ score: s, total: TOTAL, date: new Date().toISOString().slice(0, 10) })); } catch (e) { /* stocare indisponibilă */ } };
@@ -88,7 +91,7 @@
 
   function showBestOnStart() {
     const b = readBest();
-    if (b) { el.best.innerHTML = `Cel mai bun scor al tău: <b>${bestText(b)}</b>`; el.best.hidden = false; }
+    if (b) { el.best.innerHTML = T('Cel mai bun scor al tău: <b>{x}</b>', { x: bestText(b) }); el.best.hidden = false; }
   }
 
   function start() {
@@ -102,14 +105,14 @@
   function setProgress(done) {
     el.fill.style.width = (done / TOTAL * 100) + '%';
     el.bar.setAttribute('aria-valuenow', String(done));
-    el.bar.setAttribute('aria-valuetext', `${done} din ${TOTAL} întrebări răspunse`);
+    el.bar.setAttribute('aria-valuetext', T('{a} din {b} întrebări răspunse', { a: done, b: TOTAL }));
   }
 
   function render() {
     const Q = QUESTIONS[order[idx]];
     answered = false;
-    el.count.textContent = `Întrebarea ${idx + 1} din ${TOTAL}`;
-    el.ch.textContent = `Capitolul ${Q.ch}`;
+    el.count.textContent = T('Întrebarea {a} din {b}', { a: idx + 1, b: TOTAL });
+    el.ch.textContent = T('Capitolul {n}', { n: Q.ch });
     setProgress(idx);
     el.question.textContent = Q.q;
     el.options.innerHTML = '';
@@ -125,7 +128,7 @@
     });
     el.feedback.hidden = true; el.feedback.className = 'quiz-feedback'; el.feedback.innerHTML = '';
     el.next.hidden = true;
-    el.next.textContent = idx === TOTAL - 1 ? 'Vezi rezultatul' : 'Următoarea întrebare';
+    el.next.textContent = idx === TOTAL - 1 ? T('Vezi rezultatul') : T('Următoarea întrebare');
     el.question.focus({ preventScroll: true });
     if (idx > 0) el.q.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }
@@ -140,12 +143,12 @@
       const a = opts[idx][j];
       b.disabled = true;
       b.setAttribute('aria-disabled', 'true');
-      if (a === 0) { b.classList.add('is-correct'); b.querySelector('.quiz-sr').textContent = ' (răspunsul corect)'; b.setAttribute('aria-label', b.getAttribute('aria-label') + ', răspunsul corect'); }
-      if (j === k) { b.classList.add('is-chosen'); if (!ok) { b.classList.add('is-wrong'); b.setAttribute('aria-label', b.getAttribute('aria-label') + ', răspunsul tău'); } }
+      if (a === 0) { b.classList.add('is-correct'); b.querySelector('.quiz-sr').textContent = ' (' + T('răspunsul corect') + ')'; b.setAttribute('aria-label', b.getAttribute('aria-label') + ', ' + T('răspunsul corect')); }
+      if (j === k) { b.classList.add('is-chosen'); if (!ok) { b.classList.add('is-wrong'); b.setAttribute('aria-label', b.getAttribute('aria-label') + ', ' + T('răspunsul tău')); } }
     });
     el.feedback.className = 'quiz-feedback ' + (ok ? 'is-ok' : 'is-bad');
-    el.feedback.innerHTML = `<p class="quiz-verdict">${ok ? 'Corect!' : 'Greșit.'}</p><p class="quiz-ex"></p><a class="quiz-ch-link" href="${chLink(Q.ch)}">Recitește: ${chLabel(Q.ch)} <span aria-hidden="true">→</span></a>`;
-    if (!ok) el.feedback.querySelector('.quiz-verdict').textContent = `Greșit. Răspunsul corect: ${Q.a[0]}.`;
+    el.feedback.innerHTML = `<p class="quiz-verdict">${ok ? T('Corect!') : T('Greșit.')}</p><p class="quiz-ex"></p><a class="quiz-ch-link" href="${chLink(Q.ch)}">${T('Recitește:')} ${chLabel(Q.ch)} <span aria-hidden="true">→</span></a>`;
+    if (!ok) el.feedback.querySelector('.quiz-verdict').textContent = T('Greșit. Răspunsul corect: {x}.', { x: Q.a[0] });
     el.feedback.querySelector('.quiz-ex').textContent = Q.ex;
     el.feedback.hidden = false;
     setProgress(idx + 1);
@@ -171,31 +174,31 @@
     el.pct.textContent = `${pct}%`;
     el.ring.style.setProperty('--p', String(pct));
     el.result.dataset.band = pct < 60 ? 'low' : pct <= 85 ? 'mid' : 'high';
-    el.resultTitle.textContent = `Ai răspuns corect la ${score} din ${TOTAL} întrebări`;
+    el.resultTitle.textContent = T('Ai răspuns corect la {a} din {b} întrebări', { a: score, b: TOTAL });
     el.band.textContent = pct < 60
-      ? 'Recitește capitolele de mai jos și reia testul. Nu te grăbi: calculele din capitolele 3, 4, 5 și 6 sunt baza a tot ce urmează.'
+      ? T('Recitește capitolele de mai jos și reia testul. Nu te grăbi: calculele din capitolele 3, 4, 5 și 6 sunt baza a tot ce urmează.')
       : pct <= 85
-        ? 'Bază bună. Recitește capitolele unde ai greșit, apoi refă testul până treci de 85%.'
-        : 'Foarte bine! Ai înțeles bazele. Următorul pas: exersezi pe un cont demo, cu risc de 1% și jurnal complet.';
+        ? T('Bază bună. Recitește capitolele unde ai greșit, apoi refă testul până treci de 85%.')
+        : T('Foarte bine! Ai înțeles bazele. Următorul pas: exersezi pe un cont demo, cu risc de 1% și jurnal complet.');
     const best = readBest();
     el.bestResult.innerHTML = record && prev
-      ? `Scor nou record! Cel mai bun scor al tău: <b>${bestText(best)}</b> (înainte: ${bestText(prev)})`
-      : `Cel mai bun scor al tău: <b>${bestText(best || { score })}</b>`;
+      ? T('Scor nou record! Cel mai bun scor al tău: <b>{x}</b> (înainte: {y})', { x: bestText(best), y: bestText(prev) })
+      : T('Cel mai bun scor al tău: <b>{x}</b>', { x: bestText(best || { score }) });
     const missed = answers.filter(a => !a.ok);
     if (missed.length) {
-      el.missed.innerHTML = `<h3>Întrebările greșite (${missed.length})</h3><ol class="quiz-missed-list"></ol>`;
+      el.missed.innerHTML = `<h3>${T('Întrebările greșite ({n})', { n: missed.length })}</h3><ol class="quiz-missed-list"></ol>`;
       const ol = el.missed.querySelector('ol');
       missed.forEach(a => {
         const Q = QUESTIONS[a.qi];
         const li = document.createElement('li');
-        li.innerHTML = '<p class="quiz-m-q"></p><p class="quiz-m-a"><span>Răspunsul corect:</span> <b></b></p>' +
-          `<a class="quiz-ch-link" href="${chLink(Q.ch)}">Recitește: ${chLabel(Q.ch)} <span aria-hidden="true">→</span></a>`;
+        li.innerHTML = '<p class="quiz-m-q"></p><p class="quiz-m-a"><span>' + T('Răspunsul corect:') + '</span> <b></b></p>' +
+          `<a class="quiz-ch-link" href="${chLink(Q.ch)}">${T('Recitește:')} ${chLabel(Q.ch)} <span aria-hidden="true">→</span></a>`;
         li.querySelector('.quiz-m-q').textContent = Q.q;
         li.querySelector('b').textContent = Q.a[0];
         ol.appendChild(li);
       });
     } else {
-      el.missed.innerHTML = '<p class="quiz-perfect">Niciun răspuns greșit. Felicitări! Acum aplică totul pe demo, cu aceleași reguli ca pe real.</p>';
+      el.missed.innerHTML = '<p class="quiz-perfect">' + T('Niciun răspuns greșit. Felicitări! Acum aplică totul pe demo, cu aceleași reguli ca pe real.') + '</p>';
     }
     el.resultTitle.focus({ preventScroll: true });
     el.result.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });

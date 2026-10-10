@@ -11,7 +11,7 @@
   const az = [...document.querySelectorAll('.gl-az a[data-l]')];
   const total = terms.length;
   const fold = s => s.replace(/\u015F/g, '\u0219').replace(/\u0163/g, '\u021B').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  const termeni = n => n === 1 ? '1 termen' : (n < 20 ? `${n} termeni` : `${n} de termeni`);
+  const termeni = n => n === 1 ? T('1 termen') : (n < 20 ? T('{n} termeni', { n }) : T('{n} de termeni', { n }));
 
   function apply() {
     const words = fold(q.value.trim()).split(/\s+/).filter(Boolean);
@@ -28,7 +28,7 @@
       if (a) { a.classList.toggle('is-off', !any); if (any) a.removeAttribute('aria-disabled'); else a.setAttribute('aria-disabled', 'true'); }
     });
     empty.hidden = shown > 0;
-    count.textContent = words.length ? (shown ? `${termeni(shown)} ${shown === 1 ? "găsit" : "găsiți"} din ${total}` : 'Niciun rezultat') : termeni(total);
+    count.textContent = words.length ? (shown ? (shown === 1 ? T('{x} găsit din {t}', { x: termeni(shown), t: total }) : T('{x} găsiți din {t}', { x: termeni(shown), t: total })) : T('Niciun rezultat')) : termeni(total);
   }
   az.forEach(a => a.addEventListener('click', e => { if (a.getAttribute('aria-disabled') === 'true') e.preventDefault(); }));
   q.addEventListener('input', apply);

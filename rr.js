@@ -44,7 +44,7 @@
   }
   const pipSize = p => p === 'XAUUSD' ? 0.1 : (p === 'XAGUSD' || p === 'USDJPY' || JPY_CROSS.has(p)) ? 0.01 : 0.0001;
   const decimale = p => p === 'XAUUSD' || p === 'XAGUSD' ? 2 : (p === 'USDJPY' || JPY_CROSS.has(p)) ? 3 : 5;
-  const nr = (x, max, min = 0) => x.toLocaleString('ro-RO', { minimumFractionDigits: min, maximumFractionDigits: max });
+  const nr = (x, max, min = 0) => I18N.num(x, { minimumFractionDigits: min, maximumFractionDigits: max });
 
   const out = {
     err: g('rr-error'), sl: g('rr-sl-pips'), tp: g('rr-tp-pips'), raport: g('rr-raport'), lot: g('rr-loturi'), risc: g('rr-risc-suma'),
@@ -72,18 +72,18 @@
     const sold = parseNum(raw('rr-sold')), risc = parseNum(raw('rr-risc'));
 
     if (!raw('rr-intrare') || !raw('rr-sl') || !raw('rr-tp') || !raw('rr-sold') || !raw('rr-risc'))
-      return gol('Completează toate câmpurile: intrarea, stop loss-ul, take profit-ul, soldul și riscul %.', fields.filter(f => !f.value.trim()).map(f => f.id));
-    if (!(intrare > 0)) return gol('Prețul de intrare nu este un număr valid. Exemplu: 1,1200 sau 1.1200.', ['rr-intrare']);
-    if (!(sl > 0)) return gol('Stop loss-ul nu este un preț valid. Scrie prețul, nu numărul de pips (exemplu: 1,1175).', ['rr-sl']);
-    if (!(tp > 0)) return gol('Take profit-ul nu este un preț valid. Scrie prețul, nu numărul de pips (exemplu: 1,1250).', ['rr-tp']);
-    if (!(sold > 0)) return gol('Soldul contului trebuie să fie un număr mai mare decât 0.', ['rr-sold']);
-    if (!(risc > 0) || risc > 100) return gol('Riscul % trebuie să fie între 0 și 100 (de exemplu 1 sau 0,5).', ['rr-risc']);
-    if (sl === intrare) return gol('Stop loss-ul nu poate fi egal cu prețul de intrare.', ['rr-sl']);
-    if (tp === intrare) return gol('Take profit-ul nu poate fi egal cu prețul de intrare.', ['rr-tp']);
-    if (dir === 'buy' && sl > intrare) return gol('La Buy, stop loss-ul trebuie să fie sub prețul de intrare.', ['rr-sl']);
-    if (dir === 'sell' && sl < intrare) return gol('La Sell, stop loss-ul trebuie să fie deasupra prețului de intrare.', ['rr-sl']);
-    if (dir === 'buy' && tp < intrare) return gol('La Buy, take profit-ul trebuie să fie deasupra prețului de intrare.', ['rr-tp']);
-    if (dir === 'sell' && tp > intrare) return gol('La Sell, take profit-ul trebuie să fie sub prețul de intrare.', ['rr-tp']);
+      return gol(T('Completează toate câmpurile: intrarea, stop loss-ul, take profit-ul, soldul și riscul %.'), fields.filter(f => !f.value.trim()).map(f => f.id));
+    if (!(intrare > 0)) return gol(T('Prețul de intrare nu este un număr valid. Exemplu: 1,1200 sau 1.1200.'), ['rr-intrare']);
+    if (!(sl > 0)) return gol(T('Stop loss-ul nu este un preț valid. Scrie prețul, nu numărul de pips (exemplu: 1,1175).'), ['rr-sl']);
+    if (!(tp > 0)) return gol(T('Take profit-ul nu este un preț valid. Scrie prețul, nu numărul de pips (exemplu: 1,1250).'), ['rr-tp']);
+    if (!(sold > 0)) return gol(T('Soldul contului trebuie să fie un număr mai mare decât 0.'), ['rr-sold']);
+    if (!(risc > 0) || risc > 100) return gol(T('Riscul % trebuie să fie între 0 și 100 (de exemplu 1 sau 0,5).'), ['rr-risc']);
+    if (sl === intrare) return gol(T('Stop loss-ul nu poate fi egal cu prețul de intrare.'), ['rr-sl']);
+    if (tp === intrare) return gol(T('Take profit-ul nu poate fi egal cu prețul de intrare.'), ['rr-tp']);
+    if (dir === 'buy' && sl > intrare) return gol(T('La Buy, stop loss-ul trebuie să fie sub prețul de intrare.'), ['rr-sl']);
+    if (dir === 'sell' && sl < intrare) return gol(T('La Sell, stop loss-ul trebuie să fie deasupra prețului de intrare.'), ['rr-sl']);
+    if (dir === 'buy' && tp < intrare) return gol(T('La Buy, take profit-ul trebuie să fie deasupra prețului de intrare.'), ['rr-tp']);
+    if (dir === 'sell' && tp > intrare) return gol(T('La Sell, take profit-ul trebuie să fie sub prețul de intrare.'), ['rr-tp']);
 
     const ps = pipSize(p);
     const slPips = Math.round(Math.abs(intrare - sl) / ps * 1e6) / 1e6;
@@ -96,7 +96,7 @@
     const loturi = Math.floor(tinta / (slPips * pipCont) * 100 + 1e-9) / 100;
     const R = tpPips / slPips;
     const be = 1 / (1 + R);
-    const bani = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const bani = I18N.NF({ style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     out.err.hidden = true; out.err.textContent = '';
     fields.forEach(f => f.removeAttribute('aria-invalid'));
@@ -116,13 +116,13 @@
     out.vTp.textContent = nr(tp, dec, Math.min(dec, 2)); out.vIn.textContent = nr(intrare, dec, Math.min(dec, 2)); out.vSl.textContent = nr(sl, dec, Math.min(dec, 2));
 
     const note = [];
-    if (loturi < 0.01) note.push('Lotul rezultat este sub 0,01, volumul minim obișnuit: cu acest stop loss, riscul ales este prea mic pentru sold. Mărește soldul sau alege un stop loss mai apropiat, nu riscul.');
-    else if (Math.abs(loturi * slPips * pipCont - tinta) > 0.005) note.push(`Ținta de risc este ${bani.format(tinta)}; prin rotunjirea în jos a lotului riști puțin mai puțin.`);
-    if (risc > 2) note.push('Atenție: peste 2% risc pe o tranzacție, o serie normală de pierderi îți poate afecta serios contul.');
-    if (R < 1) note.push('Raport sub 1:1: câștigul vizat e mai mic decât riscul, deci ai nevoie de peste 50% tranzacții câștigătoare.');
+    if (loturi < 0.01) note.push(T('Lotul rezultat este sub 0,01, volumul minim obișnuit: cu acest stop loss, riscul ales este prea mic pentru sold. Mărește soldul sau alege un stop loss mai apropiat, nu riscul.'));
+    else if (Math.abs(loturi * slPips * pipCont - tinta) > 0.005) note.push(T('Ținta de risc este {x}; prin rotunjirea în jos a lotului riști puțin mai puțin.', { x: bani.format(tinta) }));
+    if (risc > 2) note.push(T('Atenție: peste 2% risc pe o tranzacție, o serie normală de pierderi îți poate afecta serios contul.'));
+    if (R < 1) note.push(T('Raport sub 1:1: câștigul vizat e mai mic decât riscul, deci ai nevoie de peste 50% tranzacții câștigătoare.'));
     const ref = PRET_IMPLICIT[p];
-    if (ref && (intrare > ref * 1.6 || intrare < ref / 1.6)) note.push('Verifică prețul de intrare: pare foarte diferit de cursul obișnuit al perechii.');
-    note.push(`Valoare pip folosită: circa ${nr(pipCont, 2, 2)} ${moneda} per lot standard.${conventiePip(p)} Costurile (spread, comision, swap) nu sunt incluse. Este o estimare: confirmă valorile pe platforma brokerului.`);
+    if (ref && (intrare > ref * 1.6 || intrare < ref / 1.6)) note.push(T('Verifică prețul de intrare: pare foarte diferit de cursul obișnuit al perechii.'));
+    note.push(T('Valoare pip folosită: circa {pip} {moneda} per lot standard.', { pip: nr(pipCont, 2, 2), moneda }) + conventiePip(p) + ' ' + T('Costurile (spread, comision, swap) nu sunt incluse. Este o estimare: confirmă valorile pe platforma brokerului.'));
     out.nota.textContent = note.join(' ');
     form.dataset.state = 'ok';
   }

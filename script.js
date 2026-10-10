@@ -11,7 +11,7 @@ function setMenu(open) {
   if (!menuBtn || !links) return;
   links.classList.toggle('open', open);
   menuBtn.setAttribute('aria-expanded', String(open));
-  menuBtn.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+  menuBtn.setAttribute('aria-label', open ? T('Închide meniul') : T('Deschide meniul'));
   document.documentElement.classList.toggle('menu-open', open);
 }
 if (menuBtn && links) {
@@ -195,9 +195,9 @@ function pipUsdPeLot(pereche, pret) {
 }
 
 function conventiePip(pereche) {
-  if (pereche === 'XAUUSD') return ' Convenție XAUUSD: 1 lot = 100 oz, 1 pip = 0,10 (10 USD/pip).';
-  if (pereche === 'XAGUSD') return ' Convenție XAGUSD: 1 lot = 5000 oz, 1 pip = 0,01 (50 USD/pip).';
-  if (pereche === 'USDJPY' || JPY_CROSS.has(pereche)) return ' Pentru perechile JPY, 1 pip = 0,01.';
+  if (pereche === 'XAUUSD') return ' ' + T('Convenție XAUUSD: 1 lot = 100 oz, 1 pip = 0,10 (10 USD/pip).');
+  if (pereche === 'XAGUSD') return ' ' + T('Convenție XAGUSD: 1 lot = 5000 oz, 1 pip = 0,01 (50 USD/pip).');
+  if (pereche === 'USDJPY' || JPY_CROSS.has(pereche)) return ' ' + T('Pentru perechile JPY, 1 pip = 0,01.');
   return '';
 }
 
@@ -229,7 +229,7 @@ function calculeaza() {
   if (emptyRequired) {
     sumaEl.textContent = '—';
     loturiEl.textContent = '—';
-    notaEl.textContent = 'Completează soldul, riscul % și stop loss-ul în pips.';
+    notaEl.textContent = T('Completează soldul, riscul % și stop loss-ul în pips.');
     return;
   }
 
@@ -241,10 +241,10 @@ function calculeaza() {
   // USD → monedă cont: împărțim la cursul XXXUSD (nu înmulțim)
   if (moneda === 'EUR') {
     pipCont = pipUsd / eurusd;
-    cursNota = ` Conversie EUR cu EURUSD ≈ ${eurusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}.`;
+    cursNota = ' ' + T('Conversie EUR cu EURUSD ≈ {x}.', { x: I18N.num(eurusd, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) });
   } else if (moneda === 'GBP') {
     pipCont = pipUsd / gbpusd;
-    cursNota = ` Conversie GBP cu GBPUSD ≈ ${gbpusd.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}.`;
+    cursNota = ' ' + T('Conversie GBP cu GBPUSD ≈ {x}.', { x: I18N.num(gbpusd, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) });
   }
 
   const sumaTinta = sold * (risc / 100);
@@ -253,19 +253,19 @@ function calculeaza() {
   const loturi = Number.isFinite(loturiExact) ? Math.floor(loturiExact * 100 + 1e-9) / 100 : NaN;
   const riscEfectiv = Number.isFinite(loturi) ? loturi * stop * pipCont : NaN;
 
-  const fmt = new Intl.NumberFormat('ro-RO', { style: 'currency', currency: moneda, maximumFractionDigits: 2 });
+  const fmt = I18N.NF({ style: 'currency', currency: moneda, maximumFractionDigits: 2 });
   sumaEl.textContent = fmt.format(sumaTinta);
-  loturiEl.textContent = Number.isFinite(loturi) ? loturi.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+  loturiEl.textContent = Number.isFinite(loturi) ? I18N.num(loturi, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
 
-  const pipTxt = pipCont.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const pipTxt = I18N.num(pipCont, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   let efectivNota = '';
   if (Number.isFinite(riscEfectiv) && Number.isFinite(loturi) && Math.abs(riscEfectiv - sumaTinta) > 0.005) {
-    efectivNota = ` Risc efectiv la ${loturi.toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} loturi: ${fmt.format(riscEfectiv)}.`;
+    efectivNota = ' ' + T('Risc efectiv la {lot} loturi: {bani}.', { lot: I18N.num(loturi, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), bani: fmt.format(riscEfectiv) });
   }
   notaEl.textContent =
-    `Valoare pip folosită: circa ${pipTxt} ${moneda} per lot standard, per pip.` +
+    T('Valoare pip folosită: circa {pip} {moneda} per lot standard, per pip.', { pip: pipTxt, moneda }) +
     conventiePip(pereche) + cursNota + efectivNota +
-    ' Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.';
+    ' ' + T('Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.');
 }
 
 if ($('calc-form')) {
@@ -290,11 +290,11 @@ const contactForm = $('contact-form');
 if (contactForm) contactForm.addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target;
-  const subject = encodeURIComponent('Marius FX — mesaj de la ' + f.nume.value.trim());
+  const subject = encodeURIComponent(T('Marius FX — mesaj de la {nume}', { nume: f.nume.value.trim() }));
   const body = encodeURIComponent(
-    'Nume: ' + f.nume.value.trim() + '\n' +
+    T('Nume') + ': ' + f.nume.value.trim() + '\n' +
     'E-mail: ' + f.email.value.trim() + '\n\n' +
-    'Mesaj:\n' + f.mesaj.value.trim()
+    T('Mesaj') + ':\n' + f.mesaj.value.trim()
   );
   window.location.href = `mailto:${EMAIL_CONTACT}?subject=${subject}&body=${body}`;
 });
@@ -304,8 +304,8 @@ if (contactForm) contactForm.addEventListener('submit', e => {
   const SESSIONS = [
     { id: 'sydney', name: 'Sydney', tz: 'Australia/Sydney', openH: 7, closeH: 16, pairs: 'AUD, NZD' },
     { id: 'tokyo', name: 'Tokyo', tz: 'Asia/Tokyo', openH: 9, closeH: 18, pairs: 'JPY, Asia' },
-    { id: 'london', name: 'Londra', tz: 'Europe/London', openH: 8, closeH: 17, pairs: 'EUR, GBP' },
-    { id: 'newyork', name: 'New York', tz: 'America/New_York', openH: 8, closeH: 17, pairs: 'USD, aur' }
+    { id: 'london', name: T('Londra'), tz: 'Europe/London', openH: 8, closeH: 17, pairs: 'EUR, GBP' },
+    { id: 'newyork', name: 'New York', tz: 'America/New_York', openH: 8, closeH: 17, pairs: T('USD, aur') }
   ];
   const NY_TZ = 'America/New_York';
   const WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
@@ -432,7 +432,7 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     if (h >= 24) {
       const d = Math.floor(h / 24);
       const rh = h % 24;
-      return d + 'z ' + rh + 'h ' + m + 'm';
+      return d + T('z') + ' ' + rh + 'h ' + m + 'm';
     }
     if (h > 0) return h + 'h ' + m + 'm';
     if (m > 0) return s > 0 ? (m + 'm ' + s + 's') : (m + 'm');
@@ -440,7 +440,7 @@ if (contactForm) contactForm.addEventListener('submit', e => {
   }
 
   function formatLocalTime(date, opts) {
-    return new Intl.DateTimeFormat('ro-RO', opts).format(date);
+    return new Intl.DateTimeFormat(I18N.locale, opts).format(date);
   }
 
   function visitorDayBounds(now) {
@@ -485,13 +485,13 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     const ids = new Set(open.map(s => s.id));
     const labels = [];
     if (ids.has('london') && ids.has('newyork')) {
-      labels.push({ text: 'Suprapunere Londra–New York: volatilitate mare', hot: true });
+      labels.push({ text: T('Suprapunere Londra–New York: volatilitate mare'), hot: true });
     }
     if (ids.has('tokyo') && ids.has('london')) {
-      labels.push({ text: 'Suprapunere Tokyo–Londra', hot: false });
+      labels.push({ text: T('Suprapunere Tokyo–Londra'), hot: false });
     }
     if (ids.has('sydney') && ids.has('tokyo')) {
-      labels.push({ text: 'Suprapunere Sydney–Tokyo', hot: false });
+      labels.push({ text: T('Suprapunere Sydney–Tokyo'), hot: false });
     }
     return labels;
   }
@@ -518,13 +518,13 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     chip.classList.toggle('is-closed', !weekend && open.length === 0);
     const text = chip.querySelector('.chip-text');
     if (weekend) {
-      text.textContent = 'Piața: weekend închis';
+      text.textContent = T('Piața: weekend închis');
     } else if (open.length === 0) {
-      text.textContent = 'Nicio sesiune deschisă acum';
+      text.textContent = T('Nicio sesiune deschisă acum');
     } else if (open.length === 1) {
-      text.textContent = 'Sesiunea acum: ' + open[0].name;
+      text.textContent = T('Sesiunea acum: {s}', { s: open[0].name });
     } else {
-      text.textContent = 'Sesiuni acum: ' + open.map(s => s.name).join(' · ');
+      text.textContent = T('Sesiuni acum: {s}', { s: open.map(s => s.name).join(' · ') });
     }
   }
 
@@ -553,7 +553,7 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     legend.innerHTML = [
       '<span><i style="background:var(--sess-sydney)"></i>Sydney</span>',
       '<span><i style="background:var(--sess-tokyo)"></i>Tokyo</span>',
-      '<span><i style="background:var(--sess-london)"></i>Londra</span>',
+      '<span><i style="background:var(--sess-london)"></i>' + T('Londra') + '</span>',
       '<span><i style="background:var(--sess-ny)"></i>New York</span>'
     ].join('');
 
@@ -572,7 +572,7 @@ if (contactForm) contactForm.addEventListener('submit', e => {
       card.innerHTML =
         '<div class="session-card-top"><h3>' + s.name + '</h3><span class="session-pill" data-pill>…</span></div>' +
         '<p class="session-hours" data-hours></p>' +
-        '<p class="session-local-clock">Ora locală acolo: <b data-local-clock>—</b></p>' +
+        '<p class="session-local-clock">' + T('Ora locală acolo:') + ' <b data-local-clock>—</b></p>' +
         '<p class="session-countdown" data-countdown>—</p>';
       cards.appendChild(card);
     });
@@ -603,19 +603,18 @@ if (contactForm) contactForm.addEventListener('submit', e => {
     badge.classList.toggle('is-weekend', weekend);
     badge.classList.toggle('is-closed', !weekend && open.length === 0);
     if (weekend) {
-      badgeText.textContent = 'Piața e închisă (weekend)';
+      badgeText.textContent = T('Piața e închisă (weekend)');
     } else if (open.length === 0) {
-      badgeText.textContent = 'Nicio sesiune deschisă acum';
+      badgeText.textContent = T('Nicio sesiune deschisă acum');
     } else {
-      badgeText.textContent = 'Deschis acum: ' + open.map(s => s.name).join(' · ');
+      badgeText.textContent = T('Deschis acum: {s}', { s: open.map(s => s.name).join(' · ') });
     }
 
     weekendBanner.hidden = !weekend;
     if (weekend) {
       const reopen = nextSundayNyOpen(now);
       const localReopen = formatLocalTime(reopen, { weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-      weekendCd.textContent = 'Se redeschide duminică 17:00 New York — la tine: ' + localReopen +
-        ' (în ' + formatDuration(reopen - now) + ').';
+      weekendCd.textContent = T('Se redeschide duminică 17:00 New York — la tine: {t} (în {d}).', { t: localReopen, d: formatDuration(reopen - now) });
     }
 
     const labels = weekend ? [] : overlapLabels(open);
@@ -655,13 +654,13 @@ if (contactForm) contactForm.addEventListener('submit', e => {
       const localClock = card.querySelector('[data-local-clock]');
       const cd = card.querySelector('[data-countdown]');
 
-      pill.textContent = weekend ? 'Weekend' : (isOpen ? 'Deschis' : 'Închis');
+      pill.textContent = weekend ? T('Weekend') : (isOpen ? T('Deschis') : T('Închis'));
       const { open: o, close: c } = sessionOpenCloseToday(now, s);
       const openLocal = formatLocalTime(o, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
       const closeLocal = formatLocalTime(c, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-      hoursEl.innerHTML = 'Local acolo: <strong>' +
+      hoursEl.innerHTML = T('Local acolo:') + ' <strong>' +
         String(s.openH).padStart(2, '0') + ':00–' + String(s.closeH).padStart(2, '0') + ':00</strong><br>' +
-        'La tine: <strong>' + openLocal + '–' + closeLocal + '</strong>';
+        T('La tine:') + ' <strong>' + openLocal + '–' + closeLocal + '</strong>';
 
       const lp = partsInZone(now, s.tz);
       localClock.textContent =
@@ -671,13 +670,13 @@ if (contactForm) contactForm.addEventListener('submit', e => {
 
       if (weekend) {
         const target = nextSessionBoundary(now, s);
-        cd.textContent = 'se deschide în ' + formatDuration(target.at - now);
+        cd.textContent = T('se deschide în {d}', { d: formatDuration(target.at - now) });
       } else if (isOpen) {
         const bound = nextSessionBoundary(now, s);
-        cd.textContent = 'se închide în ' + formatDuration(bound.at - now);
+        cd.textContent = T('se închide în {d}', { d: formatDuration(bound.at - now) });
       } else {
         const bound = nextSessionBoundary(now, s);
-        cd.textContent = 'se deschide în ' + formatDuration(bound.at - now);
+        cd.textContent = T('se deschide în {d}', { d: formatDuration(bound.at - now) });
       }
     });
   }

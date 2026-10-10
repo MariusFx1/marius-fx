@@ -4,7 +4,7 @@
   const E = window.SimEngine;
   if (!E) return;
   const NF = {};
-  const nf = (v, min, max) => { const k = min + '|' + (max == null ? min : max); return (NF[k] || (NF[k] = new Intl.NumberFormat('ro-RO', { minimumFractionDigits: min, maximumFractionDigits: max == null ? min : max }))).format(v); };
+  const nf = (v, min, max) => { const k = min + '|' + (max == null ? min : max); return (NF[k] || (NF[k] = I18N.NF({ minimumFractionDigits: min, maximumFractionDigits: max == null ? min : max }))).format(v); };
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '');
   const fR = v => (v == null ? '—' : sgn(v) + nf(Math.abs(v), 2) + 'R');
@@ -12,12 +12,12 @@
   const SYM = { EUR: '€', USD: '$', GBP: '£' };
   const fM = (v, ccy) => (v == null ? '—' : sgn(v) + nf(Math.abs(v), 2) + ' ' + (SYM[ccy] || ccy || ''));
   const cls = v => (v > 0 ? 'pos' : v < 0 ? 'neg' : '');
-  const WD = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
-  const NOSETUP = '(fără setup)', NOSTRAT = 'Fără strategie';
+  const WD = I18N.weekdays();
+  const NOSETUP = T('(fără setup)'), NOSTRAT = T('Fără strategie');
   function hold(sec) {
     if (sec == null) return '—';
     const h = sec / 3600;
-    return h < 1 ? '< 1 oră' : h < 48 ? nf(h, 0, 1) + ' ore' : nf(h / 24, 0, 1) + ' zile';
+    return h < 1 ? T('< 1 oră') : h < 48 ? T('{n} ore', { n: nf(h, 0, 1) }) : T('{n} zile', { n: nf(h / 24, 0, 1) });
   }
   /** Profit factor în R (comparabil între conturi și monede diferite). */
   function pfR(trades) {
@@ -36,7 +36,7 @@
     rows = rows.filter(r => r.g.n > 0);
     if (!rows.length) return '';
     const money = opts && opts.money;
-    return `<div class="st-block"><h4>${esc(title)}</h4><div class="st-tw"><table class="st-table"><thead><tr><th scope="col">${esc(opts.col)}</th><th scope="col">Tranz.</th><th scope="col">Câștig</th><th scope="col">Total R</th><th scope="col">R mediu</th>${money ? '<th scope="col">P/L</th>' : ''}</tr></thead><tbody>` +
+    return `<div class="st-block"><h4>${esc(title)}</h4><div class="st-tw"><table class="st-table"><thead><tr><th scope="col">${esc(opts.col)}</th><th scope="col">${T('Tranz.')}</th><th scope="col">${T('Câștig')}</th><th scope="col">Total R</th><th scope="col">${T('R mediu')}</th>${money ? '<th scope="col">P/L</th>' : ''}</tr></thead><tbody>` +
       rows.map(r => `<tr><th scope="row">${esc(r.k)}</th><td>${r.g.n}</td><td>${pc(r.g.wins / r.g.n)}</td><td class="${cls(r.g.r)}">${fR(r.g.r)}</td><td class="${cls(r.g.r)}">${fR(r.g.r / r.g.n)}</td>${money ? `<td class="${cls(r.g.money)}">${fM(r.g.money, money)}</td>` : ''}</tr>`).join('') +
       '</tbody></table></div></div>';
   }
@@ -56,43 +56,43 @@
     const x = i => P + i * (W - 2 * P) / (pts.length - 1), y = v => P + (hi - v) * (H - 2 * P) / span;
     const line = pts.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join('');
     const last = pts[pts.length - 1];
-    return `<figure class="st-curve"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc(label)}"><line x1="0" x2="${W}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}" class="st-zero"/><path d="${line}" class="st-line ${last >= 0 ? 'up' : 'down'}" vector-effect="non-scaling-stroke"/></svg><figcaption>${esc(label)}: ${fR(last)} după ${pts.length - 1} tranzacții</figcaption></figure>`;
+    return `<figure class="st-curve"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc(label)}"><line x1="0" x2="${W}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}" class="st-zero"/><path d="${line}" class="st-line ${last >= 0 ? 'up' : 'down'}" vector-effect="non-scaling-stroke"/></svg><figcaption>${esc(label)}: ${T('{r} după {n} tranzacții', { r: fR(last), n: pts.length - 1 })}</figcaption></figure>`;
   }
   function histHTML(hist) {
     const mx = Math.max(1, ...hist.map(h => h.n));
-    return '<div class="st-block"><h4>Distribuția rezultatelor (R)</h4><ul class="st-hist">' + hist.map((h, i) => `<li><span>${esc(h.label)}</span><i class="${i < 3 ? 'neg' : 'pos'}" style="width:${(h.n / mx * 100).toFixed(1)}%"></i><b>${h.n}</b></li>`).join('') + '</ul></div>';
+    return T('<div class="st-block"><h4>Distribuția rezultatelor (R)</h4><ul class="st-hist">') + hist.map((h, i) => `<li><span>${esc(h.label)}</span><i class="${i < 3 ? 'neg' : 'pos'}" style="width:${(h.n / mx * 100).toFixed(1)}%"></i><b>${h.n}</b></li>`).join('') + '</ul></div>';
   }
   /** HTML complet pentru statistici detaliate. opts: { ccy (pentru sume), bal0 (pentru drawdown %), curve: bool }. */
   function detailHTML(trades, opts) {
     opts = opts || {};
-    if (!trades.length) return '<p class="sim-empty">Statisticile detaliate apar după prima tranzacție închisă.</p>';
+    if (!trades.length) return T('<p class="sim-empty">Statisticile detaliate apar după prima tranzacție închisă.</p>');
     const s = summary(trades), d = s.d, money = opts.ccy || null;
     let ddPct = null;
     if (opts.bal0) ddPct = E.stats(trades, opts.bal0).maxDDPct;
     const k = (lab, val, c, sub) => `<div class="st-k"><span>${esc(lab)}</span><strong class="${c || ''}">${val}</strong>${sub ? `<small>${sub}</small>` : ''}</div>`;
-    const few = trades.length < 30 ? `<p class="st-few">Doar ${trades.length} ${trades.length === 1 ? 'tranzacție' : 'tranzacții'}: concluziile devin credibile abia după 30-50 de tranzacții cu aceleași reguli.</p>` : '';
+    const few = trades.length < 30 ? `<p class="st-few">${trades.length === 1 ? T('Doar 1 tranzacție: concluziile devin credibile abia după 30-50 de tranzacții cu aceleași reguli.') : T('Doar {n} tranzacții: concluziile devin credibile abia după 30-50 de tranzacții cu aceleași reguli.', { n: trades.length })}</p>` : '';
     const wd = [1, 2, 3, 4, 5, 6, 0].map(i => ({ k: WD[i], g: d.byWd[i] }));
     const hr = d.byHour.map((g, h) => ({ k: String(h).padStart(2, '0') + ':00', g }));
     const side = [{ k: 'Long (Buy)', g: d.bySide.buy }, { k: 'Short (Sell)', g: d.bySide.sell }];
     const sym = Object.keys(d.bySym).sort().map(x => ({ k: x, g: d.bySym[x] }));
     const setups = bySetup(trades);
     return few + '<div class="st-keys">' +
-      k('Expectanță', fR(s.expR), cls(s.expR), money ? fM(d.expectancy, money) + ' / tranzacție' : 'pe tranzacție') +
-      k('Câștig mediu', fR(s.avgWinR), 'pos', money && d.avgWin != null ? fM(d.avgWin, money) : '') +
-      k('Pierdere medie', fR(s.avgLossR), 'neg', money && d.avgLoss != null ? fM(d.avgLoss, money) : '') +
-      k('Profit factor (R)', fPF(s.pf), '') +
-      k('Serii maxime', `${s.maxCW} / ${s.maxCL}`, '', 'câștiguri / pierderi la rând') +
-      k('Drawdown maxim', ddPct != null ? pc(ddPct, 2) : fR(-s.ddR), ddPct ? 'neg' : '', ddPct != null ? fR(-s.ddR) + ' din vârf' : 'din vârful curbei R') +
-      k('Durată medie', hold(s.hold), '', 'de la intrare la ieșire') +
+      k(T('Expectanță'), fR(s.expR), cls(s.expR), money ? fM(d.expectancy, money) + T(' / tranzacție') : T('pe tranzacție')) +
+      k(T('Câștig mediu'), fR(s.avgWinR), 'pos', money && d.avgWin != null ? fM(d.avgWin, money) : '') +
+      k(T('Pierdere medie'), fR(s.avgLossR), 'neg', money && d.avgLoss != null ? fM(d.avgLoss, money) : '') +
+      k(T('Profit factor (R)'), fPF(s.pf), '') +
+      k(T('Serii maxime'), `${s.maxCW} / ${s.maxCL}`, '', T('câștiguri / pierderi la rând')) +
+      k(T('Drawdown maxim'), ddPct != null ? pc(ddPct, 2) : fR(-s.ddR), ddPct ? 'neg' : '', ddPct != null ? fR(-s.ddR) + T(' din vârf') : T('din vârful curbei R')) +
+      k(T('Durată medie'), hold(s.hold), '', T('de la intrare la ieșire')) +
       '</div>' +
-      (opts.curve !== false ? curveSVG(d.rCurve, 'Curba R cumulată') : '') +
+      (opts.curve !== false ? curveSVG(d.rCurve, T('Curba R cumulată')) : '') +
       histHTML(d.hist) +
       '<div class="st-grid">' +
-      (setups.length > 1 || (setups[0] && setups[0].k !== NOSETUP) ? groupTable('Pe setup', setups, { col: 'Setup', money }) : '') +
-      groupTable('Long / short', side, { col: 'Direcție', money }) +
-      groupTable('Pe instrument', sym, { col: 'Instrument', money }) +
-      groupTable('Pe zi (intrare, ora României)', wd, { col: 'Zi', money }) +
-      groupTable('Pe oră de intrare (ora României)', hr, { col: 'Ora', money }) +
+      (setups.length > 1 || (setups[0] && setups[0].k !== NOSETUP) ? groupTable(T('Pe setup'), setups, { col: 'Setup', money }) : '') +
+      groupTable('Long / short', side, { col: T('Direcție'), money }) +
+      groupTable(T('Pe instrument'), sym, { col: 'Instrument', money }) +
+      groupTable(T('Pe zi (intrare, ora României)'), wd, { col: T('Zi'), money }) +
+      groupTable(T('Pe oră de intrare (ora României)'), hr, { col: T('Ora'), money }) +
       '</div>';
   }
 
@@ -114,26 +114,26 @@
     });
     const best = Math.max(...cols.filter(c => c.s.n >= 1).map(c => c.s.expR == null ? -Infinity : c.s.expR));
     const row = (lab, f, c) => `<tr><th scope="row">${esc(lab)}</th>${cols.map(x => `<td class="${c ? c(x) : ''}">${f(x)}</td>`).join('')}</tr>`;
-    return `<div class="st-tw"><table class="st-table st-compare"><thead><tr><th scope="col">Indicator</th>${cols.map(c => `<th scope="col">${esc(c.nm)}${c.s.n && c.s.expR === best && cols.length > 1 ? ' <span class="st-best" title="Cea mai mare expectanță">★</span>' : ''}</th>`).join('')}</tr></thead><tbody>` +
-      row('Sesiuni', c => c.sess) +
-      row('Tranzacții', c => c.s.n + (c.s.n && c.s.n < 30 ? ' <small>(puține)</small>' : '')) +
-      row('Rata de câștig', c => pc(c.s.winRate)) +
-      row('Expectanță', c => fR(c.s.expR), c => cls(c.s.expR)) +
-      row('Total R', c => fR(c.s.totalR), c => cls(c.s.totalR)) +
-      row('Profit factor (R)', c => fPF(c.s.pf)) +
-      row('Câștig / pierdere medie', c => fR(c.s.avgWinR) + ' / ' + fR(c.s.avgLossR)) +
-      row('Drawdown maxim (R)', c => (c.s.n ? fR(-c.s.ddR) : '—')) +
-      row('Pierderi la rând (max)', c => (c.s.n ? c.s.maxCL : '—')) +
-      row('Durată medie', c => hold(c.s.hold)) +
-      row('Provocări trecute', c => (c.ch.length ? `${c.ch.filter(x => x === 'trecut').length} din ${c.ch.length}` : '—')) +
+    return `<div class="st-tw"><table class="st-table st-compare"><thead><tr><th scope="col">${T('Indicator')}</th>${cols.map(c => `<th scope="col">${esc(c.nm)}${c.s.n && c.s.expR === best && cols.length > 1 ? ' <span class="st-best" title="' + T('Cea mai mare expectanță') + '">★</span>' : ''}</th>`).join('')}</tr></thead><tbody>` +
+      row(T('Sesiuni'), c => c.sess) +
+      row(T('Tranzacții'), c => c.s.n + (c.s.n && c.s.n < 30 ? T(' <small>(puține)</small>') : '')) +
+      row(T('Rata de câștig'), c => pc(c.s.winRate)) +
+      row(T('Expectanță'), c => fR(c.s.expR), c => cls(c.s.expR)) +
+      row(T('Total R'), c => fR(c.s.totalR), c => cls(c.s.totalR)) +
+      row(T('Profit factor (R)'), c => fPF(c.s.pf)) +
+      row(T('Câștig / pierdere medie'), c => fR(c.s.avgWinR) + ' / ' + fR(c.s.avgLossR)) +
+      row(T('Drawdown maxim (R)'), c => (c.s.n ? fR(-c.s.ddR) : '—')) +
+      row(T('Pierderi la rând (max)'), c => (c.s.n ? c.s.maxCL : '—')) +
+      row(T('Durată medie'), c => hold(c.s.hold)) +
+      row(T('Provocări trecute'), c => (c.ch.length ? T('{a} din {b}', { a: c.ch.filter(x => x === 'trecut').length, b: c.ch.length }) : '—')) +
       '</tbody></table></div>';
   }
   function csvAll(trades) {
-    const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', ','));
-    const dt = t => { const p = E.roParts(t); return `${p.key} ${String(p.h).padStart(2, '0')}:00`; };
-    const head = ['Strategie', 'Setup', 'Notă', 'Instrument', 'Interval', 'Direcție', 'Intrare (ora României)', 'Preț intrare', 'Ieșire (ora României)', 'Preț ieșire', 'Lot', 'Pips', 'R', 'Profit', 'Moneda'];
+    const n = (x, d) => (x == null ? '' : Number(x).toFixed(d).replace('.', I18N.csvDec));
+    const dt = t => { const p = E.userParts(t); return `${p.key} ${String(p.h).padStart(2, '0')}:00`; };
+    const head = [T('Strategie'), 'Setup', T('Notă'), 'Instrument', T('Interval'), T('Direcție'), T('Intrare (ora României)'), T('Preț intrare'), T('Ieșire (ora României)'), T('Preț ieșire'), 'Lot', 'Pips', 'R', 'Profit', T('Moneda')];
     const rows = trades.map(t => { const dec = (E.INSTR[t.sym] || { dec: 5 }).dec + 1; return [t.strategy, t.setup || '', t.note || '', t.sym, t.stf, t.side === 'buy' ? 'Buy' : 'Sell', dt(t.entryT), n(t.entry, dec), dt(t.exitT), n(t.exit, dec), n(t.lot, 2), n(t.pips, 1), n(t.r, 2), n(t.money, 2), t.ccy]; });
-    return [head, ...rows].map(r => r.map(v => { const s = String(v); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(';')).join('\r\n');
+    return [head, ...rows].map(r => r.map(v => { const s = String(v); return (s.includes(I18N.csvSep) || /["\n]/.test(s)) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(I18N.csvSep)).join('\r\n');
   }
   /** Secțiunea „Statistici pe toate sesiunile” de pe pagina de setări. */
   function renderHistoryStats(list) {
@@ -144,14 +144,14 @@
     if (!withT.length) return;
     const fS = document.getElementById('sim-hf-strat'), fI = document.getElementById('sim-hf-sym'), fT = document.getElementById('sim-hf-setup');
     const keep = (sel, opts, all) => { const v = sel.value; sel.innerHTML = `<option value="">${all}</option>` + opts.map(o => `<option value="${esc(o)}">${esc(o)}</option>`).join(''); sel.value = opts.includes(v) ? v : ''; };
-    keep(fS, [...new Set(withT.map(stratOf))].sort(), 'Toate strategiile');
-    keep(fI, [...new Set(withT.map(s => s.sym))].sort(), 'Toate instrumentele');
+    keep(fS, [...new Set(withT.map(stratOf))].sort(), T('Toate strategiile'));
+    keep(fI, [...new Set(withT.map(s => s.sym))].sort(), T('Toate instrumentele'));
     const tr0 = allTrades(withT);
-    keep(fT, [...new Set(tr0.map(t => t.setup || NOSETUP))].sort(), 'Toate setup-urile');
+    keep(fT, [...new Set(tr0.map(t => t.setup || NOSETUP))].sort(), T('Toate setup-urile'));
     const tr = tr0.filter(t => (!fS.value || t.strategy === fS.value) && (!fI.value || t.sym === fI.value) && (!fT.value || (t.setup || NOSETUP) === fT.value));
     const s = summary(tr);
     document.getElementById('sim-h-tiles').innerHTML = [
-      ['Tranzacții', String(s.n), ''], ['Rata de câștig', pc(s.winRate), ''], ['Total R', fR(s.totalR), cls(s.totalR)], ['Expectanță', fR(s.expR), cls(s.expR)], ['Profit factor (R)', fPF(s.pf), '']
+      [T('Tranzacții'), String(s.n), ''], [T('Rata de câștig'), pc(s.winRate), ''], [T('Total R'), fR(s.totalR), cls(s.totalR)], [T('Expectanță'), fR(s.expR), cls(s.expR)], [T('Profit factor (R)'), fPF(s.pf), '']
     ].map(([a, b, c]) => `<div class="sim-tile"><span>${a}</span><strong class="${c}">${b}</strong></div>`).join('');
     document.getElementById('sim-h-compare').innerHTML = compareHTML(withT.filter(x => !fI.value || x.sym === fI.value));
     document.getElementById('sim-h-detail').innerHTML = detailHTML(tr, {});
@@ -166,7 +166,7 @@
       const blob = new Blob(['\ufeff' + csvAll(tr) + '\r\n'], { type: 'text/csv;charset=utf-8' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'simulator-istoric-' + new Date().toISOString().slice(0, 10) + '.csv';
       document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-      document.getElementById('sim-h-msg').textContent = `Fișierul CSV a fost descărcat (${tr.length} tranzacții).`;
+      document.getElementById('sim-h-msg').textContent = T('Fișierul CSV a fost descărcat ({length} tranzacții).', { length: tr.length });
     });
   }
   window.SimStats = { detailHTML, compareHTML, renderHistoryStats, wireHistory, allTrades, summary, csvAll, pfR, NOSTRAT, NOSETUP };

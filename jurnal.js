@@ -57,7 +57,7 @@
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
   const esc = s => String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   const round2 = n => Math.round(n * 100) / 100;
-  const fmtR = n => (n == null ? '—' : (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(round2(n)).toLocaleString('ro-RO', { maximumFractionDigits: 2 }) + 'R');
+  const fmtR = n => (n == null ? '—' : (n > 0 ? '+' : n < 0 ? '−' : '') + I18N.num(Math.abs(round2(n)), { maximumFractionDigits: 2 }) + 'R');
   const fmtNum = n => (n == null ? '' : String(n));
   /** Prețuri afișate cu zecimalele obișnuite ale perechii (1.08500, 191.500, 2350.50). */
   function priceDecimals(pair, v) {
@@ -72,7 +72,7 @@
     const own = (String(v).split('.')[1] || '').length;   // nu tăia zecimale scrise de utilizator
     return v.toFixed(Math.max(d, Math.min(own, 8)));
   };
-  const fmtDate = iso => (/^\d{4}-\d{2}-\d{2}$/.test(iso) ? iso.split('-').reverse().join('.') : iso || '—');
+  const fmtDate = iso => (/^\d{4}-\d{2}-\d{2}$/.test(iso) ? (I18N.lang === 'ro' ? iso.split('-').reverse().join('.') : new Date(iso + 'T12:00:00').toLocaleDateString(I18N.locale, { day: '2-digit', month: '2-digit', year: 'numeric' })) : iso || '—');
   const todayISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
 
   function plannedRR(t) {
@@ -137,7 +137,7 @@
       deschise: list.filter(isOpen).length
     };
   }
-  const pct = v => (v == null ? '—' : (Math.round(v * 1000) / 10).toLocaleString('ro-RO') + '%');
+  const pct = v => (v == null ? '—' : I18N.num(Math.round(v * 1000) / 10) + '%');
 
   // ---------- stare ----------
   let trades = load();
@@ -165,9 +165,9 @@
     const rr = ok ? plannedRR(p) : null;
     let warn = '';
     const dir = radio('directie')?.value;
-    if (ok && dir === 'Buy' && !(p.sl < p.intrare && p.tp > p.intrare)) warn = 'La Buy, SL e sub intrare și TP deasupra.';
-    if (ok && dir === 'Sell' && !(p.sl > p.intrare && p.tp < p.intrare)) warn = 'La Sell, SL e deasupra intrării și TP sub.';
-    F.rr.innerHTML = 'R:R planificat: <b>' + (rr != null ? '1:' + rr.toLocaleString('ro-RO') : '—') + '</b>' +
+    if (ok && dir === 'Buy' && !(p.sl < p.intrare && p.tp > p.intrare)) warn = T('La Buy, SL e sub intrare și TP deasupra.');
+    if (ok && dir === 'Sell' && !(p.sl > p.intrare && p.tp < p.intrare)) warn = T('La Sell, SL e deasupra intrării și TP sub.');
+    F.rr.innerHTML = T('R:R planificat:') + ' <b>' + (rr != null ? '1:' + I18N.num(rr) : '—') + '</b>' +
       (warn ? ' <span class="jt-rr-warn">· ' + warn + '</span>' : '');
     const open = !F.rezultat.value;
     if (open) { rManual = false; F.r.value = ''; }
@@ -176,7 +176,7 @@
       F.r.value = a == null ? '' : String(a).replace('.', ',');
     }
     F.r.disabled = open;
-    F.r.placeholder = open ? 'se completează la închidere' : F.rezultat.value === 'Manual' ? 'scrie tu, ex.: 0,6' : 'ex.: 2 sau -1';
+    F.r.placeholder = open ? T('se completează la închidere') : F.rezultat.value === 'Manual' ? T('scrie tu, ex.: 0,6') : T('ex.: 2 sau -1');
   }
   ['input', 'change'].forEach(ev => {
     [F.intrare, F.sl, F.tp].forEach(el => el.addEventListener(ev, updateRR));
@@ -201,8 +201,8 @@
     F.data.value = todayISO();
     F.altaWrap.hidden = true;
     F.err.hidden = true;
-    F.title.textContent = 'Adaugă o tranzacție';
-    F.submit.textContent = 'Salvează tranzacția';
+    F.title.textContent = T('Adaugă o tranzacție');
+    F.submit.textContent = T('Salvează tranzacția');
     F.cancel.hidden = true;
     F.editing.hidden = true;
     form.classList.remove('is-editing');
@@ -227,8 +227,8 @@
     F.setup.value = t.setup; F.lot.value = fmtNum(t.lot); F.risc.value = fmtNum(t.riscPct);
     F.riscBani.value = fmtNum(t.riscBani); F.emotii.value = t.emotii; F.lectie.value = t.lectie;
     if (t.setup || t.lot != null || t.riscPct != null || t.riscBani != null || t.emotii || t.lectie) F.more.open = true;
-    F.title.textContent = 'Editează tranzacția';
-    F.submit.textContent = 'Salvează modificările';
+    F.title.textContent = T('Editează tranzacția');
+    F.submit.textContent = T('Salvează modificările');
     F.cancel.hidden = false;
     F.editing.hidden = false;
     F.editing.textContent = fmtDate(t.data) + ' · ' + t.pereche;
@@ -243,16 +243,16 @@
     let pereche = F.pereche.value === '__alta' ? F.alta.value.trim().toUpperCase() : F.pereche.value;
     if (!pereche) errors.push('perechea');
     const directie = radio('directie')?.value || '';
-    if (!directie) errors.push('direcția (Buy/Sell)');
+    if (!directie) errors.push(T('direcția (Buy/Sell)'));
     const fields = { intrare: F.intrare, sl: F.sl, tp: F.tp, lot: F.lot, riscPct: F.risc, riscBani: F.riscBani, r: F.r };
-    const labels = { intrare: 'Intrare', sl: 'Stop loss', tp: 'Take profit', lot: 'Lot', riscPct: 'Risc %', riscBani: 'Risc în bani', r: 'Rezultat în R' };
+    const labels = { intrare: T('Intrare'), sl: 'Stop loss', tp: 'Take profit', lot: T('Lot'), riscPct: T('Risc %'), riscBani: T('Risc în bani'), r: T('Rezultat în R') };
     const nums = {};
     for (const [k, el] of Object.entries(fields)) {
       const v = num(el.value);
-      if (Number.isNaN(v)) errors.push(labels[k] + ' (număr)');
+      if (Number.isNaN(v)) errors.push(labels[k] + ' ' + T('(număr)'));
       nums[k] = Number.isNaN(v) ? null : v;
     }
-    if (nums.riscPct != null && (nums.riscPct < 0 || nums.riscPct > 100)) errors.push('Risc % (între 0 și 100)');
+    if (nums.riscPct != null && (nums.riscPct < 0 || nums.riscPct > 100)) errors.push(T('Risc % (între 0 și 100)'));
     if (errors.length) return { errors };
     if (!F.rezultat.value) nums.r = null;   // în desfășurare: fără rezultat în R
     const prev = editingId ? trades.find(t => t.id === editingId) : null;
@@ -270,7 +270,7 @@
     e.preventDefault();
     const { trade, errors } = readForm();
     if (errors) {
-      F.err.textContent = 'Completează sau corectează: ' + errors.join(', ') + '.';
+      F.err.textContent = T('Completează sau corectează: {x}.', { x: errors.join(', ') });
       F.err.hidden = false;
       return;
     }
@@ -280,9 +280,9 @@
     save(trades);
     resetForm();
     render(trade.id);
-    status(wasEditing ? 'Modificările au fost salvate.' : 'Tranzacția a fost salvată în jurnalul tău.');
+    status(wasEditing ? T('Modificările au fost salvate.') : T('Tranzacția a fost salvată în jurnalul tău.'));
   });
-  F.cancel.addEventListener('click', () => { resetForm(); status('Editarea a fost anulată.'); });
+  F.cancel.addEventListener('click', () => { resetForm(); status(T('Editarea a fost anulată.')); });
 
   // ---------- listă + statistici ----------
   const list = $('jt-list');
@@ -294,11 +294,11 @@
     set('rata', pct(s.rata)); set('totalR', fmtR(s.totalR)); set('rMediu', s.rMediu == null ? '—' : fmtR(s.rMediu));
     set('plan', pct(s.plan));
     const openEl = document.querySelector('[data-stat="deschise"]');
-    openEl.textContent = s.deschise ? s.deschise + ' în desfășurare' : '';
+    openEl.textContent = s.deschise ? T('{n} în desfășurare', { n: s.deschise }) : '';
     openEl.hidden = !s.deschise;
     const totalEl = document.querySelector('[data-stat="totalR"]');
     totalEl.classList.toggle('pos', s.totalR > 0); totalEl.classList.toggle('neg', s.totalR < 0);
-    $('jt-count').textContent = s.total ? s.total + (s.total === 1 ? ' tranzacție' : ' tranzacții') + (s.deschise ? ' · ' + s.deschise + ' în desfășurare' : '') : '';
+    $('jt-count').textContent = s.total ? (s.total === 1 ? T('1 tranzacție') : T('{n} tranzacții', { n: s.total })) + (s.deschise ? ' · ' + T('{n} în desfășurare', { n: s.deschise }) : '') : '';
     $('jt-empty').hidden = s.total > 0;
     ['jt-export-xlsx', 'jt-export-json', 'jt-clear'].forEach(id => { $(id).disabled = s.total === 0; });
 
@@ -308,15 +308,15 @@
       const resClass = t.rezultat ? 'res-' + t.rezultat.toLowerCase() : 'res-open';
       const rClass = r == null ? '' : r > 0 ? 'pos' : r < 0 ? 'neg' : '';
       const meta = [
-        t.intrare != null ? 'Intrare <b>' + esc(fmtPrice(t.pereche, t.intrare)) + '</b>' : '',
+        t.intrare != null ? T('Intrare') + ' <b>' + esc(fmtPrice(t.pereche, t.intrare)) + '</b>' : '',
         t.sl != null ? 'SL <b>' + esc(fmtPrice(t.pereche, t.sl)) + '</b>' : '',
         t.tp != null ? 'TP <b>' + esc(fmtPrice(t.pereche, t.tp)) + '</b>' : '',
-        rr != null ? 'R:R <b>1:' + esc(rr.toLocaleString('ro-RO')) + '</b>' : '',
-        t.lot != null ? 'Lot <b>' + esc(t.lot) + '</b>' : '',
-        t.riscPct != null ? 'Risc <b>' + esc(t.riscPct.toLocaleString('ro-RO')) + '%</b>' : '',
-        t.riscBani != null ? 'Risc în bani <b>' + esc(t.riscBani.toLocaleString('ro-RO')) + '</b>' : ''
+        rr != null ? 'R:R <b>1:' + esc(I18N.num(rr)) + '</b>' : '',
+        t.lot != null ? T('Lot') + ' <b>' + esc(t.lot) + '</b>' : '',
+        t.riscPct != null ? T('Risc') + ' <b>' + esc(I18N.num(t.riscPct)) + '%</b>' : '',
+        t.riscBani != null ? T('Risc în bani') + ' <b>' + esc(I18N.num(t.riscBani)) + '</b>' : ''
       ].filter(Boolean).map(x => '<span>' + x + '</span>').join('');
-      const notes = [['Setup', t.setup], ['Emoții', t.emotii], ['Lecție', t.lectie]]
+      const notes = [['Setup', t.setup], [T('Emoții'), t.emotii], [T('Lecție'), t.lectie]]
         .filter(([, v]) => v).map(([k, v]) => '<p><b>' + k + ':</b> ' + esc(v) + '</p>').join('');
       return `<li class="jt-item${t.id === highlightId ? ' is-new' : ''}" data-id="${esc(t.id)}">
         <div class="jt-item-top">
@@ -324,21 +324,21 @@
             <span class="jt-date">${esc(fmtDate(t.data))}</span>
             <strong class="jt-pair">${esc(t.pereche)}</strong>
             ${t.directie ? `<span class="jt-dir dir-${t.directie.toLowerCase()}">${esc(t.directie)}</span>` : ''}
-            ${t.sesiune ? `<span class="jt-sess">${esc(t.sesiune)}</span>` : ''}
-            ${t.sursa === 'simulator' ? '<span class="jt-sess jt-src-sim" title="Adăugată din simulatorul de backtesting">Simulator</span>' : ''}
+            ${t.sesiune ? `<span class="jt-sess">${esc(T(t.sesiune))}</span>` : ''}
+            ${t.sursa === 'simulator' ? '<span class="jt-sess jt-src-sim" title="' + T('Adăugată din simulatorul de backtesting') + '">Simulator</span>' : ''}
           </div>
           <div class="jt-item-result">
-            <span class="jt-res ${resClass}">${t.rezultat ? esc(t.rezultat) : 'În desfășurare'}</span>
+            <span class="jt-res ${resClass}">${t.rezultat ? esc(t.rezultat) : T('În desfășurare')}</span>
             <b class="jt-rval ${rClass}">${r == null ? '' : esc(fmtR(r))}</b>
           </div>
         </div>
         ${meta ? `<div class="jt-meta">${meta}</div>` : ''}
         ${notes ? `<div class="jt-notes-text">${notes}</div>` : ''}
         <div class="jt-item-foot">
-          <span class="jt-plan ${t.plan ? 'plan-' + t.plan.toLowerCase() : ''}">${t.plan === 'Da' ? '✓ Plan respectat' : t.plan === 'Nu' ? '✗ Plan nerespectat' : 'Plan: necompletat'}</span>
+          <span class="jt-plan ${t.plan ? 'plan-' + t.plan.toLowerCase() : ''}">${t.plan === 'Da' ? T('✓ Plan respectat') : t.plan === 'Nu' ? T('✗ Plan nerespectat') : T('Plan: necompletat')}</span>
           <span class="jt-actions">
-            <button type="button" class="jt-act" data-act="edit">Editează</button>
-            <button type="button" class="jt-act jt-act-del" data-act="delete">Șterge</button>
+            <button type="button" class="jt-act" data-act="edit">${T('Editează')}</button>
+            <button type="button" class="jt-act jt-act-del" data-act="delete">${T('Șterge')}</button>
           </span>
         </div>
       </li>`;
@@ -356,12 +356,12 @@
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setTimeout(() => F.data.focus({ preventScroll: true }), 350);
     } else if (btn.dataset.act === 'delete') {
-      if (!confirm(`Ștergi tranzacția din ${fmtDate(t.data)} (${t.pereche})?\nNu o mai poți recupera decât dintr-un backup.`)) return;
+      if (!confirm(T('Ștergi tranzacția din {d} ({p})?\nNu o mai poți recupera decât dintr-un backup.', { d: fmtDate(t.data), p: t.pereche }))) return;
       trades = trades.filter(x => x.id !== id);
       save(trades);
       if (editingId === id) resetForm();
       render();
-      status('Tranzacția a fost ștearsă.');
+      status(T('Tranzacția a fost ștearsă.'));
     }
   });
 
@@ -387,7 +387,7 @@
   $('jt-export-json').addEventListener('click', () => {
     const payload = { aplicatie: 'Marius FX — jurnal de tranzacționare', versiune: 1, exportat: new Date().toISOString(), tranzactii: sortTrades(trades).reverse() };
     download(`jurnal-marius-fx-backup-${todayISO()}.json`, new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
-    status('Backup descărcat. Păstrează fișierul într-un loc sigur (ex.: Drive, e-mail către tine).');
+    status(T('Backup descărcat. Păstrează fișierul într-un loc sigur (ex.: Drive, e-mail către tine).'));
   });
 
   $('jt-import-btn').addEventListener('click', () => $('jt-import').click());
@@ -402,35 +402,35 @@
       if (!Array.isArray(arr)) throw new Error('format');
       incoming = arr.map(sanitize).filter(Boolean);
     } catch (err) {
-      status('Fișierul nu pare un backup valid al jurnalului (.json).', true);
+      status(T('Fișierul nu pare un backup valid al jurnalului (.json).'), true);
       return;
     }
-    if (!incoming.length) { status('Backup-ul nu conține nicio tranzacție.', true); return; }
+    if (!incoming.length) { status(T('Backup-ul nu conține nicio tranzacție.'), true); return; }
     const existing = new Set(trades.map(t => t.id));
     const fresh = incoming.filter(t => !existing.has(t.id));
-    if (trades.length && !confirm(`Backup-ul conține ${incoming.length} tranzacții. Le adaug la cele ${trades.length} existente?\n(Tranzacțiile care există deja nu se dublează.)`)) return;
+    if (trades.length && !confirm(T('Backup-ul conține {a} tranzacții. Le adaug la cele {b} existente?\n(Tranzacțiile care există deja nu se dublează.)', { a: incoming.length, b: trades.length }))) return;
     trades = trades.concat(fresh);
     save(trades);
     render();
-    status(`Am importat ${fresh.length} ${fresh.length === 1 ? 'tranzacție' : 'tranzacții'}` + (incoming.length - fresh.length ? ` (${incoming.length - fresh.length} existau deja).` : '.'));
+    status((fresh.length === 1 ? T('Am importat 1 tranzacție') : T('Am importat {n} tranzacții', { n: fresh.length })) + (incoming.length - fresh.length ? ' ' + T('({n} existau deja).', { n: incoming.length - fresh.length }) : '.'));
   });
 
   $('jt-clear').addEventListener('click', () => {
     if (!trades.length) return;
-    if (!confirm(`Ștergi TOATE cele ${trades.length} tranzacții din acest browser?\nAcțiunea nu poate fi anulată. Exportă un backup înainte, dacă vrei să le păstrezi.`)) return;
+    if (!confirm(T('Ștergi TOATE cele {n} tranzacții din acest browser?\nAcțiunea nu poate fi anulată. Exportă un backup înainte, dacă vrei să le păstrezi.', { n: trades.length }))) return;
     trades = [];
     save(trades);
     resetForm();
     render();
-    status('Jurnalul a fost golit.');
+    status(T('Jurnalul a fost golit.'));
   });
 
   // ---------- export .xlsx (fără biblioteci externe) ----------
   const COLS = [
-    ['Nr.', 6], ['Data', 12], ['Pereche', 11], ['Direcție', 10], ['Sesiune', 12], ['Setup / motiv intrare', 32],
-    ['Preț intrare', 12], ['Stop loss', 12], ['Take profit', 12], ['Lot', 8], ['Risc %', 8], ['Risc în bani', 12],
-    ['R:R planificat', 11], ['Rezultat', 11], ['Rezultat în R', 11], ['Am respectat planul?', 12], ['Emoții', 20],
-    ['Lecție / ce îmbunătățesc', 36]
+    [T('Nr.'), 6], [T('Data'), 12], [T('Pereche'), 11], [T('Direcție'), 10], [T('Sesiune'), 12], [T('Setup / motiv intrare'), 32],
+    [T('Preț intrare'), 12], ['Stop loss', 12], ['Take profit', 12], [T('Lot'), 8], [T('Risc %'), 8], [T('Risc în bani'), 12],
+    [T('R:R planificat'), 11], [T('Rezultat'), 11], [T('Rezultat în R'), 11], [T('Am respectat planul?'), 12], [T('Emoții'), 20],
+    [T('Lecție / ce îmbunătățesc'), 36]
   ];
   const xmlEsc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]))
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
@@ -489,25 +489,25 @@
       rows.push({ cells: [
         [i + 1, 4], [dateSerial(t.data), 2], [t.pereche, 0], [t.directie, 0], [t.sesiune, 0], [t.setup, 5],
         [t.intrare, 3], [t.sl, 3], [t.tp, 3], [t.lot, 4], [t.riscPct, 7], [t.riscBani, 4],
-        [rr, 9], [t.rezultat || 'În desfășurare', 0], [resultR(t), 8], [t.plan, 0], [t.emotii, 5], [t.lectie, 5]
+        [rr, 9], [t.rezultat || T('În desfășurare'), 0], [resultR(t), 8], [t.plan ? T(t.plan) : t.plan, 0], [t.emotii, 5], [t.lectie, 5]
       ].map(([v, s], k) => (k === 0 ? [v, 0] : [v, s])) });
     });
     const s = computeStats(list);
     const sum = [
-      { height: 24, cells: [['Rezumat — jurnalul tău Marius FX', 6]] },
-      { cells: [['Exportat la ' + fmtDate(todayISO()), 0]] },
+      { height: 24, cells: [[T('Rezumat — jurnalul tău Marius FX'), 6]] },
+      { cells: [[T('Exportat la {d}', { d: fmtDate(todayISO()) }), 0]] },
       { cells: [] },
-      { height: 22, cells: [['Indicator', 1], ['Valoare', 1]] },
-      { cells: [['Total tranzacții', 0], [s.total, 0]] },
-      { cells: [['În desfășurare (fără rezultat în R)', 0], [s.deschise, 0]] },
-      { cells: [['Câștigate', 0], [s.castigate, 0]] },
-      { cells: [['Pierdute', 0], [s.pierdute, 0]] },
-      { cells: [['Rata de câștig', 0], [pct(s.rata), 0]] },
+      { height: 22, cells: [[T('Indicator'), 1], [T('Valoare'), 1]] },
+      { cells: [[T('Total tranzacții'), 0], [s.total, 0]] },
+      { cells: [[T('În desfășurare (fără rezultat în R)'), 0], [s.deschise, 0]] },
+      { cells: [[T('Câștigate'), 0], [s.castigate, 0]] },
+      { cells: [[T('Pierdute'), 0], [s.pierdute, 0]] },
+      { cells: [[T('Rata de câștig'), 0], [pct(s.rata), 0]] },
       { cells: [['Total R', 0], [s.totalR, 8]] },
-      { cells: [['R mediu', 0], [s.rMediu == null ? '—' : round2(s.rMediu), s.rMediu == null ? 0 : 8]] },
-      { cells: [['% tranzacții cu planul respectat', 0], [pct(s.plan), 0]] },
+      { cells: [[T('R mediu'), 0], [s.rMediu == null ? '—' : round2(s.rMediu), s.rMediu == null ? 0 : 8]] },
+      { cells: [[T('% tranzacții cu planul respectat'), 0], [pct(s.plan), 0]] },
       { cells: [] },
-      { cells: [['Date salvate doar pe dispozitivul tău. Conținut educațional, nu consultanță financiară.', 0]] }
+      { cells: [[T('Date salvate doar pe dispozitivul tău. Conținut educațional, nu consultanță financiară.'), 0]] }
     ];
     const lastRef = colName(COLS.length - 1) + rows.length;
     const files = {
@@ -520,8 +520,8 @@
       '_rels/.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
       'xl/workbook.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-        '<sheets><sheet name="Jurnal" sheetId="1" r:id="rId1"/><sheet name="Rezumat" sheetId="2" r:id="rId2"/></sheets>' +
-        (chron.length ? `<definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">Jurnal!$A$1:$${lastRef.replace(/(\d+)$/, '$$$1')}</definedName></definedNames>` : '') +
+        '<sheets><sheet name="' + T('Jurnal') + '" sheetId="1" r:id="rId1"/><sheet name="' + T('Rezumat') + '" sheetId="2" r:id="rId2"/></sheets>' +
+        (chron.length ? `<definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">${T('Jurnal')}!$A$1:$${lastRef.replace(/(\d+)$/, '$$$1')}</definedName></definedNames>` : '') +
         '</workbook>',
       'xl/_rels/workbook.xml.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
         '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>' +
@@ -570,7 +570,7 @@
   $('jt-export-xlsx').addEventListener('click', () => {
     if (!trades.length) return;
     download(`jurnal-marius-fx-${todayISO()}.xlsx`, buildXlsx(trades));
-    status('Fișierul Excel a fost descărcat.');
+    status(T('Fișierul Excel a fost descărcat.'));
   });
 
   // pentru testare

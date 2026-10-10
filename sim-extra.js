@@ -170,11 +170,11 @@
     redraw();
   }
   function setSwatch(c) { $('sim-color-sw').style.background = c; }
-  const NAMES = { hline: 'Linie orizontală', hray: 'Rază orizontală', trend: 'Linie de trend', rect: 'Dreptunghi', fib: 'Fibonacci' };
+  const NAMES = { hline: T('Linie orizontală'), hray: T('Rază orizontală'), trend: T('Linie de trend'), rect: T('Dreptunghi'), fib: 'Fibonacci' };
   const HINT = {
-    hline: 'Linie orizontală: atinge sau dă clic pe nivelul dorit.', hray: 'Rază orizontală: atinge sau dă clic de unde pornește.',
-    trend: 'Linie de trend: trage de la primul punct la al doilea (sau două clicuri).', rect: 'Dreptunghi: trage de la un colț la colțul opus (sau două clicuri).',
-    fib: 'Fibonacci: trage de la începutul mișcării (de exemplu minimul) la final (maximul). Nivelurile 0,382-0,618 sunt evidențiate.'
+    hline: T('Linie orizontală: atinge sau dă clic pe nivelul dorit.'), hray: T('Rază orizontală: atinge sau dă clic de unde pornește.'),
+    trend: T('Linie de trend: trage de la primul punct la al doilea (sau două clicuri).'), rect: T('Dreptunghi: trage de la un colț la colțul opus (sau două clicuri).'),
+    fib: T('Fibonacci: trage de la începutul mișcării (de exemplu minimul) la final (maximul). Nivelurile 0,382-0,618 sunt evidențiate.')
   };
   function setTool(t) {
     if (pending) pending = null;
@@ -183,7 +183,7 @@
     const el = $('sim-chart');
     el.classList.toggle('is-drawing', t !== 'cursor');
     if (X && X.chart) X.chart.applyOptions({ handleScroll: t === 'cursor' ? { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false } : false, handleScale: t === 'cursor' });
-    if (t !== 'cursor' && X) X.showMsg(HINT[t] + ' Esc anulează.');
+    if (t !== 'cursor' && X) X.showMsg(HINT[t] + T(' Esc anulează.'));
     redraw();
   }
   const persist = () => { if (X && X.persist) X.persist(); };
@@ -191,7 +191,7 @@
     d.id = ++st.seq; d.color = d.color || st.color;
     st.drawings.push(d);
     select(d.id); setTool('cursor'); persist();
-    X.showMsg(`${NAMES[d.type]} adăugată. O poți muta trăgând de ea sau șterge cu tasta Delete / coșul din bara de desen.`);
+    X.showMsg(T('{v} adăugată. O poți muta trăgând de ea sau șterge cu tasta Delete / coșul din bara de desen.', { v: NAMES[d.type] }));
   }
   function delSelected() {
     if (selId == null) return;
@@ -273,15 +273,15 @@
     for (const t of ['mousedown', 'mousemove', 'touchstart', 'touchmove']) el.addEventListener(t, stopLegacy, { capture: true, passive: false });
     document.querySelectorAll('.ws-dt[data-tool]').forEach(b => b.addEventListener('click', () => { setTool(tool === b.dataset.tool && b.dataset.tool !== 'cursor' ? 'cursor' : b.dataset.tool); if (matchMedia('(max-width: 699px), (max-height: 520px)').matches) toggleBar(false); /* pe ecrane mici bara se strânge, ca să ai loc de desenat */ }));
     $('sim-draw-toggle').addEventListener('click', () => toggleBar($('sim-draw').dataset.open !== 'true'));
-    $('sim-magnet').addEventListener('click', () => { st.magnet = !st.magnet; $('sim-magnet').setAttribute('aria-pressed', String(st.magnet)); persist(); X && X.showMsg(st.magnet ? 'Magnet pornit: punctele se lipesc de O/H/L/C ale lumânării.' : 'Magnet oprit.'); });
+    $('sim-magnet').addEventListener('click', () => { st.magnet = !st.magnet; $('sim-magnet').setAttribute('aria-pressed', String(st.magnet)); persist(); X && X.showMsg(st.magnet ? T('Magnet pornit: punctele se lipesc de O/H/L/C ale lumânării.') : T('Magnet oprit.')); });
     $('sim-draw-del').addEventListener('click', delSelected);
     $('sim-draw-clear').addEventListener('click', () => {
-      if (!st.drawings.length) { X && X.showMsg('Nu ai desene pe grafic.'); return; }
-      if (Date.now() - clearArm > 4000) { clearArm = Date.now(); X.showMsg(`Apasă din nou pe coș ca să ștergi toate cele ${st.drawings.length} desene.`, 'warn'); return; }
-      clearArm = 0; st.drawings = []; select(null); persist(); X.showMsg('Toate desenele au fost șterse.');
+      if (!st.drawings.length) { X && X.showMsg(T('Nu ai desene pe grafic.')); return; }
+      if (Date.now() - clearArm > 4000) { clearArm = Date.now(); X.showMsg(T('Apasă din nou pe coș ca să ștergi toate cele {length} desene.', { length: st.drawings.length }), 'warn'); return; }
+      clearArm = 0; st.drawings = []; select(null); persist(); X.showMsg(T('Toate desenele au fost șterse.'));
     });
     const pal = $('sim-palette');
-    pal.innerHTML = PALETTE.map(c => `<button type="button" class="ws-sw" data-c="${c}" style="background:${c}" aria-label="Culoarea ${c}"></button>`).join('');
+    pal.innerHTML = PALETTE.map(c => `<button type="button" class="ws-sw" data-c="${c}" style="background:${c}" aria-label="${T('Culoarea {c}', { c })}"></button>`).join('');
     $('sim-color').addEventListener('click', () => { const open = pal.hidden; pal.hidden = !open; $('sim-color').setAttribute('aria-expanded', String(open)); });
     pal.addEventListener('click', e => {
       const b = e.target.closest('[data-c]'); if (!b) return;
@@ -415,9 +415,9 @@
       const vals = keys.map(key => `<b>${X.esc(fmtVal(c, key, k))}</b>`).join(' ');
       const off = c.visible === false;
       return `<div class="ind-row${off ? ' is-off' : ''}" data-id="${c.id}"><span class="ind-name" style="color:${c.color}">${X.esc(indName(c))}</span> <span class="ind-vals">${vals}</span>` +
-        `<span class="ind-btns"><button type="button" data-act="vis" aria-pressed="${!off}" aria-label="${off ? 'Arată' : 'Ascunde'} ${X.esc(indName(c))}" title="${off ? 'Arată' : 'Ascunde'}">${off ? ICON.off : ICON.eye}</button>` +
-        `<button type="button" data-act="cfg" aria-label="Setări ${X.esc(indName(c))}" title="Setări">${ICON.gear}</button>` +
-        `<button type="button" data-act="del" aria-label="Elimină ${X.esc(indName(c))}" title="Elimină">${ICON.x}</button></span></div>`;
+        `<span class="ind-btns"><button type="button" data-act="vis" aria-pressed="${!off}" aria-label="${off ? T('Arată') : T('Ascunde')} ${X.esc(indName(c))}" title="${off ? T('Arată') : T('Ascunde')}">${off ? ICON.off : ICON.eye}</button>` +
+        `<button type="button" data-act="cfg" aria-label="${T('Setări')} ${X.esc(indName(c))}" title="${T('Setări')}">${ICON.gear}</button>` +
+        `<button type="button" data-act="del" aria-label="${T('Elimină')} ${X.esc(indName(c))}" title="${T('Elimină')}">${ICON.x}</button></span></div>`;
     }).join('');
   }
   function addInd(type) {
@@ -425,24 +425,24 @@
     const used = new Set(st.indicators.map(c => c.color));
     const c = Object.assign({ id: ++st.seq, type, visible: true }, JSON.parse(JSON.stringify(DEF[type])));
     if (st.indicators.some(z => z.type === type)) { const free = PALETTE.find(p => !used.has(p)); if (free) c.color = free; if (type === 'ema' || type === 'sma') c.len = type === 'ema' ? 50 : 200; }
-    if (st.indicators.length >= 10) { X.showMsg('Maximum 10 indicatori, ca graficul să rămână clar.', 'warn'); return; }
+    if (st.indicators.length >= 10) { X.showMsg(T('Maximum 10 indicatori, ca graficul să rămână clar.'), 'warn'); return; }
     st.indicators.push(c);
     rebuild(); renderIndList(); persist();
-    X.showMsg(`${indName(c)} adăugat.${OSC.has(type) ? ' Apare într-un panou sub grafic.' : ''}`);
+    X.showMsg(T('{indName} adăugat.{v}', { indName: indName(c), v: OSC.has(type) ? ' ' + T('Apare într-un panou sub grafic.') : '' }));
   }
   function delInd(id) { st.indicators = st.indicators.filter(c => c.id !== id); rebuild(); renderIndList(); persist(); }
   const FIELDS = {
-    ema: [['len', 'Lungime', 1, 500, 1]], sma: [['len', 'Lungime', 1, 500, 1]], rsi: [['len', 'Lungime', 2, 200, 1]], atr: [['len', 'Lungime', 1, 200, 1]],
-    bb: [['len', 'Lungime', 2, 500, 1], ['mult', 'Deviații', 0.5, 5, 0.1]],
-    macd: [['fast', 'Rapidă', 1, 200, 1], ['slow', 'Lentă', 2, 400, 1], ['signal', 'Semnal', 1, 100, 1]]
+    ema: [['len', T('Lungime'), 1, 500, 1]], sma: [['len', T('Lungime'), 1, 500, 1]], rsi: [['len', T('Lungime'), 2, 200, 1]], atr: [['len', T('Lungime'), 1, 200, 1]],
+    bb: [['len', T('Lungime'), 2, 500, 1], ['mult', T('Deviații'), 0.5, 5, 0.1]],
+    macd: [['fast', T('Rapidă'), 1, 200, 1], ['slow', T('Lentă'), 2, 400, 1], ['signal', T('Semnal'), 1, 100, 1]]
   };
   function renderIndList() {
     const ul = $('sim-ind-list'); if (!ul) return;
     $('sim-ind-empty').hidden = st.indicators.length > 0;
     ul.innerHTML = st.indicators.map(c => `<li data-id="${c.id}"><div class="ind-li-head"><strong style="color:${c.color}">${X.esc(indName(c))}</strong>
-      <button type="button" class="ws-link" data-act="del">Elimină</button></div>
+      <button type="button" class="ws-link" data-act="del">${T('Elimină')}</button></div>
       <div class="ind-li-fields">${FIELDS[c.type].map(([f, lbl, mn, mx, stp]) => `<label>${lbl} <input type="number" inputmode="decimal" data-f="${f}" min="${mn}" max="${mx}" step="${stp}" value="${c[f]}"></label>`).join('')}
-      <span class="ind-li-colors" role="group" aria-label="Culoare">${PALETTE.map(p => `<button type="button" class="ws-sw${p === c.color ? ' is-on' : ''}" data-color="${p}" style="background:${p}" aria-label="Culoarea ${p}" aria-pressed="${p === c.color}"></button>`).join('')}</span></div></li>`).join('');
+      <span class="ind-li-colors" role="group" aria-label="${T('Culoare')}">${PALETTE.map(p => `<button type="button" class="ws-sw${p === c.color ? ' is-on' : ''}" data-color="${p}" style="background:${p}" aria-label="${T('Culoarea {c}', { c: p })}" aria-pressed="${p === c.color}"></button>`).join('')}</span></div></li>`).join('');
   }
   function onIndInput(e) {
     const inp = e.target.closest('input[data-f]'); if (!inp) return;
