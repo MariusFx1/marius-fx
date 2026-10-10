@@ -142,7 +142,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
       return { href: a.href, target: a.target, rel: a.rel, text: a.textContent.trim().replace(/\s+/g, ' '), svg: !!a.querySelector('svg path'), below: r.top >= rq.bottom, prevIsQuote: a.previousElementSibling === q,
         h: r.height, btnH: Math.max(...btns), chip: !!document.getElementById('hero-session-chip'), tiles: document.querySelectorAll('.pair-tile').length, chart: !!document.querySelector('.hero-chart'), w: r.width, sw: document.documentElement.scrollWidth, iw: innerWidth };
     });
-    assert(tg.href === 'https://t.me/FreeMariusFx' && tg.target === '_blank' && /noopener/.test(tg.rel), `${label} home: Telegram link/target/rel`);
+    assert(tg.href === 'https://t.me/+sbQPdX_yA1E5NmM0' && tg.target === '_blank' && /noopener/.test(tg.rel), `${label} home: Telegram link/target/rel`);
     assert(tg.text === 'Intră în comunitatea gratuită pe Telegram' && tg.svg, `${label} home: Telegram text + inline SVG icon`);
     assert(tg.prevIsQuote && tg.below, `${label} home: Telegram button directly under the quote`);
     assert(tg.h <= tg.btnH + 2, `${label} home: Telegram button not taller than hero buttons (${tg.h} vs ${tg.btnH})`);

@@ -34,7 +34,7 @@ FOOTER = f'''  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
       <div class="footer-col footer-col-community">
         <h2 class="footer-title">Comunitate</h2>
         <ul>
-          <li><a class="footer-tg" href="https://t.me/FreeMariusFx" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{TG_PATH}"/></svg>Telegram (gratuit)</a></li>
+          <li><a class="footer-tg" href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{TG_PATH}"/></svg>Telegram (gratuit)</a></li>
           <li><a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>

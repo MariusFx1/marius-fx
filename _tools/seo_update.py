@@ -14,7 +14,7 @@ GSC_NOTE = ('  <!-- Google Search Console (metoda „etichetă HTML”): pune ai
 ORG = {'@type': 'Organization', '@id': SITE + '#org', 'name': 'MS Prime', 'url': SITE,
        'logo': {'@type': 'ImageObject', 'url': SITE + 'icon-512.png', 'width': 512, 'height': 512},
        'image': SITE + 'og-image.png', 'email': 'contact.mariusfx@gmail.com',
-       'founder': {'@type': 'Person', 'name': 'Marius'}, 'sameAs': ['https://t.me/FreeMariusFx']}
+       'founder': {'@type': 'Person', 'name': 'Marius'}, 'sameAs': ['https://t.me/+sbQPdX_yA1E5NmM0']}
 WEBSITE = {'@type': 'WebSite', '@id': SITE + '#website', 'url': SITE, 'name': 'MS Prime', 'inLanguage': 'ro',
            'description': PAGES['index']['desc'], 'publisher': {'@id': SITE + '#org'}}
 

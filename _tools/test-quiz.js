@@ -213,9 +213,9 @@ const BY_Q = new Map(QUESTIONS.map(q => [q.q, q]));
   assert(mism.length === 0, `FAQ JSON-LD matches visible text exactly ${mism.map(m => m.name).join(' | ')}`);
   const T = fq.text;
   for (const [k, re] of [['demo first', /cont demo/], ['no promise', /Nu îți pot promite/], ['no signals', /nu dau semnale/], ['commission disclosure', /pot primi un comision/],
-    ['regulation check', /reglementată/], ['ASF/ESMA', /ASF[\s\S]*ESMA|ESMA[\s\S]*ASF/], ['Declarația unică', /Declarația unică/], ['accountant', /contabil/], ['telegram', /t\.me\/FreeMariusFx/], ['email', /contact\.mariusfx@gmail\.com/]])
+    ['regulation check', /reglementată/], ['ASF/ESMA', /ASF[\s\S]*ESMA|ESMA[\s\S]*ASF/], ['Declarația unică', /Declarația unică/], ['accountant', /contabil/], ['telegram', /t\.me\/\+sbQPdX_yA1E5NmM0/], ['email', /contact\.mariusfx@gmail\.com/]])
     assert(re.test(T), `FAQ content: ${k}`);
-  for (const h of ['broker.html', 'https://t.me/FreeMariusFx', 'mailto:contact.mariusfx@gmail.com', 'lectie.html', 'test.html', 'contact.html']) if (!fq.links.includes(h)) assert(false, `FAQ links to ${h}`);
+  for (const h of ['broker.html', 'https://t.me/+sbQPdX_yA1E5NmM0', 'mailto:contact.mariusfx@gmail.com', 'lectie.html', 'test.html', 'contact.html']) if (!fq.links.includes(h)) assert(false, `FAQ links to ${h}`);
   assert(!/(garant|sigur vei câștiga|profit garantat)/i.test(T.replace(/Nu există o garanție/, '')), 'FAQ: no guarantees / promises');
 
   assert(errors.length === 0, 'no console/page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));

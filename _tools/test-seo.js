@@ -50,7 +50,7 @@ const urlOf = p => p === 'index' ? SITE : SITE + p + '.html';
     const types = ld ? ld['@graph'].map(g => g['@type']) : [];
     assert(ld && ld['@context'] === 'https://schema.org' && types.includes('WebSite') && types.includes('Organization') && (types.includes('WebPage') || (p === 'intrebari' && types.includes('FAQPage'))), `${p}: JSON-LD valid (${types})`);
     const org = ld && ld['@graph'].find(g => g['@type'] === 'Organization');
-    assert(org && org.name === 'MS Prime' && org.sameAs.includes('https://t.me/FreeMariusFx') && /icon-512\.png$/.test(org.logo.url), `${p}: Organization name/logo/sameAs Telegram`);
+    assert(org && org.name === 'MS Prime' && org.sameAs.includes('https://t.me/+sbQPdX_yA1E5NmM0') && /icon-512\.png$/.test(org.logo.url), `${p}: Organization name/logo/sameAs Telegram`);
     if (p !== 'index') {
       const bc = ld && ld['@graph'].find(g => g['@type'] === 'BreadcrumbList');
       assert(bc && bc.itemListElement.length === 2 && bc.itemListElement[0].item === SITE && bc.itemListElement[1].item === urlOf(p), `${p}: BreadcrumbList Acasă > ${bc && bc.itemListElement[1].name}`);

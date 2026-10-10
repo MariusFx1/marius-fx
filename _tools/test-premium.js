@@ -34,7 +34,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
           js: [...document.scripts].filter(s => /script\.js|lectie\.js|jurnal\.js|calendar\.js|quiz\.js|rr\.js|glosar\.js/.test(s.src)).map(s => s.getAttribute('src') + (s.defer ? ' defer' : '')),
           risks: [...document.querySelectorAll('.footer-risk')].map(p => p.textContent.trim()),
           footLinks: [...document.querySelectorAll('.site-footer a')].map(a => a.getAttribute('href')),
-          tgFoot: (a => a && a.target === '_blank' && /noopener/.test(a.rel))(document.querySelector('.site-footer a[href="https://t.me/FreeMariusFx"]')),
+          tgFoot: (a => a && a.target === '_blank' && /noopener/.test(a.rel))(document.querySelector('.site-footer a[href="https://t.me/+sbQPdX_yA1E5NmM0"]')),
           year: document.getElementById('an')?.textContent,
           sw: document.documentElement.scrollWidth, iw: innerWidth,
           newText: [...document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"]')].map(x => x.content).join(' ') + document.querySelector('.site-footer').innerText,
@@ -48,7 +48,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
       { const v = 51; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(i.js[0] === 'script.js?v=38 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
       assert(i.risks.length === 1 && i.risks[0] === RISK, `${label} ${f}: exact footer risk line (once)`);
-      for (const h of ['lectie.html', 'test.html', 'intrebari.html', 'reguli.html', 'patternuri.html', 'calculator.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'contact.html', 'https://t.me/FreeMariusFx', 'mailto:contact.mariusfx@gmail.com'])
+      for (const h of ['lectie.html', 'test.html', 'intrebari.html', 'reguli.html', 'patternuri.html', 'calculator.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'contact.html', 'https://t.me/+sbQPdX_yA1E5NmM0', 'mailto:contact.mariusfx@gmail.com'])
         if (!i.footLinks.includes(h)) assert(false, `${label} ${f}: footer link ${h}`);
       assert(i.tgFoot, `${label} ${f}: footer Telegram link target/rel`);
       assert(i.year === String(new Date().getFullYear()), `${label} ${f}: footer year filled`);
@@ -94,7 +94,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
   assert(JSON.stringify(h.tv) === JSON.stringify(['OANDA:EURUSD|1M', 'OANDA:GBPUSD|1M', 'OANDA:USDJPY|1M', 'OANDA:XAUUSD|1M']), 'home: 4 TradingView mini charts kept (OANDA, 1M)');
   assert(h.btns[0] === 'btn btn-slate|Vezi regulile de bază' && h.btns[1] === 'btn btn-primary|Calculează lotul', 'home: hero buttons kept');
   assert(h.quote === 'Succesul nu vine dintr-o tranzacție norocoasă.Vine din răbdare, disciplină și din faptul că revii mâine.', 'home: quote text kept');
-  assert(h.tg === 'https://t.me/FreeMariusFx' && h.chip && h.lesson === 'lectie.html', 'home: Telegram pill, session chip, lesson link kept');
+  assert(h.tg === 'https://t.me/+sbQPdX_yA1E5NmM0' && h.chip && h.lesson === 'lectie.html', 'home: Telegram pill, session chip, lesson link kept');
   assert(/Manrope/.test(h.font) && h.bg === 'rgb(7, 11, 20)', 'home: Manrope + navy background kept');
   assert(h.headerPos === 'sticky', 'header is sticky');
   assert(JSON.stringify(h.stats) === JSON.stringify(['6+ ani de experiență în swing trading', '8 capitole gratuite pentru începători', '5 instrumente gratuite: calculator, sesiuni, calendar, jurnal, patternuri', '0 semnale, doar educație și disciplină']), 'home: stats strip shows only true numbers ' + JSON.stringify(h.stats));
