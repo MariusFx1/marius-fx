@@ -10,8 +10,7 @@ FOOTER = f'''  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>MS <b>Prime</b></a>
+        <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true"><img src="images/logo-mark.webp?v=1" width="34" height="34" alt="" decoding="async"></span>MS <b>Prime</b></a>
         <p>Educație pentru swing trading disciplinat: reguli clare, managementul riscului și un proces pe care îl poți repeta.</p>
       </div>
       <nav class="footer-col" aria-label="Învață">
