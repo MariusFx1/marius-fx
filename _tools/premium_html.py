@@ -35,6 +35,7 @@ FOOTER = f'''  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
         <h2 class="footer-title">Comunitate</h2>
         <ul>
           <li><a class="footer-tg" href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{TG_PATH}"/></svg>Telegram (gratuit)</a></li>
+          <li><a class="footer-x" href="https://x.com/MSPrime1fx" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X · @MSPrime1fx</a></li>
           <li><a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -119,6 +120,7 @@ def meta_block(name, title, desc):
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="MS Prime: Educație · Disciplină · Managementul riscului">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@MSPrime1fx">
   <meta name="twitter:title" content="{t}">
   <meta name="twitter:description" content="{d}">
   <meta name="twitter:image" content="{img}">

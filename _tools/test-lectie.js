@@ -35,7 +35,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
       }));
       assert(JSON.stringify(info.nav) === JSON.stringify(NAV), `${label} ${f}: nav = Începători + existing links + Calendar after Sesiuni`);
       assert(info.first === 'Începători', `${label} ${f}: first nav label "Începători"`);
-      { const v = 51; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
+      { const v = 52; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(info.risk === 'Forex și CFD-urile cu levier pot duce la pierderea rapidă a banilor. Conținut educațional, nu consultanță financiară.', `${label} ${f}: footer risk line`);
       assert(info.sw <= info.iw, `${label} ${f}: no horizontal overflow (${info.sw} <= ${info.iw})`);
       if (f !== 'index') assert(info.current === f + '.html', `${label} ${f}: aria-current on own link`);
@@ -139,7 +139,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
       const a = document.querySelector('.hero-telegram'); const q = document.querySelector('.hero-note');
       const r = a.getBoundingClientRect(), rq = q.getBoundingClientRect();
       const btns = [...document.querySelectorAll('.cta .btn')].map(b => b.getBoundingClientRect().height);
-      return { href: a.href, target: a.target, rel: a.rel, text: a.textContent.trim().replace(/\s+/g, ' '), svg: !!a.querySelector('svg path'), below: r.top >= rq.bottom, prevIsQuote: a.previousElementSibling === q,
+      return { href: a.href, target: a.target, rel: a.rel, text: a.textContent.trim().replace(/\s+/g, ' '), svg: !!a.querySelector('svg path'), below: r.top >= rq.bottom, prevIsQuote: (a.parentElement.classList.contains('hero-social') ? a.parentElement : a).previousElementSibling === q,
         h: r.height, btnH: Math.max(...btns), chip: !!document.getElementById('hero-session-chip'), tiles: document.querySelectorAll('.pair-tile').length, chart: !!document.querySelector('.hero-chart'), w: r.width, sw: document.documentElement.scrollWidth, iw: innerWidth };
     });
     assert(tg.href === 'https://t.me/+sbQPdX_yA1E5NmM0' && tg.target === '_blank' && /noopener/.test(tg.rel), `${label} home: Telegram link/target/rel`);

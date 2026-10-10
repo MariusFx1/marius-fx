@@ -316,6 +316,8 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   color: var(--green-2) !important;
 }
 .social-telegram:hover { background: rgba(34,197,94,.22); }
+.socials a.social-x { display: inline-flex; align-items: center; gap: .45rem; color: var(--text); border-color: rgba(231,235,242,.3); }
+.social-x svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
 .contact-form { display: grid; gap: 1.05rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem; }
 .contact-form .btn { justify-self: start; }
 
@@ -884,6 +886,19 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .hero-telegram:focus-visible { outline-color: #2aabee; }
 .hero-telegram-icon { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #2aabee; display: grid; place-items: center; }
 .hero-telegram-icon svg { width: 17px; height: 17px; fill: #fff; margin-left: -2px; }
+.hero-social { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .6rem; margin-top: 1.15rem; }
+.hero-social .hero-telegram { margin: 0; }
+.hero-x-wrap { display: contents; }
+.hero-x {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .6rem 1.1rem .6rem .6rem; border-radius: 999px;
+  font-size: .95rem; font-weight: 700; letter-spacing: -.01em; color: #e7ebf2;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(231,235,242,.22);
+  text-decoration: none; transition: background .2s, border-color .2s, transform .2s;
+}
+.hero-x:hover { background: rgba(255,255,255,.09); border-color: rgba(231,235,242,.5); transform: translateY(-1px); }
+.hero-x-icon { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #000; border: 1px solid rgba(255,255,255,.18); display: grid; place-items: center; }
+.hero-x-icon svg { width: 14px; height: 14px; fill: #fff; }
 .hero-chips { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .55rem; margin-top: 1rem; }
 .hero-chips .hero-session-chip { margin: 0; }
 .hero-lesson-link {
@@ -896,6 +911,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .hero-lesson-link:hover { color: var(--text); border-color: rgba(34,197,94,.5); }
 @media (max-width: 540px) {
   .hero-telegram { font-size: .9rem; padding-right: 1rem; }
+  .hero-x { font-size: .9rem; padding-right: 1rem; }
 }
 
 /* ============================================================
@@ -1249,6 +1265,8 @@ input:hover, textarea:hover, .lot-form select:hover { border-color: #2a3b5c; }
 .footer-col a:hover { color: var(--green-2); }
 .footer-tg { display: inline-flex; align-items: center; gap: .45rem; }
 .footer-tg svg { width: 15px; height: 15px; fill: #2aabee; flex: none; }
+.footer-x { display: inline-flex; align-items: center; gap: .45rem; }
+.footer-x svg { width: 13px; height: 13px; fill: currentColor; flex: none; margin: 0 1px; }
 .footer-legal { margin-top: clamp(2rem, 4vw, 2.75rem); padding-top: 1.25rem; border-top: 1px solid rgba(30,43,69,.8); }
 .footer-risk { display: flex; gap: .6rem; align-items: flex-start; max-width: 52rem; font-size: .82rem; line-height: 1.55; color: #a3afc3; }
 .footer-risk::before { content: "!"; flex: none; display: grid; place-items: center; width: 1.15rem; height: 1.15rem; margin-top: .08rem; border-radius: 50%; font-size: .72rem; font-weight: 800; color: #1a1205; background: var(--amber); }

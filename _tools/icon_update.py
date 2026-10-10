@@ -10,7 +10,7 @@ def fix(text, pre):
     if 'icon-192.png' not in text:
         text = re.sub(r'(\n(\s*)<link rel="icon" type="image/png" sizes="512x512" href="([^"]*?)icon-512\.png\?v=18">)',
                       lambda m: f'\n{m.group(2)}<link rel="icon" type="image/png" sizes="192x192" href="{m.group(3)}icon-192.png?v=18">' + m.group(1), text)
-    text = re.sub(r'styles\.css\?v=(48|49|50)\b', 'styles.css?v=51', text)
+    text = re.sub(r'styles\.css\?v=(48|49|50)\b', 'styles.css?v=52', text)
     return text
 for f in sys.argv[1:]:
     p = pathlib.Path(f); t = p.read_text()
