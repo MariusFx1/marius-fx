@@ -136,7 +136,7 @@ const assert = (c, m) => { if (!c) { console.error('FAIL:', m); process.exitCode
   await new Promise(r => setTimeout(r, 1500));
   const files = fs.readdirSync(DL);
   log('downloads:', files);
-  assert(files.some(f => /^jurnal-marius-fx-\d{4}-\d{2}-\d{2}\.xlsx$/.test(f)), 'xlsx exported');
+  assert(files.some(f => /^jurnal-ms-prime-\d{4}-\d{2}-\d{2}\.xlsx$/.test(f)), 'xlsx exported');
   const backup = files.find(f => /backup.*\.json$/.test(f));
   assert(backup, 'json backup exported');
 

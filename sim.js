@@ -1,5 +1,5 @@
 /* ============================================================
-   Marius FX: simulator de backtesting (redare bară cu bară)
+   MS Prime: simulator de backtesting (redare bară cu bară)
    Date istorice reale (HistData.com, agregate în H1/H4/D1), grafic TradingView Lightweight Charts.
    Totul rulează local; sesiunile se salvează doar în localStorage.
    ============================================================ */

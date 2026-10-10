@@ -99,7 +99,7 @@ FAQ = [
    '<p>Nu îți pot promite asta și nimeni nu poate. Eu am învățat singur și mi-au trebuit mulți ani de greșeli, răbdare și disciplină până am ajuns să tranzacționez consecvent. Mulți oameni nu ajung niciodată acolo și e bine să știi asta de la început.</p>'
    '<p>Ce poți controla este procesul: risc mic, plan scris, jurnal și răbdare. Rezultatele vin, dacă vin, după foarte multe tranzacții, nu după câteva săptămâni.</p>'),
   ('semnale', 'Dai semnale de tranzacționare?',
-   '<p>Nu. Marius FX înseamnă doar educație: nu dau semnale, nu administrez conturi și nu fac consultanță de investiții personalizată. Vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
+   '<p>Nu. MS Prime înseamnă doar educație: nu dau semnale, nu administrez conturi și nu fac consultanță de investiții personalizată. Vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
   ('incep', 'De unde încep dacă nu știu nimic?',
    '<p>Cu <a href="lectie.html">cursul pentru începători</a>: 8 capitole, de la pip și lot până la primul plan de trading. După ce îl termini, fă <a href="test.html">testul de 15 întrebări</a> ca să vezi ce ai înțeles, apoi exersează calculul lotului cu <a href="calculator.html">calculatorul</a>.</p>'),
   ('broker', 'Ce broker folosești?',

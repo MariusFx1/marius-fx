@@ -383,7 +383,7 @@ const roNum = (x, d) => Number(x).toLocaleString('ro-RO', { minimumFractionDigit
   await page.goto(`${BASE}/simulator.html`, { waitUntil: 'networkidle2' });
   const seo = await page.evaluate(() => ({ t: document.title, d: document.querySelector('meta[name="description"]').content, can: document.querySelector('link[rel="canonical"]').href, og: document.querySelector('meta[property="og:title"]').content, ld: JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent) }));
   const types = seo.ld['@graph'].map(x => x['@type']);
-  assert(seo.t === 'Simulator de backtesting Forex gratuit | Marius FX' && seo.d.length <= 160 && seo.can === 'https://mariusfx1.github.io/marius-fx/simulator.html' && seo.og === seo.t, 'simulator SEO: title, description, canonical, OG');
+  assert(seo.t === 'Simulator de backtesting Forex gratuit | MS Prime' && seo.d.length <= 160 && seo.can === 'https://mariusfx1.github.io/marius-fx/simulator.html' && seo.og === seo.t, 'simulator SEO: title, description, canonical, OG');
   assert(types.includes('WebPage') && types.includes('WebApplication') && types.includes('BreadcrumbList'), `simulator JSON-LD: ${types.join(', ')}`);
   // fără JavaScript
   const p2 = await newPage({ width: 1280, height: 900 }); await p2.setJavaScriptEnabled(false);

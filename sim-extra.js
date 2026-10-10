@@ -1,4 +1,4 @@
-/* Simulator Marius FX: desene (linii, zone, Fibonacci) și indicatori (EMA, SMA, Bollinger, RSI, MACD, ATR).
+/* Simulator MS Prime: desene (linii, zone, Fibonacci) și indicatori (EMA, SMA, Bollinger, RSI, MACD, ATR).
    Se încarcă înainte de sim.js, care apelează window.SimExtra.* (load, save, onData, onCrosshair, busy). */
 (function () {
   'use strict';

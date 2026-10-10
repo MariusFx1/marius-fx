@@ -11,11 +11,11 @@ FONT_ASYNC = (f'  <link rel="preload" as="style" href="{FONT}" onload="this.onlo
 GSC_NOTE = ('  <!-- Google Search Console (metoda „etichetă HTML”): pune aici eticheta primită, de forma\n'
             '       <meta name="google-site-verification" content="CODUL-PRIMIT-DE-LA-GOOGLE">  (doar pe pagina principală) -->\n')
 
-ORG = {'@type': 'Organization', '@id': SITE + '#org', 'name': 'Marius FX', 'url': SITE,
+ORG = {'@type': 'Organization', '@id': SITE + '#org', 'name': 'MS Prime', 'url': SITE,
        'logo': {'@type': 'ImageObject', 'url': SITE + 'icon-512.png', 'width': 512, 'height': 512},
        'image': SITE + 'og-image.png', 'email': 'contact.mariusfx@gmail.com',
        'founder': {'@type': 'Person', 'name': 'Marius'}, 'sameAs': ['https://t.me/FreeMariusFx']}
-WEBSITE = {'@type': 'WebSite', '@id': SITE + '#website', 'url': SITE, 'name': 'Marius FX', 'inLanguage': 'ro',
+WEBSITE = {'@type': 'WebSite', '@id': SITE + '#website', 'url': SITE, 'name': 'MS Prime', 'inLanguage': 'ro',
            'description': PAGES['index']['desc'], 'publisher': {'@id': SITE + '#org'}}
 
 def esc(s): return html.escape(s, quote=True)

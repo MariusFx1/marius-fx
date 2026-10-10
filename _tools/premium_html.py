@@ -11,7 +11,7 @@ FOOTER = f'''  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
     <div class="container footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>Marius <b>FX</b></a>
+          <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></span>MS <b>Prime</b></a>
         <p>Educație pentru swing trading disciplinat: reguli clare, managementul riscului și un proces pe care îl poți repeta.</p>
       </div>
       <nav class="footer-col" aria-label="Învață">
@@ -44,7 +44,7 @@ FOOTER = f'''  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
     <div class="container footer-legal">
       <p class="footer-risk" id="avertisment">{RISK}</p>
       <div class="footer-bottom">
-        <p>© <span id="an"></span> Marius FX · Marius</p>
+        <p>© <span id="an"></span> MS Prime · Marius</p>
         <a href="#continut">Înapoi sus ↑</a>
       </div>
     </div>
@@ -77,7 +77,7 @@ def feature(k, t, d):
           </li>'''
 HOME_SECTIONS = '''
     <!-- ===== CIFRE (doar fapte reale) ===== -->
-    <section class="home-stats" aria-label="Marius FX pe scurt">
+    <section class="home-stats" aria-label="MS Prime pe scurt">
       <div class="container">
         <ul class="stats">
           <li class="stat-item"><span class="stat-num"><span data-count="6">6</span>+</span><span class="stat-label">ani de experiență în swing trading</span></li>
@@ -106,11 +106,11 @@ HOME_SECTIONS = '''
 def meta_block(name, title, desc):
     url = SITE if name == 'index' else SITE + name + '.html'
     t = html.escape(title.replace(' — ', ' · '), quote=True)
-    d = html.escape(desc.replace('Marius FX — ', 'Marius FX: ').replace(' — ', ': '), quote=True)
+    d = html.escape(desc.replace('MS Prime — ', 'MS Prime: ').replace(' — ', ': '), quote=True)
     img = SITE + 'og-image.png'
     return f'''  <link rel="canonical" href="{url}">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Marius FX">
+  <meta property="og:site_name" content="MS Prime">
   <meta property="og:locale" content="ro_RO">
   <meta property="og:title" content="{t}">
   <meta property="og:description" content="{d}">
@@ -118,7 +118,7 @@ def meta_block(name, title, desc):
   <meta property="og:image" content="{img}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Marius FX: Educație · Disciplină · Managementul riscului">
+  <meta property="og:image:alt" content="MS Prime: Educație · Disciplină · Managementul riscului">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{t}">
   <meta name="twitter:description" content="{d}">

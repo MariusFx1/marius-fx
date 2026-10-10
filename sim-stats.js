@@ -1,4 +1,4 @@
-/* Marius FX: statistici detaliate, istoric pe sesiuni, comparare strategii (fără dependențe; folosește SimEngine). */
+/* MS Prime: statistici detaliate, istoric pe sesiuni, comparare strategii (fără dependențe; folosește SimEngine). */
 (function () {
   'use strict';
   const E = window.SimEngine;

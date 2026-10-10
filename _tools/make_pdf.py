@@ -21,7 +21,7 @@ for i in range(1, ROWS + 1):
                   for k, (_, _, hint) in enumerate(COLS))
     rows += f"<tr>{tds}</tr>"
 checks = "".join(f'<li><i></i>{c}</li>' for c in CHECK)
-html = f"""<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"><title>Jurnal de tranzacționare — Marius FX</title>
+html = f"""<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"><title>Jurnal de tranzacționare — MS Prime</title>
 <style>
 {FACES}
 @page {{ size: A4 landscape; margin: 8mm 8mm 7mm; }}
@@ -57,7 +57,7 @@ td:first-child {{ vertical-align: middle; }}
 <div class="top">
   <div class="brand">
     <div class="mark"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg></div>
-    <div><div class="t1">Marius <b>FX</b> · șablon pentru elevi</div>
+    <div><div class="t1">MS <b>Prime</b> · șablon pentru elevi</div>
       <h1>Jurnal de tranzacționare</h1>
       <p>Notează fiecare tranzacție: planul, execuția, emoțiile și lecția. Disciplina se construiește pe hârtie, nu din memorie.</p></div>
   </div>

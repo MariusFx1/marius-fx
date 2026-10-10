@@ -208,8 +208,8 @@ const CASES = JSON.parse(fs.readFileSync(__dirname + '/rr_cases.json', 'utf8'));
   if (!LIVE) {
     // conținutul nu se schimbă; sunt permise doar meniul/subsolul (Simulator) și versiunile CSS/JS
     const lines = execSync('git diff 955b134 -- patternuri.html', { cwd: ROOT }).toString().split('\n').filter(l => /^[-+][^-+]/.test(l));
-    const okLine = l => /styles\.css\?v=\d+|script\.js\?v=\d+|<li><a href="simulator\.html">Simulator<\/a><\/li>|i18n:|rel="alternate" hreflang=|i18n\.js\?v=|i18n\/\w+\.js\?v=|fonts\.googleapis\.com|fonts\.gstatic\.com|fonts\/manrope-latin\.woff2/.test(l);
-    const imgs = (execSync('git status --porcelain -- images/', { cwd: ROOT }).toString() + execSync('git diff --stat 955b134 -- images/', { cwd: ROOT }).toString()).split('\n').filter(x => x.trim() && !/images\/flags\/|images\/masina-\d-\d+\.(webp|avif)|files? changed/.test(x)).join('\n');
+    const okLine = l => /styles\.css\?v=\d+|script\.js\?v=\d+|<li><a href="simulator\.html">Simulator<\/a><\/li>|i18n:|rel="alternate" hreflang=|i18n\.js\?v=|i18n\/\w+\.js\?v=|fonts\.googleapis\.com|fonts\.gstatic\.com|fonts\/manrope-latin\.woff2/.test(l) || /MS Prime|MS <b>Prime<\/b>|Marius FX|Marius <b>FX<\/b>|og-image\.png|\.png\?v=1[56]|favicon\.ico\?v=1[56]|site\.webmanifest\?v=1[56]/.test(l);
+    const imgs = (execSync('git status --porcelain -- images/', { cwd: ROOT }).toString() + execSync('git diff --stat 955b134 -- images/', { cwd: ROOT }).toString()).split('\n').filter(x => x.trim() && !/images\/flags\/|images\/masina-\d-\d+\.(webp|avif)|images\/jurnal-sablon-preview\.png|images\/CITESTE-MA\.txt|files? changed/.test(x)).join('\n');
     assert(lines.every(okLine) && imgs === '', 'patternuri.html content (and pattern images) unchanged: only nav/footer link + asset versions' + (lines.every(okLine) ? '' : ' ' + lines.filter(l => !okLine(l)).join(' | ')));
   }
   // meniul: 12 linkuri (cu Simulator), un rând de la 1121px

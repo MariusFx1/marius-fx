@@ -1,4 +1,4 @@
-/* Marius FX: traduceri pentru textele generate din JavaScript + selectorul de limbă.
+/* MS Prime: traduceri pentru textele generate din JavaScript + selectorul de limbă.
    Româna este limba sursă: pe paginile în română T(text) întoarce chiar textul.
    Pe /en/, /es/, /pt/ dicționarul (i18n/<limba>.js) e încărcat înaintea acestui fișier. */
 (function () {

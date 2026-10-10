@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Marius FX: versiuni EN/ES/PT generate din paginile în română (sursa unică).
+"""MS Prime: versiuni EN/ES/PT generate din paginile în română (sursa unică).
 
   python3 build_i18n.py --langs en [--extract] [--strict]
 
@@ -43,8 +43,8 @@ def has_words(t):
     return bool(re.search(r'[^\W\d_]{2,}', t))
 
 AUTO_KEEP = re.compile(r'^[A-Z0-9 /:.,·+×%€$£–\-()&#;|]+$')   # coduri: EURUSD, H4, R:R, 1:30
-BRANDS = {'Marius FX', 'Marius', 'Telegram', 'TradingView', 'MetaTrader', 'ForexFactory', 'Investing.com', 'Myfxbook', 'FX', 'XTB', 'XM', 'HistData.com',
-          'contact.mariusfx@gmail.com', 'Marius FX · Marius', 'Buy', 'Sell', 'Stop loss', 'Take profit', 'Swing trading', 'Forex', 'Long', 'Short'}
+BRANDS = {'MS Prime', 'Marius', 'Telegram', 'TradingView', 'MetaTrader', 'ForexFactory', 'Investing.com', 'Myfxbook', 'FX', 'XTB', 'XM', 'HistData.com',
+          'contact.mariusfx@gmail.com', 'MS Prime · Marius', 'Buy', 'Sell', 'Stop loss', 'Take profit', 'Swing trading', 'Forex', 'Long', 'Short'}
 
 def auto_keep(key):
     t = visible(key)

@@ -47,8 +47,8 @@ L = {h: get_column_letter(i + 1) for i, (h, _, _) in enumerate(COLS)}
 
 wb = Workbook()
 wb.calculation = CalcProperties(fullCalcOnLoad=True)
-wb.properties.creator = "Marius FX"
-wb.properties.title = "Jurnal de tranzacționare — Marius FX"
+wb.properties.creator = "MS Prime"
+wb.properties.title = "Jurnal de tranzacționare — MS Prime"
 wb.properties.subject = "Șablon educațional de jurnal de tranzacționare"
 
 # ---------------------------------------------------------------- Jurnal
@@ -60,7 +60,7 @@ ws.sheet_view.zoomScale = 100
 
 last_col = get_column_letter(NCOL)
 ws.merge_cells(f"A1:{last_col}1")
-ws["A1"] = "Jurnal de tranzacționare — Marius FX"
+ws["A1"] = "Jurnal de tranzacționare — MS Prime"
 ws["A1"].font = Font(name=FONT, bold=True, size=16, color="FFFFFF")
 ws["A1"].alignment = Alignment(vertical="center", indent=1)
 ws.merge_cells(f"A2:{last_col}2")
@@ -170,7 +170,7 @@ ws.page_setup.fitToWidth, ws.page_setup.fitToHeight = 1, 0
 ws.sheet_properties.pageSetUpPr.fitToPage = True
 ws.print_title_rows = "3:3"
 ws.page_margins.left = ws.page_margins.right = 0.4
-ws.oddFooter.center.text = "Marius FX — Jurnal de tranzacționare · pagina &P din &N"
+ws.oddFooter.center.text = "MS Prime — Jurnal de tranzacționare · pagina &P din &N"
 
 # ---------------------------------------------------------------- Rezumat
 rz = wb.create_sheet("Rezumat")

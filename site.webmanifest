@@ -1,13 +1,13 @@
 {
-  "name": "Marius FX",
-  "short_name": "Marius FX",
+  "name": "MS Prime",
+  "short_name": "MS Prime",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#070b14",
   "theme_color": "#070b14",
   "icons": [
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "favicon.png", "sizes": "32x32", "type": "image/png" }
+    { "src": "icon-512.png?v=16", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "apple-touch-icon.png?v=16", "sizes": "180x180", "type": "image/png" },
+    { "src": "favicon.png?v=16", "sizes": "32x32", "type": "image/png" }
   ]
 }

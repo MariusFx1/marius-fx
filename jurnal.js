@@ -1,5 +1,5 @@
 /* ============================================================
-   Marius FX — Jurnal de tranzacționare în browser
+   MS Prime — Jurnal de tranzacționare în browser
    Datele se salvează DOAR în localStorage-ul vizitatorului.
    Nimic nu este trimis pe server; nu există cont sau sincronizare.
    ============================================================ */
@@ -385,8 +385,8 @@
   }
 
   $('jt-export-json').addEventListener('click', () => {
-    const payload = { aplicatie: 'Marius FX — jurnal de tranzacționare', versiune: 1, exportat: new Date().toISOString(), tranzactii: sortTrades(trades).reverse() };
-    download(`jurnal-marius-fx-backup-${todayISO()}.json`, new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const payload = { aplicatie: 'MS Prime — jurnal de tranzacționare', versiune: 1, exportat: new Date().toISOString(), tranzactii: sortTrades(trades).reverse() };
+    download(`jurnal-ms-prime-backup-${todayISO()}.json`, new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
     status(T('Backup descărcat. Păstrează fișierul într-un loc sigur (ex.: Drive, e-mail către tine).'));
   });
 
@@ -494,7 +494,7 @@
     });
     const s = computeStats(list);
     const sum = [
-      { height: 24, cells: [[T('Rezumat — jurnalul tău Marius FX'), 6]] },
+      { height: 24, cells: [[T('Rezumat — jurnalul tău MS Prime'), 6]] },
       { cells: [[T('Exportat la {d}', { d: fmtDate(todayISO()) }), 0]] },
       { cells: [] },
       { height: 22, cells: [[T('Indicator'), 1], [T('Valoare'), 1]] },
@@ -569,7 +569,7 @@
 
   $('jt-export-xlsx').addEventListener('click', () => {
     if (!trades.length) return;
-    download(`jurnal-marius-fx-${todayISO()}.xlsx`, buildXlsx(trades));
+    download(`jurnal-ms-prime-${todayISO()}.xlsx`, buildXlsx(trades));
     status(T('Fișierul Excel a fost descărcat.'));
   });
 

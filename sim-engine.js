@@ -1,5 +1,5 @@
 /* ============================================================
-   Marius FX: motorul simulatorului de backtesting (fără DOM)
+   MS Prime: motorul simulatorului de backtesting (fără DOM)
    Folosit de sim.js în browser și testat separat în Node.
    Convenții (aceleași ca la calculatorul de lot):
    pip = 0,0001 (0,01 la perechile JPY, 0,10 la XAUUSD);

@@ -290,7 +290,7 @@ const contactForm = $('contact-form');
 if (contactForm) contactForm.addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target;
-  const subject = encodeURIComponent(T('Marius FX — mesaj de la {nume}', { nume: f.nume.value.trim() }));
+  const subject = encodeURIComponent(T('MS Prime — mesaj de la {nume}', { nume: f.nume.value.trim() }));
   const body = encodeURIComponent(
     T('Nume') + ': ' + f.nume.value.trim() + '\n' +
     'E-mail: ' + f.email.value.trim() + '\n\n' +

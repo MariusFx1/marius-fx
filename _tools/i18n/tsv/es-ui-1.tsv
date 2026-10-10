@@ -9,7 +9,7 @@
 8	Riesgo real con {lot} lotes: {bani}.
 9	Valor del pip usado: unos {pip} {moneda} por lote estándar, por pip.
 10	Es una estimación. Confirma el valor del pip en la plataforma de tu bróker. No dice nada sobre posibles ganancias.
-11	Marius FX: mensaje de {nume}
+11	MS Prime: mensaje de {nume}
 12	Nombre
 13	Mensaje
 14	Londres
@@ -109,7 +109,7 @@
 108	Resultado
 109	¿Respeté el plan?
 110	Lección / qué voy a mejorar
-111	Resumen: tu diario de trading Marius FX
+111	Resumen: tu diario de trading MS Prime
 112	Exportado el {d}
 113	Indicador
 114	Valor

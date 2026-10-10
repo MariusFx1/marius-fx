@@ -42,8 +42,8 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
         };
       });
       const url = f === 'index' ? SITE : SITE + f + '.html';
-      assert(i.ogTitle && i.ogDesc && i.ogImg === SITE + 'og-image.png' && i.ogUrl === url && i.ogW === '1200' && i.ogH === '630', `${label} ${f}: Open Graph tags`);
-      assert(i.tw === 'summary_large_image' && i.twImg === SITE + 'og-image.png', `${label} ${f}: Twitter card tags`);
+      assert(i.ogTitle && i.ogDesc && i.ogImg === SITE + 'og-image.png?v=2' && i.ogUrl === url && i.ogW === '1200' && i.ogH === '630', `${label} ${f}: Open Graph tags`);
+      assert(i.tw === 'summary_large_image' && i.twImg === SITE + 'og-image.png?v=2', `${label} ${f}: Twitter card tags`);
       assert(i.canon === url && i.theme === '#070b14' && i.favicon, `${label} ${f}: canonical + theme-color + favicon kept`);
       { const v = 48; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(i.js[0] === 'script.js?v=38 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);

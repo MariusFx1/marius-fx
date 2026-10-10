@@ -9,7 +9,7 @@
 8	Actual risk at {lot} lots: {bani}.
 9	Pip value used: about {pip} {moneda} per standard lot, per pip.
 10	This is an estimate. Confirm the pip value on your broker's platform. It says nothing about possible profit.
-11	Marius FX: message from {nume}
+11	MS Prime: message from {nume}
 12	Name
 13	Message
 14	London
@@ -109,7 +109,7 @@
 108	Result
 109	Did I follow the plan?
 110	Lesson / what I'll improve
-111	Summary: your Marius FX trading journal
+111	Summary: your MS Prime trading journal
 112	Exported on {d}
 113	Metric
 114	Value

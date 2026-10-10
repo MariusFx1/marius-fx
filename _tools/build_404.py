@@ -8,10 +8,10 @@ s = src
 s = re.sub(r'  <link rel="canonical"[^>]*>\n', '', s)
 s = re.sub(r'  <meta property="og:url"[^>]*>\n', '', s)
 s = re.sub(r'  <script type="application/ld\+json">.*?</script>\n', '', s, flags=re.S)
-s = re.sub(r'<title>.*?</title>', '<title>Pagina nu a fost găsită (404) | Marius FX</title>', s)
-D = 'Pagina căutată nu există pe Marius FX. Mergi la pagina principală, la cursul Forex gratuit pentru începători sau la instrumentele site-ului.'
+s = re.sub(r'<title>.*?</title>', '<title>Pagina nu a fost găsită (404) | MS Prime</title>', s)
+D = 'Pagina căutată nu există pe MS Prime. Mergi la pagina principală, la cursul Forex gratuit pentru începători sau la instrumentele site-ului.'
 s = re.sub(r'(<meta name="description" content=")[^"]*', r'\g<1>' + D, s)
-s = re.sub(r'(<meta (?:property="og:title"|name="twitter:title") content=")[^"]*', r'\g<1>Pagina nu a fost găsită | Marius FX', s)
+s = re.sub(r'(<meta (?:property="og:title"|name="twitter:title") content=")[^"]*', r'\g<1>Pagina nu a fost găsită | MS Prime', s)
 s = re.sub(r'(<meta (?:property="og:description"|name="twitter:description") content=")[^"]*', r'\g<1>' + D, s)
 s = s.replace('  <meta name="viewport"', '  <meta name="robots" content="noindex">\n  <meta name="viewport"', 1)
 s = s.replace('<a href="contact.html" aria-current="page">Contact</a>', '<a href="contact.html">Contact</a>')
