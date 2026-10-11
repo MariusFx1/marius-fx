@@ -1117,5 +1117,14 @@
  "Urmărește pe X": "Follow on X",
  "Urmărește pe X · @MSPrime1fx": "Follow on X · @MSPrime1fx",
  "X · @MSPrime1fx": "X · @MSPrime1fx",
- "<span>Urmărește pe X</span>": "<span>Follow on X</span>"
+ "<span>Urmărește pe X</span>": "<span>Follow on X</span>",
+ "Grup privat de semnale · acces doar cu abonament lunar": "Private signals group · monthly subscription only",
+ "Cere acces": "Request access",
+ "Semnalele nu sunt sfaturi de investiții. Tradingul implică riscuri.": "Signals are not investment advice. Trading involves risk.",
+ "VIP Discord (privat)": "VIP Discord (private)",
+ "VIP Discord 🔒": "VIP Discord 🔒",
+ "VIP Discord 🔒 · Cere acces": "VIP Discord 🔒 · Request access",
+ "Grup privat de semnale · acces doar cu abonament lunar. Semnalele nu sunt sfaturi de investiții. Tradingul implică riscuri.": "Private signals group · monthly subscription only. Signals are not investment advice. Trading involves risk.",
+ "<a class=\"vip-discord-btn\" href=\"https://t.me/+sbQPdX_yA1E5NmM0\" target=\"_blank\" rel=\"noopener\">Cere acces</a>": "<a class=\"vip-discord-btn\" href=\"https://t.me/+sbQPdX_yA1E5NmM0\" target=\"_blank\" rel=\"noopener\">Request access</a>",
+ "VIP Discord 🔒 · Cere acces</a><span class=\"vip-discord-sub\">Grup privat de semnale · acces doar cu abonament lunar. Semnalele nu sunt sfaturi de investiții. Tradingul implică riscuri.</span>": "VIP Discord 🔒 · Request access</a><span class=\"vip-discord-sub\">Private signals group · monthly subscription only. Signals are not investment advice. Trading involves risk.</span>"
 }
