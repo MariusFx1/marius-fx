@@ -212,7 +212,7 @@ const BY_Q = new Map(QUESTIONS.map(q => [q.q, q]));
   const mism = faqNode.mainEntity.filter((e, i) => e['@type'] !== 'Question' || e.acceptedAnswer['@type'] !== 'Answer' || e.name !== norm(fq.vis[i].q) || e.acceptedAnswer.text !== norm(fq.vis[i].a));
   assert(mism.length === 0, `FAQ JSON-LD matches visible text exactly ${mism.map(m => m.name).join(' | ')}`);
   const T = fq.text;
-  for (const [k, re] of [['demo first', /cont demo/], ['no promise', /Nu îți pot promite/], ['no signals', /nu dau semnale/], ['commission disclosure', /pot primi un comision/],
+  for (const [k, re] of [['demo first', /cont demo/], ['no promise', /Nu îți pot promite/], ['VIP signals disclosure', /grup VIP privat, cu abonament lunar[\s\S]*nu sunt sfaturi de investiții/], ['commission disclosure', /pot primi un comision/],
     ['regulation check', /reglementată/], ['ASF/ESMA', /ASF[\s\S]*ESMA|ESMA[\s\S]*ASF/], ['Declarația unică', /Declarația unică/], ['accountant', /contabil/], ['telegram', /t\.me\/\+sbQPdX_yA1E5NmM0/], ['email', /contact\.mariusfx@gmail\.com/]])
     assert(re.test(T), `FAQ content: ${k}`);
   for (const h of ['broker.html', 'https://t.me/+sbQPdX_yA1E5NmM0', 'mailto:contact.mariusfx@gmail.com', 'lectie.html', 'test.html', 'contact.html']) if (!fq.links.includes(h)) assert(false, `FAQ links to ${h}`);

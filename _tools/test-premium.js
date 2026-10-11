@@ -45,7 +45,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
       assert(i.ogTitle && i.ogDesc && i.ogImg === SITE + 'og-image.png?v=3' && i.ogUrl === url && i.ogW === '1200' && i.ogH === '630', `${label} ${f}: Open Graph tags`);
       assert(i.tw === 'summary_large_image' && i.twImg === SITE + 'og-image.png?v=3', `${label} ${f}: Twitter card tags`);
       assert(i.canon === url && i.theme === '#070b14' && i.favicon, `${label} ${f}: canonical + theme-color + favicon kept`);
-      { const v = 53; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
+      { const v = 54; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(i.js[0] === 'script.js?v=38 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
       assert(i.risks.length === 1 && i.risks[0] === RISK, `${label} ${f}: exact footer risk line (once)`);
       for (const h of ['lectie.html', 'test.html', 'intrebari.html', 'reguli.html', 'patternuri.html', 'calculator.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'contact.html', 'https://t.me/+sbQPdX_yA1E5NmM0', 'mailto:contact.mariusfx@gmail.com'])
@@ -97,7 +97,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
   assert(h.tg === 'https://t.me/+sbQPdX_yA1E5NmM0' && h.chip && h.lesson === 'lectie.html', 'home: Telegram pill, session chip, lesson link kept');
   assert(/Manrope/.test(h.font) && h.bg === 'rgb(7, 11, 20)', 'home: Manrope + navy background kept');
   assert(h.headerPos === 'sticky', 'header is sticky');
-  assert(JSON.stringify(h.stats) === JSON.stringify(['6+ ani de experiență în swing trading', '8 capitole gratuite pentru începători', '5 instrumente gratuite: calculator, sesiuni, calendar, jurnal, patternuri', '0 semnale, doar educație și disciplină']), 'home: stats strip shows only true numbers ' + JSON.stringify(h.stats));
+  assert(JSON.stringify(h.stats) === JSON.stringify(['6+ ani de experiență în swing trading', '8 capitole gratuite pentru începători', '5 instrumente gratuite: calculator, sesiuni, calendar, jurnal, patternuri', '0 costuri pentru educație · semnalele, în grupul VIP']), 'home: stats strip shows only true numbers ' + JSON.stringify(h.stats));
   assert(JSON.stringify(h.feats) === JSON.stringify(['lectie.html|Începători|true', 'test.html|Test|true', 'reguli.html|Reguli|true', 'patternuri.html|Patternuri|true', 'sesiuni.html|Sesiuni|true', 'calendar.html|Calendar|true', 'jurnal.html|Jurnal|true', 'calculator.html|Calculator|true', 'glosar.html|Glosar|true', 'intrebari.html|Întrebări frecvente|true']), 'home: 10 feature cards with icons + links');
   assert(h.preconnect.some(u => u.includes('s3.tradingview.com')) && !h.preconnect.some(u => /fonts\.(gstatic|googleapis)\.com/.test(u)), 'home: preconnect TradingView, no Google Fonts (fonts self-hosted)');
   // count-up runs and ends on the true value

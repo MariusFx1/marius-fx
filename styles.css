@@ -2420,3 +2420,6 @@ html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscro
   .vip-discord { flex-wrap: wrap; gap: .55rem .7rem; }
   .vip-discord-btn { flex: 1 1 100%; text-align: center; }
 }
+/* accent auriu „VIP” în texte */
+.vip-gold { font-weight: 800; letter-spacing: .02em; background: linear-gradient(135deg, #f1d77a, #d4af37); -webkit-background-clip: text; background-clip: text; color: #d4af37; -webkit-text-fill-color: transparent; }
+.socials a.social-vip { display: inline-flex; align-items: center; gap: .45rem; }

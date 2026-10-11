@@ -3,7 +3,7 @@ SITE = 'https://mariusfx1.github.io/marius-fx/'
 PAGES = {
   'index': dict(
     title='MS Prime: Forex pentru începători și managementul riscului',
-    desc='Educație Forex gratuită în română pentru începători: curs pas cu pas, managementul riscului, calculator de lot, sesiuni live și calendar economic. Fără semnale.',
+    desc='Educație Forex gratuită pentru începători: curs pas cu pas, managementul riscului, calculator de lot, sesiuni live și calendar. Plus grup VIP privat de semnale.',
     crumb=None),
   'lectie': dict(
     title='Curs Forex gratuit pentru începători, pas cu pas | MS Prime',
@@ -15,7 +15,7 @@ PAGES = {
     crumb='Test pentru începători'),
   'reguli': dict(
     title='10 reguli de trading disciplinat pentru începători',
-    desc='Zece reguli de bază pentru trading disciplinat: risc de 1–2% pe tranzacție, stop loss mereu, plan scris, jurnal și atenție la levier. Educație, fără semnale.',
+    desc='Zece reguli de bază pentru trading disciplinat: risc 1–2% pe tranzacție, stop loss mereu, plan scris, jurnal, atenție la levier. Educație gratuită + grup VIP privat.',
     h1=('Reguli de bază', 'Reguli de bază în trading'), crumb='Reguli de bază'),
   'patternuri': dict(
     title='Patternuri de grafic Forex explicate simplu | MS Prime',
@@ -39,7 +39,7 @@ PAGES = {
     h1=('Calculator de mărime a poziției', 'Calculator de lot Forex'), crumb='Calculator de lot'),
   'despre': dict(
     title='Despre Marius: swing trader și educație Forex | MS Prime',
-    desc='Cine este Marius: swing trader de peste șase ani, care împărtășește gratuit educație Forex despre disciplină și managementul riscului. Fără semnale.',
+    desc='Cine este Marius: swing trader de peste șase ani, care împărtășește gratuit educație Forex despre disciplină și risc. Educație gratuită + grup VIP privat.',
     h1=('Despre Marius', 'Despre Marius'), crumb='Despre'),
   'broker': dict(
     title='Brokerul folosit de Marius: RoboForex (link afiliat)',

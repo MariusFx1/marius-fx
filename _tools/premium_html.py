@@ -84,7 +84,7 @@ HOME_SECTIONS = '''
           <li class="stat-item"><span class="stat-num"><span data-count="6">6</span>+</span><span class="stat-label">ani de experiență în swing trading</span></li>
           <li class="stat-item"><span class="stat-num" data-count="8">8</span><span class="stat-label">capitole gratuite pentru începători</span></li>
           <li class="stat-item"><span class="stat-num" data-count="4">4</span><span class="stat-label">instrumente gratuite: calculator, sesiuni, jurnal, patternuri</span></li>
-          <li class="stat-item"><span class="stat-num">0</span><span class="stat-label">semnale, doar educație și disciplină</span></li>
+          <li class="stat-item"><span class="stat-num">0</span><span class="stat-label">costuri pentru educație · semnalele, în grupul <span class="vip-gold">VIP</span></span></li>
         </ul>
       </div>
     </section>
@@ -95,7 +95,7 @@ HOME_SECTIONS = '''
         <header class="section-head">
           <p class="kicker">Ce găsești aici</p>
           <h2 id="features-title">Totul pentru un început disciplinat</h2>
-          <p class="section-sub">Lecții și instrumente gratuite, ca să înveți un proces, nu să urmezi semnale.</p>
+          <p class="section-sub">Lecții și instrumente gratuite, ca să înveți un proces. Educație gratuită + grup <span class="vip-gold">VIP</span> privat.</p>
         </header>
         <ul class="features">
 ''' + '\n'.join(feature(*f) for f in FEATURES) + '''

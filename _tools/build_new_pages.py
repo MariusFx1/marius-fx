@@ -99,7 +99,7 @@ FAQ = [
    '<p>Nu îți pot promite asta și nimeni nu poate. Eu am învățat singur și mi-au trebuit mulți ani de greșeli, răbdare și disciplină până am ajuns să tranzacționez consecvent. Mulți oameni nu ajung niciodată acolo și e bine să știi asta de la început.</p>'
    '<p>Ce poți controla este procesul: risc mic, plan scris, jurnal și răbdare. Rezultatele vin, dacă vin, după foarte multe tranzacții, nu după câteva săptămâni.</p>'),
   ('semnale', 'Dai semnale de tranzacționare?',
-   '<p>Nu. MS Prime înseamnă doar educație: nu dau semnale, nu administrez conturi și nu fac consultanță de investiții personalizată. Vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
+   '<p>Educația de pe MS Prime este gratuită. Pentru semnale există un grup VIP privat, cu abonament lunar; ceri acces din comunitatea de Telegram. Semnalele nu sunt sfaturi de investiții, iar eu nu administrez conturi și nu fac consultanță personalizată. Chiar și cu semnale, vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
   ('incep', 'De unde încep dacă nu știu nimic?',
    '<p>Cu <a href="lectie.html">cursul pentru începători</a>: 8 capitole, de la pip și lot până la primul plan de trading. După ce îl termini, fă <a href="test.html">testul de 15 întrebări</a> ca să vezi ce ai înțeles, apoi exersează calculul lotului cu <a href="calculator.html">calculatorul</a>.</p>'),
   ('broker', 'Ce broker folosești?',
@@ -128,7 +128,7 @@ FAQ = [
    '<p>Pe swing trading nu trebuie să stai toată ziua în fața graficelor. Pe D1 și H4, analiza se face de câteva ori pe zi, după închiderea lumânărilor, iar pozițiile rămân deschise zile sau săptămâni, cu stop loss și take profit setate.</p>'
    '<p>La început, pune mai mult timp în învățat decât în tranzacționat: cursul, contul demo, jurnalul. O recapitulare a jurnalului în fiecare weekend contează mai mult decât orele petrecute zilnic în fața ecranului.</p>'),
   ('comunitate', 'Cum intru în comunitate?',
-   '<p>Comunitatea Free Marius FX de pe Telegram este gratuită. Intri de aici: <a href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener">t.me/+sbQPdX_yA1E5NmM0</a>. Acolo vorbim despre educație, disciplină și managementul riscului, nu despre semnale.</p>'),
+   '<p>Comunitatea Free Marius FX de pe Telegram este gratuită. Intri de aici: <a href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener">t.me/+sbQPdX_yA1E5NmM0</a>. Acolo vorbim despre educație, disciplină și managementul riscului. Semnalele sunt doar în grupul VIP privat, cu abonament lunar.</p>'),
   ('contact', 'Cum te contactez?',
    '<p>Îmi scrii pe e-mail la <a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a> sau din pagina <a href="contact.html">Contact</a>. Răspund la întrebări despre materialele educaționale, dar nu ofer consultanță de investiții personalizată.</p>'),
 ]
