@@ -8,9 +8,9 @@ const puppeteer = require('puppeteer-core');
   for (const f of ['index', 'reguli', 'patternuri', 'sesiuni', 'calendar', 'calculator', 'despre', 'broker', 'contact', 'jurnal', 'lectie', 'test', 'intrebari', 'glosar']) {
     await p.goto(`http://localhost:8765/${f}.html`, { waitUntil: 'networkidle2' });
   }
-  await p.goto('http://localhost:8765/despre.html', { waitUntil: 'networkidle2' });
-  await p.click('.gallery-item'); await new Promise(r => setTimeout(r, 300));
-  console.log('despre lightbox open:', await p.$eval('#lightbox', d => d.open));
+  await p.goto('http://localhost:8765/jurnal.html', { waitUntil: 'networkidle2' });
+  await p.click('[data-lightbox]'); await new Promise(r => setTimeout(r, 300));
+  console.log('jurnal lightbox open:', await p.$eval('#lightbox', d => d.open));
   console.log('errors:', errs.filter(e => !/tradingview|google/.test(e)));
   await b.close();
 })();

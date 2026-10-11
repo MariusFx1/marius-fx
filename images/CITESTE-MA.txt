@@ -1,6 +1,5 @@
 MS PRIME — IMAGINI
 ===================
-masina-1.jpg, masina-2.jpg   fotografiile personale din pagina „Despre” (despre.html)
 pattern-*.svg                ilustrațiile din pagina „Patternuri”
 jurnal-sablon-preview.png    previzualizarea șablonului de jurnal (pagina „Jurnal”)
 

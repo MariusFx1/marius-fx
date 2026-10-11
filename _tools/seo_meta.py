@@ -38,9 +38,9 @@ PAGES = {
     desc='Calculator Forex gratuit: lotul după risc și stop loss, plus raportul risc/câștig (R:R), profitul potențial și rata de câștig de break-even. Doar educațional.',
     h1=('Calculator de mărime a poziției', 'Calculator de lot Forex'), crumb='Calculator de lot'),
   'despre': dict(
-    title='Despre Marius: swing trader și educație Forex | MS Prime',
-    desc='Cine este Marius: swing trader de peste șase ani, care împărtășește gratuit educație Forex despre disciplină și risc. Educație gratuită + grup VIP privat.',
-    h1=('Despre Marius', 'Despre Marius'), crumb='Despre'),
+    title='Despre MS Prime: educație Forex gratuită și swing trading',
+    desc='MS Prime: educație Forex gratuită pentru începători și traderi care își testează strategiile. Disciplină, managementul riscului, instrumente gratuite.',
+    h1=('Despre MS Prime', 'Despre MS Prime'), crumb='Despre'),
   'broker': dict(
     title='Brokerul folosit de Marius: RoboForex (link afiliat)',
     desc='Brokerul pe care îl folosește Marius pentru Forex: RoboForex. Linkul este de afiliere, nu o recomandare independentă. Citește riscurile înainte.',
