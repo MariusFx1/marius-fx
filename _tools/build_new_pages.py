@@ -128,7 +128,7 @@ FAQ = [
    '<p>Pe swing trading nu trebuie să stai toată ziua în fața graficelor. Pe D1 și H4, analiza se face de câteva ori pe zi, după închiderea lumânărilor, iar pozițiile rămân deschise zile sau săptămâni, cu stop loss și take profit setate.</p>'
    '<p>La început, pune mai mult timp în învățat decât în tranzacționat: cursul, contul demo, jurnalul. O recapitulare a jurnalului în fiecare weekend contează mai mult decât orele petrecute zilnic în fața ecranului.</p>'),
   ('comunitate', 'Cum intru în comunitate?',
-   '<p>Comunitatea Free Marius FX de pe Telegram este gratuită. Intri de aici: <a href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener">t.me/+sbQPdX_yA1E5NmM0</a>. Acolo vorbim despre educație, disciplină și managementul riscului. Semnalele sunt doar în grupul VIP privat, cu abonament lunar.</p>'),
+   '<p>Comunitatea MS Prime de pe Telegram este gratuită. Intri de aici: <a href="https://t.me/+sbQPdX_yA1E5NmM0" target="_blank" rel="noopener">t.me/+sbQPdX_yA1E5NmM0</a>. Acolo vorbim despre educație, disciplină și managementul riscului. Semnalele sunt doar în grupul VIP privat, cu abonament lunar.</p>'),
   ('contact', 'Cum te contactez?',
    '<p>Îmi scrii pe e-mail la <a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a> sau din pagina <a href="contact.html">Contact</a>. Răspund la întrebări despre materialele educaționale, dar nu ofer consultanță de investiții personalizată.</p>'),
 ]
