@@ -2412,6 +2412,9 @@ html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscro
   transition: transform .2s, filter .2s;
 }
 .vip-discord-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.vip-discord { flex-wrap: wrap; }
+.vip-banner { flex: 1 1 100%; display: block; border-radius: 12px; overflow: hidden; line-height: 0; border: 1px solid rgba(212,175,55,.28); }
+.vip-banner img { display: block; width: 100%; max-width: 100%; height: auto; }
 .vip-discord-disc { margin: .4rem auto 0; max-width: 560px; font-size: .7rem; color: var(--muted); text-align: center; }
 .footer-vip, .social-vip { display: inline-flex; align-items: center; gap: .45rem; }
 .footer-vip svg, .social-vip svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
