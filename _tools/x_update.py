@@ -8,8 +8,8 @@ def fix(t):
     t = re.sub(r'(<li><a class="footer-tg"[^\n]*?</a></li>)', lambda m: m.group(1) + f'\n          <li><a class="footer-x" href="{XURL}" target="_blank" rel="noopener">{XSVG}X · @MSPrime1fx</a></li>', t, count=1)
     t = re.sub(r'(<li><a class="social-telegram"[^\n]*?</a></li>)', lambda m: m.group(1) + f'\n            <li><a class="social-x" href="{XURL}" target="_blank" rel="noopener">{XSVG}Urmărește pe X · @MSPrime1fx</a></li>', t, count=1)
     t = re.sub(r'(\n(\s*)<a class="hero-telegram"[\s\S]*?</a>)', lambda m: f'\n{m.group(2)}<div class="hero-social">' + m.group(1).replace('\n', '\n  ') + f'\n{m.group(2)}  <div class="hero-x-wrap"><a class="hero-x" href="{XURL}" target="_blank" rel="noopener"><span class="hero-x-icon" aria-hidden="true">{XSVG.replace(" aria-hidden=\"true\"", "")}</span><span>Urmărește pe X</span></a></div>\n{m.group(2)}</div>', t, count=1)
-    t = t.replace('"sameAs":["https://t.me/+sbQPdX_yA1E5NmM0"]', '"sameAs":["https://t.me/+sbQPdX_yA1E5NmM0","https://x.com/MSPrime1fx"]')
-    t = t.replace("'sameAs': ['https://t.me/+sbQPdX_yA1E5NmM0']", "'sameAs': ['https://t.me/+sbQPdX_yA1E5NmM0', 'https://x.com/MSPrime1fx']")
+    t = t.replace('"sameAs":["https://t.me/MSPrimeFree"]', '"sameAs":["https://t.me/MSPrimeFree","https://x.com/MSPrime1fx"]')
+    t = t.replace("'sameAs': ['https://t.me/MSPrimeFree']", "'sameAs': ['https://t.me/MSPrimeFree', 'https://x.com/MSPrime1fx']")
     t = re.sub(r'(\n(\s*)<meta name="twitter:card" content="summary_large_image">)', lambda m: m.group(1) + f'\n{m.group(2)}<meta name="twitter:site" content="@MSPrime1fx">', t, count=1)
     return t
 for f in sys.argv[1:]:

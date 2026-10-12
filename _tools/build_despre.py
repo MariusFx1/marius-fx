@@ -2,7 +2,7 @@
 import re, pathlib
 from vip_update import DSVG
 ROOT = pathlib.Path('/workspace/forex-ms')
-TG = 'https://t.me/+sbQPdX_yA1E5NmM0'; X = 'https://x.com/MSPrime1fx'
+TG = 'https://t.me/MSPrimeFree'; X = 'https://x.com/MSPrime1fx'
 TGPATH = 'M21.94 4.3c.27-1.2-.47-1.67-1.25-1.38L2.9 9.78c-1.2.47-1.18 1.15-.21 1.45l4.56 1.42 1.75 5.4c.22.6.11.84.75.84.49 0 .71-.23.98-.5l2.2-2.14 4.58 3.38c.84.47 1.45.23 1.66-.78l3.01-14.17-.24-.38zM8.44 12.36l9.53-6.01c.48-.29.92-.13.56.19l-8.16 7.36-.32 3.43-1.61-4.97z'
 XPATH = 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'
 TITLE = 'Despre MS Prime: educație Forex gratuită și swing trading'
