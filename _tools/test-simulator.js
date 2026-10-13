@@ -357,7 +357,7 @@ const roNum = (x, d) => Number(x).toLocaleString('ro-RO', { minimumFractionDigit
   for (const f of ['index', 'simulator', 'patternuri', 'calculator', 'glosar']) {
     await page.goto(`${BASE}/${f}.html`, { waitUntil: 'networkidle2' });
     const n = await page.evaluate(() => { const li = [...document.querySelectorAll('#nav-links > li')]; const ul = document.getElementById('nav-links').getBoundingClientRect(); const br = document.querySelector('.site-header .brand, .site-header a[href="index.html"]').getBoundingClientRect(); return { n: li.length, rows: new Set(li.map(x => Math.round(x.getBoundingClientRect().top))).size, gap: ul.left - br.right, right: innerWidth - ul.right, sim: li[8] && li[8].textContent.trim(), cur: (document.querySelector('#nav-links a[aria-current="page"]') || {}).textContent }; });
-    assert(n.n === 12 && n.rows === 1 && n.gap >= 20 && n.right >= 20 && n.sim === 'Simulator', `nav 1121 ${f}: 12 items on one row, Simulator after Calculator (gap ${Math.round(n.gap)}px, right ${Math.round(n.right)}px)`);
+    assert(n.n === 13 && n.rows === 1 && n.gap >= 20 && n.right >= 20 && n.sim === 'Simulator', `nav 1121 ${f}: 13 items on one row, Simulator after Calculator (gap ${Math.round(n.gap)}px, right ${Math.round(n.right)}px)`);
     if (f === 'simulator') assert(n.cur === 'Simulator', 'nav: Simulator marked aria-current on its page');
   }
   await page.setViewport({ width: 1120, height: 800 });

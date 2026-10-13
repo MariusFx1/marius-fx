@@ -2478,3 +2478,54 @@ html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscro
 .ab-section .kicker + h2 { margin-top: 0; }
 @media (min-width: 981px) { .ab-features > li:last-child { grid-column: span 2; } }
 @media (min-width: 601px) and (max-width: 980px) { .ab-features > li:last-child { grid-column: span 2; } }
+
+/* ===== VIP page ===== */
+.vp-hero { text-align: center; }
+.vp-hero .kicker { justify-content: center; }
+.vp-hero .section-sub { margin-inline: auto; }
+.vp-banner { display: block; max-width: 880px; margin: 2rem auto 0; }
+.vp-banner img { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(212,175,55,.38); box-shadow: 0 24px 60px -30px rgba(212,175,55,.45); }
+.vp-price { display: flex; flex-direction: column; align-items: center; gap: .8rem; margin-top: 1.8rem; }
+.vp-badge { display: inline-block; padding: .35rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #0b1220; background: linear-gradient(135deg, #f1d77a, #d4af37); }
+.vp-amount { margin: 0; display: flex; align-items: baseline; justify-content: center; gap: .6rem; flex-wrap: wrap; }
+.vp-amount s { color: var(--muted); font-size: 1.15rem; }
+.vp-amount strong { font-size: clamp(2.2rem, 5vw, 2.9rem); font-weight: 800; color: #f1e3b0; letter-spacing: -.03em; }
+.vp-amount span { color: var(--muted); }
+.vp-cta { min-width: 220px; }
+.vp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+.vp-card { background: linear-gradient(180deg, var(--surface), var(--bg-2)); border: 1px solid var(--border); border-radius: 16px; padding: 1.3rem 1.2rem; }
+.vp-card h3, .vp-steps h3 { margin: 0 0 .4rem; font-size: 1.05rem; color: #f4f7fc; }
+.vp-card p, .vp-steps p, .vp-faq p { margin: 0; color: var(--muted); line-height: 1.6; }
+.vp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+.vp-steps li { display: flex; gap: .9rem; align-items: flex-start; background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem; }
+.vp-num { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #0b1220; background: var(--green); }
+.vp-steps a, .vp-faq a { color: var(--green-2); }
+.vp-faqs { display: grid; gap: .7rem; max-width: 760px; }
+.vp-faq { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: .95rem 1.1rem; }
+.vp-faq summary { cursor: pointer; font-weight: 700; color: #f4f7fc; list-style: none; }
+.vp-faq summary::-webkit-details-marker { display: none; }
+.vp-faq summary::after { content: "+"; float: right; color: var(--green); font-weight: 800; }
+.vp-faq[open] summary::after { content: "−"; }
+.vp-faq p { margin-top: .6rem; }
+.vp-risk { margin-top: 2rem; max-width: 760px; padding: 1.1rem 1.2rem; border-radius: 12px; border: 1px solid rgba(239,68,68,.45); background: rgba(239,68,68,.08); }
+.vp-risk strong { color: #fca5a5; }
+.vp-risk p { margin: .4rem 0 0; color: var(--muted); line-height: 1.6; font-size: .92rem; }
+.vp-final { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.nav-links a.nav-vip { color: #e9c96a; }
+.nav-links a.nav-vip:hover, .nav-links a.nav-vip[aria-current="page"] { color: #f1d77a; }
+@media (min-width: 1121px) { .nav-links a.nav-vip::after { background: linear-gradient(90deg, #f1d77a, #d4af37); } }
+.vp-steps a[href^="mailto:"] { overflow-wrap: anywhere; }
+/* 13 linkuri în meniu (cu VIP): meniu desktop mai compact ca să încapă pe un rând în toate limbile */
+@media (min-width: 1121px) {
+  .nav-links { gap: .08rem; }
+  .nav-links a { padding: .42rem .5rem; font-size: .84rem; }
+  .nav-links a::after { left: .5rem; right: .5rem; }
+}
+@media (min-width: 1121px) and (max-width: 1480px) {
+  .nav-links a { padding: .42rem .4rem; font-size: .8rem; letter-spacing: -.015em; }
+  .nav-links a::after { left: .4rem; right: .4rem; }
+}
+@media (min-width: 1121px) and (max-width: 1200px) {
+  .nav-links a { padding: .42rem .34rem; font-size: .78rem; }
+  .nav-links a::after { left: .34rem; right: .34rem; }
+}

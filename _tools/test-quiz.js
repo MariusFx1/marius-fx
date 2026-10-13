@@ -70,7 +70,7 @@ const BY_Q = new Map(QUESTIONS.map(q => [q.q, q]));
           labels: lis.map(l => l.textContent.trim()), toggle: getComputedStyle(document.querySelector('.menu-toggle')).display };
       });
       assert(n.rows === 1 && n.gap >= 24 && n.right <= n.navRight + 1 && n.toggle === 'none', `nav ${w} ${f}: one row, ${Math.round(n.gap)}px clear of logo`);
-      if (w === 1280 && f === 'index') assert(JSON.stringify(n.labels) === JSON.stringify(['Începători', 'Test', 'Reguli', 'Patternuri', 'Sesiuni', 'Calendar', 'Jurnal', 'Calculator', 'Simulator', 'Despre', 'Broker', 'Contact']), 'nav order: Test right after Începători ' + n.labels.join(','));
+      if (w === 1280 && f === 'index') assert(JSON.stringify(n.labels) === JSON.stringify(['Începători', 'Test', 'Reguli', 'Patternuri', 'Sesiuni', 'Calendar', 'Jurnal', 'Calculator', 'Simulator', 'Despre', 'Broker', 'VIP', 'Contact']), 'nav order: Test right after Începători ' + n.labels.join(','));
     }
   }
   await page.setViewport({ width: 1120, height: 800 });
@@ -82,7 +82,7 @@ const BY_Q = new Map(QUESTIONS.map(q => [q.q, q]));
   const mm = await page.evaluate(() => { const ul = document.getElementById('nav-links'); const a = ul.querySelector('a[href="test.html"]'); const r = a.getBoundingClientRect();
     const last = [...ul.querySelectorAll('a')].pop(); ul.scrollTop = 1e5; const lr = last.getBoundingClientRect();
     return { n: ul.querySelectorAll('a').length, vis: r.height > 0 && getComputedStyle(a).visibility === 'visible', lastIn: lr.bottom <= innerHeight + 1 }; });
-  assert(mm.n === 12 && mm.vis && mm.lastIn, `mobile menu: 12 links incl. Test, last reachable (${mm.n})`);
+  assert(mm.n === 13 && mm.vis && mm.lastIn, `mobile menu: 13 links incl. Test, last reachable (${mm.n})`);
 
   // ---------- linkuri noi ----------
   for (const f of ['index', 'lectie', 'reguli', 'patternuri', 'sesiuni', 'calendar', 'jurnal', 'calculator', 'despre', 'broker', 'contact', 'test', 'intrebari', 'glosar']) {

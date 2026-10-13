@@ -4,7 +4,7 @@ const BASE = process.env.BASE || 'http://localhost:8765';
 const SHOTS = process.env.SHOTS || '/workspace/forex-ms/screenshots';
 const SKIP_SHOTS = !!process.env.SKIP_SHOTS;
 const PAGES = ['index', 'lectie', 'reguli', 'patternuri', 'sesiuni', 'calendar', 'jurnal', 'calculator', 'despre', 'broker', 'contact'];
-const NAV = ['lectie.html', 'test.html', 'reguli.html', 'patternuri.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'calculator.html', 'simulator.html', 'despre.html', 'broker.html', 'contact.html'];
+const NAV = ['lectie.html', 'test.html', 'reguli.html', 'patternuri.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'calculator.html', 'simulator.html', 'despre.html', 'broker.html', 'vip.html', 'contact.html'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let fails = 0;
 const assert = (c, m) => { if (!c) { fails++; console.error('FAIL:', m); } else console.log('ok  -', m); };
@@ -35,7 +35,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
       }));
       assert(JSON.stringify(info.nav) === JSON.stringify(NAV), `${label} ${f}: nav = Începători + existing links + Calendar after Sesiuni`);
       assert(info.first === 'Începători', `${label} ${f}: first nav label "Începători"`);
-      { const v = 55; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
+      { const v = 58; assert(info.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
       assert(info.risk === 'Forex și CFD-urile cu levier pot duce la pierderea rapidă a banilor. Conținut educațional, nu consultanță financiară.', `${label} ${f}: footer risk line`);
       assert(info.sw <= info.iw, `${label} ${f}: no horizontal overflow (${info.sw} <= ${info.iw})`);
       if (f !== 'index') assert(info.current === f + '.html', `${label} ${f}: aria-current on own link`);

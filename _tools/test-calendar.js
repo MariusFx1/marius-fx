@@ -83,7 +83,7 @@ const rows = p => p.$$eval('.cal-row', rs => rs.map(r => ({
         const col = [...document.querySelectorAll('.site-footer h3, .site-footer h4, .site-footer .footer-title')].find(h => /Instrumente/i.test(h.textContent));
         return { k, label: nav[k]?.textContent.trim(), prev: nav[k - 1]?.getAttribute('href'), count: nav.length, colLinks: col ? [...col.parentElement.querySelectorAll('a')].map(a => a.textContent.trim()) : [] };
       });
-      assert(i.label === 'Calendar' && i.prev === 'sesiuni.html' && i.count === 12, `${label} ${f}: nav "Calendar" after Sesiuni`);
+      assert(i.label === 'Calendar' && i.prev === 'sesiuni.html' && i.count === 13, `${label} ${f}: nav "Calendar" after Sesiuni`);
       assert(JSON.stringify(i.colLinks) === '["Calculator","Simulator","Sesiuni","Calendar","Jurnal","Broker"]', `${label} ${f}: footer Instrumente has Calendar`);
       if (label === 'mobile') {
         await page.click('.menu-toggle'); await sleep(250);

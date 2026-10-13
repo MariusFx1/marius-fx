@@ -5,7 +5,7 @@ const BASE = process.env.BASE || 'http://localhost:8765';
 const ROOT = '/workspace/forex-ms';
 const LANGS = (process.env.LANGS || 'ro,en').split(',');
 const SITE = 'https://mariusfx1.github.io/marius-fx/';
-const PAGES = ['index', 'lectie', 'test', 'reguli', 'patternuri', 'sesiuni', 'calendar', 'calculator', 'jurnal', 'simulator', 'glosar', 'intrebari', 'despre', 'broker', 'contact'];
+const PAGES = ['index', 'lectie', 'test', 'reguli', 'patternuri', 'sesiuni', 'calendar', 'calculator', 'jurnal', 'simulator', 'glosar', 'intrebari', 'despre', 'broker', 'contact', 'vip'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) pass++; else { fail++; console.log('FAIL', m); } };

@@ -136,6 +136,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
   </url>
   <url>
+    <loc>https://mariusfx1.github.io/marius-fx/vip.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+  </url>
+  <url>
     <loc>https://mariusfx1.github.io/marius-fx/en/</loc>
     <lastmod>2026-10-09</lastmod>
     <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/"/>
@@ -269,6 +278,15 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/simulator.html"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/simulator.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/en/vip.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
   </url>
   <url>
     <loc>https://mariusfx1.github.io/marius-fx/es/</loc>
@@ -406,6 +424,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
   </url>
   <url>
+    <loc>https://mariusfx1.github.io/marius-fx/es/vip.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+  </url>
+  <url>
     <loc>https://mariusfx1.github.io/marius-fx/pt/</loc>
     <lastmod>2026-10-09</lastmod>
     <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/"/>
@@ -539,5 +566,14 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/simulator.html"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/simulator.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/simulator.html"/>
+  </url>
+  <url>
+    <loc>https://mariusfx1.github.io/marius-fx/pt/vip.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/vip.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/vip.html"/>
   </url>
 </urlset>

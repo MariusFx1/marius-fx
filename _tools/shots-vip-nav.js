@@ -1,0 +1,20 @@
+const puppeteer = require('puppeteer-core');
+(async () => {
+  const b = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', headless: 'new', args: ['--no-sandbox'] });
+  const p = await b.newPage();
+  await p.setViewport({ width: 390, height: 844 });
+  await p.evaluateOnNewDocument(() => { try { localStorage.setItem('lang-suggest-dismissed', '1'); } catch (e) {} });
+  await p.goto('http://localhost:8765/en/vip.html', { waitUntil: 'networkidle2' });
+  await p.evaluate(async () => { for (let y=0;y<document.body.scrollHeight;y+=300){scrollTo(0,y);await new Promise(r=>setTimeout(r,120));} scrollTo(0,0); });
+  await new Promise(r=>setTimeout(r,1500));
+  console.log('en overflow', await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth));
+  await p.screenshot({ path: '/workspace/forex-ms/screenshots/vip-en-mobile.png', fullPage: true });
+  await p.goto('http://localhost:8765/index.html', { waitUntil: 'networkidle2' });
+  await p.setViewport({ width: 390, height: 1000 });
+  await p.evaluate(() => document.querySelector('.lang-suggest-close')?.click());
+  await p.click('.menu-toggle'); await new Promise(r=>setTimeout(r,700));
+  await p.evaluate(() => { document.querySelector('.lang-suggest')?.remove(); const v = document.querySelector('.nav-links .nav-vip'); v.scrollIntoView({block:'center'}); });
+  await new Promise(r=>setTimeout(r,400));
+  await p.screenshot({ path: '/workspace/forex-ms/screenshots/nav-vip-mobile.png' });
+  await b.close();
+})();
