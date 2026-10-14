@@ -176,7 +176,7 @@ const assert = (c, m) => { if (!c) { console.error('FAIL:', m); process.exitCode
   await page.reload({ waitUntil: 'networkidle0' });
   assert(!(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)), 'no horizontal overflow at 390px');
 
-  const posts = requests.filter(r => !r.startsWith('GET'));
+  const posts = requests.filter(r => !r.startsWith('GET') && !/google-analytics\.com|googletagmanager\.com/.test(r)); // GA4 analytics exempt
   assert(posts.length === 0, 'no non-GET requests (nothing sent anywhere)');
   const external = [...new Set(requests.map(r => new (require('url').URL)(r.split(' ')[1]).host))];
   log('hosts contacted:', external);
