@@ -99,7 +99,7 @@ FAQ = [
    '<p>Nu îți pot promite asta și nimeni nu poate. Eu am învățat singur și mi-au trebuit mulți ani de greșeli, răbdare și disciplină până am ajuns să tranzacționez consecvent. Mulți oameni nu ajung niciodată acolo și e bine să știi asta de la început.</p>'
    '<p>Ce poți controla este procesul: risc mic, plan scris, jurnal și răbdare. Rezultatele vin, dacă vin, după foarte multe tranzacții, nu după câteva săptămâni.</p>'),
   ('semnale', 'Dai semnale de tranzacționare?',
-   '<p>Educația de pe MS Prime este gratuită. Pentru semnale există un grup VIP privat, cu abonament lunar; ceri acces din comunitatea de Telegram. Semnalele nu sunt sfaturi de investiții, iar eu nu administrez conturi și nu fac consultanță personalizată. Chiar și cu semnale, vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
+   '<p>Educația de pe MS Prime este gratuită. Pentru semnale există un grup VIP privat pe Discord, cu abonament lunar pe Whop; detalii și plată pe pagina VIP. Semnalele nu sunt sfaturi de investiții, iar eu nu administrez conturi și nu fac consultanță personalizată. Chiar și cu semnale, vreau să înveți să iei singur decizii, după planul tău. Dacă nu știi de ce ai intrat într-o tranzacție, nu vei ști nici când să ieși.</p>'),
   ('incep', 'De unde încep dacă nu știu nimic?',
    '<p>Cu <a href="lectie.html">cursul pentru începători</a>: 8 capitole, de la pip și lot până la primul plan de trading. După ce îl termini, fă <a href="test.html">testul de 15 întrebări</a> ca să vezi ce ai înțeles, apoi exersează calculul lotului cu <a href="calculator.html">calculatorul</a>.</p>'),
   ('broker', 'Ce broker folosești?',
