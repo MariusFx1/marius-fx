@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVC55DC6H5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MVC55DC6H5');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <title>Como calcular o tamanho do lote (position sizing) no Forex | MS Prime</title>
+  <meta name="description" content="A fórmula do tamanho do lote no Forex, o risco percentual por operação, o valor do pip e um exemplo passo a passo com números didáticos e a calculadora gratuita.">
+  <link rel="canonical" href="https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html">
+<!-- i18n:alt -->
+  <link rel="alternate" hreflang="ro" href="https://mariusfx1.github.io/marius-fx/marime-lot-forex.html">
+  <link rel="alternate" hreflang="en" href="https://mariusfx1.github.io/marius-fx/en/marime-lot-forex.html">
+  <link rel="alternate" hreflang="es" href="https://mariusfx1.github.io/marius-fx/es/marime-lot-forex.html">
+  <link rel="alternate" hreflang="pt" href="https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html">
+  <link rel="alternate" hreflang="x-default" href="https://mariusfx1.github.io/marius-fx/marime-lot-forex.html">
+  <!-- /i18n:alt -->
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-10-15">
+  <meta property="og:site_name" content="MS Prime">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Como calcular o tamanho do lote (position sizing) no Forex | MS Prime">
+  <meta property="og:description" content="A fórmula do tamanho do lote no Forex, o risco percentual por operação, o valor do pip e um exemplo passo a passo com números didáticos e a calculadora gratuita.">
+  <meta property="og:url" content="https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html">
+  <meta property="og:image" content="https://mariusfx1.github.io/marius-fx/og-image.png?v=3">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MS Prime: Educação · Disciplina · Gestão de risco">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@MSPrime1fx">
+  <meta name="twitter:title" content="Como calcular o tamanho do lote (position sizing) no Forex | MS Prime">
+  <meta name="twitter:description" content="A fórmula do tamanho do lote no Forex, o risco percentual por operação, o valor do pip e um exemplo passo a passo com números didáticos e a calculadora gratuita.">
+  <meta name="twitter:image" content="https://mariusfx1.github.io/marius-fx/og-image.png?v=3">
+  <link rel="preload" href="../fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=60">
+  <link rel="icon" href="../favicon.ico?v=18" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png?v=18">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png?v=18">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png?v=18">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png?v=18">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=18">
+  <link rel="manifest" href="../site.webmanifest?v=18">
+  <meta name="theme-color" content="#070b14">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mariusfx1.github.io/marius-fx/pt/#website",
+      "url": "https://mariusfx1.github.io/marius-fx/pt/",
+      "name": "MS Prime",
+      "inLanguage": "pt",
+      "description": "Educação Forex gratuita para iniciantes: curso passo a passo, gestão de risco, calculadora de lote, sessões ao vivo e calendário. Além disso, grupo VIP privado de sinais.",
+      "publisher": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/#org"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://mariusfx1.github.io/marius-fx/pt/#org",
+      "name": "MS Prime",
+      "url": "https://mariusfx1.github.io/marius-fx/pt/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mariusfx1.github.io/marius-fx/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://mariusfx1.github.io/marius-fx/og-image.png?v=3",
+      "email": "contact.mariusfx@gmail.com",
+      "founder": {
+        "@type": "Person",
+        "name": "Marius"
+      },
+      "sameAs": [
+        "https://t.me/MSPrimeFree",
+        "https://x.com/MSPrime1fx"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#webpage",
+      "url": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html",
+      "name": "Como calcular o tamanho do lote (position sizing) no Forex | MS Prime",
+      "description": "A fórmula do tamanho do lote no Forex, o risco percentual por operação, o valor do pip e um exemplo passo a passo com números didáticos e a calculadora gratuita.",
+      "inLanguage": "pt",
+      "isPartOf": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#article"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://mariusfx1.github.io/marius-fx/pt/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Artigos",
+          "item": "https://mariusfx1.github.io/marius-fx/pt/articole.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Como calcular o tamanho do lote (position sizing) no Forex",
+          "item": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#article",
+      "headline": "Como calcular o tamanho do lote (position sizing) no Forex",
+      "description": "A fórmula do tamanho do lote no Forex, o risco percentual por operação, o valor do pip e um exemplo passo a passo com números didáticos e a calculadora gratuita.",
+      "inLanguage": "pt",
+      "url": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html",
+      "mainEntityOfPage": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/marime-lot-forex.html#webpage"
+      },
+      "datePublished": "2026-10-15",
+      "dateModified": "2026-10-15",
+      "image": "https://mariusfx1.github.io/marius-fx/og-image.png?v=3",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "name": "Marius"
+      },
+      "publisher": {
+        "@id": "https://mariusfx1.github.io/marius-fx/pt/#org"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body class="page-inner">
+  <a class="skip-link" href="#continut">Pular para o conteúdo</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navegação principal">
+      <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true"><picture><source srcset="../images/logo-bull.webp?v=1" type="image/webp"><img src="../images/logo-bull.png?v=1" width="49" height="40" alt="" decoding="async"></picture></span>MS <b>Prime</b></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="lectie.html">Iniciantes</a></li>
+        <li><a href="test.html">Teste</a></li>
+        <li><a href="reguli.html">Regras</a></li>
+        <li><a href="patternuri.html">Padrões</a></li>
+        <li><a href="sesiuni.html">Sessões</a></li>
+        <li><a href="calendar.html">Calendário</a></li>
+        <li><a href="jurnal.html">Diário</a></li>
+        <li><a href="calculator.html">Calculadora</a></li>
+        <li><a href="simulator.html">Simulador</a></li>
+        <li><a href="despre.html">Sobre</a></li>
+        <li><a href="broker.html">Corretora</a></li>
+        <li><a class="nav-vip" href="vip.html">VIP</a></li>
+        <li><a href="contact.html">Contato</a></li>
+      </ul>
+      <!-- i18n:switch --><div class="lang-switch" translate="no"><button type="button" class="lang-btn" aria-expanded="false" aria-controls="lang-menu" aria-label="Idioma: Português. Escolha o idioma" title="Escolha o idioma"><img src="../images/flags/br.svg" alt="" width="20" height="15"><span>PT</span><svg class="lang-chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></button><ul class="lang-menu" id="lang-menu" hidden><li><a href="../marime-lot-forex.html" hreflang="ro" lang="ro"><img src="../images/flags/ro.svg" alt="" width="20" height="15"><b>RO</b><span>Română</span></a></li><li><a href="../en/marime-lot-forex.html" hreflang="en" lang="en"><img src="../images/flags/gb.svg" alt="" width="20" height="15"><b>EN</b><span>English</span></a></li><li><a href="../es/marime-lot-forex.html" hreflang="es" lang="es"><img src="../images/flags/es.svg" alt="" width="20" height="15"><b>ES</b><span>Español</span></a></li><li><a href="marime-lot-forex.html" hreflang="pt" lang="pt" aria-current="true"><img src="../images/flags/br.svg" alt="" width="20" height="15"><b>PT</b><span>Português</span></a></li></ul></div><!-- /i18n:switch -->
+    </nav>
+  </header>
+
+  <main id="continut">
+    <article class="section container art" id="articol">
+      <div class="art-wrap">
+      <nav class="art-crumb" aria-label="Trilha de navegação"><a href="index.html">Início</a><span aria-hidden="true">›</span><a href="articole.html">Artigos</a></nav>
+      <header class="art-head">
+        <p class="kicker">Artigo · 5 min de leitura</p>
+        <h1>Como calcular o tamanho do lote (position sizing) no Forex</h1>
+        <p class="art-meta">Publicado por Marius · <time datetime="2026-10-15">15 de outubro de 2026</time></p>
+        <p class="art-lead">O tamanho do lote (em inglês, position sizing) decide quanto você perde se a operação chegar ao stop loss. Muitos iniciantes escolhem o lote “no olho”, e uma única operação ruim pode levar boa parte da conta. O método correto é o inverso: primeiro você decide quanto aceita arriscar, depois calcula o lote que respeita esse valor.</p>
+      </header>
+      <div class="art-body">
+      <h2>Por que o tamanho do lote importa</h2>
+      <p>O stop loss diz quantos pips você pode perder, mas não quanto dinheiro. O dinheiro depende do lote: o mesmo stop loss de 25 pips pode significar uma perda pequena ou muito grande, conforme o tamanho da posição. Por isso a gestão de risco começa pelo lote, e não pela direção que você acha que o preço vai tomar. A regra básica das <a href="reguli.html">dez regras</a> é arriscar no máximo 1–2% da conta em uma operação.</p>
+      <h3>Por que um percentual fixo e não um valor aleatório</h3>
+      <p>Um percentual fixo se adapta sozinho ao tamanho da conta e ajuda você a sobreviver a uma sequência de perdas. A aritmética: com risco de 1% por operação, dez perdas seguidas deixam a conta cerca de 9,6% menor. Com risco de 10%, essas mesmas dez perdas a reduziriam em cerca de 65%. Ninguém pode prometer que você não terá uma sequência de perdas, então um lote pequeno é a sua proteção.</p>
+      <p>Não existe um percentual que sirva para todos. A regra deste site é 1–2% no máximo e, no começo, você pode partir de 0,5–1% em uma conta demo. Aumente o percentual só depois de seguir o plano por muito tempo. O percentual se aplica ao saldo atual, então o lote é recalculado a cada operação, e não copiado da anterior.</p>
+      <h2>A fórmula do tamanho do lote</h2>
+      <p>O cálculo tem dois passos. Primeiro, você descobre quanto aceita perder em dinheiro. Segundo, divide esse valor pela perda de um lote padrão com o stop loss escolhido.</p>
+      <ol>
+        <li>Risco em dinheiro = saldo da conta × percentual de risco.</li>
+        <li>Lote = risco em dinheiro ÷ (stop loss em pips × valor de um pip para 1 lote).</li>
+      </ol>
+      <h2>O básico do valor do pip</h2>
+      <p>Um <a href="glosar.html#t-pip">pip</a> é o menor movimento “padrão” do preço: 0,0001 na maioria dos pares e 0,01 nos pares com iene. Um <a href="glosar.html#t-lot">lote</a> padrão são 100.000 unidades da moeda base. O <a href="glosar.html#t-valoarea-pipului">valor do pip</a> mostra quanto você ganha ou perde em um movimento de um pip.</p>
+      <ul>
+        <li>Em pares cotados em USD, como o EURUSD, um pip em 1 lote vale 10 USD. Em 0,1 lote vale 1 USD e em 0,01 lote (micro lote) 0,10 USD.</li>
+        <li>Em pares com iene, um pip em 1 lote são 1.000 JPY, que você converte para a moeda da conta pela cotação atual, então o valor em USD ou EUR muda.</li>
+        <li>Em outros pares, o valor é expresso na moeda cotada e depende da cotação. Consulte as especificações do contrato na sua corretora, principalmente para ouro ou índices.</li>
+      </ul>
+      <p>O capítulo 3 do <a href="lectie.html#cap-3">curso</a> explica com mais detalhes pips, lotes e custos.</p>
+      <p>Um exemplo didático com uma cotação inventada para um par com iene: suponha que o USDJPY esteja em 150. Um pip em 1 lote são 1.000 JPY ÷ 150 ≈ 6,67 USD. Com risco de 50 USD e stop loss de 30 pips, o lote é 50 ÷ (30 × 6,67) = 0,25 lote. A cotação real muda, então o valor do pip também muda.</p>
+      <h2>Um exemplo calculado passo a passo</h2>
+      <aside class="art-ex" aria-label="Exemplo didático">
+        <p class="art-ex-label">Exemplo didático</p>
+        <p>Todos os números abaixo são inventados, só para mostrar o cálculo. A conta tem 5.000 USD, o risco escolhido é 1%, o par é EURUSD e o stop loss é de 25 pips.</p>
+        <ol>
+          <li>Risco em dinheiro: 5.000 × 1% = 50 USD.</li>
+          <li>Perda em 1 lote: 25 pips × 10 USD = 250 USD.</li>
+          <li>Lote: 50 ÷ 250 = 0,20 lote.</li>
+          <li>Verificação: 0,20 × 25 pips × 10 USD = 50 USD, exatamente o risco planejado.</li>
+        </ol>
+        <p>O mesmo risco com um stop loss de 50 pips: 50 ÷ (50 × 10) = 0,10 lote. Um stop loss mais largo leva a um lote menor, e a perda em dinheiro continua a mesma.</p>
+      </aside>
+      <h3>Arredondamento e lote mínimo</h3>
+      <p>As corretoras costumam permitir passos de 0,01 lote. Arredonde sempre para baixo, para não passar do risco. Um exemplo didático com outros números inventados: conta de 500 USD, risco de 1% = 5 USD, stop loss de 40 pips no EURUSD. O cálculo dá 5 ÷ (40 × 10) = 0,0125 lote, então você arredonda para 0,01. O risco real é 0,01 × 40 × 10 = 4 USD, menos que 5 USD.</p>
+      <p>Se o resultado ficasse abaixo do lote mínimo da corretora, não aumente o risco para encaixar. Escolha um stop loss mais curto só se fizer sentido no gráfico, ou abra mão da operação.</p>
+      <h2>Use a calculadora</h2>
+      <p>Você não precisa fazer as contas à mão toda vez. A <a href="calculator.html">calculadora de risco e lote</a> deste site pede o saldo, o risco em percentual, o par e o stop loss em pips, e então mostra o lote. Teste o exemplo acima para conferir que obtém o mesmo resultado e depois use com os seus números. A relação risco/retorno também está lá.</p>
+      <h2>Erros frequentes</h2>
+      <ul>
+        <li>Escolher o lote antes do stop loss. A ordem correta: a estrutura do gráfico (veja os planos da <a href="patternuri.html">página de padrões</a>) dá o stop loss, e o stop loss dá o lote.</li>
+        <li>Confundir risco com <a href="glosar.html#t-marja">margem</a>. A margem é o valor que a corretora bloqueia para manter a posição aberta, e não quanto você pode perder.</li>
+        <li>Esquecer que a <a href="glosar.html#t-levier">alavancagem</a> não muda a fórmula, mas facilita abrir um lote grande demais.</li>
+        <li>Ignorar os custos: o spread e o deslizamento (slippage) podem fazer a perda real ser um pouco maior que a calculada.</li>
+        <li>Aumentar o risco depois de alguns ganhos ou “dobrá-lo” depois de uma perda para recuperar. Mantenha o risco constante.</li>
+      </ul>
+      <h2>Resumindo</h2>
+      <p>Decida o risco em percentual, defina o stop loss a partir da estrutura do gráfico, calcule o lote e arredonde para baixo. Depois siga o plano. A gestão de risco não garante lucros, mas limita a sua perda em cada operação. Se você está começando, leia também <a href="swing-trading-incepatori.html">o que é swing trading</a> e <a href="stop-loss-forex.html">como colocar o stop loss corretamente</a>.</p>
+      </div>
+      <div class="art-vip">
+        <div class="vip-discord">
+          <span class="vip-discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg><span class="vip-lock"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 9V7a5 5 0 0 0-10 0v2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-8-2a3 3 0 0 1 6 0v2H9V7z"/></svg></span></span>
+          <div class="vip-discord-text"><p class="vip-discord-title">Quer ver essas ideias aplicadas no mercado?</p><p class="vip-discord-line">MS Prime VIP: grupo privado de sinais no Discord, acesso com assinatura mensal. <a href="vip.html">Veja o que o VIP inclui</a></p></div>
+          <a class="vip-discord-btn" href="https://whop.com/mariusfx1-github-io/ms-prime-vip/" target="_blank" rel="noopener">Solicitar acesso</a>
+        </div>
+        <p class="vip-discord-disc">Os sinais não são aconselhamento de investimento. O trading envolve riscos.</p>
+      </div>
+      <p class="art-disc">Conteúdo educacional, não é aconselhamento financeiro. Forex e CFDs com alavancagem podem levar à perda rápida de dinheiro, e os exemplos com números são didáticos e não garantem nenhum resultado.</p>
+      <aside class="art-more" aria-labelledby="art-more-h">
+        <h2 id="art-more-h">Leia também</h2>
+        <ul>
+          <li><a href="swing-trading-incepatori.html">O que é swing trading e como começar</a></li>
+          <li><a href="stop-loss-forex.html">Stop loss: como colocá-lo corretamente</a></li>
+          <li><a href="articole.html">Artigos</a></li>
+        </ul>
+      </aside>
+      </div>
+    </article>
+  </main>
+
+  <!-- ===== SUBSOL + AVERTISMENT DE RISC ===== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true"><picture><source srcset="../images/logo-bull.webp?v=1" type="image/webp"><img src="../images/logo-bull.png?v=1" width="49" height="40" alt="" decoding="async"></picture></span>MS <b>Prime</b></a>
+        <p>Educação para um swing trading disciplinado: regras claras, gestão de risco e um processo que você pode repetir.</p>
+      </div>
+      <nav class="footer-col" aria-label="Aprenda">
+        <h2 class="footer-title">Aprenda</h2>
+        <ul>
+          <li><a href="lectie.html">Iniciantes</a></li>
+          <li><a href="test.html">Teste</a></li>
+          <li><a href="glosar.html">Glossário</a></li>
+          <li><a href="reguli.html">Regras</a></li>
+          <li><a href="patternuri.html">Padrões</a></li>
+          <li><a href="articole.html">Artigos</a></li>
+          <li><a href="despre.html">Sobre</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Ferramentas">
+        <h2 class="footer-title">Ferramentas</h2>
+        <ul>
+          <li><a href="calculator.html">Calculadora</a></li>
+          <li><a href="simulator.html">Simulador</a></li>
+          <li><a href="sesiuni.html">Sessões</a></li>
+          <li><a href="calendar.html">Calendário</a></li>
+          <li><a href="jurnal.html">Diário</a></li>
+          <li><a href="broker.html">Corretora</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col footer-col-community">
+        <h2 class="footer-title">Comunidade</h2>
+        <ul>
+          <li><a class="footer-tg" href="https://t.me/MSPrimeFree" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.94 4.3c.27-1.2-.47-1.67-1.25-1.38L2.9 9.78c-1.2.47-1.18 1.15-.21 1.45l4.56 1.42 1.75 5.4c.22.6.11.84.75.84.49 0 .71-.23.98-.5l2.2-2.14 4.58 3.38c.84.47 1.45.23 1.66-.78l3.01-14.17-.24-.38zM8.44 12.36l9.53-6.01c.48-.29.92-.13.56.19l-8.16 7.36-.32 3.43-1.61-4.97z"/></svg>Telegram (grátis)</a></li>
+          <li><a class="footer-x" href="https://x.com/MSPrime1fx" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X · @MSPrime1fx</a></li>
+          <li><a href="vip.html">MS Prime VIP</a></li>
+          <li><a class="footer-vip" href="https://whop.com/mariusfx1-github-io/ms-prime-vip/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>VIP Discord (privado)</a></li>
+          <li><a href="mailto:contact.mariusfx@gmail.com">contact.mariusfx@gmail.com</a></li>
+          <li><a href="intrebari.html">Perguntas frequentes</a></li>
+          <li><a href="contact.html">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-legal">
+      <p class="footer-risk" id="avertisment">Forex e CFDs alavancados podem levar a perdas rápidas de dinheiro. Conteúdo educacional, não é recomendação financeira.</p>
+      <div class="footer-bottom">
+        <p>© <span id="an"></span> MS Prime · Marius</p>
+        <a href="#continut">Voltar ao topo ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="../i18n/pt.js?v=d12d9947" defer></script>
+  <script src="../i18n.js?v=32d8fa8b" defer></script>
+  <script src="../script.js?v=38" defer></script>
+</body>
+</html>
