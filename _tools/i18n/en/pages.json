@@ -1411,5 +1411,6 @@
  "Vezi graficele reale ale unor semnale din grupul VIP, la semnal și la rezultat.": "See the real charts of some signals from the VIP group, at the signal and at the result.",
  "Vezi rezultatele": "See the results",
  "Unități": "Units",
- "<span>Loturi standard</span>": "<span>Standard lots</span>"
+ "<span>Loturi standard</span>": "<span>Standard lots</span>",
+ "<small>rotunjit la 0,01</small>": "<small>rounded to 0.01</small>"
 }

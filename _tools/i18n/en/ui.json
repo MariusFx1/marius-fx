@@ -654,5 +654,8 @@
  "1 lot standard = {u} unități; 1 pip = {p}.": "1 standard lot = {u} units; 1 pip = {p}.",
  "Rezultat educațional — confirmă specificațiile simbolului la broker.": "Educational result — confirm the symbol specifications with your broker.",
  "Curs folosit: 1 {q} = {x} {a} · {src} · {dt}": "Rate used: 1 {q} = {x} {a} · {src} · {dt}",
- "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Account currency = quote currency, no conversion needed."
+ "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Account currency = quote currency, no conversion needed.",
+ "Suma riscată și profitul sunt calculate pentru lotul rotunjit ({lot}); ținta de risc este {x}.": "Amount at risk and profit are calculated for the rounded lot ({lot}); your risk target is {x}.",
+ "Valoare pip: {pip} per lot standard ({u} unități, 1 pip = {ps}).": "Pip value: {pip} per standard lot ({u} units, 1 pip = {ps}).",
+ "Costurile (spread, comision, swap) nu sunt incluse. Confirmă specificațiile simbolului la broker.": "Costs (spread, commission, swap) are not included. Confirm the symbol specifications with your broker."
 }

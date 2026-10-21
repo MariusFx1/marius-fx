@@ -18,6 +18,9 @@ const CASES = JSON.parse(fs.readFileSync(__dirname + '/rr_cases.json', 'utf8'));
 (async () => {
   const browser = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', headless: 'new', args: ['--no-sandbox'] });
   const page = await browser.newPage();
+  // curs fix (același ca în rr_cases.py), pus în cache-ul calculatorului: rezultate deterministe, fără rețea
+  const TEST_RATES = { USD: 1, EUR: 0.89, GBP: 0.75, JPY: 158.0, CHF: 0.82, CAD: 1.40, AUD: 1.43, NZD: 1.76 };
+  await page.evaluateOnNewDocument(r => { try { localStorage.setItem('msFxRates1', JSON.stringify({ rates: r, ts: Date.UTC(2026, 9, 21, 0, 0), src: 'test', loaded: Date.now() })); } catch (e) {} }, TEST_RATES);
   const errors = [];
   page.on('pageerror', e => errors.push(page.url() + ' :: ' + e.message));
   page.on('console', m => { if (m.type() === 'error' && !isThirdParty(m.text() + (m.location()?.url || ''))) errors.push(page.url() + ' :: ' + m.text()); });
@@ -69,9 +72,9 @@ const CASES = JSON.parse(fs.readFileSync(__dirname + '/rr_cases.json', 'utf8'));
         Math.abs(roNum(r.rr.split(':')[1]) - Number(C.rr.split(':')[1])) < 0.006 && r.be === C.be.replace('.', ',') &&
         r.risk.includes(C.input.ccy) && r.sell === (C.input.dir === 'sell');
       assert(ok, `${label}: ${C.case}${i % 2 ? ' (comma decimals)' : ''} → SL ${r.sl}, TP ${r.tp}, ${r.rr}, lot ${r.lot}, risk ${r.risk}, profit ${r.profit}, BE ${r.be} | python: ${C.sl_pips}/${C.tp_pips} ${C.rr} lot ${C.lot} ${C.risked}/${C.profit} ${C.be}`);
-      if (C.case.startsWith('XAUUSD')) assert(/XAUUSD: 1 lot = 100 oz, 1 pip = 0,10/.test(r.nota), `${label}: gold pip convention shown in note`);
-      if (C.case.startsWith('USDJPY')) assert(/JPY, 1 pip = 0,01/.test(r.nota), `${label}: JPY pip convention shown in note`);
-      if (C.case.startsWith('EURJPY')) assert(/Ținta de risc este 120,00/.test(r.nota) && Number(r.gTp) > Number(r.gSl), `${label}: floored-lot note + visual zones proportional (TP ${r.gTp} > SL ${r.gSl})`);
+      if (C.case.startsWith('XAUUSD')) assert(/1,00\s?USD per lot standard \(100 unități, 1 pip = 0,01\)/.test(r.nota), `${label}: gold pip convention shown in note`);
+      if (C.case.startsWith('USDJPY')) assert(/100\.000 unități, 1 pip = 0,01\)/.test(r.nota) && /Curs folosit: 1 JPY = /.test(r.nota), `${label}: JPY pip convention + live rate shown in note`);
+      if (C.case.startsWith('EURJPY')) assert(/lotul rotunjit \(0,42\); ținta de risc este 120,00/.test(r.nota) && Number(r.gTp) > Number(r.gSl), `${label}: rounded-lot note + visual zones proportional (TP ${r.gTp} > SL ${r.gSl})`);
     }
 
     // ---------- validare ----------
@@ -112,7 +115,7 @@ const CASES = JSON.parse(fs.readFileSync(__dirname + '/rr_cases.json', 'utf8'));
     await page.select('#rr-pereche', 'XAUUSD'); await sleep(30);
     const xv = await page.evaluate(() => ['rr-intrare', 'rr-sl', 'rr-tp'].map(id => document.getElementById(id).value));
     r = await read();
-    assert(JSON.stringify(xv) === '["4150.00","4147.50","4155.00"]' && r.sl === '25' && r.tp === '50', `${label}: XAUUSD preset ${xv} → 25/50 pips`);
+    assert(JSON.stringify(xv) === '["4150.00","4149.75","4150.50"]' && r.sl === '25' && r.tp === '50', `${label}: XAUUSD preset ${xv} → 25/50 pips`);
     // lot sub 0,01
     await page.select('#rr-pereche', 'EURUSD'); await set('rr-sold', '100'); await set('rr-risc', '1'); await set('rr-intrare', '1.1200'); await set('rr-sl', '1.1100'); await set('rr-tp', '1.1400');
     r = await read();

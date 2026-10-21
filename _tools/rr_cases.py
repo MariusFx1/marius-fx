@@ -1,23 +1,18 @@
 # Verificare independentă a calculatorului risk/reward (aceleași convenții ca în script.js)
 import math, json
-EURUSD, GBPUSD, USDJPY = 1.12, 1.32, 158
-def pip_size(p): return 0.10 if p=='XAUUSD' else 0.01 if (p.endswith('JPY') or p=='XAGUSD') else 0.0001
-def pip_usd(p, price):
-    if p in ('EURUSD','GBPUSD','AUDUSD','NZDUSD','XAUUSD'): return 10.0
-    if p=='XAGUSD': return 50.0
-    if p=='USDJPY': return 1000/price
-    if p in ('USDCAD','USDCHF'): return 10/price
-    if p.endswith('JPY'): return 1000/USDJPY
-    if p=='EURGBP': return 10*GBPUSD
-    raise ValueError(p)
+# Metoda Myfxbook (ca script.js calcLot): curs fix de test, injectat și în pagină (test-rr-glosar.js)
+RATES = {"USD": 1, "EUR": 0.89, "GBP": 0.75, "JPY": 158.0, "CHF": 0.82, "CAD": 1.40, "AUD": 1.43, "NZD": 1.76}
+def spec(p):
+    if p=='XAUUSD': return 100, 0.01
+    if p=='XAGUSD': return 5000, 0.01
+    return 100000, (0.01 if p.endswith('JPY') else 0.0001)
+def pip_size(p): return spec(p)[1]
 def calc(p, d, entry, sl, tp, bal, ccy, risk):
-    ps = pip_size(p)
+    contract, ps = spec(p)
     slp, tpp = round(abs(entry-sl)/ps, 6), round(abs(tp-entry)/ps, 6)
-    pu = pip_usd(p, entry)
-    conv = (entry if p=='EURUSD' else EURUSD) if ccy=='EUR' else (entry if p=='GBPUSD' else GBPUSD) if ccy=='GBP' else 1
-    pc = pu/conv
+    pc = ps*contract*(RATES[ccy]/RATES[p[3:]])
     target = bal*risk/100
-    lot = math.floor(target/(slp*pc)*100 + 1e-9)/100
+    lot = round(math.floor(target/(slp*pc)*100 + 0.5 + 1e-9)/100, 2)
     R = tpp/slp
     return dict(case=f'{p} {d} {ccy}', sl_pips=round(slp,1), tp_pips=round(tpp,1), rr=f'1:{R:.2f}', lot=lot,
                 target=round(target,2), risked=round(lot*slp*pc,2), profit=round(lot*tpp*pc,2), be=f'{100/(1+R):.1f}%', pip_value=round(pc,4))
@@ -31,4 +26,4 @@ CASES = [
 ]
 out = [dict(calc(*c), input=dict(zip(['pair','dir','entry','sl','tp','bal','ccy','risk'], c))) for c in CASES]
 for o in out: print(json.dumps(o, ensure_ascii=False))
-json.dump(out, open('/workspace/forex-ms-tools/rr_cases.json','w'), ensure_ascii=False, indent=1)
+for f in ('/workspace/forex-ms-tools/rr_cases.json','/workspace/forex-ms/_tools/rr_cases.json'): json.dump(out, open(f,'w'), ensure_ascii=False, indent=1)

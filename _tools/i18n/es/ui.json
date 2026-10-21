@@ -654,5 +654,8 @@
  "1 lot standard = {u} unități; 1 pip = {p}.": "1 lote estándar = {u} unidades; 1 pip = {p}.",
  "Rezultat educațional — confirmă specificațiile simbolului la broker.": "Resultado educativo: confirma las especificaciones del símbolo con tu bróker.",
  "Curs folosit: 1 {q} = {x} {a} · {src} · {dt}": "Cotización usada: 1 {q} = {x} {a} · {src} · {dt}",
- "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Moneda de la cuenta = moneda cotizada, no hace falta conversión."
+ "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Moneda de la cuenta = moneda cotizada, no hace falta conversión.",
+ "Suma riscată și profitul sunt calculate pentru lotul rotunjit ({lot}); ținta de risc este {x}.": "La cantidad en riesgo y el beneficio se calculan con el lote redondeado ({lot}); tu objetivo de riesgo es {x}.",
+ "Valoare pip: {pip} per lot standard ({u} unități, 1 pip = {ps}).": "Valor del pip: {pip} por lote estándar ({u} unidades, 1 pip = {ps}).",
+ "Costurile (spread, comision, swap) nu sunt incluse. Confirmă specificațiile simbolului la broker.": "Los costes (spread, comisión, swap) no están incluidos. Confirma las especificaciones del símbolo con tu bróker."
 }

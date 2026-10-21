@@ -1,10 +1,10 @@
 /* Calculator risk/reward (calculator.html, tabul „Risk/Reward”).
    Folosește aceleași convenții ca și calculatorul de lot din script.js (încărcat înainte):
-   PRET_IMPLICIT, pipUsdPeLot, conventiePip, parseNum, EURUSD_PRESUPUS, GBPUSD_PRESUPUS, JPY_CROSS. */
+   PRET_IMPLICIT (valori de pornire), parseNum, specLot, calcLot, FX/fxStare (curs live), fxCursText. */
 (function () {
   'use strict';
   const form = document.getElementById('rr-form');
-  if (!form || typeof pipUsdPeLot !== 'function') return;
+  if (!form || typeof calcLot !== 'function') return;
   const g = id => document.getElementById(id);
 
   // ---------- tab-uri Lot | Risk/Reward (fără JS, ambele panouri rămân vizibile) ----------
@@ -42,7 +42,7 @@
     if (!/^\d+(\.\d+)?$/.test(s)) return NaN;
     return Number(s);
   }
-  const pipSize = p => p === 'XAUUSD' ? 0.1 : (p === 'XAGUSD' || p === 'USDJPY' || JPY_CROSS.has(p)) ? 0.01 : 0.0001;
+  const pipSize = p => specLot(p).pip;   // aceeași convenție ca tabul Lot (Myfxbook)
   const decimale = p => p === 'XAUUSD' || p === 'XAGUSD' ? 2 : (p === 'USDJPY' || JPY_CROSS.has(p)) ? 3 : 5;
   const nr = (x, max, min = 0) => I18N.num(x, { minimumFractionDigits: min, maximumFractionDigits: max });
 
@@ -88,12 +88,11 @@
     const ps = pipSize(p);
     const slPips = Math.round(Math.abs(intrare - sl) / ps * 1e6) / 1e6;
     const tpPips = Math.round(Math.abs(tp - intrare) / ps * 1e6) / 1e6;
-    const pipUsd = pipUsdPeLot(p, intrare);
-    // USD → moneda contului: împărțim la EURUSD / GBPUSD (ca la calculatorul de lot)
-    const eurusd = p === 'EURUSD' ? intrare : EURUSD_PRESUPUS, gbpusd = p === 'GBPUSD' ? intrare : GBPUSD_PRESUPUS;
-    const pipCont = moneda === 'EUR' ? pipUsd / eurusd : moneda === 'GBP' ? pipUsd / gbpusd : pipUsd;
-    const tinta = sold * risc / 100;
-    const loturi = Math.floor(tinta / (slPips * pipCont) * 100 + 1e-9) / 100;
+    // același calcul ca tabul Lot (Myfxbook): curs live, lot rotunjit normal la 0,01
+    const r = calcLot({ pereche: p, moneda, sold, risc, stop: slPips, rates: FX && FX.rates });
+    if (!Number.isFinite(r.loturi)) return gol(fxStare === 'loading' ? T('Se încarcă cursul live…') : T('Nu am putut încărca cursul live. Verifică conexiunea și reîncarcă pagina.'));
+    const pipCont = r.pip, tinta = r.suma;
+    const loturi = Math.round(r.loturi * 100 + 1e-9) / 100;
     const R = tpPips / slPips;
     const be = 1 / (1 + R);
     const bani = I18N.NF({ style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -117,12 +116,13 @@
 
     const note = [];
     if (loturi < 0.01) note.push(T('Lotul rezultat este sub 0,01, volumul minim obișnuit: cu acest stop loss, riscul ales este prea mic pentru sold. Mărește soldul sau alege un stop loss mai apropiat, nu riscul.'));
-    else if (Math.abs(loturi * slPips * pipCont - tinta) > 0.005) note.push(T('Ținta de risc este {x}; prin rotunjirea în jos a lotului riști puțin mai puțin.', { x: bani.format(tinta) }));
+    else if (Math.abs(loturi * slPips * pipCont - tinta) > 0.005) note.push(T('Suma riscată și profitul sunt calculate pentru lotul rotunjit ({lot}); ținta de risc este {x}.', { lot: nr(loturi, 2, 2), x: bani.format(tinta) }));
     if (risc > 2) note.push(T('Atenție: peste 2% risc pe o tranzacție, o serie normală de pierderi îți poate afecta serios contul.'));
     if (R < 1) note.push(T('Raport sub 1:1: câștigul vizat e mai mic decât riscul, deci ai nevoie de peste 50% tranzacții câștigătoare.'));
     const ref = PRET_IMPLICIT[p];
     if (ref && (intrare > ref * 1.6 || intrare < ref / 1.6)) note.push(T('Verifică prețul de intrare: pare foarte diferit de cursul obișnuit al perechii.'));
-    note.push(T('Valoare pip folosită: circa {pip} {moneda} per lot standard.', { pip: nr(pipCont, 2, 2), moneda }) + conventiePip(p) + ' ' + T('Costurile (spread, comision, swap) nu sunt incluse. Este o estimare: confirmă valorile pe platforma brokerului.'));
+    const sp = specLot(p);
+    note.push(T('Valoare pip: {pip} per lot standard ({u} unități, 1 pip = {ps}).', { pip: I18N.NF({ style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(pipCont), u: nr(sp.contract, 0), ps: I18N.num(sp.pip, { maximumFractionDigits: 4 }) }) + ((c => c ? ' ' + c.replace(/\.$/, '') + '.' : '')(fxCursText(p, moneda))) + ' ' + T('Costurile (spread, comision, swap) nu sunt incluse. Confirmă specificațiile simbolului la broker.'));
     out.nota.textContent = note.join(' ');
     form.dataset.state = 'ok';
   }
@@ -154,5 +154,6 @@
   form.addEventListener('input', calc);
   form.addEventListener('change', e => { if (e.target.id !== 'rr-pereche') calc(); });
   form.addEventListener('submit', e => e.preventDefault());
+  document.addEventListener('fx-ready', calc);
   calc();
 })();

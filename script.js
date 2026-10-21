@@ -249,6 +249,16 @@ async function fxIncarca() {
   fxStare = 'error';
 }
 
+/** Linia cu cursul folosit (sursă + dată), comună taburilor Lot și Risk/Reward. */
+function fxCursText(pereche, moneda) {
+  const quote = pereche.slice(3);
+  if (quote === moneda) return T('Moneda contului = moneda de cotare, nu e nevoie de conversie.');
+  if (!FX) return '';
+  const x = (moneda === 'USD' ? 1 : FX.rates[moneda]) / (quote === 'USD' ? 1 : FX.rates[quote]);
+  const dt = new Date(FX.ts).toLocaleString(I18N.locale || undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  return T('Curs folosit: 1 {q} = {x} {a} · {src} · {dt}', { q: quote, a: moneda, x: I18N.num(x, { maximumFractionDigits: 6 }), src: FX.src, dt });
+}
+
 function calculeaza() {
   const g = id => $(id);
   const sumaEl = g('suma-risc'), loturiEl = g('loturi'), notaEl = g('pip-nota'), cursEl = g('fx-curs');
@@ -274,14 +284,8 @@ function calculeaza() {
     notaEl.textContent = T('1 lot standard = {u} unități; 1 pip = {p}.', { u: n(sp.contract, 0), p: I18N.num(sp.pip, { maximumFractionDigits: 4 }) }) +
       ' ' + T('Rezultat educațional — confirmă specificațiile simbolului la broker.');
   }
-  if (cursEl) {
-    const quote = pereche.slice(3);
-    if (FX && quote !== moneda) {
-      const x = (moneda === 'USD' ? 1 : FX.rates[moneda]) / (quote === 'USD' ? 1 : FX.rates[quote]);
-      const dt = new Date(FX.ts).toLocaleString(I18N.locale || undefined, { dateStyle: 'medium', timeStyle: 'short' });
-      cursEl.textContent = T('Curs folosit: 1 {q} = {x} {a} · {src} · {dt}', { q: quote, a: moneda, x: I18N.num(x, { maximumFractionDigits: 6 }), src: FX.src, dt });
-    } else cursEl.textContent = quote === moneda ? T('Moneda contului = moneda de cotare, nu e nevoie de conversie.') : '';
-  }
+  if (cursEl) cursEl.textContent = fxCursText(pereche, moneda);
+
 }
 
 /** Separator de mii la tastare (1,000 / 100,000), caret păstrat; parseNum elimină virgulele. */
@@ -308,7 +312,7 @@ if ($('calc-form')) {
   });
   $('calc-form').addEventListener('submit', e => e.preventDefault());
   calculeaza();
-  fxIncarca().then(calculeaza);
+  fxIncarca().then(() => { calculeaza(); document.dispatchEvent(new Event('fx-ready')); });
 }
 
 // ===== Formular contact -> mailto (fără server) =====
