@@ -201,88 +201,114 @@ function conventiePip(pereche) {
   return '';
 }
 
+// ===== Calculator lot (ca Myfxbook Position Size): cursuri live, fără preț introdus manual =====
+// lots = (sold × risc%) / (SL pips × valoare pip per lot în moneda contului)
+// valoare pip per lot = mărime pip × contract, convertită din moneda de cotare în moneda contului
+const LOT_SPEC = { XAUUSD: { contract: 100, pip: 0.01 }, XAGUSD: { contract: 5000, pip: 0.01 } };
+function specLot(pereche) {
+  if (LOT_SPEC[pereche]) return LOT_SPEC[pereche];
+  return { contract: 100000, pip: pereche.slice(3) === 'JPY' ? 0.01 : 0.0001 };
+}
+/** rates = unități de monedă per 1 USD (ex. {EUR: 0.89, JPY: 158}). */
+function pipPeLotCont(pereche, moneda, rates) {
+  const sp = specLot(pereche), quote = pereche.slice(3);
+  const rQ = quote === 'USD' ? 1 : rates && rates[quote];
+  const rA = moneda === 'USD' ? 1 : rates && rates[moneda];
+  if (quote === moneda) return sp.pip * sp.contract;
+  if (!(rQ > 0) || !(rA > 0)) return NaN;
+  return sp.pip * sp.contract * (rA / rQ);
+}
+function calcLot(o) {
+  const sp = specLot(o.pereche);
+  const suma = o.sold * o.risc / 100;
+  const pip = pipPeLotCont(o.pereche, o.moneda, o.rates);
+  const loturi = (o.stop > 0 && pip > 0) ? suma / (o.stop * pip) : NaN;
+  return { suma, pip, loturi, unitati: loturi * sp.contract };
+}
+
+const FX_CACHE = 'msFxRates1';
+let FX = null; let fxStare = 'loading';
+function fxSalvat() { try { const c = JSON.parse(localStorage.getItem(FX_CACHE) || 'null'); return c && c.rates ? c : null; } catch (e) { return null; } }
+async function fxIncarca() {
+  const c = fxSalvat();
+  if (c && Date.now() - c.loaded < 3 * 3600e3) { FX = c; fxStare = 'ok'; return; }
+  const surse = [
+    ['https://open.er-api.com/v6/latest/USD', j => j.result === 'success' && { rates: j.rates, ts: j.time_last_update_unix * 1000, src: 'ExchangeRate-API (open.er-api.com)' }],
+    ['https://api.frankfurter.dev/v1/latest?from=USD', j => j.rates && { rates: j.rates, ts: Date.parse(j.date + 'T16:00:00Z'), src: 'Frankfurter (ECB)' }]
+  ];
+  for (const [url, map] of surse) {
+    try {
+      const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 8000);
+      const r = await fetch(url, { signal: ctl.signal, cache: 'no-store' }); clearTimeout(t);
+      if (!r.ok) continue;
+      const d = map(await r.json());
+      if (d && d.rates && d.rates.EUR) { d.loaded = Date.now(); FX = d; fxStare = 'ok'; try { localStorage.setItem(FX_CACHE, JSON.stringify(d)); } catch (e) {} return; }
+    } catch (e) { /* încercăm sursa următoare */ }
+  }
+  if (c) { FX = c; fxStare = 'ok'; return; }   // curs salvat anterior, cu data lui
+  fxStare = 'error';
+}
+
 function calculeaza() {
-  const perecheEl = $('pereche');
-  const monedaEl = $('moneda');
-  const soldEl = $('sold');
-  const riscEl = $('risc');
-  const stopEl = $('stop');
-  const pretEl = $('pret');
-  const sumaEl = $('suma-risc');
-  const loturiEl = $('loturi');
-  const notaEl = $('pip-nota');
-  if (!perecheEl || !sumaEl || !loturiEl) return;
-
-  const pereche = perecheEl.value;
-  const moneda = monedaEl.value;
-  const soldRaw = (soldEl.value || '').trim();
-  const riscRaw = (riscEl.value || '').trim();
-  const stopRaw = (stopEl.value || '').trim();
-  const pretRaw = (pretEl.value || '').trim();
-
+  const g = id => $(id);
+  const sumaEl = g('suma-risc'), loturiEl = g('loturi'), notaEl = g('pip-nota'), cursEl = g('fx-curs');
+  if (!g('pereche') || !sumaEl || !loturiEl) return;
+  const pereche = g('pereche').value, moneda = g('moneda').value;
+  const soldRaw = (g('sold').value || '').trim(), riscRaw = (g('risc').value || '').trim(), stopRaw = (g('stop').value || '').trim();
+  const outs = ['suma-risc', 'loturi'];
+  const gol = () => outs.forEach(id => { if (g(id)) g(id).textContent = '—'; });
+  if (!soldRaw || !riscRaw || !stopRaw) { gol(); notaEl.textContent = T('Completează soldul, riscul % și stop loss-ul în pips.'); return; }
   const sold = Math.max(0, parseNum(soldRaw) || 0);
   const risc = Math.min(100, Math.max(0, parseNum(riscRaw) || 0));
   const stop = Math.max(0, parseNum(stopRaw) || 0);
-  const pret = parseNum(pretRaw);
-
-  const emptyRequired = !soldRaw || !riscRaw || !stopRaw;
-  if (emptyRequired) {
-    sumaEl.textContent = '—';
-    loturiEl.textContent = '—';
-    notaEl.textContent = T('Completează soldul, riscul % și stop loss-ul în pips.');
-    return;
+  const r = calcLot({ pereche, moneda, sold, risc, stop, rates: FX && FX.rates });
+  const fmt = I18N.NF({ style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const n = (x, d) => I18N.num(x, { minimumFractionDigits: d, maximumFractionDigits: d });
+  sumaEl.textContent = fmt.format(r.suma);
+  if (!Number.isFinite(r.loturi)) {
+    gol(); sumaEl.textContent = fmt.format(r.suma);
+    notaEl.textContent = fxStare === 'loading' ? T('Se încarcă cursul live…') : T('Nu am putut încărca cursul live. Verifică conexiunea și reîncarcă pagina.');
+  } else {
+    loturiEl.textContent = n(r.loturi, 2);
+    const sp = specLot(pereche);
+    notaEl.textContent = T('1 lot standard = {u} unități; 1 pip = {p}.', { u: n(sp.contract, 0), p: I18N.num(sp.pip, { maximumFractionDigits: 4 }) }) +
+      ' ' + T('Rezultat educațional — confirmă specificațiile simbolului la broker.');
   }
-
-  const pipUsd = pipUsdPeLot(pereche, pret);
-  const eurusd = (pereche === 'EURUSD' && pret > 0) ? pret : EURUSD_PRESUPUS;
-  const gbpusd = (pereche === 'GBPUSD' && pret > 0) ? pret : GBPUSD_PRESUPUS;
-  let pipCont = pipUsd;
-  let cursNota = '';
-  // USD → monedă cont: împărțim la cursul XXXUSD (nu înmulțim)
-  if (moneda === 'EUR') {
-    pipCont = pipUsd / eurusd;
-    cursNota = ' ' + T('Conversie EUR cu EURUSD ≈ {x}.', { x: I18N.num(eurusd, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) });
-  } else if (moneda === 'GBP') {
-    pipCont = pipUsd / gbpusd;
-    cursNota = ' ' + T('Conversie GBP cu GBPUSD ≈ {x}.', { x: I18N.num(gbpusd, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) });
+  if (cursEl) {
+    const quote = pereche.slice(3);
+    if (FX && quote !== moneda) {
+      const x = (moneda === 'USD' ? 1 : FX.rates[moneda]) / (quote === 'USD' ? 1 : FX.rates[quote]);
+      const dt = new Date(FX.ts).toLocaleString(I18N.locale || undefined, { dateStyle: 'medium', timeStyle: 'short' });
+      cursEl.textContent = T('Curs folosit: 1 {q} = {x} {a} · {src} · {dt}', { q: quote, a: moneda, x: I18N.num(x, { maximumFractionDigits: 6 }), src: FX.src, dt });
+    } else cursEl.textContent = quote === moneda ? T('Moneda contului = moneda de cotare, nu e nevoie de conversie.') : '';
   }
-
-  const sumaTinta = sold * (risc / 100);
-  const loturiExact = (stop > 0 && pipCont > 0) ? sumaTinta / (stop * pipCont) : NaN;
-  // Rotunjire ÎN JOS la 0,01 lot — riscul efectiv nu depășește ținta
-  const loturi = Number.isFinite(loturiExact) ? Math.floor(loturiExact * 100 + 1e-9) / 100 : NaN;
-  const riscEfectiv = Number.isFinite(loturi) ? loturi * stop * pipCont : NaN;
-
-  const fmt = I18N.NF({ style: 'currency', currency: moneda, maximumFractionDigits: 2 });
-  sumaEl.textContent = fmt.format(sumaTinta);
-  loturiEl.textContent = Number.isFinite(loturi) ? I18N.num(loturi, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
-
-  const pipTxt = I18N.num(pipCont, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  let efectivNota = '';
-  if (Number.isFinite(riscEfectiv) && Number.isFinite(loturi) && Math.abs(riscEfectiv - sumaTinta) > 0.005) {
-    efectivNota = ' ' + T('Risc efectiv la {lot} loturi: {bani}.', { lot: I18N.num(loturi, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), bani: fmt.format(riscEfectiv) });
-  }
-  notaEl.textContent =
-    T('Valoare pip folosită: circa {pip} {moneda} per lot standard, per pip.', { pip: pipTxt, moneda }) +
-    conventiePip(pereche) + cursNota + efectivNota +
-    ' ' + T('Este o estimare — confirmă valoarea pipului pe platforma brokerului. Nu indică profitul posibil.');
 }
 
+/** Separator de mii la tastare (1,000 / 100,000), caret păstrat; parseNum elimină virgulele. */
+function formatMii(el) {
+  const v = el.value, pos = el.selectionStart == null ? v.length : el.selectionStart;
+  const before = v.slice(0, pos).replace(/[^\d.]/g, '').length;
+  let clean = v.replace(/[^\d.]/g, '');
+  const dot = clean.indexOf('.');
+  if (dot >= 0) clean = clean.slice(0, dot + 1) + clean.slice(dot + 1).replace(/\./g, '');
+  const [i, d] = clean.split('.');
+  const out = (i || '').replace(/^0+(?=\d)/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (d !== undefined ? '.' + d : '');
+  if (out === v) return;
+  el.value = out;
+  let k = 0, c = 0; while (c < out.length && k < before) { if (/[\d.]/.test(out[c])) k++; c++; }
+  try { if (document.activeElement === el) el.setSelectionRange(c, c); } catch (e) {}
+}
+['sold', 'rr-sold'].forEach(id => { const el = $(id); if (el) { el.addEventListener('input', () => formatMii(el)); formatMii(el); } });
+
 if ($('calc-form')) {
-  $('pereche').addEventListener('change', () => {
-    const p = PRET_IMPLICIT[$('pereche').value];
-    if (p != null) $('pret').value = String(p);
-    calculeaza();
-  });
-  ['sold', 'risc', 'stop', 'pret'].forEach(id => {
+  ['pereche', 'moneda', 'sold', 'risc', 'stop'].forEach(id => {
     const el = $(id);
     el.addEventListener('input', calculeaza);
     el.addEventListener('change', calculeaza);
   });
-  $('moneda').addEventListener('input', calculeaza);
-  $('moneda').addEventListener('change', calculeaza);
   $('calc-form').addEventListener('submit', e => e.preventDefault());
   calculeaza();
+  fxIncarca().then(calculeaza);
 }
 
 // ===== Formular contact -> mailto (fără server) =====

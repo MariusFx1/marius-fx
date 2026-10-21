@@ -1275,7 +1275,6 @@
  "Un termen nu e clar? Vezi <a href=\"glosar.html\">glosarul Forex</a>.": "Algum termo não ficou claro? Veja o <a href=\"glosar.html\">glossário Forex</a>.",
  "Unde pui SL și TP.": "Onde você coloca o SL e o TP.",
  "Unitatea de măsură a mărimii poziției. 1 lot standard = 100.000 de unități din valuta de bază, 0,10 loturi = 10.000, iar 0,01 loturi (micro) = 1.000. Câte loturi deschizi afli cu <a href=\"calculator.html\">calculatorul de lot</a>.": "A unidade de medida do tamanho da posição. 1 lote padrão = 100.000 unidades da moeda base, 0,10 lote = 10.000 e 0,01 lote (micro) = 1.000. Quantos lotes abrir você calcula com a <a href=\"calculator.html\">calculadora de lote</a>.",
- "Unități": "Unidades",
  "Urmărește pe X": "Siga-nos no X",
  "Urmărește pe X · @MSPrime1fx": "Siga-nos no X · @MSPrime1fx",
  "Următoarea întrebare": "Próxima pergunta",
@@ -1410,5 +1409,7 @@
  "Semnale din grupul VIP, înainte și după, cu graficele reale ale tranzacțiilor încheiate.": "Sinais do grupo VIP, antes e depois, com os gráficos reais das operações encerradas.",
  "Semnale, înainte și după": "Sinais, antes e depois",
  "Vezi graficele reale ale unor semnale din grupul VIP, la semnal și la rezultat.": "Veja os gráficos reais de alguns sinais do grupo VIP, no sinal e no resultado.",
- "Vezi rezultatele": "Ver os resultados"
+ "Vezi rezultatele": "Ver os resultados",
+ "Unități": "Unidades",
+ "<span>Loturi standard</span>": "<span>Lotes padrão</span>"
 }

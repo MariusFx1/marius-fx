@@ -648,5 +648,11 @@
  "Ținta: equity ": "Meta: patrimônio ",
  "∞ (fără pierderi)": "∞ (sem perdas)",
  "✓ Plan respectat": "✓ Plano seguido",
- "✗ Plan nerespectat": "✗ Plano não seguido"
+ "✗ Plan nerespectat": "✗ Plano não seguido",
+ "Se încarcă cursul live…": "Carregando a cotação ao vivo…",
+ "Nu am putut încărca cursul live. Verifică conexiunea și reîncarcă pagina.": "Não foi possível carregar a cotação ao vivo. Verifique sua conexão e recarregue a página.",
+ "1 lot standard = {u} unități; 1 pip = {p}.": "1 lote padrão = {u} unidades; 1 pip = {p}.",
+ "Rezultat educațional — confirmă specificațiile simbolului la broker.": "Resultado educativo — confirme as especificações do símbolo com sua corretora.",
+ "Curs folosit: 1 {q} = {x} {a} · {src} · {dt}": "Cotação usada: 1 {q} = {x} {a} · {src} · {dt}",
+ "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Moeda da conta = moeda cotada, sem necessidade de conversão."
 }

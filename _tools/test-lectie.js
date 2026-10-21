@@ -154,7 +154,7 @@ const isThirdParty = t => /tradingview|google|gstatic|fonts\.|favicon/i.test(t);
   await page.setViewport(DESK);
   await page.goto(`${BASE}/calculator.html`, { waitUntil: 'networkidle2' });
   await page.select('#pereche', 'EURUSD'); await page.select('#moneda', 'EUR');
-  for (const [id, v] of [['sold', '1000'], ['risc', '1'], ['stop', '25'], ['pret', '1,10']]) { await page.$eval('#' + id, el => el.value = ''); await page.type('#' + id, v); }
+  for (const [id, v] of [['sold', '1000'], ['risc', '1'], ['stop', '25']]) { await page.$eval('#' + id, el => el.value = ''); await page.type('#' + id, v); }
   const calc = await page.evaluate(() => ({ s: document.getElementById('suma-risc').textContent, l: document.getElementById('loturi').textContent }));
   assert(calc.l === '0,04' && /10,00/.test(calc.s), `calculator agrees with lesson example: ${JSON.stringify(calc)}`);
 

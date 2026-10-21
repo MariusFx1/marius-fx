@@ -109,7 +109,7 @@ async function toolChecks(b, l) {
   await page.goto(`${BASE}/${pre(l)}calculator.html`, { waitUntil: 'networkidle2' });
   const calc = await page.evaluate(async () => {
     const set = (id, v) => { const e = document.getElementById(id); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); };
-    set('sold', '1000'); set('risc', '1'); set('stop', '25'); set('pret', '1.10');
+    set('sold', '1000'); set('risc', '1'); set('stop', '25');
     const m = document.getElementById('moneda'); if (m) { m.value = 'EUR'; m.dispatchEvent(new Event('input', { bubbles: true })); }
     await new Promise(r => setTimeout(r, 100));
     const out = { lot: document.getElementById('loturi').textContent, sum: document.getElementById('suma-risc').textContent };

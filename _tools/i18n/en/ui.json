@@ -648,5 +648,11 @@
  "Ținta: equity ": "Target: equity ",
  "∞ (fără pierderi)": "∞ (no losses)",
  "✓ Plan respectat": "✓ Plan followed",
- "✗ Plan nerespectat": "✗ Plan not followed"
+ "✗ Plan nerespectat": "✗ Plan not followed",
+ "Se încarcă cursul live…": "Loading live rate…",
+ "Nu am putut încărca cursul live. Verifică conexiunea și reîncarcă pagina.": "Could not load the live rate. Check your connection and reload the page.",
+ "1 lot standard = {u} unități; 1 pip = {p}.": "1 standard lot = {u} units; 1 pip = {p}.",
+ "Rezultat educațional — confirmă specificațiile simbolului la broker.": "Educational result — confirm the symbol specifications with your broker.",
+ "Curs folosit: 1 {q} = {x} {a} · {src} · {dt}": "Rate used: 1 {q} = {x} {a} · {src} · {dt}",
+ "Moneda contului = moneda de cotare, nu e nevoie de conversie.": "Account currency = quote currency, no conversion needed."
 }
