@@ -46,7 +46,7 @@ const MOB = { width: 390, height: 844, isMobile: true, hasTouch: true, deviceSca
       assert(i.tw === 'summary_large_image' && i.twImg === SITE + 'og-image.png?v=3', `${label} ${f}: Twitter card tags`);
       assert(i.canon === url && i.theme === '#070b14' && i.favicon, `${label} ${f}: canonical + theme-color + favicon kept`);
       { const v = 60; assert(i.css === `styles.css?v=${v}`, `${label} ${f}: styles.css?v=${v}`); }
-      assert(i.js[0] === 'script.js?v=39 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
+      assert(i.js[0] === 'script.js?v=40 defer' && i.js.every(s => s.endsWith(' defer')), `${label} ${f}: scripts deferred ${JSON.stringify(i.js)}`);
       assert(i.risks.length === 1 && i.risks[0] === RISK, `${label} ${f}: exact footer risk line (once)`);
       for (const h of ['lectie.html', 'test.html', 'intrebari.html', 'reguli.html', 'patternuri.html', 'calculator.html', 'sesiuni.html', 'calendar.html', 'jurnal.html', 'contact.html', 'https://t.me/MSPrimeFree', 'mailto:contact.mariusfx@gmail.com'])
         if (!i.footLinks.includes(h)) assert(false, `${label} ${f}: footer link ${h}`);
