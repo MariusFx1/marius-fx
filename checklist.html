@@ -39,7 +39,7 @@
   <meta name="twitter:image" content="https://mariusfx1.github.io/marius-fx/og-image.png?v=3">
   <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css?v=61">
-  <link rel="stylesheet" href="checklist.css?v=1">
+  <link rel="stylesheet" href="checklist.css?v=2">
   <link rel="icon" href="favicon.ico?v=18" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=18">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=18">
@@ -92,27 +92,41 @@
       <div class="ck-layout">
         <form class="ck-list" id="ck-form" novalidate>
 
-          <fieldset class="ck-card" data-key="zone" data-w="20">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 17h18"/><path d="M7 7v10M17 7v10" opacity=".45"/></svg></span><div class="ck-title"><b>1. Zonă de suport / rezistență</b><small>Prețul este la o zonă clară de suport/rezistență (sau cerere/ofertă)?</small></div><div class="ck-pts" data-pts>0/20</div></legend>
+          <fieldset class="ck-card" data-key="tfa" data-w="9">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div class="ck-title"><b>1. Timeframe de analiză</b><small>Pe ce timeframe ai găsit zona și structura?</small></div><div class="ck-pts" data-pts>0/9</div></legend>
+            <div class="ck-opts ck-tf">
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="W1" data-v="1"><span><b>W1</b><em>Ideal</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="D1" data-v="1"><span><b>D1</b><em>Ideal</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="H4" data-v="1"><span><b>H4</b><em>Ideal</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="H2" data-v="0.6"><span><b>H2</b><em>Parțial</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="H1" data-v="0.4"><span><b>H1</b><em>Parțial</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="M30" data-v="0.2"><span><b>M30</b><em>Slab</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="M15" data-v="0.15"><span><b>M15</b><em>Slab</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfa" value="M5" data-v="0"><span><b>M5</b><em>Prea mic</em></span></label>
+            </div>
+            <p class="ck-tip">Pentru swing trading, zonele și trendul se citesc pe W1, D1 sau H4. Timeframe-urile mici sunt pline de zgomot.</p>
+          </fieldset>
+          <fieldset class="ck-card" data-key="zone" data-w="15">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 17h18"/><path d="M7 7v10M17 7v10" opacity=".45"/></svg></span><div class="ck-title"><b>2. Zonă de suport / rezistență</b><small>Prețul este la o zonă clară de suport/rezistență (sau cerere/ofertă)?</small></div><div class="ck-pts" data-pts>0/15</div></legend>
             <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="zone" value="1" data-v="1"><span><b>Da, zonă clară</b><em>Zona a fost respectată de mai multe ori pe H4/D1.</em></span></label>
               <label class="ck-opt"><input type="radio" name="zone" value="0" data-v="0"><span><b>Nu / la mijlocul range-ului</b><em>La mijloc nu ai nici avantaj, nici loc logic pentru SL.</em></span></label>
             </div>
           </fieldset>
 
-          <fieldset class="ck-card" data-key="candle" data-w="15">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3v4M8 15v6M16 3v6M16 17v4"/><rect x="5.5" y="7" width="5" height="8" rx="1"/><rect x="13.5" y="9" width="5" height="8" rx="1"/></svg></span><div class="ck-title"><b>2. Confirmare de lumânare</b><small>Ce formațiune de lumânare vezi în zonă?</small></div><div class="ck-pts" data-pts>0/15</div></legend>
+          <fieldset class="ck-card" data-key="candle" data-w="12">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3v4M8 15v6M16 3v6M16 17v4"/><rect x="5.5" y="7" width="5" height="8" rx="1"/><rect x="13.5" y="9" width="5" height="8" rx="1"/></svg></span><div class="ck-title"><b>3. Confirmare de lumânare</b><small>Ce formațiune de lumânare vezi în zonă?</small></div><div class="ck-pts" data-pts>0/12</div></legend>
             <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="candle" value="engulf" data-v="1"><span><b>Engulfing bullish / bearish</b><em>Corpul acoperă complet lumânarea anterioară, în direcția tranzacției.</em></span></label>
               <label class="ck-opt"><input type="radio" name="candle" value="pin" data-v="1"><span><b>Pin bar (Hammer / Shooting Star)</b><em>Fitil lung de respingere, cel puțin de 2 ori corpul.</em></span></label>
               <label class="ck-opt"><input type="radio" name="candle" value="star" data-v="1"><span><b>Morning / Evening Star</b><em>Trei lumânări: impuls, indecizie, inversare puternică.</em></span></label>
-              <label class="ck-opt"><input type="radio" name="candle" value="inside" data-v="0.8"><span><b>Breakout din inside bar</b><em>Așteaptă închiderea în afara lumânării-mamă, nu doar un fitil.</em></span></label>
+              <label class="ck-opt"><input type="radio" name="candle" value="inside" data-v="0.75"><span><b>Breakout din inside bar</b><em>Așteaptă închiderea în afara lumânării-mamă, nu doar un fitil.</em></span></label>
               <label class="ck-opt ck-none"><input type="radio" name="candle" value="none" data-v="0"><span><b>Niciuna</b><em>Fără confirmare, intrarea este doar o presupunere.</em></span></label>
             </div>
           </fieldset>
 
-          <fieldset class="ck-card" data-key="pattern" data-w="15">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 18l4-6 3 3 3-8 3 8 3-3 4 6"/></svg></span><div class="ck-title"><b>3. Pattern / setup de grafic</b><small>Ce structură vezi pe timeframe-ul de lucru?</small></div><div class="ck-pts" data-pts>0/15</div></legend>
+          <fieldset class="ck-card" data-key="pattern" data-w="12">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 18l4-6 3 3 3-8 3 8 3-3 4 6"/></svg></span><div class="ck-title"><b>4. Pattern / setup de grafic</b><small>Ce structură vezi pe timeframe-ul de lucru?</small></div><div class="ck-pts" data-pts>0/12</div></legend>
             <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="pattern" value="hs" data-v="1"><span><b>Head and Shoulders (și inversul)</b><em>Intră după ruperea neckline-ului, ideal la retestare.</em></span></label>
               <label class="ck-opt"><input type="radio" name="pattern" value="double" data-v="1"><span><b>Double Top / Double Bottom</b><em>Al doilea vârf eșuează la aceeași zonă; confirmarea e ruperea mijlocului.</em></span></label>
@@ -122,24 +136,39 @@
             </div>
           </fieldset>
 
-          <fieldset class="ck-card" data-key="trend" data-w="15">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div class="ck-title"><b>4. Trend aliniat cu timeframe-ul mare</b><small>Direcția tranzacției este aceeași cu trendul de pe D1/W1?</small></div><div class="ck-pts" data-pts>0/15</div></legend>
+          <fieldset class="ck-card ck-trend" data-key="trend" data-w="12">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div class="ck-title ck-v-trend"><b>5. Trend aliniat cu timeframe-ul mare</b><small>Direcția tranzacției este aceeași cu trendul de pe D1/W1?</small></div><div class="ck-title ck-v-rev"><b>5. Inversare confirmată (Head and Shoulders)</b><small>Trendul anterior e epuizat (structură ruptă) și neckline-ul a fost rupt + retestat?</small></div><div class="ck-pts" data-pts>0/12</div></legend>
             <div class="ck-opts">
-              <label class="ck-opt"><input type="radio" name="trend" value="1" data-v="1"><span><b>Da, în direcția trendului</b><em>Maxime și minime tot mai sus (sau mai jos) pe timeframe-ul mare.</em></span></label>
-              <label class="ck-opt"><input type="radio" name="trend" value="0" data-v="0"><span><b>Nu / contra trendului</b><em>Tranzacțiile contra trendului au nevoie de mult mai multă confirmare.</em></span></label>
+              <label class="ck-opt"><input type="radio" name="trend" value="1" data-v="1"><span class="ck-v-trend"><b>Da, în direcția trendului</b><em>Maxime și minime tot mai sus (sau mai jos) pe timeframe-ul mare.</em></span><span class="ck-v-rev"><b>Da, structură ruptă + neckline retestat</b><em>Ultimul minim (sau maxim) al trendului a fost rupt, iar prețul a revenit la neckline și l-a respectat.</em></span></label>
+              <label class="ck-opt"><input type="radio" name="trend" value="0" data-v="0"><span class="ck-v-trend"><b>Nu / contra trendului</b><em>Tranzacțiile contra trendului au nevoie de mult mai multă confirmare.</em></span><span class="ck-v-rev"><b>Nu încă</b><em>Fără ruperea neckline-ului, trendul vechi poate continua.</em></span></label>
             </div>
+            <p class="ck-tip ck-v-rev">Head and Shoulders este un pattern de inversare: intri împotriva trendului anterior, deci nu cauți alinierea cu el. Cauți dovada că s-a terminat: structura ruptă, neckline-ul spart și retestat.</p>
           </fieldset>
 
-          <fieldset class="ck-card" data-key="retest" data-w="15">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h18" opacity=".45"/><path d="M4 18c3 0 4-10 8-10s3 6 4 6 2-3 4-3"/></svg></span><div class="ck-title"><b>5. Retestare + confirmare</b><small>Prețul a retestat zona și confirmarea s-a format (lumânare închisă)?</small></div><div class="ck-pts" data-pts>0/15</div></legend>
+          <fieldset class="ck-card" data-key="retest" data-w="12">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h18" opacity=".45"/><path d="M4 18c3 0 4-10 8-10s3 6 4 6 2-3 4-3"/></svg></span><div class="ck-title"><b>6. Retestare + confirmare</b><small>Prețul a retestat zona și confirmarea s-a format (lumânare închisă)?</small></div><div class="ck-pts" data-pts>0/12</div></legend>
             <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="retest" value="1" data-v="1"><span><b>Da, retestat și confirmat</b><em>Ai așteptat închiderea lumânării, nu ai intrat pe ghicite.</em></span></label>
               <label class="ck-opt"><input type="radio" name="retest" value="0" data-v="0"><span><b>Nu încă</b><em>Pune o alertă la zonă și revino când apare confirmarea.</em></span></label>
             </div>
           </fieldset>
 
+          <fieldset class="ck-card" data-key="tfe" data-w="8">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><div class="ck-title"><b>7. Timeframe de confirmare / intrare</b><small>Pe ce timeframe s-a format confirmarea de intrare?</small></div><div class="ck-pts" data-pts>0/8</div></legend>
+            <div class="ck-opts ck-tf">
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="W1" data-v="0.4"><span><b>W1</b><em>Prea lent</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="D1" data-v="0.9"><span><b>D1</b><em>Foarte bun</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="H4" data-v="1"><span><b>H4</b><em>Ideal</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="H2" data-v="0.6"><span><b>H2</b><em>Parțial</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="H1" data-v="0.5"><span><b>H1</b><em>Parțial</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="M30" data-v="0.2"><span><b>M30</b><em>Slab</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="M15" data-v="0.15"><span><b>M15</b><em>Slab</em></span></label>
+              <label class="ck-opt ck-chip"><input type="radio" name="tfe" value="M5" data-v="0"><span><b>M5</b><em>Prea mic</em></span></label>
+            </div>
+            <p class="ck-tip">Confirmarea ideală vine pe H4 (sau D1). Pe timeframe-uri foarte mici apar multe semnale false.</p>
+          </fieldset>
           <fieldset class="ck-card" data-key="risk" data-w="10">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div class="ck-title"><b>6. Risc 1–3% din cont</b><small>Cât la sută din cont riști pe această tranzacție?</small></div><div class="ck-pts" data-pts>0/10</div></legend>
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div class="ck-title"><b>8. Risc 1–3% din cont</b><small>Cât la sută din cont riști pe această tranzacție?</small></div><div class="ck-pts" data-pts>0/10</div></legend>
             <div class="ck-inputs">
               <label class="ck-field"><span class="ck-lbl">Risc (% din cont)</span>
                 <div class="ck-inp"><input type="number" id="ck-risk" inputmode="decimal" min="0" max="100" step="0.1" placeholder="ex. 1"><i>%</i></div>
@@ -150,7 +179,7 @@
           </fieldset>
 
           <fieldset class="ck-card" data-key="rr" data-w="10">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg></span><div class="ck-title"><b>7. Risk/Reward minim 1:2</b><small>Introdu SL și TP în pipși sau direct R:R.</small></div><div class="ck-pts" data-pts>0/10</div></legend>
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg></span><div class="ck-title"><b>9. Risk/Reward minim 1:2</b><small>Introdu SL și TP în pipși sau direct R:R.</small></div><div class="ck-pts" data-pts>0/10</div></legend>
             <div class="ck-inputs ck-inputs-3">
               <label class="ck-field"><span class="ck-lbl">Stop loss (pipși)</span>
                 <div class="ck-inp"><input type="number" id="ck-sl" inputmode="decimal" min="0" step="0.1" placeholder="ex. 30"></div>
@@ -181,7 +210,7 @@
             <p class="ck-verdict" id="ck-verdict">Completează checklist-ul</p>
             <p class="ck-verdict-sub" id="ck-verdict-sub">Alege câte o opțiune în fiecare secțiune.</p>
             <ul class="ck-flags" id="ck-flags"></ul>
-            <div class="ck-progress"><p><span id="ck-done">0</span>/7 secțiuni completate</p><i><b id="ck-bar"></b></i></div>
+            <div class="ck-progress"><p><span id="ck-done">0</span>/9 secțiuni completate</p><i><b id="ck-bar"></b></i></div>
             <button type="button" class="btn btn-ghost ck-reset" id="ck-reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Resetează checklist-ul</button>
             <ul class="ck-legend">
               <li><i class="g"></i>85–100%: setup puternic</li>
@@ -250,6 +279,6 @@
   </footer>
   <script src="i18n.js?v=32d8fa8b" defer></script>
   <script src="script.js?v=40" defer></script>
-  <script src="checklist.js?v=2" defer></script>
+  <script src="checklist.js?v=3" defer></script>
 </body>
 </html>

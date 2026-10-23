@@ -101,3 +101,17 @@
   .ck-head { gap: .65rem; } .ck-ico { width: 36px; height: 36px; }
   .ck-legend { display: none; }
 }
+
+/* v2: timeframe-uri + inversare Head and Shoulders */
+.ck-opts.ck-tf { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ck-chip { flex-direction: column; align-items: flex-start; gap: .45rem; padding: .65rem .75rem; }
+.ck-chip span b { font-family: var(--mono); font-size: 1rem; }
+.ck-opt input[data-v]:not([data-v="1"]):not([data-v="0"]):checked { background: var(--amber); border-color: var(--amber); }
+.ck-opt:has(input[data-v]:not([data-v="1"]):not([data-v="0"]):checked) { border-color: rgba(251,191,36,.6); background: linear-gradient(135deg, rgba(251,191,36,.13), rgba(251,191,36,.03)); }
+.ck-trend .ck-v-rev, .ck-trend.is-rev .ck-v-trend { display: none; }
+.ck-trend.is-rev .ck-v-rev { display: grid; }
+.ck-trend.is-rev p.ck-v-rev { display: block; }
+.ck-trend.is-rev { border-color: rgba(251,191,36,.45); }
+.ck-trend.is-rev .ck-ico { background: rgba(251,191,36,.1); border-color: rgba(251,191,36,.35); }
+.ck-trend.is-rev .ck-ico svg { stroke: var(--amber); transform: scaleY(-1); }
+@media (max-width: 560px) { .ck-opts.ck-tf { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; } .ck-chip { padding: .55rem .5rem; } .ck-chip em { font-size: .72rem; } }

@@ -91,11 +91,17 @@
     animate(score);
   }
 
+  const trendCard = form.querySelector('.ck-trend');
+  function syncRev() {
+    const rev = !!form.querySelector('input[name=pattern][value="hs"]:checked');
+    if (rev !== trendCard.classList.contains('is-rev')) { trendCard.classList.toggle('is-rev', rev); trendCard.querySelectorAll('input').forEach(i => { i.checked = false; }); }
+  }
+  form.addEventListener('change', syncRev);
   form.addEventListener('input', update);
   form.addEventListener('change', update);
   form.addEventListener('submit', e => e.preventDefault());
   $('ck-rr').addEventListener('input', () => { if ($('ck-rr').value) { $('ck-sl').value = ''; $('ck-tp').value = ''; } });
   ['ck-sl', 'ck-tp'].forEach(id => $(id).addEventListener('input', () => { if ($(id).value) $('ck-rr').value = ''; }));
-  $('ck-reset').addEventListener('click', () => { form.reset(); update(); form.querySelector('input').focus({ preventScroll: true }); window.scrollTo({ top: form.getBoundingClientRect().top + scrollY - 90, behavior: 'smooth' }); });
+  $('ck-reset').addEventListener('click', () => { form.reset(); syncRev(); update(); form.querySelector('input').focus({ preventScroll: true }); window.scrollTo({ top: form.getBoundingClientRect().top + scrollY - 90, behavior: 'smooth' }); });
   update();
 })();
