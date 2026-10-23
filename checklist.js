@@ -256,7 +256,7 @@
       const list = Array.isArray(arr) ? arr : [];
       list.push(entry);
       localStorage.setItem(KEY, JSON.stringify(list));
-      say(T('Setup salvat în Jurnal ca tranzacție în desfășurare.'), 'ok', [ROOT + 'jurnal.html', T('Deschide Jurnalul →')]);
+      say(T('Setup salvat în Jurnal ca tranzacție în desfășurare.'), 'ok', ['jurnal.html', T('Deschide Jurnalul →')]);
     } catch (e) { say(T('Nu am putut salva: browserul blochează stocarea locală.'), 'bad'); }
   });
 
