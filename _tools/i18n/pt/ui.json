@@ -707,5 +707,10 @@
  "Imaginea a fost descărcată.": "A imagem foi baixada.",
  "Nu am putut genera imaginea.": "Não foi possível gerar a imagem.",
  "Checklist înainte de tranzacție": "Checklist antes da operação",
- "scor setup": "pontuação"
+ "scor setup": "pontuação",
+ "Calculează lotul în calculator, respectă SL-ul și nu muta stop loss-ul.": "Calcule o lote na calculadora, respeite o SL e não mova o stop loss.",
+ "Completează toate secțiunile, inclusiv R:R-ul, pentru verdictul final.": "Preencha todas as seções, incluindo o R:R, para o veredito final.",
+ "O regulă obligatorie nu este respectată. Corectează R:R-ul înainte de orice intrare.": "Uma regra obrigatória não é respeitada. Corrija o R:R antes de qualquer entrada.",
+ "Ai ales Head and Shoulders: întrebarea de la pasul 5 s-a schimbat, răspunde din nou.": "Você escolheu Head and Shoulders: a pergunta do passo 5 mudou, responda de novo.",
+ "Pattern-ul nu mai este Head and Shoulders: răspunde din nou la pasul 5.": "O padrão não é mais Head and Shoulders: responda de novo o passo 5."
 }

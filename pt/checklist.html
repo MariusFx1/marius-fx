@@ -39,7 +39,7 @@
   <meta name="twitter:image" content="https://mariusfx1.github.io/marius-fx/og-image.png?v=3">
   <link rel="preload" href="../fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../styles.css?v=61">
-  <link rel="stylesheet" href="../checklist.css?v=3">
+  <link rel="stylesheet" href="../checklist.css?v=4">
   <link rel="icon" href="../favicon.ico?v=18" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png?v=18">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png?v=18">
@@ -161,7 +161,6 @@
       <div class="ck-layout">
         <form class="ck-list" id="ck-form" novalidate>
 
-          <div class="ck-step"><span>1</span><div><b>Contexto</b><small>Direção, timeframe, zona e tendência.</small></div></div>
           <fieldset class="ck-card ck-dircard" data-key="dir" data-w="0">
 <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17V7M4 10l3-3 3 3"/><path d="M17 7v10M14 14l3 3 3-3"/></svg></span><div class="ck-title"><b>1. Direção e par</b><small>O que você quer operar e em qual direção?</small></div><div class="ck-pts" data-pts>—</div></legend>            <div class="ck-opts ck-dir">
               <label class="ck-opt ck-buy"><input type="radio" name="dir" value="buy"><span><b>Buy (compra)</b><em>Você compra: espera que o preço suba.</em></span></label>
@@ -187,24 +186,14 @@
             </div>
             <p class="ck-tip">Para swing trading, as zonas e a tendência são lidas no W1, D1 ou H4. Timeframes baixos são cheios de ruído.</p>
           </fieldset>
-          <fieldset class="ck-card" data-key="zone" data-w="13">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 17h18"/><path d="M7 7v10M17 7v10" opacity=".45"/></svg></span><div class="ck-title"><b>3. Zona de suporte / resistência</b><small><span class="ck-d-n">O preço está em uma zona clara de suporte/resistência (ou demanda/oferta)?</span><span class="ck-d-b">O preço está em uma zona clara de suporte (ou demanda)?</span><span class="ck-d-s">O preço está em uma zona clara de resistência (ou oferta)?</span></small></div><div class="ck-pts" data-pts>0/13</div></legend>            <div class="ck-opts">
+          <fieldset class="ck-card" data-key="zone" data-w="15">
+<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 17h18"/><path d="M7 7v10M17 7v10" opacity=".45"/></svg></span><div class="ck-title"><b>3. Zona de suporte / resistência</b><small><span class="ck-d-n">O preço está em uma zona clara de suporte/resistência (ou demanda/oferta)?</span><span class="ck-d-b">O preço está em uma zona clara de suporte (ou demanda)?</span><span class="ck-d-s">O preço está em uma zona clara de resistência (ou oferta)?</span></small></div><div class="ck-pts" data-pts>0/15</div></legend>            <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="zone" value="1" data-v="1"><span><b class="ck-d-n">Sim, zona clara</b><b class="ck-d-b">Sim, suporte / demanda clara</b><b class="ck-d-s">Sim, resistência / oferta clara</b><em>A zona foi respeitada várias vezes no H4/D1.</em></span></label>
               <label class="ck-opt"><input type="radio" name="zone" value="0" data-v="0"><span><b>Não / no meio do range</b><em>No meio você não tem vantagem nem um lugar lógico para o SL.</em></span></label>
             </div>
           </fieldset>
-          <fieldset class="ck-card ck-trend" data-key="trend" data-w="11">
-            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div class="ck-title ck-v-trend"><b>4. Tendência alinhada com o timeframe maior</b><small><span class="ck-d-n">A direção da operação é a mesma da tendência no D1/W1?</span><span class="ck-d-b">A tendência no D1/W1 é de alta, na direção da sua compra?</span><span class="ck-d-s">A tendência no D1/W1 é de baixa, na direção da sua venda?</span></small></div><div class="ck-title ck-v-rev"><b><span class="ck-d-n">4. Reversão confirmada (Head and Shoulders)</span><span class="ck-d-b">4. Reversão confirmada (Inverse Head and Shoulders)</span><span class="ck-d-s">4. Reversão confirmada (Head and Shoulders)</span></b><small><span class="ck-d-n">A tendência anterior está esgotada (estrutura rompida) e a neckline foi rompida + retestada?</span><span class="ck-d-b">A tendência de baixa anterior está esgotada (estrutura rompida) e a neckline foi rompida para cima + retestada?</span><span class="ck-d-s">A tendência de alta anterior está esgotada (estrutura rompida) e a neckline foi rompida para baixo + retestada?</span></small></div><div class="ck-pts" data-pts>0/11</div></legend>
-            <div class="ck-opts">
-              <label class="ck-opt"><input type="radio" name="trend" value="1" data-v="1"><span class="ck-v-trend"><b>Sim, a favor da tendência</b><em class="ck-d-n">Topos e fundos cada vez mais altos (ou mais baixos) no timeframe maior.</em><em class="ck-d-b">Topos e fundos cada vez mais altos no timeframe maior.</em><em class="ck-d-s">Topos e fundos cada vez mais baixos no timeframe maior.</em></span><span class="ck-v-rev"><b>Sim, estrutura rompida + neckline retestada</b><em class="ck-d-n">O último fundo (ou topo) da tendência foi rompido, e o preço voltou à neckline e a respeitou.</em><em class="ck-d-b">O último topo da tendência de baixa foi rompido, e o preço voltou à neckline e a respeitou como suporte.</em><em class="ck-d-s">O último fundo da tendência de alta foi rompido, e o preço voltou à neckline e a respeitou como resistência.</em></span></label>
-              <label class="ck-opt"><input type="radio" name="trend" value="0" data-v="0"><span class="ck-v-trend"><b>Não / contra a tendência</b><em>Operações contra a tendência precisam de muito mais confirmação.</em></span><span class="ck-v-rev"><b>Ainda não</b><em>Sem o rompimento da neckline, a tendência antiga pode continuar.</em></span></label>
-            </div>
-            <p class="ck-status mid" id="ck-trend-st" aria-live="polite"></p>
-            <p class="ck-tip ck-v-rev">Head and Shoulders é um padrão de reversão: você entra contra a tendência anterior, então não procura alinhamento com ela. Procura a prova de que ela terminou: estrutura rompida e a neckline rompida e retestada.</p>
-          </fieldset>
-          <div class="ck-step"><span>2</span><div><b>Setup e confirmação</b><small>O padrão, o candle de confirmação, o reteste e o timeframe de entrada.</small></div></div>
           <fieldset class="ck-card" data-key="pattern" data-w="11">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 18l4-6 3 3 3-8 3 8 3-3 4 6"/></svg></span><div class="ck-title"><b>5. Padrão / setup do gráfico</b><small>Qual estrutura você vê no seu timeframe de trabalho?</small></div><div class="ck-pts" data-pts>0/11</div></legend>            <div class="ck-opts">
+<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 18l4-6 3 3 3-8 3 8 3-3 4 6"/></svg></span><div class="ck-title"><b>4. Padrão / setup do gráfico</b><small>Qual estrutura você vê no seu timeframe de trabalho?</small></div><div class="ck-pts" data-pts>0/11</div></legend>            <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="pattern" value="hs" data-v="1"><span><b class="ck-d-n">Head and Shoulders (e o invertido)</b><b class="ck-d-b">Inverse Head and Shoulders</b><b class="ck-d-s">Head and Shoulders</b><em>Entre após o rompimento da neckline, de preferência no reteste.</em></span></label>
               <label class="ck-opt"><input type="radio" name="pattern" value="double" data-v="1"><span><b class="ck-d-n">Double Top / Double Bottom</b><b class="ck-d-b">Double Bottom</b><b class="ck-d-s">Double Top</b><em class="ck-d-n">O segundo topo falha na mesma zona; a confirmação é o rompimento do meio.</em><em class="ck-d-b">O segundo fundo falha no mesmo suporte; a confirmação é o rompimento do topo do meio.</em><em class="ck-d-s">O segundo topo falha na mesma resistência; a confirmação é o rompimento do fundo do meio.</em></span></label>
               <label class="ck-opt"><input type="radio" name="pattern" value="pullback" data-v="1"><span><b>Pullback na tendência</b><em>Correção até uma zona ou estrutura, na direção da tendência principal.</em></span></label>
@@ -212,8 +201,17 @@
               <label class="ck-opt ck-none"><input type="radio" name="pattern" value="none" data-v="0"><span><b>Nenhum</b><em>Sem estrutura clara a pontuação cai; não force um padrão.</em></span></label>
             </div>
           </fieldset>
-          <fieldset class="ck-card" data-key="candle" data-w="11">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3v4M8 15v6M16 3v6M16 17v4"/><rect x="5.5" y="7" width="5" height="8" rx="1"/><rect x="13.5" y="9" width="5" height="8" rx="1"/></svg></span><div class="ck-title"><b>6. Confirmação de candle</b><small>Qual formação de candle você vê na zona?</small></div><div class="ck-pts" data-pts>0/11</div></legend>            <div class="ck-opts">
+          <fieldset class="ck-card ck-trend" data-key="trend" data-w="11">
+            <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div class="ck-title ck-v-trend"><b>5. Tendência alinhada com o timeframe maior</b><small><span class="ck-d-n">A direção da operação é a mesma da tendência no D1/W1?</span><span class="ck-d-b">A tendência no D1/W1 é de alta, na direção da sua compra?</span><span class="ck-d-s">A tendência no D1/W1 é de baixa, na direção da sua venda?</span></small></div><div class="ck-title ck-v-rev"><b><span class="ck-d-n">5. Reversão confirmada (Head and Shoulders)</span><span class="ck-d-b">5. Reversão confirmada (Inverse Head and Shoulders)</span><span class="ck-d-s">5. Reversão confirmada (Head and Shoulders)</span></b><small><span class="ck-d-n">A tendência anterior está esgotada (estrutura rompida) e a neckline foi rompida + retestada?</span><span class="ck-d-b">A tendência de baixa anterior está esgotada (estrutura rompida) e a neckline foi rompida para cima + retestada?</span><span class="ck-d-s">A tendência de alta anterior está esgotada (estrutura rompida) e a neckline foi rompida para baixo + retestada?</span></small></div><div class="ck-pts" data-pts>0/11</div></legend>
+            <div class="ck-opts">
+              <label class="ck-opt"><input type="radio" name="trend" value="1" data-v="1"><span class="ck-v-trend"><b>Sim, a favor da tendência</b><em class="ck-d-n">Topos e fundos cada vez mais altos (ou mais baixos) no timeframe maior.</em><em class="ck-d-b">Topos e fundos cada vez mais altos no timeframe maior.</em><em class="ck-d-s">Topos e fundos cada vez mais baixos no timeframe maior.</em></span><span class="ck-v-rev"><b>Sim, estrutura rompida + neckline retestada</b><em class="ck-d-n">O último fundo (ou topo) da tendência foi rompido, e o preço voltou à neckline e a respeitou.</em><em class="ck-d-b">O último topo da tendência de baixa foi rompido, e o preço voltou à neckline e a respeitou como suporte.</em><em class="ck-d-s">O último fundo da tendência de alta foi rompido, e o preço voltou à neckline e a respeitou como resistência.</em></span></label>
+              <label class="ck-opt"><input type="radio" name="trend" value="0" data-v="0"><span class="ck-v-trend"><b>Não / contra a tendência</b><em>Operações contra a tendência precisam de muito mais confirmação.</em></span><span class="ck-v-rev"><b>Ainda não</b><em>Sem o rompimento da neckline, a tendência antiga pode continuar.</em></span></label>
+            </div>
+            <p class="ck-status mid" id="ck-trend-st" aria-live="polite"></p>
+            <p class="ck-tip ck-v-rev">Head and Shoulders é um padrão de reversão: você entra contra a tendência anterior, então não procura alinhamento com ela. Procura a prova de que ela terminou: estrutura rompida e a neckline rompida e retestada.</p>
+          </fieldset>
+          <fieldset class="ck-card" data-key="candle" data-w="12">
+<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3v4M8 15v6M16 3v6M16 17v4"/><rect x="5.5" y="7" width="5" height="8" rx="1"/><rect x="13.5" y="9" width="5" height="8" rx="1"/></svg></span><div class="ck-title"><b>6. Confirmação de candle</b><small>Qual formação de candle você vê na zona?</small></div><div class="ck-pts" data-pts>0/12</div></legend>            <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="candle" value="engulf" data-v="1"><span><b class="ck-d-n">Engulfing de alta / de baixa</b><b class="ck-d-b">Engulfing de alta</b><b class="ck-d-s">Engulfing de baixa</b><em class="ck-d-n">O corpo engole totalmente o candle anterior, na direção da operação.</em><em class="ck-d-b">Um candle verde engole totalmente o corpo do candle vermelho anterior.</em><em class="ck-d-s">Um candle vermelho engole totalmente o corpo do candle verde anterior.</em></span></label>
               <label class="ck-opt"><input type="radio" name="candle" value="pin" data-v="1"><span><b class="ck-d-n">Pin bar (Hammer / Shooting Star)</b><b class="ck-d-b">Hammer (pin bar de alta)</b><b class="ck-d-s">Shooting Star (pin bar de baixa)</b><em class="ck-d-n">Pavio longo de rejeição, pelo menos o dobro do corpo.</em><em class="ck-d-b">Pavio inferior longo, pelo menos o dobro do corpo: os vendedores foram rejeitados.</em><em class="ck-d-s">Pavio superior longo, pelo menos o dobro do corpo: os compradores foram rejeitados.</em></span></label>
               <label class="ck-opt"><input type="radio" name="candle" value="star" data-v="1"><span><b class="ck-d-n">Morning / Evening Star</b><b class="ck-d-b">Morning Star</b><b class="ck-d-s">Evening Star</b><em class="ck-d-n">Três candles: impulso, indecisão, reversão forte.</em><em class="ck-d-b">Três candles: um vermelho, um pequeno de indecisão e depois um verde forte.</em><em class="ck-d-s">Três candles: um verde, um pequeno de indecisão e depois um vermelho forte.</em></span></label>
@@ -221,8 +219,8 @@
               <label class="ck-opt ck-none"><input type="radio" name="candle" value="none" data-v="0"><span><b>Nenhuma</b><em>Sem confirmação, a entrada é só um palpite.</em></span></label>
             </div>
           </fieldset>
-          <fieldset class="ck-card" data-key="retest" data-w="11">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg></span><div class="ck-title"><b>7. Reteste + confirmação</b><small>O preço retestou a zona e a confirmação se formou (candle fechado)?</small></div><div class="ck-pts" data-pts>0/11</div></legend>            <div class="ck-opts">
+          <fieldset class="ck-card" data-key="retest" data-w="12">
+<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg></span><div class="ck-title"><b>7. Reteste + confirmação</b><small>O preço retestou a zona e a confirmação se formou (candle fechado)?</small></div><div class="ck-pts" data-pts>0/12</div></legend>            <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="retest" value="1" data-v="1"><span><b>Sim, retestado e confirmado</b><em>Você esperou o fechamento do candle, não entrou no chute.</em></span></label>
               <label class="ck-opt"><input type="radio" name="retest" value="0" data-v="0"><span><b>Ainda não</b><em>Coloque um alerta na zona e volte quando a confirmação aparecer.</em></span></label>
             </div>
@@ -240,7 +238,6 @@
             </div>
             <p class="ck-tip">A confirmação ideal vem no H4 (ou D1). Em timeframes muito baixos aparecem muitos sinais falsos.</p>
           </fieldset>
-          <div class="ck-step"><span>3</span><div><b>Timing</b><small>A sessão de trading e as notícias importantes.</small></div></div>
           <fieldset class="ck-card" data-key="session" data-w="6">
 <legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><div class="ck-title"><b>9. Sessão de entrada</b><small>Em qual sessão você entra na operação?</small></div><div class="ck-pts" data-pts>0/6</div></legend>            <div class="ck-opts">
               <label class="ck-opt"><input type="radio" name="session" value="london" data-v="1"><span><b>Londres</b><em>Alta liquidez, movimentos claros.</em></span></label>
@@ -258,34 +255,8 @@
               <label class="ck-opt ck-none"><input type="radio" name="news" value="unknown" data-v="0"><span><b>Não verifiquei</b><em>Abra o calendário antes de entrar.</em></span></label>
             </div>
           </fieldset>
-          <div class="ck-step"><span>4</span><div><b>Risco</b><small>O risco por operação, o lote e a relação risco/retorno.</small></div></div>
-          <fieldset class="ck-card" data-key="risk" data-w="8">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div class="ck-title"><b>11. Risco de 1–3% da conta + lote</b><small>Qual porcentagem da conta você arrisca? O lote é calculado automaticamente.</small></div><div class="ck-pts" data-pts>0/8</div></legend>            <div class="ck-inputs">
-              <label class="ck-field"><span class="ck-lbl">Risco (% da conta)</span>
-                <div class="ck-inp"><input type="number" id="ck-risk" inputmode="decimal" min="0" max="100" step="0.1" placeholder="ex. 1"><i>%</i></div>
-              </label>
-              <p class="ck-status" id="ck-risk-st" aria-live="polite"></p>
-            </div>
-            <div class="ck-lot" id="ck-lot">
-              <div class="ck-inputs ck-inputs-lot">
-                <label class="ck-field"><span class="ck-lbl">Moeda da conta</span>
-                  <div class="ck-inp ck-sel"><select id="ck-cur"><option value="USD" selected>USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option></select></div>
-                </label>
-                <label class="ck-field"><span class="ck-lbl">Saldo da conta</span>
-                  <div class="ck-inp"><input type="text" id="ck-bal" inputmode="decimal" autocomplete="off" placeholder="ex. 10,000"></div>
-                </label>
-              </div>
-              <div class="ck-lot-out">
-                <div><span>Valor em risco</span><b id="ck-lot-amt">—</b></div>
-                <div><span>Lote padrão</span><b id="ck-lot-lots">—</b></div>
-              </div>
-              <p class="ck-lot-note" id="ck-lot-note"></p>
-              <p class="ck-lot-fx" id="ck-lot-fx"></p>
-            </div>
-            <p class="ck-tip">Máximo de 3% por operação, de preferência 1–2%. O lote usa o mesmo cálculo e as mesmas cotações ao vivo da <a href="calculator.html">calculadora de lote</a>, com o stop loss do passo 12.</p>
-          </fieldset>
-          <fieldset class="ck-card" data-key="rr" data-w="8">
-<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg></span><div class="ck-title"><b>12. Risco/Retorno mínimo de 1:2</b><small>Informe SL e TP em pips, ou diretamente o R:R.</small></div><div class="ck-pts" data-pts>0/8</div></legend>            <div class="ck-inputs ck-inputs-3">
+          <fieldset class="ck-card" data-key="rr" data-w="12">
+<legend class="ck-head"><span class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg></span><div class="ck-title"><b>11. Risco/Retorno mínimo de 1:2</b><small>Informe SL e TP em pips, ou diretamente o R:R.</small></div><div class="ck-pts" data-pts>0/12</div></legend>            <div class="ck-inputs ck-inputs-3">
               <label class="ck-field"><span class="ck-lbl">Stop loss (pips)</span>
                 <div class="ck-inp"><input type="number" id="ck-sl" inputmode="decimal" min="0" step="0.1" placeholder="ex. 30"></div>
               </label>
@@ -298,6 +269,7 @@
               <p class="ck-status" id="ck-rr-st" aria-live="polite"></p>
             </div>
             <p class="ck-tip">A regra do Marius: entre apenas se o TP der pelo menos 2R, com o SL atrás da estrutura.</p>
+            <a class="ck-calc-link" href="calculator.html"><span class="ck-calc-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11v6M8 15h2M12 15h2"/></svg></span><span class="ck-calc-txt"><b>Calcule o lote na calculadora&nbsp;→</b><small>O risco (1–3% da conta) e o lote exato, com cotações ao vivo, para o seu par e o seu stop loss.</small></span></a>
           </fieldset>
         </form>
 
@@ -316,7 +288,7 @@
             <p class="ck-verdict-sub" id="ck-verdict-sub">Escolha uma opção em cada seção.</p>
             <ul class="ck-flags" id="ck-flags"></ul>
             <ul class="ck-flags ck-warns" id="ck-warns"></ul>
-            <div class="ck-progress"><p><span id="ck-done">0</span>/12 seções concluídas</p><i><b id="ck-bar"></b></i></div>
+            <div class="ck-progress"><p><span id="ck-done">0</span>/11 seções concluídas</p><i><b id="ck-bar"></b></i></div>
             <div class="ck-actions">
               <button type="button" class="btn btn-primary ck-act" id="ck-save"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg>Salvar no Diário</button>
               <button type="button" class="btn btn-ghost ck-act" id="ck-share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Compartilhar</button>
@@ -388,9 +360,9 @@
       </div>
     </div>
   </footer>
-  <script src="../i18n/pt.js?v=f5eca29f" defer></script>
+  <script src="../i18n/pt.js?v=793265ca" defer></script>
   <script src="../i18n.js?v=32d8fa8b" defer></script>
   <script src="../script.js?v=40" defer></script>
-  <script src="../checklist.js?v=5" defer></script>
+  <script src="../checklist.js?v=6" defer></script>
 </body>
 </html>

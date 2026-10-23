@@ -1,5 +1,5 @@
 /* MS Prime: checklist înainte de tranzacție (scor live, doar educațional).
-   Lotul folosește calcLot / fxIncarca / FX din script.js (aceleași ca pe calculator.html). */
+   Lotul se calculează pe calculator.html (link în pasul Risc). */
 (function () {
   'use strict';
   const form = document.getElementById('ck-form');
@@ -17,7 +17,7 @@
   const NEWS_PENALTY = 10;
   const ASIA_PAIRS = /JPY|AUD|NZD/;
   let shown = 0, raf = 0;
-  let state = { score: 0, tier: 'none', verdict: '', done: 0, lot: null };
+  let state = { score: 0, tier: 'none', verdict: '', done: 0 };
 
   function color(p) {   // roșu (0) → galben (60) → verde (100)
     const h = p < 60 ? (p / 60) * 45 : 45 + ((p - 60) / 40) * 97;
@@ -44,32 +44,6 @@
   const visible = (root, sel) => { const el = [...root.querySelectorAll(sel)].find(e => e.getClientRects().length); return el ? el.textContent.trim() : ''; };
   const cardTitle = card => visible(card, '.ck-title b').replace(/^\d+\.\s*/, '');
   const optLabel = input => visible(input.closest('label'), 'b');
-
-  // ---------- lot (identic cu calculator.html) ----------
-  function lotUpdate() {
-    const amtEl = $('ck-lot-amt'), lotEl = $('ck-lot-lots'), note = $('ck-lot-note'), fx = $('ck-lot-fx');
-    const p = pair(), moneda = $('ck-cur').value;
-    const soldRaw = ($('ck-bal').value || '').trim(), riscRaw = ($('ck-risk').value || '').trim(), stopRaw = ($('ck-sl').value || '').trim();
-    amtEl.textContent = '—'; lotEl.textContent = '—'; fx.textContent = ''; state.lot = null; state.amount = null;
-    if (!p) { note.textContent = T('Alege perechea la pasul 1 ca să calculezi lotul.'); return; }
-    if (!soldRaw || !riscRaw || !stopRaw) { note.textContent = stopRaw ? T('Completează soldul și riscul %.') : T('Completează soldul, riscul % și stop loss-ul în pipși (pasul 12).'); return; }
-    const sold = Math.max(0, parseNum(soldRaw) || 0);
-    const risc = Math.min(100, Math.max(0, parseNum(riscRaw) || 0));
-    const stop = Math.max(0, parseNum(stopRaw) || 0);
-    const r = calcLot({ pereche: p, moneda, sold, risc, stop, rates: FX && FX.rates });
-    const fmt = I18N.NF({ style: 'currency', currency: moneda, minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const n = (x, d) => I18N.num(x, { minimumFractionDigits: d, maximumFractionDigits: d });
-    amtEl.textContent = fmt.format(r.suma); state.amount = Math.round(r.suma * 100) / 100;
-    if (!Number.isFinite(r.loturi)) {
-      note.textContent = fxStare === 'loading' ? T('Se încarcă cursul live…') : T('Nu am putut încărca cursul live. Verifică conexiunea și reîncarcă pagina.');
-    } else {
-      lotEl.textContent = n(r.loturi, 2); state.lot = Math.round(r.loturi * 100) / 100;
-      const sp = specLot(p);
-      note.textContent = T('1 lot standard = {u} unități; 1 pip = {p}.', { u: n(sp.contract, 0), p: I18N.num(sp.pip, { maximumFractionDigits: 4 }) }) +
-        ' ' + T('Rezultat educațional — confirmă specificațiile simbolului la broker.');
-    }
-    fx.textContent = fxCursText(p, moneda);
-  }
 
   // ---------- știri din data/calendar.json (fără evenimente inventate) ----------
   let CAL = null, calState = 'loading';
@@ -128,15 +102,6 @@
         st.className = 'ck-status';
         st.textContent = f === null && (dir() || pair()) ? (dir() ? T('Alege perechea.') : T('Alege direcția: Buy sau Sell.')) : '';
         if (st.textContent) st.classList.add('mid');
-      } else if (key === 'risk') {
-        const r = val('ck-risk'), st = $('ck-risk-st');
-        st.className = 'ck-status';
-        if (!isNaN(r)) {
-          if (!(r > 0)) { f = null; st.textContent = T('Introdu un risc mai mare decât 0%.'); st.classList.add('bad'); }
-          else if (r > 3) { f = 0; st.textContent = T('Peste 3%: risc prea mare, scade lotul.'); st.classList.add('bad'); flags.push(T('Risc peste 3% din cont')); }
-          else if (r > 2) { f = 0.7; st.textContent = T('Acceptabil, dar 1–2% e mai sănătos.'); st.classList.add('mid'); }
-          else { f = 1; st.textContent = T('Risc sănătos, în regulă.'); st.classList.add('ok'); }
-        } else st.textContent = '';
       } else if (key === 'rr') {
         const sl = val('ck-sl'), tp = val('ck-tp'), d = val('ck-rr'), st = $('ck-rr-st');
         let rr = NaN, bad = '';
@@ -167,10 +132,10 @@
     const capped = flags.length > 0;
     let tier, v, sub;
     if (done === 0) { tier = 'none'; v = T('Completează checklist-ul'); sub = T('Alege câte o opțiune în fiecare secțiune.'); }
-    else if (capped || score < 60) { tier = 'bad'; v = T('Nu intra'); sub = capped ? T('O regulă obligatorie nu este respectată. Corectează riscul sau R:R-ul înainte de orice intrare.') : T('Prea puține criterii îndeplinite. Așteaptă un setup mai clar.'); }
+    else if (capped || score < 60) { tier = 'bad'; v = T('Nu intra'); sub = capped ? T('O regulă obligatorie nu este respectată. Corectează R:R-ul înainte de orice intrare.') : T('Prea puține criterii îndeplinite. Așteaptă un setup mai clar.'); }
     else if (score < 85 || done < cards.length) { tier = 'mid'; v = T('Setup mediu: așteaptă mai multă confirmare'); sub = T('Lipsesc câteva elemente. Răbdarea face parte din plan.'); }
-    else { tier = 'good'; v = T('Setup puternic: poți intra conform planului'); sub = T('Respectă SL-ul, lotul calculat și nu muta stop loss-ul.'); }
-    if (tier === 'mid' && score >= 85) sub = T('Completează toate secțiunile, inclusiv riscul și R:R-ul, pentru verdictul final.');
+    else { tier = 'good'; v = T('Setup puternic: poți intra conform planului'); sub = T('Calculează lotul în calculator, respectă SL-ul și nu muta stop loss-ul.'); }
+    if (tier === 'mid' && score >= 85) sub = T('Completează toate secțiunile, inclusiv R:R-ul, pentru verdictul final.');
     if (done > 0 && done < cards.length) sub += ' ' + T('Secțiuni rămase: {n}.', { n: cards.length - done });
     box.dataset.tier = tier;
     $('ck-verdict').textContent = v;
@@ -180,7 +145,6 @@
     $('ck-done').textContent = done;
     $('ck-bar').style.width = (done / cards.length * 100) + '%';
     Object.assign(state, { score, tier, verdict: v, done });
-    lotUpdate();
     animate(score);
   }
 
@@ -197,7 +161,7 @@
       const had = !!trendCard.querySelector('input:checked');
       trendCard.classList.toggle('is-rev', rev);
       trendCard.querySelectorAll('input').forEach(i => { i.checked = false; });
-      st.textContent = had ? (rev ? T('Ai ales Head and Shoulders: întrebarea de la pasul 4 s-a schimbat, răspunde din nou.') : T('Pattern-ul nu mai este Head and Shoulders: răspunde din nou la pasul 4.')) : '';
+      st.textContent = had ? (rev ? T('Ai ales Head and Shoulders: întrebarea de la pasul 5 s-a schimbat, răspunde din nou.') : T('Pattern-ul nu mai este Head and Shoulders: răspunde din nou la pasul 5.')) : '';
     } else if (trendCard.querySelector('input:checked')) st.textContent = '';
   }
   form.addEventListener('change', () => { syncDir(); syncRev(); });
@@ -205,7 +169,6 @@
   form.addEventListener('change', update);
   form.addEventListener('submit', e => e.preventDefault());
   $('ck-pair').addEventListener('change', renderNews);
-  $('ck-bal').addEventListener('input', () => formatMii($('ck-bal')));
   $('ck-rr').addEventListener('input', () => { if ($('ck-rr').value) { $('ck-sl').value = ''; $('ck-tp').value = ''; } });
   ['ck-sl', 'ck-tp'].forEach(id => $(id).addEventListener('input', () => { if ($(id).value) $('ck-rr').value = ''; }));
   const actSt = $('ck-act-st');
@@ -242,12 +205,12 @@
     if (s.news) parts.push(T('Știri') + ': ' + s.news);
     if (state.rr && !isNaN(state.rr) && cards.find(c => c.dataset.key === 'rr').classList.contains('is-done')) parts.push('R:R 1:' + num(state.rr, 2));
     const now = new Date().toISOString();
-    const risk = val('ck-risk'), sess = checked('session');
+    const sess = checked('session');
     const entry = {
       id: (crypto.randomUUID ? crypto.randomUUID() : 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10)),
       data: todayISO(), pereche: pair(), directie: dir() === 'buy' ? 'Buy' : 'Sell', sesiune: sess ? SESS[sess.value] : '',
       setup: parts.join(' · ').slice(0, 600), intrare: null, sl: null, tp: null,
-      lot: state.lot, riscPct: risk > 0 ? risk : null, riscBani: state.lot != null ? state.amount : null,
+      lot: null, riscPct: null, riscBani: null,
       rezultat: '', r: null, plan: '', emotii: '', lectie: '', creat: now, modificat: ''
     };
     try {
@@ -308,7 +271,7 @@
     const items = cards.filter(c => +c.dataset.w > 0);
     const top = 800, rowH = 39, colW = (W - 160) / 2;
     items.forEach((c, i) => {
-      const colI = i < 6 ? 0 : 1, row = i < 6 ? i : i - 6;
+      const half = Math.ceil(items.length / 2), colI = i < half ? 0 : 1, row = i < half ? i : i - half;
       const x = 80 + colI * colW, y = top + row * (rowH + 8);
       const ok = c.classList.contains('is-ok'), done = c.classList.contains('is-done');
       ctx.fillStyle = 'rgba(255,255,255,.04)'; rr(ctx, x, y, colW - 20, rowH, 12); ctx.fill();
@@ -348,5 +311,4 @@
   });
 
   syncDir(); syncRev(); update(); renderNews(); loadCal();
-  if (typeof fxIncarca === 'function') fxIncarca().then(lotUpdate);
 })();
