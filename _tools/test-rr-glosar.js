@@ -220,7 +220,7 @@ const CASES = JSON.parse(fs.readFileSync(__dirname + '/rr_cases.json', 'utf8'));
   for (const f of ['glosar', 'calculator']) {
     await page.goto(`${BASE}/${f}.html`, { waitUntil: 'networkidle2' });
     const n = await page.evaluate(() => { const lis = [...document.querySelectorAll('#nav-links > li')]; return { n: lis.length, rows: new Set(lis.map(l => Math.round(l.getBoundingClientRect().top))).size }; });
-    assert(n.n === 13 && n.rows === 1, `nav 1121 ${f}: 13 items on one row`);
+    assert(n.n === 14 && n.rows === 1, `nav 1121 ${f}: 14 items on one row`);
   }
   assert(errors.length === 0, 'no console/page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
   await browser.close();

@@ -1,0 +1,103 @@
+/* MS Prime: checklist înainte de tranzacție */
+.ck-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 1.6rem; align-items: start; }
+.ck-list { display: grid; gap: 1rem; margin: 0; }
+.ck-card { margin: 0; min-width: 0; border: 1px solid var(--border); border-radius: 18px; padding: 1.15rem 1.2rem 1.2rem; background: linear-gradient(180deg, rgba(20,32,58,.55), rgba(11,18,32,.9)); position: relative; transition: border-color .3s, box-shadow .3s, transform .3s; }
+.ck-card::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0; background: var(--border); transition: background .3s; }
+.ck-card.is-ok { border-color: rgba(34,197,94,.45); box-shadow: 0 12px 32px -22px rgba(34,197,94,.8); }
+.ck-card.is-ok::before { background: var(--green); }
+.ck-card.is-bad { border-color: rgba(248,113,113,.4); }
+.ck-card.is-bad::before { background: var(--red); }
+.ck-head { display: flex; align-items: flex-start; gap: .85rem; width: 100%; padding: 0; margin-bottom: .95rem; float: left; }
+.ck-head + * { clear: both; }
+.ck-ico { flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--green-soft); border: 1px solid rgba(34,197,94,.3); }
+.ck-ico svg { width: 22px; height: 22px; fill: none; stroke: var(--green-2); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ck-card.is-bad .ck-ico { background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.35); }
+.ck-card.is-bad .ck-ico svg { stroke: var(--red); }
+.ck-title { flex: 1; min-width: 0; display: grid; gap: .1rem; }
+.ck-title b { font-size: 1.05rem; letter-spacing: -.01em; color: var(--text); }
+.ck-title small { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+.ck-pts { flex: none; font-family: var(--mono); font-size: .78rem; color: var(--muted); padding: .25rem .55rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(7,11,20,.6); }
+.ck-card.is-ok .ck-pts { color: var(--green-2); border-color: rgba(34,197,94,.4); }
+.ck-card.is-bad .ck-pts { color: var(--red); border-color: rgba(248,113,113,.4); }
+.ck-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .6rem; clear: both; }
+.ck-opt { position: relative; display: flex; gap: .7rem; align-items: flex-start; padding: .75rem .85rem; border-radius: 13px; border: 1px solid var(--border); background: rgba(7,11,20,.55); cursor: pointer; transition: border-color .2s, background .2s, transform .15s; }
+.ck-opt:hover { border-color: rgba(74,222,128,.45); transform: translateY(-1px); }
+.ck-opt input { appearance: none; -webkit-appearance: none; flex: none; width: 20px; height: 20px; margin: .15rem 0 0; border-radius: 50%; border: 2px solid #3a4a68; display: grid; place-items: center; transition: border-color .2s, background .2s; cursor: pointer; }
+.ck-opt input::after { content: ""; width: 9px; height: 5px; border: solid #04110a; border-width: 0 0 2.2px 2.2px; transform: rotate(-45deg) scale(0); margin-top: -2px; transition: transform .2s cubic-bezier(.3,1.6,.5,1); }
+.ck-opt input:checked { background: var(--green); border-color: var(--green); }
+.ck-opt input:checked::after { transform: rotate(-45deg) scale(1); }
+.ck-opt input:focus-visible { outline: 2px solid var(--green-2); outline-offset: 2px; }
+.ck-opt:has(input:checked) { border-color: var(--green); background: linear-gradient(135deg, rgba(34,197,94,.16), rgba(34,197,94,.04)); }
+.ck-opt input[data-v="0"]:checked { background: var(--red); border-color: var(--red); }
+.ck-opt:has(input[data-v="0"]:checked) { border-color: rgba(248,113,113,.6); background: linear-gradient(135deg, rgba(248,113,113,.14), rgba(248,113,113,.03)); }
+.ck-opt span { display: grid; gap: .15rem; min-width: 0; }
+.ck-opt b { font-size: .95rem; color: var(--text); line-height: 1.35; }
+.ck-opt em { font-style: normal; font-size: .82rem; color: var(--muted); line-height: 1.45; }
+.ck-inputs { display: grid; grid-template-columns: minmax(0, 220px) 1fr; gap: .6rem 1rem; align-items: end; clear: both; }
+.ck-inputs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ck-inputs-3 .ck-status { grid-column: 1 / -1; }
+.ck-lbl { display: block; }
+.ck-field { display: grid; gap: .35rem; font-size: .85rem; color: var(--muted); font-weight: 600; }
+.ck-inp { display: flex; align-items: center; gap: .4rem; border: 1px solid var(--border); border-radius: 12px; background: rgba(7,11,20,.7); padding: 0 .8rem; transition: border-color .2s, box-shadow .2s; }
+.ck-inp:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+.ck-inp input { flex: 1; min-width: 0; background: none; border: 0; color: var(--text); font: 600 1.05rem var(--mono); padding: .7rem 0; outline: none; }
+.ck-inp i { font-style: normal; color: var(--muted); font-family: var(--mono); }
+.ck-status { margin: 0; font-size: .88rem; font-weight: 600; min-height: 1.3em; }
+.ck-status.ok { color: var(--green-2); } .ck-status.mid { color: var(--amber); } .ck-status.bad { color: var(--red); }
+.ck-tip { margin: .85rem 0 0; font-size: .85rem; color: var(--muted); padding: .6rem .8rem; border-radius: 10px; background: rgba(34,197,94,.06); border: 1px dashed rgba(34,197,94,.25); }
+.ck-tip::before { content: "💡 "; }
+
+.ck-side { position: sticky; top: 84px; display: grid; gap: .9rem; }
+.ck-score { --ck-c: hsl(0 85% 55%); text-align: center; border-radius: 22px; padding: 1.5rem 1.3rem 1.3rem; border: 1px solid var(--border); background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--ck-c) 16%, transparent), transparent 70%), linear-gradient(180deg, #0f1829, #0a1120); box-shadow: 0 30px 60px -40px color-mix(in srgb, var(--ck-c) 70%, transparent); transition: box-shadow .4s; }
+.ck-ring { position: relative; width: 210px; height: 210px; margin: 0 auto .6rem; }
+.ck-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+.ck-ring-bg { fill: none; stroke: rgba(255,255,255,.06); stroke-width: 14; }
+.ck-ring-ticks { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 3; stroke-dasharray: 1.5 8.55; }
+.ck-ring-fg { fill: none; stroke-width: 14; stroke-linecap: round; }
+.ck-ring-num { position: absolute; inset: 0; display: grid; place-content: center; grid-template-columns: auto auto; align-items: baseline; justify-items: center; }
+.ck-ring-num b { font-size: 3.6rem; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--ck-c); font-variant-numeric: tabular-nums; }
+.ck-ring-num span { font-size: 1.5rem; font-weight: 800; color: var(--ck-c); }
+.ck-ring-cap { position: absolute; left: 0; right: 0; top: 64%; text-align: center; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: .35rem; }
+.ck-verdict { margin: .2rem 0 .3rem; font-size: 1.22rem; font-weight: 800; letter-spacing: -.015em; line-height: 1.3; color: var(--text); }
+.ck-score[data-tier="good"] .ck-verdict { color: var(--green-2); }
+.ck-score[data-tier="mid"] .ck-verdict { color: var(--amber); }
+.ck-score[data-tier="bad"] .ck-verdict { color: var(--red); }
+.ck-score[data-tier="good"] .ck-verdict::before { content: "✓ "; }
+.ck-score[data-tier="bad"] .ck-verdict::before { content: "✕ "; }
+.ck-verdict-sub { margin: 0 0 .8rem; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+.ck-flags { list-style: none; margin: 0 0 .8rem; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
+.ck-flags:empty { display: none; }
+.ck-flags li { font-size: .78rem; font-weight: 700; color: var(--red); background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.35); border-radius: 999px; padding: .25rem .65rem; }
+.ck-flags li::before { content: "⚠ "; }
+.ck-progress { font-size: .8rem; color: var(--muted); display: grid; gap: .4rem; margin-bottom: 1rem; }
+.ck-progress p { margin: 0; }
+.ck-progress i { display: block; height: 6px; border-radius: 6px; background: rgba(255,255,255,.06); overflow: hidden; }
+.ck-progress i b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--green), var(--green-2)); border-radius: inherit; transition: width .5s cubic-bezier(.22,.61,.36,1); }
+.ck-reset { width: 100%; gap: .5rem; color: var(--text); background: transparent; border-color: var(--border); }
+.ck-reset svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ck-legend { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .3rem; font-size: .8rem; color: var(--muted); text-align: left; }
+.ck-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: .5rem; vertical-align: middle; }
+.ck-legend .g { background: var(--green); } .ck-legend .a { background: var(--amber); } .ck-legend .r { background: var(--red); }
+.ck-disclaimer { margin: 0; font-size: .8rem; line-height: 1.55; color: var(--muted); padding: .8rem 1rem; border-radius: 14px; border: 1px solid var(--border); background: rgba(251,191,36,.05); }
+.ck-disclaimer b { color: var(--amber); }
+@media (max-width: 960px) {
+  .ck-layout { grid-template-columns: 1fr; }
+  .ck-side { position: static; order: -1; }
+  .ck-score { display: grid; grid-template-columns: 150px 1fr; gap: 0 1.1rem; text-align: left; align-items: center; padding: 1.1rem; }
+  .ck-ring { width: 150px; height: 150px; grid-row: span 3; margin: 0; }
+  .ck-ring-num b { font-size: 2.6rem; }
+  .ck-verdict { font-size: 1.05rem; }
+  .ck-flags { justify-content: flex-start; }
+  .ck-progress, .ck-reset, .ck-legend { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .ck-card { padding: 1rem .9rem; }
+  .ck-score { grid-template-columns: 112px 1fr; }
+  .ck-ring { width: 112px; height: 112px; }
+  .ck-ring-num b { font-size: 2rem; } .ck-ring-num span { font-size: 1rem; } .ck-ring-cap { font-size: .58rem; letter-spacing: .06em; }
+  .ck-opts { grid-template-columns: 1fr; }
+  .ck-inputs, .ck-inputs-3 { grid-template-columns: 1fr 1fr; }
+  .ck-inputs-3 .ck-field:last-of-type { grid-column: 1 / -1; }
+  .ck-head { gap: .65rem; } .ck-ico { width: 36px; height: 36px; }
+  .ck-legend { display: none; }
+}

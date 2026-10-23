@@ -111,7 +111,7 @@ const urlOf = p => p === 'index' ? SITE : SITE + p + '.html';
     }));
     if (LIVE) assert(resp.status() === 404, `404: missing deep URL returns HTTP 404 (${resp.status()})`);
     assert(r.h1 === 'Pagina nu a fost găsită' && r.robots === 'noindex' && !r.canon, `404 ${vp.width}: h1, noindex, no canonical`);
-    assert(/Manrope/.test(r.font) && r.bg !== 'rgba(0, 0, 0, 0)' && r.nav === 13 && /Forex și CFD-urile/.test(r.risk || ''), `404 ${vp.width}: site style loaded, nav + footer risk line`);
+    assert(/Manrope/.test(r.font) && r.bg !== 'rgba(0, 0, 0, 0)' && r.nav === 14 && /Forex și CFD-urile/.test(r.risk || ''), `404 ${vp.width}: site style loaded, nav + footer risk line`);
     assert(r.rel.length === 0, `404 ${vp.width}: all links/resources absolute (/marius-fx/...) ${r.rel.slice(0, 3)}`);
     assert(['/marius-fx/', '/marius-fx/lectie.html', '/marius-fx/calculator.html', '/marius-fx/sesiuni.html', '/marius-fx/calendar.html'].every(h => r.links.includes(h)), `404 ${vp.width}: links back to home + key pages`);
     assert(r.sw <= r.iw && e4.length === 0, `404 ${vp.width}: no overflow, no broken resources ${e4.join(' | ')}`);

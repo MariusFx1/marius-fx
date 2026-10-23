@@ -18,6 +18,6 @@ for path in sorted(glob.glob(f'{ROOT}/*.html')):
         foot, n = re.subn(r'(\n( *)<li><a class="footer-vip")', lambda m: '\n%s<li><a href="%svip.html">MS Prime VIP</a></li>' % (m.group(2), pre) + m.group(1), foot, count=1)
         assert n == 1, path
     s = head + body + foot
-    s = re.sub(r'styles\.css\?v=\d+', 'styles.css?v=60', s)
+    s = re.sub(r'styles\.css\?v=\d+', 'styles.css?v=61', s)
     open(path, 'w', encoding='utf-8').write(s)
     print('ok', path.rsplit('/', 1)[1])

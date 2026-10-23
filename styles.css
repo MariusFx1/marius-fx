@@ -2611,3 +2611,6 @@ html.sim-app-on, html.sim-app-on body { overflow: hidden; height: 100%; overscro
 .art-index .fineprint { margin-top: 2rem; font-size: .92rem; line-height: 1.6; max-width: 46rem; }
 .art-index .art-disc { max-width: 46rem; }
 @media (max-width: 600px) { .art-lead { font-size: 1.05rem; } .art-body p, .art-body li { font-size: 1rem; } .art-ex { padding: 1rem 1rem 1.05rem; } }
+
+/* meniul cu 14 linkuri (Checklist): încape pe un rând și la 1121px */
+@media (min-width: 1121px) and (max-width: 1200px) { .nav-links a { padding-left: .24rem; padding-right: .24rem; } }

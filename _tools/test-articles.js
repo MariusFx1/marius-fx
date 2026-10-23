@@ -31,7 +31,7 @@ function staticChecks() {
     ok(alts.length === 5 && alts.includes('x-default=' + SITE + p + '.html') && alts.includes(l + '=' + url), `${l}/${p}: hreflang ${alts.length}`);
     ok(/<head>\n<!-- Google tag \(gtag\.js\) -->\n<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-MVC55DC6H5">/.test(s) && (s.match(/G-MVC55DC6H5/g) || []).length === 2, `${l}/${p}: GA tag right after <head>, once`);
     ok(!/google-site-verification/.test(s), `${l}/${p}: no google-site-verification`);
-    ok(/styles\.css\?v=60"/.test(s), `${l}/${p}: styles.css?v=60`);
+    ok(/styles\.css\?v=61"/.test(s), `${l}/${p}: styles.css?v=61`);
     ok(/og:title" content="[^"]+"/.test(s) && /twitter:title" content="[^"]+"/.test(s), `${l}/${p}: og/twitter title`);
     const lds = [...s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
     ok(lds.length === 1, `${l}/${p}: single JSON-LD block`);
