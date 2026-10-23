@@ -675,5 +675,8 @@
  "Lipsesc câteva elemente. Răbdarea face parte din plan.": "A few elements are missing. Patience is part of the plan.",
  "Setup puternic: poți intra conform planului": "Strong setup: you can enter according to plan",
  "Respectă SL-ul, lotul calculat și nu muta stop loss-ul.": "Respect the SL and the calculated lot, and do not move the stop loss.",
- "Secțiuni rămase: {n}.": "Sections left: {n}."
+ "Secțiuni rămase: {n}.": "Sections left: {n}.",
+ "SL și TP trebuie să fie mai mari decât 0.": "SL and TP must be greater than 0.",
+ "Introdu un R:R mai mare decât 0.": "Enter an R:R greater than 0.",
+ "Completează toate secțiunile, inclusiv riscul și R:R-ul, pentru verdictul final.": "Complete every section, including risk and R:R, for the final verdict."
 }

@@ -43,17 +43,21 @@
         const r = val('ck-risk'), st = $('ck-risk-st');
         st.className = 'ck-status';
         if (!isNaN(r)) {
-          if (r <= 0) { f = 0; st.textContent = T('Introdu un risc mai mare decât 0%.'); st.classList.add('bad'); }
+          if (!(r > 0)) { f = null; st.textContent = T('Introdu un risc mai mare decât 0%.'); st.classList.add('bad'); }
           else if (r > 3) { f = 0; st.textContent = T('Peste 3%: risc prea mare, scade lotul.'); st.classList.add('bad'); flags.push(T('Risc peste 3% din cont')); }
           else if (r > 2) { f = 0.7; st.textContent = T('Acceptabil, dar 1–2% e mai sănătos.'); st.classList.add('mid'); }
           else { f = 1; st.textContent = T('Risc sănătos, în regulă.'); st.classList.add('ok'); }
         } else st.textContent = '';
       } else if (key === 'rr') {
         const sl = val('ck-sl'), tp = val('ck-tp'), d = val('ck-rr'), st = $('ck-rr-st');
-        let rr = NaN;
-        if (sl > 0 && tp > 0) rr = tp / sl; else if (d > 0) rr = d;
+        let rr = NaN, bad = '';
         st.className = 'ck-status';
-        if (!isNaN(rr)) {
+        if (!isNaN(sl) || !isNaN(tp)) {
+          if (sl > 0 && tp > 0) rr = tp / sl;
+          else if (!isNaN(sl) && !isNaN(tp)) bad = T('SL și TP trebuie să fie mai mari decât 0.');
+        } else if (!isNaN(d)) { if (d > 0) rr = d; else bad = T('Introdu un R:R mai mare decât 0.'); }
+        if (bad) { st.textContent = bad; st.classList.add('bad'); }
+        else if (!isNaN(rr)) {
           const txt = 'R:R 1:' + num(rr, 2);
           if (rr < 2) { f = 0; st.textContent = txt + ' · ' + T('sub 1:2, nu respectă regula.'); st.classList.add('bad'); flags.push(T('R:R sub 1:2')); }
           else { f = 1; st.textContent = txt + ' · ' + T('minim 2R, în regulă.'); st.classList.add('ok'); }
@@ -73,8 +77,9 @@
     let tier, v, sub;
     if (done === 0) { tier = 'none'; v = T('Completează checklist-ul'); sub = T('Alege câte o opțiune în fiecare secțiune.'); }
     else if (capped || score < 60) { tier = 'bad'; v = T('Nu intra'); sub = capped ? T('O regulă obligatorie nu este respectată. Corectează riscul sau R:R-ul înainte de orice intrare.') : T('Prea puține criterii îndeplinite. Așteaptă un setup mai clar.'); }
-    else if (score < 85) { tier = 'mid'; v = T('Setup mediu: așteaptă mai multă confirmare'); sub = T('Lipsesc câteva elemente. Răbdarea face parte din plan.'); }
+    else if (score < 85 || done < cards.length) { tier = 'mid'; v = T('Setup mediu: așteaptă mai multă confirmare'); sub = T('Lipsesc câteva elemente. Răbdarea face parte din plan.'); }
     else { tier = 'good'; v = T('Setup puternic: poți intra conform planului'); sub = T('Respectă SL-ul, lotul calculat și nu muta stop loss-ul.'); }
+    if (tier === 'mid' && score >= 85) sub = T('Completează toate secțiunile, inclusiv riscul și R:R-ul, pentru verdictul final.');
     if (done > 0 && done < cards.length) sub += ' ' + T('Secțiuni rămase: {n}.', { n: cards.length - done });
     box.dataset.tier = tier;
     $('ck-verdict').textContent = v;
